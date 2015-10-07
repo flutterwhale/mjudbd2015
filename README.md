@@ -1,2 +1,2 @@
-# mjudba2015
+# mjudbd2015
 database design 2015
