@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>kr.ac</groupId>
 	<artifactId>mju</artifactId>
-	<name>groupware_system_team2</name>
+	<name>groupwareSystem_team2</name>
 	<packaging>war</packaging>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
 	<properties>
