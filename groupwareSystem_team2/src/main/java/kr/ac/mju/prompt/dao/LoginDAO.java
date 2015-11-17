@@ -14,14 +14,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class LoginDAO {
 
-	public User login(String userID, String userPW)  {
+	public User login(String ID, String PW)  {
 
 		// TODO Auto-generated method stub
-		System.out.println(" login DAO :" + userID + "  " + userPW);
+		System.out.println(" login DAO :" + ID + "  " + PW);
 		
-		
-		
-		User User = new User();
 		Statement stmt = null;
 		Connection conn = null;
 		ResultSet rs = null,rs2 = null;
@@ -31,15 +28,15 @@ public class LoginDAO {
 
 			Class.forName("com.mysql.jdbc.Driver");
 				conn= DriverManager.getConnection(
-					"jdbc:mysql://117.123.66.137:8089/lms", "park",
-					"wldnjs7862"); 
+					"jdbc:mysql://117.123.66.137:8089/dbd2015", "park",
+					"pjw49064215"); 
 
 			
 
 				stmt = conn.createStatement();
 	
 			
-			String query = "select * from " + "lms.tuser"+ " where userID ='"+ userID+"' ;";
+			String query = "SELECT * FROM dbd2015.t_user where User_Identifier ='"+ ID+"' ;";
 			
 			
 			rs =  stmt.executeQuery(query);
@@ -49,9 +46,9 @@ public class LoginDAO {
 					
 					//결과 값이 있으면 ID가 존재하는 것.
 					
-					String rID = rs.getString("userID");
+					String rID = rs.getString("User_Identifier");
 					System.out.println("-> "+ rID+" 아이디가 존재 합니다.");
-					query = "select * from " + "lms.tuser"+ " where userID = '"+ rID+"' and userPW = '"+ userPW+"' ;";
+					query = "select * from " + "dbd2015.t_user"+ " where User_Identifier = '"+ rID+"' and Password = '"+ PW+"' ;";
 					rs2 =  stmt.executeQuery(query);
 					 
 					
@@ -60,13 +57,12 @@ public class LoginDAO {
 					
 					loginsuccess=true;
 					al.clear();
-					System.out.println( " 두번째 쿼리 결과"+rs2.getString("userID") +" " +rs2.getString("userPW"));
+					System.out.println( " 두번째 쿼리 결과"+rs2.getString("User_Identifier") +" " +rs2.getString("Password"));
 					
 					
-					al.add(rs2.getString("userID"));
-					al.add(rs2.getString("userPW"));
-					al.add(rs2.getString("userName"));
-					al.add(rs2.getString("userCat"));
+					al.add(rs2.getString("User_Identifier"));
+					al.add(rs2.getString("Password"));
+					al.add(rs2.getString("Name"));
 
 					rs2.close();
 					}else{
@@ -139,18 +135,18 @@ public class LoginDAO {
 		}
 		
 
-			return User;
+			return user;
 		
 		}else{
 			
-			return User;
+			User user = new User();
+			return user;
 			
 		}
 
 	}
-	public User Usersignup(String name, String id, String cat, String pw){
+	public User signup(String name, String id, String cat, String pw){
 		
-		User User = null ;
 		System.out.println("회원 가입");
 		System.out.println(name+"  id : "+ id + " " +pw + " cat : " +cat);
 		Statement stmt = null;
@@ -158,32 +154,33 @@ public class LoginDAO {
 		ResultSet rs = null;
 		int result =0;
 		
-	
+		User myUser = new User(id,name,pw,cat);
 		try {
 
 			Class.forName("com.mysql.jdbc.Driver");
 			 conn = DriverManager.getConnection(
-					"jdbc:mysql://117.123.66.137:8089/lms", "park",
-					"wldnjs7862"); 
+					"jdbc:mysql://117.123.66.137:8089/dbd2015", "park",
+					"pjw49064215"); 
 
 			//String query = "select * from " + "lms.tlecture";
 			
 	
 			stmt = conn.createStatement();
 			
-			String query = "INSERT INTO `lms`.`tuser` (`userID`,  `userPW`,`userName`, `userCat`) VALUES ( '"+id+"','"+pw+"','"+ name+ "','"+ cat+"');";
+			String query = "INSERT INTO `dbd2015`.`t_user` (`User_Identifier`,  `Password`,`Name`) VALUES ( '"+id+"','"+pw+"','"+ name+ "','"+ cat+"');";
 			
 			result =stmt.executeUpdate(query);
 			if(result==1){
 				
 				System.out.println("쿼리 성공");
-				User = new User(id,name,pw,cat);
+				
 				
 			}else{
-				User = new User(id,name,pw,cat);
 				System.out.println("쿼리 실패");
 			}
 			 
+				
+			
 			
 				stmt.close();
 				conn.close();
@@ -216,7 +213,8 @@ public class LoginDAO {
   
 		}
 		 
-		return User;
+		
+		return myUser;
 		
 	}
 
