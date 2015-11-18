@@ -6,6 +6,7 @@ public class UserInfo {
 
 	private User myUser;
 	private int Code;
+	private String msg;
 
 	public UserInfo() {
 
@@ -19,7 +20,6 @@ public class UserInfo {
 		this.myUser = myUser;
 	}
 
-
 	public int getErrorCode() {
 		return Code;
 	}
@@ -27,5 +27,14 @@ public class UserInfo {
 	public void setErrorCode(int errorCode) {
 		this.Code = errorCode;
 	}
+
+	public String getMsg() {
+
+		
+		
+		
+		return msg;
+	}
+
 
 }

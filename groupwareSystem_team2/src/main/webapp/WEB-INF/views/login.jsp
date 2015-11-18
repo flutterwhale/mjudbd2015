@@ -4,7 +4,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="kr.ac.mju.prompt.model.UserInfo"%>
+<%@ page import="kr.ac.mju.prompt.model.UserBean"%>
 <%@ page import="kr.ac.mju.prompt.model.User"%>
+<jsp:useBean id="loginbean" class="kr.ac.mju.prompt.model.UserBean"
+	scope="session" />
+
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -21,22 +25,25 @@
 		UserInfo ui = (UserInfo) session.getAttribute("userinfo");
 		int code = ui.getErrorCode();
 		User myuser = ui.getMyUser();
-		String uName = myuser.getName();
-		int uId = myuser.getId();
-		int Permission = myuser.getPermission();
-		int DepartId = myuser.getDI();
-		int Position_Name = myuser.getPosition_Name();
 		
-
+		loginbean.setMyUser(myuser);
+//loginbean.setId(myuser.getId());		
+				
+				
 		if (check == 0) {
-
 			System.out.println(" session check ? 실패 " + code);
 			if (code == 122) {
+				
+				
+				
+				
 	%>
+
+	
+	
 	<script type="text/javascript">
 		alert("code 122 : 존재하지 않는 ID 입니다.");
-		location.replace("${pageContext.request.contextPath}/LoginController/logout.do"); 
-	
+		location.replace("${pageContext.request.contextPath}/LoginController/logout.do");
 	</script>
 
 	<%
@@ -47,7 +54,7 @@
 	<script type="text/javascript">
 		alert("code 121 : 비밀번호가 일치 하지 않습니다.");
 		location
-				.replace("${pageContext.request.contextPath}/LoginController/logout.do"); 
+				.replace("${pageContext.request.contextPath}/LoginController/logout.do");
 	</script>
 
 	<%
@@ -56,28 +63,28 @@
 
 		} else {
 
-			System.out.println(" Userinfo : id "+ uId+" 이름 " + uName + "  code " + code);
-		
+	//		System.out.println(" Userinfo : id " + uId + " 이름 " + uName + "  code " + code);
+
 			if (code == 0) { //로그인 성공!
 	%>
 
 	<script type="text/javascript">
-	alert("환영합니다.");	
-		document.writeln("<div><pre>");
-		document.writeln("</br>ID: ");
-		document.writeln("</br>name: ");
-		document.writeln("</br>position: " );
-		document.writeln("</br>Department: ");
-		document.writenl("</br>permission:  "+<%=ui.getMyUser().getPermission()%>);
-		document.writeln("</div></pre>");
-		</script>
-<h2><p>
-	(으)로 로그인하였습니다.
-	</h2></p>
+		alert("환영합니다.");
+	</script>
+	<h2>
+		Id <jsp:getProperty property="id" name="loginbean"/></br>
+	직급코드 <jsp:getProperty property="position_Name" name="loginbean"/></br>
+		이름  <jsp:getProperty property="name" name="loginbean"/></br>
+	권한 <jsp:getProperty property="permission" name="loginbean"/></br>
+	 부서코드 <jsp:getProperty property="di" name="loginbean"/></br>
+	
+		<p>(으)로 로그인하였습니다.
+	</h2>
+	</p>
 	<button type="button"
 		onclick="location.href='${pageContext.request.contextPath}/LoginController/logout.do'">로그아웃</button>
 	<br />
-<%-- 	
+	<%-- 	
 	<%
 		if (cat.equals("학생")) {
 	%>
@@ -149,13 +156,10 @@
 	<%
 		}--%>
 
-<%
-			}
+	<%
+		}
 		}
 	%>
-
-
-
 
 
 

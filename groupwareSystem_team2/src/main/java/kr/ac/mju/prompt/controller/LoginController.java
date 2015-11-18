@@ -35,6 +35,11 @@ public class LoginController {
 			logger.info("97 : id 입력하지 않음");
 			logger.info("로그인 시도 ID:11111111" + userID + ", PW:" + userPW);	
 			return "home"; 
+		}else if(0==userPW.length()){
+			logger.info("96 : pw 입력하지 않음");
+			logger.info("로그인 시도 ID:11111111" + userID + ", PW:" + userPW);	
+			return "home"; 
+			
 		}
 		//LoginInfo logininfo = new LoginInfo(userID,userPW); 
 		logger.info("로그인 시도 ID:" + userID + ", PW:" + userPW);		

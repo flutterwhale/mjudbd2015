@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import kr.ac.mju.prompt.model.User;
+import kr.ac.mju.prompt.model.UserBean;
 import kr.ac.mju.prompt.model.UserInfo;
 
 import org.springframework.stereotype.Repository;
@@ -25,7 +26,7 @@ public class LoginDAO {
 		ArrayList al = new ArrayList();
 		boolean loginsuccess = false;
 		
-		
+		UserBean b =new UserBean();
 		
 		try {
 
@@ -63,16 +64,25 @@ public class LoginDAO {
 					
 					al.clear();
 					al.add(rs2.getInt("User_Identifier"));
+					b.setId(gID);
 					al.add(rs2.getString("Password"));
+					b.setPassword(gpw);
 					al.add(rs2.getString("Name"));
+					b.setName(gname);
 					al.add(rs2.getInt("Department_Identifier"));
+					b.setDi(gdepart);
 					al.add(rs2.getInt("Permission"));
+					b.setPermission(gpermission);
 					al.add(rs2.getInt("Position_Name"));
+					b.setPosition_Name(gposition);
+					
+					
 					rs2.close();
 				} else { // pw가 없음.
 					System.out.println("loginDAO : PW가 일치 하지 않습니다.");
 					System.out.println("loginDAO : PW불일치로 로그인 실패");
 					Uinfo.setErrorCode(121);
+					b.setMsg("121");
 					rs2.close();
 				}
 				rs.close();
@@ -84,6 +94,7 @@ public class LoginDAO {
 				System.out.println("loginDAO : 아이디가 존재하지 않습니다.");
 				System.out.println("loginDAO : ID 없음으로  로그인 실패");
 				Uinfo.setErrorCode(122);
+				b.setMsg("122");
 				rs.close();
 				stmt.close();
 				conn.close();
@@ -133,6 +144,7 @@ public class LoginDAO {
 			System.out.println("loginDAO : 로그인 성공 ");
 			Uinfo.setMyUser(user);
 			Uinfo.setErrorCode(0);
+			b.setMsg("0");
 			return Uinfo;
 
 		} else {
