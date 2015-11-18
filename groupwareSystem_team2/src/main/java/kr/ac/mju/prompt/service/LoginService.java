@@ -1,5 +1,6 @@
 package kr.ac.mju.prompt.service;
 
+import kr.ac.mju.prompt.model.UserInfo;
 import kr.ac.mju.prompt.dao.LoginDAO;
 import kr.ac.mju.prompt.model.User;
 
@@ -12,22 +13,25 @@ public class LoginService {
 	@Autowired
 	private LoginDAO loginDAO;
 
-	public User login(User user) {
+	public UserInfo login(String id, String pw) {
 		// TODO Auto-generated method stub
 
 		
 		
-		//System.out.println("login Service ["+ li.getID() +"] [" + li.getPW()+"] ");
+		System.out.println("login Service : ["+ id +"] [" + pw+"] ");		
 		
 		
-		
-		return loginDAO.login(user.getId(),user.getPassword());
+		return loginDAO.login(Integer.parseInt(id),pw);
 	}
+
+
 	
-	public User signup(User user){
+public UserInfo signup(UserInfo ui){
 		
+		User user = ui.getMyUser();
 		
-		return loginDAO.signup(user.getName(), user.getId(), user.getCategory(), user.getPassword());
+		return loginDAO.signup(user.getName(), user.getId(),  user.getPassword());
 	}
+
 
 }

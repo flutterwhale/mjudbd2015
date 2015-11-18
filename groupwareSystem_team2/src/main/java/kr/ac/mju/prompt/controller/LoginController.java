@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import kr.ac.mju.prompt.model.User;
+import kr.ac.mju.prompt.model.UserInfo;
 import kr.ac.mju.prompt.service.LoginService;
 
 import org.slf4j.Logger;
@@ -17,57 +18,47 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class LoginController {
-
+ 
 	@Autowired
 	private LoginService loginService;
-	private static final Logger logger = LoggerFactory
-			.getLogger(Controller.class);
+	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
 	@RequestMapping(value = "/LoginController/login.do", method = RequestMethod.POST)
 	public String login(HttpSession session, HttpServletRequest request)
 			throws UnsupportedEncodingException{
  
 		request.setCharacterEncoding("utf-8");
-		String userID = request.getParameter("user_id");
+		String userID = request.getParameter("user_id");  //home.jsp 에서 input 에서 넘어온 parameter
 		String userPW = request.getParameter("user_password");
 		
-		User login = new User(userID,userPW); 
-		logger.info("로그인 시도 ID:" + login.getID() + ", PW:" + login.getPW());
+		if(0==userID.length()) {
+			logger.info("97 : id 입력하지 않음");
+			logger.info("로그인 시도 ID:11111111" + userID + ", PW:" + userPW);	
+			return "home"; 
+		}
+		//LoginInfo logininfo = new LoginInfo(userID,userPW); 
+		logger.info("로그인 시도 ID:" + userID + ", PW:" + userPW);		
+		UserInfo ui = loginService.login(userID,userPW);   // loginservice 요청 !!!!!!!!!!!!!
 		
-		
-		
-		User ui = loginService.login(login); 
-		
-		//System.out.println("   ?? "+ui.getMyUser().getId());
-		
-		session.setAttribute("sessionUser", ui.getId());
-		session.setAttribute("sessionName", ui.getName());
-		session.setAttribute("sessionCategory", ui.getCategory());
-		
-		
-		
-		if(userID.equals(ui.getId() )& userPW.equals(ui.getPassword())){
-			
-			
-			logger.info("111 : 로그인 일치");
-			
+		session.setAttribute("LoginINFO", ui.getMyUser().getId());
+		 
+		if(ui.getErrorCode()==0){ //로그인 성공 정보 0
+			//userID.equals(ui.getMyUser().getId()+"")&& userPW.equals(ui.getMyUser().getPassword())
+			logger.info("0 : 로그인 일치");			
 			session.setAttribute("sessionCheck", 1);
-			session.setAttribute("user", ui);
-			
+			session.setAttribute("userinfo", ui);
 			return "login";	
 		}else{
 			session.setAttribute("sessionCheck", 0);
-		
-			
-			session.setAttribute("user", ui);
+			logger.info("99 : 로그인 실패");
+			session.setAttribute("userinfo", ui);
 			return "login"; 
-		} 
-			
-		 
+		}   
+	} 
+	   
+	   
 	
-	}
 	
-
 	@RequestMapping(value = "/LoginController/main.do", method = RequestMethod.GET)
 	public String main(HttpSession session) {
 		logger.info("메인화면");
@@ -77,8 +68,8 @@ public class LoginController {
 		}
 		return "login";
 	}
-	
-	
+	  
+	 
 	@RequestMapping(value = "/LoginController/logout.do", method = RequestMethod.GET)
 	public String logout(HttpSession session) {
 		logger.info("로그아웃");
@@ -124,21 +115,19 @@ public class LoginController {
 		
 		
 		
-		User myUser = new User(userID, userName, userPW, userCat);
+		User myUser = new User(Integer.parseInt(userID), userName, userPW, userCat);
 		UserInfo userInfo = new UserInfo();
 		userInfo.setMyUser(myUser);
 		
+		logger.info("회원가입 시도 ID :" + userID + ", PW:" + userPW + " , NAME : "+ userName + " " + userCat);
 		
-		logger.info("회원가입 시도 ID:" + userID + ", PW:" + userPW + " , NAME : "+ userName + " " + userCat);
 		
-		
+
 		
 		UserInfo ui = loginService.signup(userInfo); 
 		
-		
-		
-	
 		request.setAttribute("code", ui.getErrorCode());
+	
 		return "failureLogin";
 	}
 }
