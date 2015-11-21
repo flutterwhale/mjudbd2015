@@ -23,7 +23,6 @@ public class UserBean {
 		this.name = myUser.getName();
 		this.permission = myUser.getPermission();
 		this.position_Name = myUser.getPosition_Name();
-
 		System.out.println("생성자 주입 완료 ");
 	}
 	

@@ -26,6 +26,26 @@ public class UserInfo {
 
 	public void setErrorCode(int errorCode) {
 		this.Code = errorCode;
+		switch (errorCode) {
+		case 0:
+			this.msg = "로그인 성공! 환영합니다!";
+			break;
+		case 99:
+			this.msg = "로그인 실패!";
+			break;
+		case 121:
+			this.msg = "PW 불일치!";
+			break;
+		case 122:
+			this.msg = "ID 존재 하지 않음!";
+			break;
+
+	
+		}
+		
+		
+		
+		
 	}
 
 	public String getMsg() {

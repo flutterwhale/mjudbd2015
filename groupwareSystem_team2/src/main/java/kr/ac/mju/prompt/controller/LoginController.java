@@ -1,6 +1,9 @@
 package kr.ac.mju.prompt.controller;
 
 import java.io.UnsupportedEncodingException;
+import java.text.DateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -13,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -24,9 +28,19 @@ public class LoginController {
 	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
 	@RequestMapping(value = "/LoginController/login.do", method = RequestMethod.POST)
-	public String login(HttpSession session, HttpServletRequest request)
+	public String login(HttpSession session, HttpServletRequest request,Locale locale, Model model)
 			throws UnsupportedEncodingException{
  
+		
+		Date date = new Date();
+		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+		
+		String formattedDate = dateFormat.format(date);
+		
+		model.addAttribute("serverTime", formattedDate );
+		
+		
+		
 		request.setCharacterEncoding("utf-8");
 		String userID = request.getParameter("user_id");  //home.jsp 에서 input 에서 넘어온 parameter
 		String userPW = request.getParameter("user_password");
@@ -76,12 +90,22 @@ public class LoginController {
 	  
 	 
 	@RequestMapping(value = "/LoginController/logout.do", method = RequestMethod.GET)
-	public String logout(HttpSession session) {
+	public String logout(HttpSession session,Locale locale, Model model) {
+		logger.info("Welcome home! The client locale is {}.", locale);
 		logger.info("로그아웃");
+		Date date = new Date();
+		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+		
+		String formattedDate = dateFormat.format(date);
+		
+		model.addAttribute("serverTime", formattedDate );
+		
 		if (session.getAttribute("sessionUser") != null) {
 			
 			logger.info(session.getAttribute("sessionUser").toString()+" / " + session.getAttribute("sessionName").toString()+ " 해당 사용자가 로그아웃 하였습니다. ");
 			session.removeAttribute("sessionUser");
+			
+		
 		}
 		return "home";
 	}
