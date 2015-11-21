@@ -11,7 +11,21 @@ public class UserBean {
 	private int permission;
 	private int position_Name;
 	
-	
+	public UserBean(){
+		
+		
+	}
+	public UserBean(User user){
+		this.myUser = user;
+		this.password = myUser.getPassword();
+		this.id = myUser.getId();
+		this.di = myUser.getDI();
+		this.name = myUser.getName();
+		this.permission = myUser.getPermission();
+		this.position_Name = myUser.getPosition_Name();
+
+		System.out.println("생성자 주입 완료 ");
+	}
 	
 
 	public User getMyUser() {

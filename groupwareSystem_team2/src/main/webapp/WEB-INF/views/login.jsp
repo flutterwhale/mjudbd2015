@@ -10,6 +10,8 @@
 	scope="session" />
 
 
+
+ 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -26,8 +28,7 @@
 		int code = ui.getErrorCode();
 		User myuser = ui.getMyUser();
 		
-		loginbean.setMyUser(myuser);
-//loginbean.setId(myuser.getId());		
+		loginbean.setMyUser(myuser); // 생성자를 이용한 bean 객체  주입 필요..... 아직은 안됨 ㅠㅠ
 				
 				
 		if (check == 0) {
@@ -39,7 +40,13 @@
 				
 	%>
 
-	
+<%-- 	
+	<bean id="loginbean" class="kr.ac.mju.prompt.model.UserBean" scope = "session">
+	      <constructor-arg>
+	                <ref bean="<%=myuser%>"/>
+	      <constructor-arg>
+	</bean>
+	 --%>
 	
 	<script type="text/javascript">
 		alert("code 122 : 존재하지 않는 ID 입니다.");
@@ -48,8 +55,9 @@
 
 	<%
 		System.out.println("122:  아이디 없음 ");
-
+			
 			} else if (code == 121) {
+				
 	%>
 	<script type="text/javascript">
 		alert("code 121 : 비밀번호가 일치 하지 않습니다.");
