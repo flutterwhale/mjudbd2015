@@ -61,6 +61,12 @@
 					maxlength="15"></td>
 				<td>최대 15글자</td>
 			</tr>
+			<tr>
+				<td>연락처</td>
+				<td><input id="id" type="text" name="signupID" size="15"
+					maxlength="13"></td>
+				<td></td>
+			</tr>
 
 			<tr>
 				<td>주소</td>

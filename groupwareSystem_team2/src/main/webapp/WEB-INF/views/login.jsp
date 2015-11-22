@@ -5,7 +5,8 @@
 	pageEncoding="UTF-8"%>
 <%@ page import="kr.ac.mju.prompt.model.UserInfo"%>
 <%@ page import="kr.ac.mju.prompt.model.UserBean"%>
-<%@ page import="kr.ac.mju.prompt.model.User"%>
+<%@page import="org.apache.commons.beanutils.BeanUtils" %>
+
 <jsp:useBean id="loginbean" class="kr.ac.mju.prompt.model.UserBean"
 	scope="session" />
 
@@ -25,11 +26,9 @@
 		System.out.println(" session check ? " + check);
 
 		UserInfo ui = (UserInfo) session.getAttribute("userinfo");
-		//int code = ui.getErrorCode();
-		User myuser = ui.getMyUser();
+		UserBean myuser = ui.getMyUser();
 		
-		loginbean.setMyUser(myuser); // 생성자를 이용한 bean 객체  주입 필요..... 아직은 안됨 ㅠㅠ
-				
+				BeanUtils.copyProperties(loginbean,myuser);
 				
 		if (check == 0) {
 			System.out.println(" session check ? 실패 " + loginbean.getCode());
@@ -51,7 +50,6 @@
 	</script>
 
 	<%
-		System.out.println(loginbean.getCode()+": "+loginbean.getMsg());
 			
 			} else if (loginbean.getCode() == 121) {
 				
@@ -73,7 +71,7 @@
 
 			if (loginbean.getCode() == 0) { //로그인 성공!
 				
-				
+			System.out.println(" loginbean test  "+loginbean.getId()+" myuser "+ myuser.getId()+ " : "+loginbean.getCode());
 	%>
 
 	<script type="text/javascript">
@@ -175,7 +173,7 @@ The time on the server is ${serverTime}.</p>
 		<button>메신저</button>
 		<%
 		}else { //프리랜서가아니라면?
-		
+			System.out.println(" loginbean test 2  "+loginbean.getId()+" myuser "+ myuser.getId()+ " : "+loginbean.getCode());
 		
 	%>
 	

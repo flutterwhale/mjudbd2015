@@ -8,7 +8,7 @@ import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import kr.ac.mju.prompt.model.User;
+import kr.ac.mju.prompt.model.UserBean;
 import kr.ac.mju.prompt.model.UserInfo;
 import kr.ac.mju.prompt.service.LoginService;
 
@@ -144,7 +144,7 @@ public class LoginController {
 		
 		
 		
-		User myUser = new User(Integer.parseInt(userID), userName, userPW, userCat);
+		UserBean myUser = new UserBean(Integer.parseInt(userID), userName, userPW);
 		UserInfo userInfo = new UserInfo();
 		userInfo.setMyUser(myUser);
 		

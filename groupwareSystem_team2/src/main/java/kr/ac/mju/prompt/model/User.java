@@ -1,6 +1,6 @@
-package kr.ac.mju.prompt.model;
+/*package kr.ac.mju.prompt.model;
 
-public class User {
+public class User1 {
 	private int id;
 	private String name;
 	private String password;
@@ -76,3 +76,4 @@ public class User {
 
 
 }
+*/
