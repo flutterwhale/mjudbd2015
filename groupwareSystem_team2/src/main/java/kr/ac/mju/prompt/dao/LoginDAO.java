@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import kr.ac.mju.prompt.model.User;
 import kr.ac.mju.prompt.model.UserBean;
 import kr.ac.mju.prompt.model.UserInfo;
 
@@ -129,14 +128,14 @@ public class LoginDAO {
 			}
 
 		}
-		User user = new User();
+		UserBean user = new UserBean();
 
 		if (loginsuccess) {
 
 			user.setId((Integer) al.get(0));
 			user.setPassword(al.get(1).toString());
 			user.setName(al.get(2).toString());
-			user.setDI((Integer)al.get(3));
+			user.setDi((Integer)al.get(3));
 			user.setPermission((Integer)al.get(4));
 			user.setPosition_Name((Integer)al.get(5));
 
@@ -187,13 +186,13 @@ public class LoginDAO {
 			if (result == 1) {
 
 				System.out.println("쿼리 성공");
-				User myUser = new User(id, name, pw);
+				UserBean myUser = new UserBean(id, name, pw);
 				Uinfo.setMyUser(myUser);
 				Uinfo.setErrorCode(222);
 
 			} else {
 				System.out.println("쿼리 실패");
-				User myUser = new User(id, name, pw);
+				UserBean myUser = new UserBean(id, name, pw);
 				Uinfo.setErrorCode(200);
 
 			}

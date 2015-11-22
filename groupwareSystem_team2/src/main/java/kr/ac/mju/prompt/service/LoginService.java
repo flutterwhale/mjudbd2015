@@ -1,8 +1,8 @@
 package kr.ac.mju.prompt.service;
 
+import kr.ac.mju.prompt.model.UserBean;
 import kr.ac.mju.prompt.model.UserInfo;
 import kr.ac.mju.prompt.dao.LoginDAO;
-import kr.ac.mju.prompt.model.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,7 +28,7 @@ public class LoginService {
 	
 public UserInfo signup(UserInfo ui){
 		
-		User user = ui.getMyUser();
+		UserBean user = ui.getMyUser();
 		
 		return loginDAO.signup(user.getName(), user.getId(),  user.getPassword());
 	}

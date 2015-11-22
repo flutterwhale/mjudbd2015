@@ -1,10 +1,8 @@
 package kr.ac.mju.prompt.model;
 
-import kr.ac.mju.prompt.model.User;
-
 public class UserInfo {
 
-	private User myUser;
+	private UserBean myUser;
 	private int Code;
 	private String msg;
 
@@ -12,11 +10,11 @@ public class UserInfo {
 
 	}
 
-	public User getMyUser() {
+	public UserBean getMyUser() {
 		return myUser;
 	}
 
-	public void setMyUser(User myUser) {
+	public void setMyUser(UserBean myUser) {
 		this.myUser = myUser;
 	}
 

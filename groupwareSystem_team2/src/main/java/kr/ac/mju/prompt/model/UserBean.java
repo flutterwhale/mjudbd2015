@@ -1,9 +1,8 @@
 package kr.ac.mju.prompt.model;
 
 public class UserBean {
-	private String msg = ""; // 변수는 public으로 선언
+	private String msg = ""; 
 	private int code;
-	private User myUser;
 	private int id;
 	private String name;
 	private String password;
@@ -13,34 +12,16 @@ public class UserBean {
 	
 	public UserBean(){
 		
-		
-	}
-	public UserBean(User user){
-		this.myUser = user;
-		this.password = myUser.getPassword();
-		this.id = myUser.getId();
-		this.di = myUser.getDI();
-		this.name = myUser.getName();
-		this.permission = myUser.getPermission();
-		this.position_Name = myUser.getPosition_Name();
-		System.out.println("생성자 주입 완료 ");
-	}
+	} //생성자. 파라미터 없음.
+
 	
 
-	public User getMyUser() {
-		return myUser;
-	}
-
-	public void setMyUser(User myUser) {
-		this.myUser = myUser;
+	public UserBean(int id, String name, String pw) {
+		// TODO Auto-generated constructor stub
+		this.id=id;
+		this.name = name;
+		this.password = pw;
 		
-		setId(myUser.getId());
-		setName(myUser.getName());
-		setPassword(myUser.getPassword());
-		setDi(myUser.getDI());
-		setPermission(myUser.getPermission());
-		setPosition_Name(myUser.getPosition_Name()); 
-		System.out.println("setter 완료 ");
 	}
 
 	public int getId() {
