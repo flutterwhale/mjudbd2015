@@ -4,6 +4,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+ <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <title>회원 가입</title>
 <script type="text/javascript">
 	function check() {
@@ -29,12 +32,92 @@
 </script>
 </head>
 <body>
-
-	<table>
+	
+	<div class="container">
 		<form onSubmit="return check()"
 			action="${pageContext.request.contextPath}/LoginController/signup"
 			method="POST" name="myform">
-			<tr>
+			<fieldset>
+			<legend class="legend">개인정보</legend>
+			<div class="form-group">
+			<label>이름</label>
+			<input id="name" type="text" name="signupName" size="8"
+					maxlength="8" placeholder="최대8글자">
+			</div>
+			<div class="form-group">
+			<label>아이디</label>
+			<input id="id" type="text" name="signupID" size="15"
+					maxlength="10" disabled="disabled" placeholder="가입 완료 시 자동부여">
+			</div>
+			<div class="form-group">
+			<label>비밀번호</label>
+			<input id="pw" type="password" name="signupPW" size="15"
+					maxlength="15" placeholder="최대 15글자">
+			<label>비밀번호 확인</label>
+			<input id="pw2" type="password" name="signupPW2" size="15"
+					maxlength="15" placeholder="최대 15글자">
+			</div>
+			<div class="form-group">
+			<label>주민번호</label>
+			<input id="ssn" type="text" name="ssn" size="14"
+					maxlength="14">
+			</div>
+			<div class="form-group">
+			<label>연락처</label>
+			<input id="phone" type="text" name="phone" size="15"
+					maxlength="13">
+			</div>
+			<div class="form-group">
+			<label>이메일</label>
+			<input id="email" type="text" name="email" size="15"
+					maxlength="30">
+			</div>
+			<div class="form-group">
+			<label>주소</label>
+			<textarea id="address" name="address" cols="30" rows="3"></textarea>
+			</div>
+			<div class="form-group">
+			<label>성별</label>
+			<label><input type="radio" value="1" name="gender">남자</label><label><input
+						type="radio" value="0" name="gender">여자</label>
+			</div>
+			<div class="form-group">
+			<label>회원종류</label>
+			<select id="cat" name="signupCat"><option>정직원</option>
+						<option>프리랜서</option></select>
+			</div>
+					
+			</fieldset>
+			<fieldset>
+			<legend class="legend">기타 정보</legend>
+			<div class="form-group">
+			<label>최종학력</label>
+			<input id="university" type="text" name="university"
+					size="10" maxlength="10">학교 <input id="major" type="text"
+					name="major" size="10" maxlength="10">학과 <input
+					id="entrance" type="text" name="entrance" size="10" maxlength="10">입학
+					<input id="graduation" type="text" name="graduation"
+					size="10" maxlength="10">졸업
+			</div>
+			<div class="form-group">
+			<label>경력</label>
+			<textarea id="career" name="career" cols="30" rows="5"></textarea>
+			</div>
+			<div class="form-group">
+			<label>포트폴리오 업로드</label>
+			<input type="file" id="portfolio" name="portfolio">
+			</div>
+			<div class="form-group">
+			<label>기술등급</label>
+			<label><input type="radio" value="10"
+						name="tech_level"> 고급</label> <label><input type="radio"
+						value="20" name="tech_level"> 중급</label> <label><input
+						type="radio" value="30" name="tech_level"> 하급</label>
+			</div>
+					
+			</fieldset>
+
+			<!-- <tr>
 				<td><h2>개인 정보</h2></td>
 			</tr>
 			<tr>
@@ -139,13 +222,13 @@
 				<td>아래로 동적으로 증가한다..</td>
 			</tr>
 	</table>
-
-	<button type="submit" class="btn_signup">제출</button>
+ -->
+	<button type="submit" class="btn btn-primary">제출</button>
 	</form>
 	<form
 		action="${pageContext.request.contextPath}/LoginController/logout.do"
 		method="GET">
-		<button type="submit" class="btn_back">뒤로가기</button>
+		<button type="submit" class="btn">뒤로가기</button>
 	</form>
 </body>
 </html>
