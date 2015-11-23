@@ -16,6 +16,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Main</title>
 </head>
@@ -71,6 +75,7 @@
 	<script type="text/javascript">
 		alert("환영합니다.");
 	</script>
+	<table class ="table"></table>
 	<h2>
 		Id
 		<jsp:getProperty property="id" name="loginbean" /></br> 직급코드
@@ -84,7 +89,7 @@
 			<button type="button"
 				onclick="location.href='${pageContext.request.contextPath}/LoginController/logout.do'">로그아웃</button>
 	</h2>
-
+	</table>
 	</p>
 	<p>The time on the server is ${serverTime}.</p>
 
