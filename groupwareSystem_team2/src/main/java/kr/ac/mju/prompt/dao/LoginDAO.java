@@ -25,9 +25,9 @@ public class LoginDAO {
 		ResultSet rs = null, rs2 = null;
 		ArrayList al = new ArrayList();
 		boolean loginsuccess = false;
-		
-		UserBean b =new UserBean();
-		
+
+		UserBean b = new UserBean();
+
 		try {
 
 			Class.forName("com.mysql.jdbc.Driver");
@@ -41,12 +41,17 @@ public class LoginDAO {
 			if (rs.next()) {
 
 				int rID = rs.getInt("User_Identifier");
-				System.out.println("loginDAO : -> " + rID + " 아이디가 존재 합니다.");
-				String query2 = "SELECT * FROM dbd2015.t_user join dbd2015.t_position on t_user.User_Identifier = t_position.User_Identifier  join  dbd2015.t_department on t_department.Department_Identifier = t_position.Department_Identifier  WHERE t_user.User_Identifier = '"+ rID + "' and t_user.Password = '" + PW + "' ;";
-				
-				
-				//SELECT * FROM dbd2015.t_user join dbd2015.t_position on t_user.User_Identifier = t_position.User_Identifier  join  dbd2015.t_department on t_department.Department_Identifier = t_position.Department_Identifier  where t_user.User_Identifier='60102339' and t_user.Password = '1234';
-				
+				System.out.println("loginDAO.login: -> " + rID + " 아이디가 존재 합니다.");
+				String query2 = "SELECT * FROM dbd2015.t_user join dbd2015.t_position on t_user.User_Identifier = t_position.User_Identifier  join  dbd2015.t_department on t_department.Department_Identifier = t_position.Department_Identifier  WHERE t_user.User_Identifier = '"
+						+ rID + "' and t_user.Password = '" + PW + "' ;";
+
+				// SELECT * FROM dbd2015.t_user join dbd2015.t_position on
+				// t_user.User_Identifier = t_position.User_Identifier join
+				// dbd2015.t_department on t_department.Department_Identifier =
+				// t_position.Department_Identifier where
+				// t_user.User_Identifier='60102339' and t_user.Password =
+				// '1234';
+
 				System.out.println("loginDAO : 쿼리 >" + query2);
 				rs2 = stmt.executeQuery(query2);
 
@@ -55,13 +60,14 @@ public class LoginDAO {
 					int gID = rs2.getInt("User_Identifier");
 					String gpw = rs2.getString("Password");
 					String gname = rs2.getString("Name");
-					int gdepart = rs2.getInt("Department_Identifier"); // 부서  code
-					int gpermission = rs2.getInt("Permission") ; // 권한 구분 !!
-					int gposition = rs2.getInt("Position_Name") ; // 직급 !!!!
-					System.out.println("loginDAO :  두번째 쿼리 결과" + gID + " pw " + gpw + " name " + gname + " permission "+gpermission+" Department code / name " + gdepart + " Position "+ gposition   );
+					int gdepart = rs2.getInt("Department_Identifier"); // 부서
+																		// code
+					int gpermission = rs2.getInt("Permission"); // 권한 구분 !!
+					int gposition = rs2.getInt("Position_Name"); // 직급 !!!!
+					System.out.println("loginDAO :  두번째 쿼리 결과" + gID + " pw " + gpw + " name " + gname + " permission "
+							+ gpermission + " Department code / name " + gdepart + " Position " + gposition);
 					loginsuccess = true;
-					
-					
+
 					al.clear();
 					al.add(rs2.getInt("User_Identifier"));
 					b.setId(gID);
@@ -75,8 +81,7 @@ public class LoginDAO {
 					b.setPermission(gpermission);
 					al.add(rs2.getInt("Position_Name"));
 					b.setPosition_Name(gposition);
-					
-					
+
 					rs2.close();
 				} else { // pw가 없음.
 					System.out.println("loginDAO : PW가 일치 하지 않습니다.");
@@ -136,10 +141,9 @@ public class LoginDAO {
 			user.setId((Integer) al.get(0));
 			user.setPassword(al.get(1).toString());
 			user.setName(al.get(2).toString());
-			user.setDi((Integer)al.get(3));
-			user.setPermission((Integer)al.get(4));
-			user.setPosition_Name((Integer)al.get(5));
-
+			user.setDi((Integer) al.get(3));
+			user.setPermission((Integer) al.get(4));
+			user.setPosition_Name((Integer) al.get(5));
 
 			System.out.println("loginDAO : 로그인 성공 ");
 			Uinfo.setMyUser(user);
@@ -151,7 +155,7 @@ public class LoginDAO {
 			System.out.println("loginDAO : 로그인 실패 ");
 
 			Uinfo.setMyUser(user);
-			//Uinfo.setErrorCode(99);//실패 코드 
+			// Uinfo.setErrorCode(99);//실패 코드
 			return Uinfo;
 
 		}
@@ -165,35 +169,42 @@ public class LoginDAO {
 		Statement stmt = null;
 		Connection conn = null;
 		ResultSet rs = null;
-		int result = 0;
+		int result, result2 = 0;
 
-		
-		System.out.println("sb ? name "+sb.getName());
-		
+		System.out.println("sb ? name " + sb.getName());
+
 		try {
 
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection("jdbc:mysql://117.123.66.137:8089/dbd2015", "park", "pjw49064215");
 			stmt = conn.createStatement();
 
+			System.out.println("프리랜서? " + sb.getIsFreeLancer());
 
-		String query = "INSERT INTO `dbd2015`.`t_user` (`Name`, `SocialSecurtyNum`, `Gender`, `Phone_Number`, `Address`, `Academic_Career`, `Technic_Level`, `Career`, `Email`, `Password`) "
-				+ "VALUES ('"+sb.getName() +"', '"+sb.getSsn() +"', '"+sb.getGender() +"', '"+sb.getPhone() +"', '"+sb.getAddr() +"', '"+sb.getA_career() +"', '"+sb.getTech_level() +"', '"+sb.getCareer() +"', '"+ sb.getEmail()+"', '"+ sb.getPassword()+"');";
-				
-		System.out.println("insert query? : "+ query);
+			String query = "INSERT INTO `dbd2015`.`t_user` (`Name`,`User_Identifier`, `SocialSecurtyNum`, `Gender`, `Phone_Number`, `Address`, `Academic_Career`, `Technic_Level`, `Career`, `Email`, `Password`) "
+					+ "VALUES ('" + sb.getName() + "', '" + sb.getId() + "', '" + sb.getSsn() + "', '" + sb.getGender()
+					+ "', '" + sb.getPhone() + "', '" + sb.getAddr() + "', '" + sb.getA_career() + "', '"
+					+ sb.getTech_level() + "', '" + sb.getCareer() + "', '" + sb.getEmail() + "', '" + sb.getPassword()
+					+ "');";
 
-		result = stmt.executeUpdate(query);
+			System.out.println("insert query? : " + query);
 
+			result = stmt.executeUpdate(query);
 
-			if (result == 1) {
+			query = "INSERT INTO `dbd2015`.`t_position` (`Department_Identifier`, `User_Identifier`, `Position_Name`) VALUES ('0', '"
+					+ sb.getId() + "', '0');";
 
-				System.out.println("쿼리 성공");
+			result2 = stmt.executeUpdate(query);
+
+			if (result == 1 && result2 == 1) {
+
+				System.out.println("insert 쿼리 성공");
+
 				Uinfo.setMySignupBean(sb);
 				Uinfo.setErrorCode(222);
 
 			} else {
 				System.out.println("쿼리 실패");
-				//UserBean myUser = new UserBean(id, name, pw);
 				Uinfo.setErrorCode(200);
 
 			}

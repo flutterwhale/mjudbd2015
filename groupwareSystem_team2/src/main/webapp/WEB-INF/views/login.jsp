@@ -10,9 +10,6 @@
 <jsp:useBean id="loginbean" class="kr.ac.mju.prompt.model.UserBean"
 	scope="session" />
 
-
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -34,51 +31,22 @@
 
 		if (check == 0) {
 			System.out.println(" session check ? 실패 " + loginbean.getCode());
-			if (loginbean.getCode() == 122) {
+			System.out.println(loginbean.getCode() + ": " + loginbean.getMsg());
+		}
+		if (loginbean.getCode() == 0) { //로그인 성공!
+			System.out.println(" loginbean test  " + loginbean.getId() + " myuser " + myuser.getId() + " : "
+					+ loginbean.getCode());
 	%>
 
-
-	<script type="text/javascript">
-		alert("code 122 : 존재하지 않는 ID 입니다.");
-		location
-				.replace("${pageContext.request.contextPath}/LoginController/logout.do");
-	</script>
-
-	<%
-		} else if (loginbean.getCode() == 121) {
-	%>
-	<script type="text/javascript">
-		alert("code 121 : 비밀번호가 일치 하지 않습니다.");
-		location
-				.replace("${pageContext.request.contextPath}/LoginController/logout.do");
-	</script>
-
-	<%
-		System.out.println("121:  비밀번호 틀림 ");
-				System.out.println(loginbean.getCode() + ": " + loginbean.getMsg());
-			}
-
-		} else {
-
-			//		System.out.println(" Userinfo : id " + uId + " 이름 " + uName + "  code " + code);
-
-			if (loginbean.getCode() == 0) { //로그인 성공!
-
-				System.out.println(" loginbean test  " + loginbean.getId() + " myuser " + myuser.getId() + " : "
-						+ loginbean.getCode());
-	%>
-
-	<script type="text/javascript">
-		alert("환영합니다.");
-	</script>
+	<!-- 	<script type="text/javascript">
+		alert("환영합니다!");
+	</script>  -->
 	<h2>
-		Id
-		<jsp:getProperty property="id" name="loginbean" /></br> 직급코드
-		<jsp:getProperty property="position_Name" name="loginbean" /></br> 이름
-		<jsp:getProperty property="name" name="loginbean" /></br> 권한
-		<jsp:getProperty property="permission" name="loginbean" /></br> 부서코드
-		<jsp:getProperty property="di" name="loginbean" /></br>
-
+		Id<jsp:getProperty property="id" name="loginbean" /></br> 직급코드<jsp:getProperty
+			property="position_Name" name="loginbean" /></br> 이름<jsp:getProperty
+			property="name" name="loginbean" /></br> 권한<jsp:getProperty
+			property="permission" name="loginbean" /></br> 부서코드<jsp:getProperty
+			property="di" name="loginbean" /></br>
 		<p>
 			(으)로 로그인하였습니다.
 			<button type="button"
@@ -91,23 +59,23 @@
 
 	<button>개인 정보</button>
 	<%
-		if (loginbean.getPermission() == 14) { // 영업부
-
-					System.out.println(loginbean.getPermission() + ": 영업부 권한  로그인");
+		if (loginbean.getPermission() == 11) { // PM 권한
+				System.out.println(loginbean.getPermission() + ": PM 권한 로그인");
 	%>
 
 
 	<button type="button"
-		onclick="location.href='${pageContext.request.contextPath}/CourseController/insertCoursePage'">수주
-		현황</button>
+		onclick="location.href='${pageContext.request.contextPath}/CourseController/insertCoursePage'">프로젝트
+		관리</button>
+
 	<br />
-
-
+	<button>업무 일지</button>
+	<button>평가 관리</button>
 
 
 	<%
-		} else if (loginbean.getPermission() == 11) {//pm
-					System.out.println(loginbean.getPermission() + ": PM 권한 로그인");
+		} else if (loginbean.getPermission() == 12) {//PL 권한
+				System.out.println(loginbean.getPermission() + ": PL 권한 로그인");
 	%>
 
 
@@ -117,56 +85,53 @@
 		method="POST">
 		<%-- <input type="hidden" name="user_id" value=<%=uid%>> --%>
 		<button>프로젝트 관리</button>
-		<br />
+		<button>업무 일지</button>
+
 	</form>
-	<button>평가 관리</button>
-
-
-	<%
-		} else if (loginbean.getPermission() == 99) { //가입 대기
-					System.out.println(loginbean.getPermission() + ": 가입대기 상태 로그인");
-	%>
 
 
 
 	<%
-		} else if (loginbean.getPermission() == 15) { //개발팀
-
-					System.out.println(loginbean.getPermission() + ": 프로젝트 투입 직원 권한 로그인");
+		} else if (loginbean.getPermission() == 13) { //개발자
+				System.out.println(loginbean.getPermission() + ": 개발자 상태 로그인(프로젝트 투입 직원 권한 )");
 	%>
 	<button>프로젝트</button>
-
+	<button>업무 일지</button>
 
 	<%
 		}
-				if (loginbean.getDi() == 17) { // 개발팀 업무 : 프로젝트...
-
-					System.out.println(loginbean.getPermission() + ": 개발팀 업무 프로젝트  로그인");
+			if (loginbean.getDi() == 10) { // 경영진 메뉴
+				System.out.println(loginbean.getPermission() + ": 경영진 메뉴");
 	%>
 
 	<%
 		}
 
-				if (loginbean.getPosition_Name() == 99) { // 프리랜서
+			if (loginbean.getPosition_Name() == 99) { // 외부인력팀
 
-					System.out.println(loginbean.getPermission() + ": 프리랜서 직급  로그인");
+				System.out.println(loginbean.getPermission() + ": 프리랜서(외부인력팀) 로그인");
 	%>
 	<button>메신저</button>
 	<%
+		} else if (loginbean.getPosition_Name() == 0) { //가입 대기 상태 
+
+				System.out.println(loginbean.getPermission() + ": 가입 대기 상태 로그인");
+	%>
+	<p>가입 대기 상태 입니다. 인사관리부의 승인을 기다립니다.</p>
+
+	<%
 		} else { //프리랜서가아니라면?
-					System.out.println(" loginbean test 2  " + loginbean.getId() + " myuser " + myuser.getId()
-							+ " : " + loginbean.getCode());
+				System.out.println(loginbean.getPermission() + ": 일반 직원 로그인, 공통 메뉴 보임");
 	%>
 
 	<!-- 공통 메뉴 -->
 
 	<button>전자결재</button>
+
 	<button>메신저</button>
 	<button>게시판</button>
 	<%
 		}
-			}
-
 		}
 	%>
 

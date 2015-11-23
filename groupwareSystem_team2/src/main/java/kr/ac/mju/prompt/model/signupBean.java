@@ -9,7 +9,7 @@ public class signupBean {
 	private String password;
 	private String ssn;
 	private String phone;
-	private String cat;
+
 	private String addr;
 	private String email;
 	private int gender;
@@ -18,6 +18,8 @@ public class signupBean {
 	private String a_career;
 	private String career;
 	private String portfolio;
+	// 개발자 정보
+	private String isFreeLancer;
 	private String language;
 	private int language_level;
 	private int tech_level;
@@ -26,31 +28,52 @@ public class signupBean {
 	private int permission;
 	private int position_Name;
 
+	public signupBean(String name, String id, String password, String ssn, String phone, String isFreeLancer,
+			String addr, String email, String gender, String a_career, String career, String portfolio, String language,
+			String language_level, String tech_level) {
 
-	public signupBean(String name,String password, String ssn, String phone, String cat, String addr,String email, String gender, String a_career,
-			String career, String portfolio, String language, String language_level, String tech_level) {
+		this.setName(name);
+		this.setId(Integer.parseInt(id));
+		this.setPassword(password);
+		this.setSsn(ssn);
+		this.setPhone(phone);
+		this.setIsFreeLancer(isFreeLancer);
+		this.setAddr(addr);
+		this.setGender(Integer.parseInt(gender));
+		this.setA_career(a_career);
+		this.setEmail(email);
+		this.setCareer(career);
+		this.setLanguage(language_level);
+		this.setPortfolio(portfolio);
+		this.setLanguage(language_level);
+		this.setLanguage_level(Integer.parseInt(language_level));
+		this.setTech_level(Integer.parseInt(tech_level));
+		System.out.println("signupBean(개발자) 생성완료");
 
-		this.name = name;
-		this.password = password;
-		this.ssn = ssn;
-		this.phone = phone;
-		this.cat = cat;
-		this.addr = addr;
-		this.gender = Integer.parseInt(gender);
-		this.a_career = a_career;
-		this.career=career;
-		this.language = language;
-		this.portfolio = portfolio;
-		this.language_level = Integer.parseInt(language_level);
-		this.tech_level = Integer.parseInt(tech_level);
-		System.out.println("signupBean 생성완료");
+	}
+
+	public signupBean(String name,String id, String password, String ssn, String phone, String addr, String email, String gender,
+			String a_career, String career, String portfolio) {
+
+		this.setName(name);
+		this.setId(Integer.parseInt(id));
+		this.setPassword(password);
+		this.setSsn(ssn);
+		this.setPhone(phone);
+		this.setAddr(addr);
+		this.setGender(Integer.parseInt(gender));
+		this.setA_career(a_career);
+		this.setEmail(email);
+		this.setCareer(career);
+		this.setPortfolio(portfolio);
+		System.out.println("signupBean(비 개발자) 생성완료");
 
 	}
 	/*
 	 * public signupBean(String name, String ssn, String phone, String cat,
-	 * String addr, int gender, String a_career, String career, String portfolio, String language,
-	 * int language_level, int tech_level, int di, int permission, int
-	 * position_Name) {
+	 * String addr, int gender, String a_career, String career, String
+	 * portfolio, String language, int language_level, int tech_level, int di,
+	 * int permission, int position_Name) {
 	 * 
 	 * 
 	 * }
@@ -136,14 +159,6 @@ public class signupBean {
 		this.phone = phone;
 	}
 
-	public String getCat() {
-		return cat;
-	}
-
-	public void setCat(String cat) {
-		this.cat = cat;
-	}
-
 	public String getAddr() {
 		return addr;
 	}
@@ -167,7 +182,6 @@ public class signupBean {
 	public void setA_career(String a_career) {
 		this.a_career = a_career;
 	}
-
 
 	public String getLanguage() {
 		return language;
@@ -215,6 +229,14 @@ public class signupBean {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getIsFreeLancer() {
+		return isFreeLancer;
+	}
+
+	public void setIsFreeLancer(String isFreeLancer) {
+		this.isFreeLancer = isFreeLancer;
 	}
 
 }

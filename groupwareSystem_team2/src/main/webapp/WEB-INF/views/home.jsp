@@ -30,8 +30,15 @@
 		<td><form
 				action="${pageContext.request.contextPath}/LoginController/signupPage"
 				method="POST">
-
+<input type="hidden" name="joincat" value="common"> 
 				<button type="submit">Join</button>
+			</form></td>
+		</tr>
+		<td><form
+				action="${pageContext.request.contextPath}/LoginController/signupPage"
+				method="POST">
+				<input type="hidden"  name="joincat" value="developer"> 
+				<button type="submit">Developer Join</button>
 			</form></td>
 		</tr>
 
