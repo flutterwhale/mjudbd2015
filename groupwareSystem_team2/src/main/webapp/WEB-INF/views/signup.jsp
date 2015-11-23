@@ -42,7 +42,7 @@
 				<td><input id="name" type="text" name="signupName" size="8"
 					maxlength="8"></td>
 				<td>최대8글자</td>
-			</tr> 
+			</tr>
 			<tr>
 				<td>아이디</td>
 				<td><input id="id" type="text" name="signupID" size="15"
@@ -62,68 +62,82 @@
 				<td>최대 15글자</td>
 			</tr>
 			<tr>
+				<td>주민 번호</td>
+				<td><input id="ssn" type="text" name="ssn" size="14"
+					maxlength="14"></td>
+				<td></td>
+			</tr>
+			<tr>
 				<td>연락처</td>
 				<td><input id="phone" type="text" name="phone" size="15"
 					maxlength="13"></td>
 				<td></td>
 			</tr>
-
+	<tr>
+				<td>email</td>
+				<td><input id="email" type="text" name="email" size="15"
+					maxlength="30"></td>
+				<td></td>
+			</tr>
 			<tr>
 				<td>주소</td>
-				<td><textarea id="address"  name="address"cols="30" rows="3"></textarea></td>
+				<td><textarea id="address" name="address" cols="30" rows="3"></textarea></td>
 			</tr>
-		<tr>
-			<td>성별</td>
-			<td><label><input type="radio" value="1" name="gender">남자</label><label><input
-					type="radio" value="0" name="gender">여자</label></td>
-		</tr>
-		<tr>
-			<td>회원종류</td>
-			<td><select id="cat" name="signupCat"><option>정직원</option>
-					<option>프리랜서</option></select></td>
-		</tr>
+			<tr>
+				<td>성별</td>
+				<td><label><input type="radio" value="1" name="gender">남자</label><label><input
+						type="radio" value="0" name="gender">여자</label></td>
+			</tr>
+			<tr>
+				<td>회원종류</td>
+				<td><select id="cat" name="signupCat"><option>정직원</option>
+						<option>프리랜서</option></select></td>
+			</tr>
 
-		<br>
-		<tr>
-			<td><h2>기타 정보</h2></td>
-		</tr>
-		<tr>
-			<td>최종학력 :</td>
-			<td><input id="university" type="text" name="university"
-				size="10" maxlength="10">학교 <input id="major" type="text"
-				name="major" size="10" maxlength="10">학과 <input
-				id="entrance" type="text" name="entrance" size="10" maxlength="10">입학/
-			
-			<td><input id="graduation" type="text" name="graduation" size="10"
-				maxlength="10">졸업</td>
+			<br>
+			<tr>
+				<td><h2>기타 정보</h2></td>
+			</tr>
+			<tr>
+				<td>최종학력 :</td>
+				<td><input id="university" type="text" name="university"
+					size="10" maxlength="10">학교 <input id="major" type="text"
+					name="major" size="10" maxlength="10">학과 <input
+					id="entrance" type="text" name="entrance" size="10" maxlength="10">입학/
 
-		</tr>
-		<tr>
-			<td>경력</td>
-			<td><textarea id="career" name="career" cols="30" rows="5"></textarea></td>
-		</tr>
-		<tr>
 
-			<td>포트폴리오 업로드</td>
-			<td><input type="file" id="portfolio" name="portfolio"></td>
 
-		</tr>
-		<tr>
-			<td>기술 등급</td>
-			<td><label><input type="radio" value="10"
-					name="tech_level"> 고급</label> <label><input type="radio"
-					value="20" name="tech_level"> 중급</label> <label><input
-					type="radio" value="30" name="tech_level"> 하급</label></td>
-			<td>자신의 기술 등급 기재</td>
-		</tr>
-		<tr>
-			<td>사용 가능 언어</td><td><input type="text" id="language" name="language">
-			<label><input type="radio" value="10"
-					name="language_level">상</label> <label><input type="radio"
-					value="20" name="language_level">중</label><label><input
-					type="radio" value="30" name="language_level">하</label></td> <td>아래로 동적으로 증가한다..</td>
-		</tr>
+				
+				<td><input id="graduation" type="text" name="graduation"
+					size="10" maxlength="10">졸업</td>
 
+			</tr>
+			<tr>
+				<td>경력</td>
+				<td><textarea id="career" name="career" cols="30" rows="5"></textarea></td>
+			</tr>
+			<tr>
+
+				<td>포트폴리오 업로드</td>
+				<td><input type="file" id="portfolio" name="portfolio"></td>
+
+			</tr>
+			<tr>
+				<td>기술 등급</td>
+				<td><label><input type="radio" value="10"
+						name="tech_level"> 고급</label> <label><input type="radio"
+						value="20" name="tech_level"> 중급</label> <label><input
+						type="radio" value="30" name="tech_level"> 하급</label></td>
+				<td>자신의 기술 등급 기재</td>
+			</tr>
+			<tr>
+				<td>사용 가능 언어</td>
+				<td><input type="text" id="language" name="language"> <label><input
+						type="radio" value="10" name="language_level">상</label> <label><input
+						type="radio" value="20" name="language_level">중</label><label><input
+						type="radio" value="30" name="language_level">하</label></td>
+				<td>아래로 동적으로 증가한다..</td>
+			</tr>
 	</table>
 
 	<button type="submit" class="btn_signup">제출</button>
