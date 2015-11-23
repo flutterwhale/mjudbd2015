@@ -8,19 +8,19 @@
 <script type="text/javascript">
 	function check() {
 		a = document.myform.signupName.value
-		b = document.myform.signupID.value
-		c = document.myform.signupPW.value
-		if (b == "") {
+		b = document.myform.signupPW.value
+		c = document.myform.signupPW2.value
+		if (a == "") {
 			alert("이름를 입력해 주세요")
-			document.myform.signupName.focus()
+			document.myform.signupName.focus();
 			return false;
-		} else if (a == "") {
-			alert("ID를 입력해 주세요")
-			document.myform.signupID.focus()
+		} else if (b == "") {
+			alert("암호를 입력해 주세요")
+			document.myform.signupPW.focus();
 			return false;
 		} else if (c == "") {
-			alert("암호를 입력해 주세요")
-			document.myform.signupPW.focus()
+			alert("암호 확인을 입력해 주세요")
+			document.myform.signupPW2.focus();
 			return false;
 		} else {
 			alert("제출합니다.")
@@ -42,7 +42,7 @@
 				<td><input id="name" type="text" name="signupName" size="8"
 					maxlength="8"></td>
 				<td>최대8글자</td>
-			</tr>
+			</tr> 
 			<tr>
 				<td>아이디</td>
 				<td><input id="id" type="text" name="signupID" size="15"
@@ -57,20 +57,20 @@
 			</tr>
 			<tr>
 				<td>비밀번호확인</td>
-				<td><input id="pw" type="password" name="signupPW" size="15"
+				<td><input id="pw2" type="password" name="signupPW2" size="15"
 					maxlength="15"></td>
 				<td>최대 15글자</td>
 			</tr>
 			<tr>
 				<td>연락처</td>
-				<td><input id="id" type="text" name="signupID" size="15"
+				<td><input id="phone" type="text" name="phone" size="15"
 					maxlength="13"></td>
 				<td></td>
 			</tr>
 
 			<tr>
 				<td>주소</td>
-				<td><textarea id="address" cols="30" rows="3"></textarea></td>
+				<td><textarea id="address"  name="address"cols="30" rows="3"></textarea></td>
 			</tr>
 		<tr>
 			<td>성별</td>
@@ -91,21 +91,21 @@
 			<td>최종학력 :</td>
 			<td><input id="university" type="text" name="university"
 				size="10" maxlength="10">학교 <input id="major" type="text"
-				name="university" size="10" maxlength="10">학과 <input
-				id="major" type="text" name="university" size="10" maxlength="10">입학/
+				name="major" size="10" maxlength="10">학과 <input
+				id="entrance" type="text" name="entrance" size="10" maxlength="10">입학/
 			
-			<td><input id="major" type="text" name="university" size="10"
+			<td><input id="graduation" type="text" name="graduation" size="10"
 				maxlength="10">졸업</td>
 
 		</tr>
 		<tr>
 			<td>경력</td>
-			<td><textarea id="career" cols="30" rows="5"></textarea></td>
+			<td><textarea id="career" name="career" cols="30" rows="5"></textarea></td>
 		</tr>
 		<tr>
 
 			<td>포트폴리오 업로드</td>
-			<td><input type="file"></td>
+			<td><input type="file" id="portfolio" name="portfolio"></td>
 
 		</tr>
 		<tr>
@@ -115,6 +115,13 @@
 					value="20" name="tech_level"> 중급</label> <label><input
 					type="radio" value="30" name="tech_level"> 하급</label></td>
 			<td>자신의 기술 등급 기재</td>
+		</tr>
+		<tr>
+			<td>사용 가능 언어</td><td><input type="text" id="language" name="language">
+			<label><input type="radio" value="10"
+					name="language_level">상</label> <label><input type="radio"
+					value="20" name="language_level">중</label><label><input
+					type="radio" value="30" name="language_level">하</label></td> <td>아래로 동적으로 증가한다..</td>
 		</tr>
 
 	</table>

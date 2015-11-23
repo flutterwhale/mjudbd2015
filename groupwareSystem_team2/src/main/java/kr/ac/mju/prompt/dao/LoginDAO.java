@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import kr.ac.mju.prompt.model.UserBean;
 import kr.ac.mju.prompt.model.UserInfo;
+import kr.ac.mju.prompt.model.signupBean;
 
 import org.springframework.stereotype.Repository;
 
@@ -157,16 +158,17 @@ public class LoginDAO {
 
 	}
 
-	public UserInfo signup(String name, int id, String pw) {
+	public UserInfo signup(signupBean sb) {
 
 		System.out.println("회원 가입 ");
-		System.out.println(name + " id : " + id + " " + pw );
 		UserInfo Uinfo = new UserInfo();
 		Statement stmt = null;
 		Connection conn = null;
 		ResultSet rs = null;
 		int result = 0;
 
+		
+		System.out.println();
 		
 		try {
 
@@ -177,22 +179,22 @@ public class LoginDAO {
 
 			stmt = conn.createStatement();
 
-			String query = "INSERT INTO `dbd2015`.`t_user` (`User_Identifier`,`Password`,`Name`) VALUES ( '" + id
-					+ "','" + pw + "','" + name + "','" +  "');";
-
-			result = stmt.executeUpdate(query);
+//			String query = "INSERT INTO `dbd2015`.`t_user` (`User_Identifier`,`Password`,`Name`) VALUES ( '" + id
+//					+ "','" + pw + "','" + name + "','" +  "');";
+//
+//			result = stmt.executeUpdate(query);
 
 
 			if (result == 1) {
 
 				System.out.println("쿼리 성공");
-				UserBean myUser = new UserBean(id, name, pw);
-				Uinfo.setMyUser(myUser);
+				//UserBean myUser = new UserBean(id, name, pw);
+			//	Uinfo.setMyUser(myUser);
 				Uinfo.setErrorCode(222);
 
 			} else {
 				System.out.println("쿼리 실패");
-				UserBean myUser = new UserBean(id, name, pw);
+				//UserBean myUser = new UserBean(id, name, pw);
 				Uinfo.setErrorCode(200);
 
 			}
