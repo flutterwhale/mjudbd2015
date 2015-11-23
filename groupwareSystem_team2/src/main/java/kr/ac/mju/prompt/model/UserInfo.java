@@ -2,6 +2,7 @@ package kr.ac.mju.prompt.model;
 
 public class UserInfo {
 
+	private signupBean mySignupBean;
 	private UserBean myUser;
 	private int Code;
 	private String msg;
@@ -37,22 +38,20 @@ public class UserInfo {
 		case 122:
 			this.msg = "ID 존재 하지 않음!";
 			break;
-
-	
 		}
-		
-		
-		
-		
 	}
 
 	public String getMsg() {
-
-		
-		
-		
 		return msg;
 	}
 
 
+
+	public signupBean getMySignupBean() {
+		return mySignupBean;
+	}
+
+	public void setMySignupBean(signupBean mySignupBean) {
+		this.mySignupBean = mySignupBean;
+	}
 }

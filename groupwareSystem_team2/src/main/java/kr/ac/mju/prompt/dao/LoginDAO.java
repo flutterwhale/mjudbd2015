@@ -168,28 +168,27 @@ public class LoginDAO {
 		int result = 0;
 
 		
-		System.out.println();
+		System.out.println("sb ? name "+sb.getName());
 		
 		try {
 
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection("jdbc:mysql://117.123.66.137:8089/dbd2015", "park", "pjw49064215");
-
-			// String query = "select * from " + "lms.tlecture";
-
 			stmt = conn.createStatement();
 
-//			String query = "INSERT INTO `dbd2015`.`t_user` (`User_Identifier`,`Password`,`Name`) VALUES ( '" + id
-//					+ "','" + pw + "','" + name + "','" +  "');";
-//
-//			result = stmt.executeUpdate(query);
+
+		String query = "INSERT INTO `dbd2015`.`t_user` (`Name`, `SocialSecurtyNum`, `Gender`, `Phone_Number`, `Address`, `Academic_Career`, `Technic_Level`, `Career`, `Email`, `Password`) "
+				+ "VALUES ('"+sb.getName() +"', '"+sb.getSsn() +"', '"+sb.getGender() +"', '"+sb.getPhone() +"', '"+sb.getAddr() +"', '"+sb.getA_career() +"', '"+sb.getTech_level() +"', '"+sb.getCareer() +"', '"+ sb.getEmail()+"', '"+ sb.getPassword()+"');";
+				
+		System.out.println("insert query? : "+ query);
+
+		result = stmt.executeUpdate(query);
 
 
 			if (result == 1) {
 
 				System.out.println("쿼리 성공");
-				//UserBean myUser = new UserBean(id, name, pw);
-			//	Uinfo.setMyUser(myUser);
+				Uinfo.setMySignupBean(sb);
 				Uinfo.setErrorCode(222);
 
 			} else {

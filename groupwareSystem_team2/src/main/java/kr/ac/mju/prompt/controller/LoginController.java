@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import kr.ac.mju.prompt.model.UserBean;
 import kr.ac.mju.prompt.model.UserInfo;
+import kr.ac.mju.prompt.model.signupBean;
 import kr.ac.mju.prompt.service.LoginService;
 
 import org.slf4j.Logger;
@@ -122,19 +123,23 @@ public class LoginController {
 	public String signup(HttpSession session, HttpServletRequest request) throws UnsupportedEncodingException {
 
 		request.setCharacterEncoding("utf-8");
-		String userName = request.getParameter("signupName");//이름
+		String name = request.getParameter("signupName");//이름
 		//String userID = request.getParameter("signupID");//아이디?
-		String userPW = request.getParameter("signupPW");//비밀번호
+		String password = request.getParameter("signupPW");//비밀번호
 		
-		String userPhone = request.getParameter("phone");//연락처
-		String userAddr = request.getParameter("address"); //주소
-		String userGender = request.getParameter("gender"); //성별
-		String userCat = request.getParameter("signupCat"); // 정직원/ 프리랜서?
+		String phone = request.getParameter("phone");//연락처
+		String email = request.getParameter("email");//연락처
+		String addr = request.getParameter("address"); //주소
+		String gender = request.getParameter("gender"); //성별
+		String ssn = request.getParameter("ssn"); //성별
+		String cat = request.getParameter("signupCat"); // 정직원/ 프리랜서?
 		//기타 정보
 		String university = request.getParameter("university"); // 최종학력
 		String major = request.getParameter("major");
 		String entrance = request.getParameter("entrance");
 		String graduation = request.getParameter("graduation");
+		String academic_career = university+"."+major+"."+entrance+"."+graduation;
+		
 		String career = request.getParameter("career");
 		String portfolio = request.getParameter("portfolio");
 		String tech_level = request.getParameter("tech_level");
@@ -143,19 +148,22 @@ public class LoginController {
 		
 		//사용 가능한 언어 
 		
-		logger.info("회원가입 시도 NAME :" + userName + ", PW:" + userPW + " , NAME : " + userPhone + " cat " + userCat);
-		logger.info("userAddr :" + userAddr + ", gender:" + userGender + " , university : " + university + " major " + major);
-		logger.info("entrance :" + entrance + ", graduation:" + graduation + " , career : " + career + " portfolio " + portfolio + " tech_level " +tech_level );
-		logger.info("language :" + language + ", language_level:" + language_level);
+		logger.info("회원가입 시도 NAME :" + name + ", PW:" + password + " , NAME : " + phone +"ssn : "+ssn+ " cat " + cat);
+		logger.info(" userAddr :" + addr +"email : "+email+ ", gender:" + gender + " , academic_carrer career: " +academic_career+" careers : "+ career );
+		logger.info(" portfolio: "+portfolio+" language :" + language + ", language_level:" + language_level + " tech_level: "+tech_level);
+		
+		
+		signupBean sb = new signupBean( name,password,  ssn,  phone,  cat,  addr, email, gender,  academic_career,
+				career, portfolio, language,  language_level,  tech_level);
 		
 	
 
 
 		//logger.info("회원가입 시도 ID :" + userID + ", PW:" + userPW + " , NAME : " + userName + " " + userCat);
 
-	//	UserInfo ui = loginService.signup(userInfo);
+		UserInfo ui = loginService.signup(sb);
 
-		//request.setAttribute("code", ui.getErrorCode());
+		request.setAttribute("code", ui.getErrorCode());
 
 		return "failureLogin";
 	}
