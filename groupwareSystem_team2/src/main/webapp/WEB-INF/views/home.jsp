@@ -7,7 +7,7 @@
 <title>Home</title>
 </head>
 <body>
-	<h1>Login</h1>
+	<h1>안현선 </h1>
 	<table>
 		<form
 			action="${pageContext.request.contextPath}/LoginController/login.do"

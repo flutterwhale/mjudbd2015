@@ -123,7 +123,7 @@
 
 
 	<%
-		} else if (loginbean.getPermission() == 99) { //가입 대기
+		} else if (loginbean.getPermission() == 0) { //가입 대기
 					System.out.println(loginbean.getPermission() + ": 가입대기 상태 로그인");
 	%>
 
@@ -159,6 +159,7 @@
 	%>
 
 	<!-- 공통 메뉴 -->
+
 
 	<button>전자결재</button>
 	<button>메신저</button>
