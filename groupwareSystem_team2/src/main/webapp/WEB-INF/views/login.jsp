@@ -13,6 +13,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<link rel="stylesheet" href="http://bootswatch.com/flatly/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Main</title>
 </head>
@@ -41,30 +44,66 @@
 	<!-- 	<script type="text/javascript">
 		alert("환영합니다!");
 	</script>  -->
-	<h2>
-		Id<jsp:getProperty property="id" name="loginbean" /></br> 직급코드<jsp:getProperty
-			property="position_Name" name="loginbean" /></br> 이름<jsp:getProperty
-			property="name" name="loginbean" /></br> 권한<jsp:getProperty
-			property="permission" name="loginbean" /></br> 부서코드<jsp:getProperty
-			property="di" name="loginbean" /></br>
-		<p>
-			(으)로 로그인하였습니다.
-			<button type="button"
-				onclick="location.href='${pageContext.request.contextPath}/LoginController/logout.do'">로그아웃</button>
-	</h2>
+	<nav class="navbar navbar-default">
+  		<div class="container-fluid">
+    		<div class="navbar-header">
+      			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        			<span class="sr-only">Toggle navigation</span>
+        			<span class="icon-bar"></span>
+        			<span class="icon-bar"></span>
+        			<span class="icon-bar"></span>
+      			</button>
+      			<a class="navbar-brand" href="#">GruopwareSystem</a>
+    		</div>
 
-	</p>
-	<p>The time on the server is ${serverTime}.</p>
+    		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      			<ul class="nav navbar-nav navbar-right">
+        			<li><a href="#">DatabaseSystem Team Project</a></li>
+      			</ul>
+    		</div>
+  		</div>
+	</nav>
+	<div>
+	<table class="table table-striped table-hover" style="width:400px;">
+		<tr>
+			<td>ID</td>
+			<td><jsp:getProperty property="id" name="loginbean" /></td>
+		</tr>
+		<tr>
+		 	<td>직급코드</td>
+		 	<td><jsp:getProperty property="position_Name" name="loginbean" />
+		 	</td>
+		 	
+		</tr>
+		<tr>
+		 	<td>이름</td>
+		 	<td><jsp:getProperty property="name" name="loginbean" /></td>
+		</tr>
+		<tr>
+		 	<td>권한</td>
+		 	<td><jsp:getProperty property="permission" name="loginbean" /></td>
+		</tr>
+		<tr>
+		 	<td>부서코드</td>
+		 	<td><jsp:getProperty property="di" name="loginbean" /></td>
+		</tr>
+		<tr>
+		 	<td></td>
+		 	<td><button type="button" onclick="location.href='${pageContext.request.contextPath}/LoginController/logout.do'">로그아웃</button>
+			</td>
+		</tr>
+	</table>
+		<p>The time on the server is ${serverTime}.</p>
 
 
-	<button>개인 정보</button>
+	<button class="btn btn-success">개인 정보</button>
 	<%
 		if (loginbean.getPermission() == 11) { // PM 권한
 				System.out.println(loginbean.getPermission() + ": PM 권한 로그인");
 	%>
 
 
-	<button type="button"
+	<button class="btn btn-success" type="button"
 		onclick="location.href='${pageContext.request.contextPath}/CourseController/insertCoursePage'">프로젝트
 		관리</button>
 
@@ -80,7 +119,7 @@
 		action="${pageContext.request.contextPath}/LectureController/insertLecturePage"
 		method="POST">
 		<%-- <input type="hidden" name="user_id" value=<%=uid%>> --%>
-		<button>프로젝트 관리</button>
+		<button class="btn btn-success">프로젝트 관리</button>
 
 	</form>
 
@@ -98,18 +137,18 @@
 				//수주현황
 				//모든 프로젝트
 	%>
-	<button>수주 현황</button>
-	<button>프로젝트 현황</button>
+	<button class="btn btn-success">수주 현황</button>
+	<button class="btn btn-success">프로젝트 현황</button>
 	<%
 		} else if (loginbean.getDi() == 12) { //영업부 메뉴
 
 				//수주 현황
 	%>
-	<button>수주 현황</button>
+	<button class="btn btn-success">수주 현황</button>
 	<%
 		} else if (loginbean.getDi() == 15) { // 인사관리팀 메뉴
 	%>
-	<button>인사 관리</button>
+	<button class="btn btn-success">인사 관리</button>
 	<%
 		//인사 관리
 			} else if (loginbean.getDi() == 13) {//총무팀 메뉴
@@ -121,8 +160,8 @@
 				//업무 일지
 				//프로젝트
 	%>
-	<button>프로젝트</button>
-	<button>업무 일지</button>
+	<button class="btn btn-success">프로젝트</button>
+	<button class="btn btn-success">업무 일지</button>
 	<%
 		}
 	if (loginbean.getPosition_Name() == 0 || loginbean.getDi() == 0) { //가입 대기 상태 
@@ -139,16 +178,16 @@
 
 					System.out.println(loginbean.getPermission() + ": 프리랜서(외부인력팀) 로그인");
 				%>
-				<button>메신저</button>
+				<button class="btn btn-success">메신저</button>
 				<%
 					} else {
 				%>
 
 				<!-- 공통 메뉴 -->
 			
-				<button>전자결재</button>
-				<button>메신저</button>
-				<button>게시판</button>
+				<button class="btn btn-success">전자결재</button>
+				<button class="btn btn-success">메신저</button>
+				<button class="btn btn-success">게시판</button>
 				<%
 					
 					} // 외부 인력 아닌 기본 공통 메뉴
@@ -157,6 +196,6 @@
 
 		}//로그인 성공 끝
 	%>
-
+	</div>
 </body>
 </html>
