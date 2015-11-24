@@ -103,7 +103,7 @@
       				<textarea class="form-control" style="width:600px;" id="address" name="address" cols="30" rows="3"></textarea>
     			</div>
     		</div>
-			<div class="radio">
+			<div class="form-group">
 				<label for="inputname" class="col-sm-2 control-label">성별</label>
     			<label>
       				<input type="radio" value="1" name="gender">남자
@@ -117,10 +117,8 @@
 			<div class="form-group">
 				<label for="inputname" class="col-sm-2 control-label">최종학력</label>
     			<div class="col-sm-10">
-      				<input id="university" class="form-control" style="width:200px;" type="text" name="university" size="10" maxlength="10">학교 
-      				<input id="major" class="form-control" style="width:200px;" type="text" name="major" size="10" maxlength="10">학과 
-      				<input id="entrance" class="form-control" style="width:200px;" type="text" name="entrance" size="10" maxlength="10">입학/
-      				<input id="graduation" class="form-control" style="width:200px;" type="text" name="graduation" size="10" maxlength="10">졸업
+      				<input id="university" class="form-control" style="width:200px;" type="text" name="university" size="10" maxlength="10">학교 <input id="major" class="form-control" style="width:200px;" type="text" name="major" size="10" maxlength="10">학과 
+      				<input id="entrance" class="form-control" style="width:200px;" type="text" name="entrance" size="10" maxlength="10">입학<input id="graduation" class="form-control" style="width:200px;" type="text" name="graduation" size="10" maxlength="10">졸업
     			</div>
     		</div>	
 			<div class="form-group">
@@ -138,8 +136,9 @@
 
 			<button type="submit" class="btn btn-primary">제출</button>
 		</form>
-		<form action="${pageContext.request.contextPath}/LoginController/logout.do" method="GET">
-			<button type="submit" class="btn btn-primary">뒤로가기</button>
+		<form class="form-inline"
+		action="${pageContext.request.contextPath}/LoginController/logout.do" method="GET">
+			<button type="submit" class="btn btn-default">뒤로가기</button>
 		</form>
 </body>
 </html>
