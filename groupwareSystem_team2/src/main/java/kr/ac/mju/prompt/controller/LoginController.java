@@ -2,6 +2,7 @@ package kr.ac.mju.prompt.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
@@ -47,7 +48,7 @@ public class LoginController {
 			logger.info("97 : id 입력하지 않음");
 			logger.info("로그인 시도 ID:" + userID + ", PW:" + userPW);
 			request.setAttribute("code", 97);
-			
+
 			return "loginRetrun";
 		} else if (0 == userPW.length()) {
 			logger.info("96 : pw 입력하지 않음");
@@ -72,7 +73,7 @@ public class LoginController {
 			return "login";
 		} else {
 			session.setAttribute("sessionCheck", 0);
-			request.setAttribute("code", 99);
+			request.setAttribute("code", ui.getErrorCode());
 			logger.info("99 : 로그인 실패");
 			session.setAttribute("userinfo", ui);
 			return "loginRetrun";
@@ -137,7 +138,7 @@ public class LoginController {
 	@RequestMapping(value = "/LoginController/signup", method = RequestMethod.POST) // 비개발자
 																					// 등록
 	public String signup(HttpSession session, HttpServletRequest request) throws UnsupportedEncodingException {
-		//String joincat = request.getParameter("joincat");
+		// String joincat = request.getParameter("joincat");
 		logger.info("회원 가입 시도: 일반직원");
 
 		request.setCharacterEncoding("utf-8");
@@ -186,8 +187,8 @@ public class LoginController {
 																								// 등록
 	public String signup_developer(HttpSession session, HttpServletRequest request)
 			throws UnsupportedEncodingException {
-		String joincat = (request.getParameter("isFreelancer").equals("FreeLancer")?"FreeLancer":"Common");
-		logger.info("회원 가입 시도: " + joincat);
+		String joincat = request.getParameter("isFreelancer");//!= false?"FreeLancer":"Common" .length()!=0?"FreeLancer":"Common"
+		logger.info("회원 가입 시도: " + joincat );
 
 		request.setCharacterEncoding("utf-8");
 		String name = request.getParameter("signupName");// 이름
@@ -203,27 +204,41 @@ public class LoginController {
 		// 기타 정보
 		String university = request.getParameter("university"); // 최종학력
 		String major = request.getParameter("major");
-		String entrance = request.getParameter("entrance");
+		String depart = request.getParameter("depart");
 		String graduation = request.getParameter("graduation");
-		String academic_career = university + "." + major + "." + entrance + "." + graduation;
+		String academic_career = university + "." + depart + "." + major + "." + graduation;
 
 		String career = request.getParameter("career");
 
 		String portfolio = request.getParameter("portfolio");
 		String tech_level = request.getParameter("tech_level");
-		String language = request.getParameter("language");
-		String language_level = request.getParameter("language_level");
-
+		
+		int language_count = Integer.parseInt(request.getParameter("language_count"));
+		System.out.println("추가된 language 개수 "+ language_count);
+		
+		ArrayList<String> language_list = new ArrayList<String>();
+		ArrayList<Integer> language_level_list = new ArrayList<Integer>();	
+		
+		for(int i=1 ;i<=language_count ;i++){
+			language_list.add(new String(request.getParameter("language"+i)));
+			language_level_list.add(new Integer(request.getParameter("language_level"+i)));
+		}
+		
+		for(int i=0;i<language_count;i++){
+			   System.out.println(i+"language>"+language_list.get(i).toString());
+			   System.out.println(i+"level==>"+language_level_list.get(i).toString());
+			}
 		// 사용 가능한 언어
 		logger.info(
 				"개발자 등록 시도  : ID " + id + "NAME :" + name + ", PW:" + password + " , NAME : " + phone + "ssn : " + ssn);
 		logger.info(" userAddr :" + addr + "email : " + email + ", gender:" + gender + " , academic_carrer career: "
 				+ academic_career + " careers : " + career + " portfolio: " + portfolio);
-		logger.info(" joincat " + joincat + " language :" + language + ", language_level:" + language_level
-				+ " tech_level: " + tech_level);
+		logger.info(" joincat " + joincat + " tech_level: " + tech_level);
+				
 
+				
 		signupBean sb = new signupBean(joincat,name, id, password, ssn, phone,  addr, email, gender,
-				academic_career, career, portfolio, language, language_level, tech_level);
+				academic_career, career, portfolio, language_list,language_level_list, tech_level);
 
 		UserInfo ui = loginService.signup(sb);
 

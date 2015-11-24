@@ -94,20 +94,26 @@
 			<tr>
 				<td><h2>기타 정보</h2></td>
 			</tr>
-			<tr>
-				<td>최종학력 :</td>
-				<td><input id="university" type="text" name="university"
-					size="10" maxlength="10">학교 <input id="major" type="text"
-					name="major" size="10" maxlength="10">학과 <input
-					id="entrance" type="text" name="entrance" size="10" maxlength="10">입학/
-
-
-
-				
-				<td><input id="graduation" type="text" name="graduation"
-					size="10" maxlength="10">졸업</td>
-
-			</tr>
+					<tr>
+			<td>학력 :</td>
+			<td colspan="2">
+				<input id="university" type="text" name="university" size="10" maxlength="10">학교 
+				<input id="depart" type="text" name="depart" size="10" maxlength="10">학과(부) 
+				<input id="major" type="text" name="major" size="10" maxlength="10">전공
+				<select id="graduation" name="graduation" >
+                    <option value="박사" >박사</option>
+                    <option value="박사수료" >박사수료</option>
+                    <option value="박사재학" >박사재학</option>
+                    <option value="석사" >석사</option>
+                    <option value="석사수료" >석사수료</option>
+                    <option value="석사재학" >석사재학</option>
+                    <option value="학사" >학사</option>
+                    <option value="학사수료" >학사수료</option>
+                    <option value="학사재학">학사재학</option>
+                    <option value="고등학교졸">고등학교졸</option>
+                </select>
+			</td>
+		</tr>
 			<tr>
 				<td>경력</td>
 				<td><textarea id="career" name="career" cols="30" rows="5"></textarea></td>

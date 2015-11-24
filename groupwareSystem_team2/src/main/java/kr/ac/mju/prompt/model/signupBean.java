@@ -1,5 +1,8 @@
 package kr.ac.mju.prompt.model;
 
+import java.util.ArrayList;
+import java.util.Map;
+
 public class signupBean {
 	private String msg = "";
 	private int code;
@@ -23,14 +26,15 @@ public class signupBean {
 	private String language;
 	private int language_level;
 	private int tech_level;
+	private ArrayList language_list;
+	private ArrayList language_language_list;
 	// 부서 정보
 	private int di;
 	private int permission;
 	private int position_Name;
 
 	public signupBean(String isFreeLancer, String name, String id, String password, String ssn, String phone,
-			String addr, String email, String gender, String a_career, String career, String portfolio, String language,
-			String language_level, String tech_level) {
+			String addr, String email, String gender, String a_career, String career, String portfolio,  ArrayList language_list,ArrayList language_language_list, String tech_level) {
 		
 		this.setIsFreeLancer(isFreeLancer);
 		this.setName(name);
@@ -43,10 +47,11 @@ public class signupBean {
 		this.setA_career(a_career);
 		this.setEmail(email);
 		this.setCareer(career);
-		this.setLanguage(language_level);
 		this.setPortfolio(portfolio);
-		this.setLanguage(language_level);
-		this.setLanguage_level(Integer.parseInt(language_level));
+		this.setLanguage_list(language_list);
+		this.setLanguage_language_list(language_language_list);
+	/*	this.setLanguage(language_level);
+		this.setLanguage_level(Integer.parseInt(language_level));*/
 		this.setTech_level(Integer.parseInt(tech_level));
 		System.out.println("signupBean(개발자) 생성완료");
 
@@ -237,6 +242,22 @@ public class signupBean {
 
 	public void setIsFreeLancer(String isFreeLancer) {
 		this.isFreeLancer = isFreeLancer;
+	}
+
+	public ArrayList getLanguage_list() {
+		return language_list;
+	}
+
+	public void setLanguage_list(ArrayList language_list) {
+		this.language_list = language_list;
+	}
+
+	public ArrayList getLanguage_language_list() {
+		return language_language_list;
+	}
+
+	public void setLanguage_language_list(ArrayList language_language_list) {
+		this.language_language_list = language_language_list;
 	}
 
 }

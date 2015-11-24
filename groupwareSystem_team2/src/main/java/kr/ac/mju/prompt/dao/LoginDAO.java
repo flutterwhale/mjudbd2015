@@ -155,7 +155,7 @@ public class LoginDAO {
 			System.out.println("loginDAO : 로그인 실패 ");
 
 			Uinfo.setMyUser(user);
-			// Uinfo.setErrorCode(99);//실패 코드
+			//Uinfo.setErrorCode(99);//실패 코드
 			return Uinfo;
 
 		}
@@ -190,16 +190,26 @@ public class LoginDAO {
 			System.out.println("insert query? : " + query);
 
 			result = stmt.executeUpdate(query);
-			if (sb.getIsFreeLancer().equals("FreeLancer")) {
-				query = "INSERT INTO `dbd2015`.`t_position` (`Department_Identifier`, `User_Identifier`, `Position_Name`) VALUES ('00', '"
-						+ sb.getId() + "', '99');";
-			} else {
+			if (sb.getIsFreeLancer().isEmpty()) {
+				System.out.println("일반 직원 속성 추가");
+				query = "INSERT INTO `dbd2015`.`t_position` (`Department_Identifier`, `User_Identifier`, `Position_Name`) VALUES ('0', '"
+						+ sb.getId() + "', '0');";
+				result2 = stmt.executeUpdate(query);
+
+			} else if (sb.getIsFreeLancer().equals("Common")) {
+				System.out.println("일반 개발자 속성 추가");
 
 				query = "INSERT INTO `dbd2015`.`t_position` (`Department_Identifier`, `User_Identifier`, `Position_Name`) VALUES ('0', '"
 						+ sb.getId() + "', '0');";
+				result2 = stmt.executeUpdate(query);
+			} else if(sb.getIsFreeLancer().equals("FreeLancer")) {
 
+				System.out.println("프리랜서 기본 속성 추가");
+				query = "INSERT INTO `dbd2015`.`t_position` (`Department_Identifier`, `User_Identifier`, `Position_Name`) VALUES ('00', '"
+						+ sb.getId() + "', '99');";
+				result2 = stmt.executeUpdate(query);
 			}
-			result2 = stmt.executeUpdate(query);
+			
 
 			if (result == 1 && result2 == 1) {
 
