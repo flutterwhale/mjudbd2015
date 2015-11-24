@@ -259,4 +259,12 @@ public class LoginDAO {
 
 	}
 
+	
+	public signupBean editUser(signupBean sb) {
+		
+		
+		
+		
+		return sb;
+	}
 }
