@@ -8,11 +8,6 @@ import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import kr.ac.mju.prompt.model.UserBean;
-import kr.ac.mju.prompt.model.UserInfo;
-import kr.ac.mju.prompt.model.signupBean;
-import kr.ac.mju.prompt.service.LoginService;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +15,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import kr.ac.mju.prompt.model.UserInfo;
+import kr.ac.mju.prompt.model.signupBean;
+import kr.ac.mju.prompt.service.LoginService;
 
 @Controller
 public class LoginController {
@@ -49,12 +48,12 @@ public class LoginController {
 			logger.info("로그인 시도 ID:" + userID + ", PW:" + userPW);
 			request.setAttribute("code", 97);
 			
-			return "failureLogin";
+			return "loginRetrun";
 		} else if (0 == userPW.length()) {
 			logger.info("96 : pw 입력하지 않음");
 			request.setAttribute("code", 96);
 			logger.info("로그인 시도 ID:" + userID + ", PW:" + userPW);
-			return "failureLogin";
+			return "loginRetrun";
 
 		}
 		// LoginInfo logininfo = new LoginInfo(userID,userPW);
@@ -76,7 +75,7 @@ public class LoginController {
 			request.setAttribute("code", 99);
 			logger.info("99 : 로그인 실패");
 			session.setAttribute("userinfo", ui);
-			return "failureLogin";
+			return "loginRetrun";
 		}
 	}
 
@@ -138,8 +137,8 @@ public class LoginController {
 	@RequestMapping(value = "/LoginController/signup", method = RequestMethod.POST) // 비개발자
 																					// 등록
 	public String signup(HttpSession session, HttpServletRequest request) throws UnsupportedEncodingException {
-		String joincat = request.getParameter("joincat");
-		logger.info("회원 가입 시도: " + joincat);
+		//String joincat = request.getParameter("joincat");
+		logger.info("회원 가입 시도: 일반직원");
 
 		request.setCharacterEncoding("utf-8");
 		String name = request.getParameter("signupName");// 이름
@@ -161,7 +160,6 @@ public class LoginController {
 
 		String career = request.getParameter("career");
 
-		// 프리랜서?FreeLancer
 		String portfolio = request.getParameter("portfolio");
 
 		// 사용 가능한 언어
@@ -181,14 +179,14 @@ public class LoginController {
 
 		request.setAttribute("code", ui.getErrorCode());
 
-		return "failureLogin";
+		return "loginRetrun";
 	}
 
 	@RequestMapping(value = "/LoginController/signup_developer", method = RequestMethod.POST) // 개발자
 																								// 등록
 	public String signup_developer(HttpSession session, HttpServletRequest request)
 			throws UnsupportedEncodingException {
-		String joincat = request.getParameter("joincat");
+		String joincat = (request.getParameter("isFreelancer").equals("FreeLancer")?"FreeLancer":"Common");
 		logger.info("회원 가입 시도: " + joincat);
 
 		request.setCharacterEncoding("utf-8");
@@ -211,29 +209,26 @@ public class LoginController {
 
 		String career = request.getParameter("career");
 
-		String isFreeLancer = request.getParameter("isFreelancer"); // 정직원/
-																	// 프리랜서?FreeLancer
 		String portfolio = request.getParameter("portfolio");
 		String tech_level = request.getParameter("tech_level");
 		String language = request.getParameter("language");
 		String language_level = request.getParameter("language_level");
 
 		// 사용 가능한 언어
-
 		logger.info(
-				"회원가입 시도  : ID " + id + "NAME :" + name + ", PW:" + password + " , NAME : " + phone + "ssn : " + ssn);
+				"개발자 등록 시도  : ID " + id + "NAME :" + name + ", PW:" + password + " , NAME : " + phone + "ssn : " + ssn);
 		logger.info(" userAddr :" + addr + "email : " + email + ", gender:" + gender + " , academic_carrer career: "
 				+ academic_career + " careers : " + career + " portfolio: " + portfolio);
-		logger.info(" cat " + isFreeLancer + " language :" + language + ", language_level:" + language_level
+		logger.info(" joincat " + joincat + " language :" + language + ", language_level:" + language_level
 				+ " tech_level: " + tech_level);
 
-		signupBean sb = new signupBean(name, id, password, ssn, phone, isFreeLancer, addr, email, gender,
+		signupBean sb = new signupBean(joincat,name, id, password, ssn, phone,  addr, email, gender,
 				academic_career, career, portfolio, language, language_level, tech_level);
 
 		UserInfo ui = loginService.signup(sb);
 
 		request.setAttribute("code", ui.getErrorCode());
 
-		return "failureLogin";
+		return "loginRetrun";
 	}
 }

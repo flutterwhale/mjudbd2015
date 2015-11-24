@@ -68,9 +68,6 @@
 		onclick="location.href='${pageContext.request.contextPath}/CourseController/insertCoursePage'">프로젝트
 		관리</button>
 
-	<br />
-	<button>업무 일지</button>
-	<button>평가 관리</button>
 
 
 	<%
@@ -79,13 +76,11 @@
 	%>
 
 
-	<br />
 	<form
 		action="${pageContext.request.contextPath}/LectureController/insertLecturePage"
 		method="POST">
 		<%-- <input type="hidden" name="user_id" value=<%=uid%>> --%>
 		<button>프로젝트 관리</button>
-		<button>업무 일지</button>
 
 	</form>
 
@@ -95,48 +90,73 @@
 		} else if (loginbean.getPermission() == 13) { //개발자
 				System.out.println(loginbean.getPermission() + ": 개발자 상태 로그인(프로젝트 투입 직원 권한 )");
 	%>
-	<button>프로젝트</button>
-	<button>업무 일지</button>
 
 	<%
 		}
 			if (loginbean.getDi() == 10) { // 경영진 메뉴
 				System.out.println(loginbean.getPermission() + ": 경영진 메뉴");
+				//수주현황
+				//모든 프로젝트
+	%>
+	<button>수주 현황</button>
+	<button>프로젝트 현황</button>
+	<%
+		} else if (loginbean.getDi() == 12) { //영업부 메뉴
+
+				//수주 현황
+	%>
+	<button>수주 현황</button>
+	<%
+		} else if (loginbean.getDi() == 15) { // 인사관리팀 메뉴
+	%>
+	<button>인사 관리</button>
+	<%
+		//인사 관리
+			} else if (loginbean.getDi() == 13) {//총무팀 메뉴
+				//프로젝트 관리?
 	%>
 
+	<%
+		} else if (loginbean.getDi() == 17) { //개발팀
+				//업무 일지
+				//프로젝트
+	%>
+	<button>프로젝트</button>
+	<button>업무 일지</button>
 	<%
 		}
-
-			if (loginbean.getPosition_Name() == 99) { // 외부인력팀
-
-				System.out.println(loginbean.getPermission() + ": 프리랜서(외부인력팀) 로그인");
-	%>
-	<button>메신저</button>
-	<%
-		} else if (loginbean.getPosition_Name() == 0) { //가입 대기 상태 
+	if (loginbean.getPosition_Name() == 0 || loginbean.getDi() == 0) { //가입 대기 상태 
 
 				System.out.println(loginbean.getPermission() + ": 가입 대기 상태 로그인");
 	%>
-	<p>가입 대기 상태 입니다. 인사관리부의 승인을 기다립니다.</p>
+		<p>가입 대기 상태 입니다. 인사관리부의 승인을 기다립니다.</p>
 
 	<%
-		} else { //프리랜서가아니라면?
+		} else { //가입 대기가 아니라면?
 				System.out.println(loginbean.getPermission() + ": 일반 직원 로그인, 공통 메뉴 보임");
+
+				if (loginbean.getPosition_Name() == 99) { // 외부인력팀
+
+					System.out.println(loginbean.getPermission() + ": 프리랜서(외부인력팀) 로그인");
+				%>
+				<button>메신저</button>
+				<%
+					} else {
+				%>
+
+				<!-- 공통 메뉴 -->
+			
+				<button>전자결재</button>
+				<button>메신저</button>
+				<button>게시판</button>
+				<%
+					
+					} // 외부 인력 아닌 기본 공통 메뉴
+
+			} //가입 대기 아닌 경우 끝
+
+		}//로그인 성공 끝
 	%>
-
-	<!-- 공통 메뉴 -->
-
-	<button>전자결재</button>
-
-	<button>메신저</button>
-	<button>게시판</button>
-	<%
-		}
-		}
-	%>
-
-
-
 
 </body>
 </html>

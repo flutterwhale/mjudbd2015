@@ -28,16 +28,16 @@ public class signupBean {
 	private int permission;
 	private int position_Name;
 
-	public signupBean(String name, String id, String password, String ssn, String phone, String isFreeLancer,
+	public signupBean(String isFreeLancer, String name, String id, String password, String ssn, String phone,
 			String addr, String email, String gender, String a_career, String career, String portfolio, String language,
 			String language_level, String tech_level) {
-
+		
+		this.setIsFreeLancer(isFreeLancer);
 		this.setName(name);
 		this.setId(Integer.parseInt(id));
 		this.setPassword(password);
 		this.setSsn(ssn);
 		this.setPhone(phone);
-		this.setIsFreeLancer(isFreeLancer);
 		this.setAddr(addr);
 		this.setGender(Integer.parseInt(gender));
 		this.setA_career(a_career);
@@ -54,7 +54,7 @@ public class signupBean {
 
 	public signupBean(String name,String id, String password, String ssn, String phone, String addr, String email, String gender,
 			String a_career, String career, String portfolio) {
-
+		
 		this.setName(name);
 		this.setId(Integer.parseInt(id));
 		this.setPassword(password);

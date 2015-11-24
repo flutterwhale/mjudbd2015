@@ -91,38 +91,34 @@
 
 
 			<br>
-		<tr>
-			<td><h2>기타 정보</h2></td>
-		</tr>
-		<tr>
-			<td>최종학력 :</td>
-			<td><input id="university" type="text" name="university"
-				size="10" maxlength="10">학교 <input id="major" type="text"
-				name="major" size="10" maxlength="10">학과 <input
-				id="entrance" type="text" name="entrance" size="10" maxlength="10">입학/
+			<tr>
+				<td><h2>기타 정보</h2></td>
+			</tr>
+			<tr>
+				<td>최종학력 :</td>
+				<td><input id="university" type="text" name="university"
+					size="10" maxlength="10">학교 <input id="major" type="text"
+					name="major" size="10" maxlength="10">학과 <input
+					id="entrance" type="text" name="entrance" size="10" maxlength="10">입학/
 
 
 
+				
+				<td><input id="graduation" type="text" name="graduation"
+					size="10" maxlength="10">졸업</td>
 
+			</tr>
+			<tr>
+				<td>경력</td>
+				<td><textarea id="career" name="career" cols="30" rows="5"></textarea></td>
+			</tr>
 
+			<tr>
 
-			
-			<td><input id="graduation" type="text" name="graduation"
-				size="10" maxlength="10">졸업</td>
+				<td>포트폴리오 업로드</td>
+				<td><input type="file" id="portfolio" name="portfolio"></td>
 
-		</tr>
-		<tr>
-			<td>경력</td>
-			<td><textarea id="career" name="career" cols="30" rows="5"></textarea></td>
-		</tr>
-
-		<tr>
-
-			<td>포트폴리오 업로드</td>
-			<td><input type="file" id="portfolio" name="portfolio"></td>
-
-		</tr>
-
+			</tr>
 	</table>
 
 	<button type="submit" class="btn_signup">제출</button>

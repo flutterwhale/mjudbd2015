@@ -171,7 +171,7 @@ public class LoginDAO {
 		ResultSet rs = null;
 		int result, result2 = 0;
 
-		System.out.println("sb ? name " + sb.getName());
+		System.out.println("가입. name " + sb.getName() + " IsFreeLancer : " + sb.getIsFreeLancer());
 
 		try {
 
@@ -190,10 +190,15 @@ public class LoginDAO {
 			System.out.println("insert query? : " + query);
 
 			result = stmt.executeUpdate(query);
+			if (sb.getIsFreeLancer().equals("FreeLancer")) {
+				query = "INSERT INTO `dbd2015`.`t_position` (`Department_Identifier`, `User_Identifier`, `Position_Name`) VALUES ('00', '"
+						+ sb.getId() + "', '99');";
+			} else {
 
-			query = "INSERT INTO `dbd2015`.`t_position` (`Department_Identifier`, `User_Identifier`, `Position_Name`) VALUES ('0', '"
-					+ sb.getId() + "', '0');";
+				query = "INSERT INTO `dbd2015`.`t_position` (`Department_Identifier`, `User_Identifier`, `Position_Name`) VALUES ('0', '"
+						+ sb.getId() + "', '0');";
 
+			}
 			result2 = stmt.executeUpdate(query);
 
 			if (result == 1 && result2 == 1) {

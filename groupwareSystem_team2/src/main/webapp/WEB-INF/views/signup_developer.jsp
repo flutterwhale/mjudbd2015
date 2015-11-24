@@ -32,7 +32,7 @@
 
 	<table>
 		<form onSubmit="return check()"
-			action="${pageContext.request.contextPath}/LoginController/signup"
+			action="${pageContext.request.contextPath}/LoginController/signup_developer"
 			method="POST" name="myform">
 			<tr>
 				<td><h2>개인 정보</h2></td>
@@ -46,8 +46,8 @@
 			<tr>
 				<td>아이디</td>
 				<td><input id="id" type="text" name="signupID" size="8"
-					maxlength="8" ></td>
-					<td>8자리 숫자사용</td>
+					maxlength="8"></td>
+				<td>8자리 숫자사용</td>
 			</tr>
 			<tr>
 				<td>비밀번호</td>
@@ -91,61 +91,60 @@
 
 
 			<br>
-		<tr>
-			<td><h2>기타 정보</h2></td>
-		</tr>
-		<tr>
-			<td>최종학력 :</td>
-			<td><input id="university" type="text" name="university"
-				size="10" maxlength="10">학교 <input id="major" type="text"
-				name="major" size="10" maxlength="10">학과 <input
-				id="entrance" type="text" name="entrance" size="10" maxlength="10">입학/
+			<tr>
+				<td><h2>기타 정보</h2></td>
+			</tr>
+			<tr>
+				<td>최종학력 :</td>
+				<td><input id="university" type="text" name="university"
+					size="10" maxlength="10">학교 <input id="major" type="text"
+					name="major" size="10" maxlength="10">학과 <input
+					id="entrance" type="text" name="entrance" size="10" maxlength="10">입학/
 
 
 
 
-			
-			<td><input id="graduation" type="text" name="graduation"
-				size="10" maxlength="10">졸업</td>
 
-		</tr>
-		<tr>
-			<td>경력</td>
-			<td><textarea id="career" name="career" cols="30" rows="5"></textarea></td>
-		</tr>
+				
+				<td><input id="graduation" type="text" name="graduation"
+					size="10" maxlength="10">졸업</td>
+
+			</tr>
+			<tr>
+				<td>경력</td>
+				<td><textarea id="career" name="career" cols="30" rows="5"></textarea></td>
+			</tr>
 
 
-		
 
-		<tr>
-			<td>프리랜서 여부</td>
-			<td><input type="checkbox" name="isFreelancer"
-				value="FreeLancer"></td>
-		</tr>
-		<tr>
 
-			<td>포트폴리오 업로드</td>
-			<td><input type="file" id="portfolio" name="portfolio"></td>
+			<tr>
+				<td>프리랜서 여부</td>
+				<td><input type="checkbox" name="isFreelancer"
+					value="FreeLancer" ></td>
+			</tr>
+			<tr>
 
-		</tr>
-		<tr>
-			<td>기술 등급</td>
-			<td><label><input type="radio" value="10"
-					name="tech_level"> 고급</label> <label><input type="radio"
-					value="20" name="tech_level"> 중급</label> <label><input
-					type="radio" value="30" name="tech_level"> 하급</label></td>
-			<td>자신의 기술 등급 기재</td>
-		</tr>
-		<tr>
-			<td>사용 가능 언어</td>
-			<td><input type="text" id="language" name="language"> <label><input
-					type="radio" value="10" name="language_level">상</label> <label><input
-					type="radio" value="20" name="language_level">중</label><label><input
-					type="radio" value="30" name="language_level">하</label></td>
-			<td>아래로 동적으로 증가한다..</td>
-		</tr>
+				<td>포트폴리오 업로드</td>
+				<td><input type="file" id="portfolio" name="portfolio"></td>
 
-		
+			</tr>
+			<tr>
+				<td>기술 등급</td>
+				<td><label><input type="radio" value="10"
+						name="tech_level"> 고급</label> <label><input type="radio"
+						value="20" name="tech_level"> 중급</label> <label><input
+						type="radio" value="30" name="tech_level"> 하급</label></td>
+				<td>자신의 기술 등급 기재</td>
+			</tr>
+			<tr>
+				<td>사용 가능 언어</td>
+				<td><input type="text" id="language" name="language"> <label><input
+						type="radio" value="10" name="language_level">상</label> <label><input
+						type="radio" value="20" name="language_level">중</label><label><input
+						type="radio" value="30" name="language_level">하</label></td>
+				<td>아래로 동적으로 증가한다..</td>
+			</tr>
 	</table>
 
 	<button type="submit" class="btn_signup">제출</button>
