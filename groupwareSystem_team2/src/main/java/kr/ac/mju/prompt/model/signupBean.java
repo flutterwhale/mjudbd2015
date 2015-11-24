@@ -27,14 +27,14 @@ public class signupBean {
 	private int language_level;
 	private int tech_level;
 	private ArrayList language_list;
-	private ArrayList language_language_list;
+	private ArrayList language_level_list;
 	// 부서 정보
 	private int di;
 	private int permission;
 	private int position_Name;
 
 	public signupBean(String isFreeLancer, String name, String id, String password, String ssn, String phone,
-			String addr, String email, String gender, String a_career, String career, String portfolio,  ArrayList language_list,ArrayList language_language_list, String tech_level) {
+			String addr, String email, String gender, String a_career, String career, String portfolio,  ArrayList language_list,ArrayList language_level_list, String tech_level) {
 		
 		this.setIsFreeLancer(isFreeLancer);
 		this.setName(name);
@@ -49,9 +49,7 @@ public class signupBean {
 		this.setCareer(career);
 		this.setPortfolio(portfolio);
 		this.setLanguage_list(language_list);
-		this.setLanguage_language_list(language_language_list);
-	/*	this.setLanguage(language_level);
-		this.setLanguage_level(Integer.parseInt(language_level));*/
+		this.setLanguage_level_list(language_level_list);
 		this.setTech_level(Integer.parseInt(tech_level));
 		System.out.println("signupBean(개발자) 생성완료");
 
@@ -252,12 +250,14 @@ public class signupBean {
 		this.language_list = language_list;
 	}
 
-	public ArrayList getLanguage_language_list() {
-		return language_language_list;
+	public ArrayList getLanguage_level_list() {
+		return language_level_list;
 	}
 
-	public void setLanguage_language_list(ArrayList language_language_list) {
-		this.language_language_list = language_language_list;
+	public void setLanguage_level_list(ArrayList language_level_list) {
+		this.language_level_list = language_level_list;
 	}
+
+
 
 }

@@ -16,6 +16,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class LoginDAO {
 
+	
+	
+	
 	public UserInfo login(int id, String PW) {
 		// TODO Auto-generated method stub
 		System.out.println(" login DAO :input " + id + " / " + PW);
@@ -155,7 +158,7 @@ public class LoginDAO {
 			System.out.println("loginDAO : 로그인 실패 ");
 
 			Uinfo.setMyUser(user);
-			//Uinfo.setErrorCode(99);//실패 코드
+			// Uinfo.setErrorCode(99);//실패 코드
 			return Uinfo;
 
 		}
@@ -169,7 +172,202 @@ public class LoginDAO {
 		Statement stmt = null;
 		Connection conn = null;
 		ResultSet rs = null;
-		int result, result2 = 0;
+		int result, result2 = 0, result3 = 0;
+
+		System.out.println("가입. name " + sb.getName() + " IsFreeLancer : " + sb.getIsFreeLancer());
+
+		try {
+
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = DriverManager.getConnection("jdbc:mysql://117.123.66.137:8089/dbd2015", "park", "pjw49064215");
+			stmt = conn.createStatement();
+
+			System.out.println("프리랜서? " + sb.getIsFreeLancer());
+
+			String query = "INSERT INTO `dbd2015`.`t_user` (`Name`,`User_Identifier`, `SocialSecurtyNum`, `Gender`, `Phone_Number`, `Address`, `Academic_Career`, `Technic_Level`, `Career`, `Email`, `Password`) "
+					+ "VALUES ('" + sb.getName() + "', '" + sb.getId() + "', '" + sb.getSsn() + "', '" + sb.getGender()
+					+ "', '" + sb.getPhone() + "', '" + sb.getAddr() + "', '" + sb.getA_career() + "', '"
+					+ sb.getTech_level() + "', '" + sb.getCareer() + "', '" + sb.getEmail() + "', '" + sb.getPassword()
+					+ "');";
+
+			System.out.println("insert query? : " + query);
+			result = stmt.executeUpdate(query);
+			System.out.println("insert result? " + result);
+			if (result == 1) {
+				System.out.println("insert 2 :" + sb.getIsFreeLancer());
+				if (sb.getIsFreeLancer().isEmpty()) {
+					System.out.println("일반 직원 속성 추가");
+					query = "INSERT INTO `dbd2015`.`t_position` (`Department_Identifier`, `User_Identifier`, `Position_Name`) VALUES ('0', '"
+							+ sb.getId() + "', '0');";
+					result2 = stmt.executeUpdate(query);
+					System.out.println("insert result2? " + result2);
+				}
+				if (sb.getIsFreeLancer().equals("common") == true) {
+					System.out.println("일반 개발자 속성 추가");
+
+					query = "INSERT INTO `dbd2015`.`t_position` (`Department_Identifier`, `User_Identifier`, `Position_Name`) VALUES ('0', '"
+							+ sb.getId() + "', '0');";
+					result2 = stmt.executeUpdate(query);
+					System.out.println("insert result2? " + result2);
+					if (result2 == 1) {
+						System.out.println("1차 쿼리 성공?");
+						ArrayList ll = sb.getLanguage_list();
+						ArrayList lll = sb.getLanguage_level_list();
+						System.out.println(" ll  size :" + ll.size());
+						System.out.println(" lll  size :" + ll.size());
+						for (int i = 0; i < ll.size(); i++) {
+
+							System.out.println(" ll  get :" + ll.get(i));
+							System.out.println(" lll  get :" + lll.get(i));
+							query = "INSERT INTO `dbd2015`.`t_programming_technical_level` (`Language`, `Language_Level`, `User_Identifier`) VALUES ('"
+									+ ll.get(i) + "', '" + lll.get(i) + "', '" + sb.getId() + "');";
+
+							System.out.println(" 프로그래밍 언어 추가 : " + query);
+							stmt.executeUpdate(query);
+							
+						}
+
+					}
+
+				}
+				if (sb.getIsFreeLancer().equals("FreeLancer") == true) {
+
+					System.out.println("프리랜서 기본 속성 추가");
+					query = "INSERT INTO `dbd2015`.`t_position` (`Department_Identifier`, `User_Identifier`, `Position_Name`) VALUES ('0', '"
+							+ sb.getId() + "', '99');";
+					result2 = stmt.executeUpdate(query);
+					System.out.println("insert result2? " + result2);
+					if (result2 == 1) {
+
+						ArrayList ll = sb.getLanguage_list();
+						ArrayList lll = sb.getLanguage_level_list();
+						for (int i = 0; i < ll.size(); i++) {
+							System.out.println(" ll  get" + ll.get(i));
+							System.out.println(" lll  get" + lll.get(i));
+
+							query = "INSERT INTO `dbd2015`.`t_programming_technical_level` (`Language`, `Language_Level`, `User_Identifier`) VALUES ('"
+									+ ll.get(i) + "', '" + lll.get(i) + "', '" + sb.getId() + "');";
+
+							System.out.println(" 프로그래밍 언어 추가 : " + query);
+							stmt.executeUpdate(query);
+						}
+					}
+				}
+
+			}
+			if (result == 1 && result2 == 1) {
+
+				System.out.println("insert 쿼리 성공");
+
+				Uinfo.setMySignupBean(sb);
+				Uinfo.setErrorCode(222);
+
+			} else {
+				System.out.println("쿼리 실패");
+				Uinfo.setErrorCode(200);
+
+			}
+
+		
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("잘못된 값이 들어 왔습니다.");
+			Uinfo.setErrorCode(201);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+
+				if (stmt != null) {
+					stmt.close();
+				}
+
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+
+		return Uinfo;
+
+	}
+
+	public String checkID(String id) {
+		System.out.println("id 중복 확인"+ id);
+		String result=null;
+		Statement stmt = null;
+		Connection conn = null;
+		ResultSet rs = null;
+		
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = DriverManager.getConnection("jdbc:mysql://117.123.66.137:8089/dbd2015", "park", "pjw49064215");
+			stmt = conn.createStatement();
+			String query = "SELECT * FROM dbd2015.t_user where User_Identifier ='" + id + "' ;";
+			
+			rs = stmt.executeQuery(query);
+
+			if (rs.next()){
+
+				int rID = rs.getInt("User_Identifier");
+				System.out.println("loginDAO.checkID: "+ id +" -> " + rID + " 아이디가 존재 합니다.");
+				result = "false";
+			}else{
+				
+				System.out.println("loginDAO.checkID: "+ id +" 해당 아이디는 사용 가능합니다.");
+				result="true";
+			}
+			
+			
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+
+				if (stmt != null) {
+					stmt.close();
+				}
+
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+		
+		return result;
+		
+	}
+	
+	
+	public signupBean showMember(signupBean sb) {
+
+		System.out.println("개인 정보 수정");
+		UserInfo Uinfo = new UserInfo();
+		Statement stmt = null;
+		Connection conn = null;
+		ResultSet rs = null;
+		int result, result2 = 0, result3 = 0;
 
 		System.out.println("가입. name " + sb.getName() + " IsFreeLancer : " + sb.getIsFreeLancer());
 
@@ -202,14 +400,48 @@ public class LoginDAO {
 				query = "INSERT INTO `dbd2015`.`t_position` (`Department_Identifier`, `User_Identifier`, `Position_Name`) VALUES ('0', '"
 						+ sb.getId() + "', '0');";
 				result2 = stmt.executeUpdate(query);
-			} else if(sb.getIsFreeLancer().equals("FreeLancer")) {
+
+				if (result2 == 1) {
+
+					ArrayList ll = sb.getLanguage_list();
+					ArrayList lll = sb.getLanguage_level_list();
+					for (int i = 0; i <= ll.size(); i++) {
+						query = "INSERT INTO `dbd2015`.`t_programming_technical_level` (`Language`, `Language_Level`, `User_Identifier`) VALUES ('"
+								+ ll.get(i) + "', '" + lll.get(i) + "', '" + sb.getId() + "');";
+
+						System.out.println(" 프로그래밍 언어 추가 : " + query);
+						if (stmt.executeUpdate(query) == 1) {
+							result2 = 0;
+							System.out.println("언어 추가 실패");
+							break;
+						}
+					}
+				}
+
+			} else if (sb.getIsFreeLancer().equals("FreeLancer")) {
 
 				System.out.println("프리랜서 기본 속성 추가");
 				query = "INSERT INTO `dbd2015`.`t_position` (`Department_Identifier`, `User_Identifier`, `Position_Name`) VALUES ('00', '"
 						+ sb.getId() + "', '99');";
 				result2 = stmt.executeUpdate(query);
+
+				if (result2 == 1) {
+
+					ArrayList ll = sb.getLanguage_list();
+					ArrayList lll = sb.getLanguage_level_list();
+					for (int i = 0; i <= ll.size(); i++) {
+						query = "INSERT INTO `dbd2015`.`t_programming_technical_level` (`Language`, `Language_Level`, `User_Identifier`) VALUES ('"
+								+ ll.get(i) + "', '" + lll.get(i) + "', '" + sb.getId() + "');";
+
+						System.out.println(" 프로그래밍 언어 추가 : " + query);
+						if (stmt.executeUpdate(query) == 1) {
+							result2 = 0;
+							System.out.println("언어 추가 실패");
+							break;
+						}
+					}
+				}
 			}
-			
 
 			if (result == 1 && result2 == 1) {
 
@@ -255,16 +487,6 @@ public class LoginDAO {
 
 		}
 
-		return Uinfo;
-
-	}
-
-	
-	public signupBean editUser(signupBean sb) {
-		
-		
-		
-		
 		return sb;
 	}
 }

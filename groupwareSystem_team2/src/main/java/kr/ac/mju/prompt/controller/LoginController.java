@@ -90,6 +90,21 @@ public class LoginController {
 		}
 		return "login";
 	}
+	
+	//LoginController/idcheck
+	@RequestMapping(value = "LoginController/idcheck.do", method = RequestMethod.GET)
+	public String idchk(HttpServletRequest request,Model model) {
+		logger.info("id check 하기 ");
+		String id =  request.getParameter("id");
+		
+		String result = loginService.idcheck(id);
+		String test = result.equals("true")?"사용 가능한 아이디 입니다.":"이미 사용중인 아이디 입니다.";
+		System.out.println("idchk : "+test);
+		model.addAttribute("result", test);
+		
+		request.setAttribute("check", result);
+		return "idcheck";
+	}
 
 	@RequestMapping(value = "/LoginController/logout.do", method = RequestMethod.GET)
 	public String logout(HttpSession session, Locale locale, Model model) {

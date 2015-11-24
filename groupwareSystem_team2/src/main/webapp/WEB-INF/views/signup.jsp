@@ -135,6 +135,27 @@ function check() {
 		alert("제출합니다.");
 	}
 }
+function idCheck(){
+	var id = document.getElementById("id").value;
+	var reg_uid = /^[1-9][0-9]{7}$/;//아이디 유효성확인.
+
+	if( reg_uid.test(id) != true ) {
+	
+           alert("8자리 숫자만 넣으셔야 합니다.");
+
+           document.myform.signupID.value="";
+
+           document.myform.signupID.focus();
+
+           return false;
+
+    }
+	
+	window.open("${pageContext.request.contextPath}/LoginController/idcheck.do?id="+id+"","id중복 체크","width=100,height=100");
+	
+	
+	
+}
 </script>
 </head>
 <body>
@@ -152,7 +173,7 @@ function check() {
 		</tr>
 		<tr>
 			<td>아이디</td>
-			<td><input id="id" type="text" name="signupID" size="8" maxlength="8" ></td>
+			<td><input id="id" type="text" name="signupID" size="8" maxlength="8"  ><button type="button"  onclick="idCheck()">id 중복 체크</button></td>
 			<td>8자리 숫자사용</td>
 		</tr>
 		<tr>

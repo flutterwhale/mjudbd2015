@@ -26,5 +26,11 @@ public class LoginService {
 
 		return loginDAO.signup(sb);
 	}
+	
+	public String idcheck(String id) {
+		System.out.println("login Service.idcheck :"+id);
+
+		return loginDAO.checkID(id);
+	}
 
 }
