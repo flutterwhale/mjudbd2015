@@ -29,9 +29,9 @@ public class LoginController {
 	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
 	@RequestMapping(value = "/LoginController/login.do", method = RequestMethod.POST)
-	public String login(HttpSession session, HttpServletRequest request, Locale locale, Model model)
+	public String login(HttpServletRequest request, Locale locale, Model model)
 			throws UnsupportedEncodingException {
-
+		
 		Date date = new Date();
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
 
@@ -57,30 +57,31 @@ public class LoginController {
 			return "loginRetrun";
 
 		}
-		// LoginInfo logininfo = new LoginInfo(userID,userPW);
 		logger.info("로그인 시도 ID:" + userID + ", PW:" + userPW);
 		UserInfo ui = loginService.login(userID, userPW); // loginservice 요청
-
-		session.setAttribute("LoginINFO", ui.getMyUser().getId());
-
+		/*HttpSession session  = request.getSession(true);
+		session.setAttribute("LoginINFO", ui);
+		session.setAttribute("sessionUser", ui.getMyUser().getName());*/
+		
+		
 		if (ui.getErrorCode() == 0) { // 로그인 성공 정보 0
-			// userID.equals(ui.getMyUser().getId()+"")&&
-			// userPW.equals(ui.getMyUser().getPassword())
 			logger.info("0 : 로그인 일치");
-			request.setAttribute("code", 0);
-			session.setAttribute("sessionCheck", 1);
+			HttpSession session  = request.getSession(true);
+			//request.setAttribute("code", "0");
 			session.setAttribute("userinfo", ui);
+			session.setAttribute("session_name", ui.getMyUser().getId());
+			session.setAttribute("code", "0");
+		
 			return "login";
 		} else {
-			session.setAttribute("sessionCheck", 0);
+			//session.setAttribute("sessionCheck", 0);
 			request.setAttribute("code", ui.getErrorCode());
 			logger.info("99 : 로그인 실패");
-			session.setAttribute("userinfo", ui);
 			return "loginRetrun";
 		}
 	}
 
-	@RequestMapping(value = "/LoginController/main.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/LoginController/main", method = RequestMethod.GET)
 	public String main(HttpSession session) {
 		logger.info("메인화면");
 		if (session.getAttribute("sessionUser") != null) {
@@ -88,7 +89,7 @@ public class LoginController {
 			logger.info(session.getAttribute("sessionUser").toString() + " / "
 					+ session.getAttribute("sessionName").toString() + " 해당 사용자가 로그인중입니다. ");
 		}
-		return "login";
+		return "main";
 	}
 	
 	//LoginController/idcheck
@@ -110,20 +111,23 @@ public class LoginController {
 	public String logout(HttpSession session, Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
 		logger.info("로그아웃");
+		session.setAttribute("session_name", "null");
+		//logger.info(session.getId()+" 로그아웃 : "+session.getAttribute("myUser"));
+	//	session.invalidate();
 		Date date = new Date();
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
 
 		String formattedDate = dateFormat.format(date);
 
 		model.addAttribute("serverTime", formattedDate);
-
-		if (session.getAttribute("sessionUser") != null) {
-
+		session.invalidate();
+		
+	/*	if (session.getAttribute("sessionUser") != null) {
 			logger.info(session.getAttribute("sessionUser").toString() + " / "
 					+ session.getAttribute("sessionName").toString() + " 해당 사용자가 로그아웃 하였습니다. ");
-			session.removeAttribute("sessionUser");
+			
 
-		}
+		}*/
 		return "home";
 	}
 
@@ -261,4 +265,17 @@ public class LoginController {
 
 		return "loginRetrun";
 	}
+	@RequestMapping(value = "/LoginController/showMemberPage", method = RequestMethod.GET)
+	public String showMember(HttpSession session, HttpServletRequest request)
+			throws UnsupportedEncodingException {
+				
+		logger.info("개인 정보 확인: " + session.getAttribute("sessionUser") );
+		
+		
+		return "showMember";
+		
+		
+	}
+	
+	
 }

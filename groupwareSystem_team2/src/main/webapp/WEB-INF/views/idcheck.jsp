@@ -19,7 +19,7 @@
 	}
 	function parentFalse() {
 
-		window.opener.document.getElementById('id').disable;
+		//window.opener.document.getElementById('id').disabled="true";
 		window.close();
 
 	}
@@ -31,11 +31,11 @@
 	<%
 		if (request.getAttribute("check").equals("true")) {// 중복
 	%>
-	<button onclick="parentTrue()">닫기</button>
+	<button onclick="parentFalse()">닫기</button>
 	<%
 		} else {
 	%>
-<button onclick="parentFalse()">닫기</button>
+<button onclick="parentTrue()">닫기</button>
 	<%
 		}
 	%>

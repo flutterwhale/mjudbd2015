@@ -104,7 +104,7 @@
 
 
 	<form
-		action="${pageContext.request.contextPath}/LoginController/updateMember"
+		action="${pageContext.request.contextPath}/LoginController/main.do"
 		method="POST">
 		<input type="hidden" name="user_id" value=<%=sID%>>
 		<button>정보 수정하기</button>

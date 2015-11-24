@@ -32,5 +32,9 @@ public class LoginService {
 
 		return loginDAO.checkID(id);
 	}
+	public signupBean showMember(String id) {
+		System.out.println("login Service.idcheck :"+id);
 
+		return loginDAO.showMember(id);
+	}
 }

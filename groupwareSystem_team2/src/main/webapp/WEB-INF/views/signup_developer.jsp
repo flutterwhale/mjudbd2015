@@ -12,213 +12,112 @@
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 
 <script>
-
     function sample4_execDaumPostcode() {
-
         new daum.Postcode({
-
             oncomplete: function(data) {
-
                 // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-
-
-
                 // 도로명 주소의 노출 규칙에 따라 주소를 조합한다.
-
                 // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-
                 var fullRoadAddr = data.roadAddress; // 도로명 주소 변수
-
                 var extraRoadAddr = ''; // 도로명 조합형 주소 변수
-
-
-
                 // 법정동명이 있을 경우 추가한다. (법정리는 제외)
-
                 // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-
                 if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
-
                     extraRoadAddr += data.bname;
-
                 }
-
                 // 건물명이 있고, 공동주택일 경우 추가한다.
-
                 if(data.buildingName !== '' && data.apartment === 'Y'){
-
                    extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-
                 }
-
-                // 도로명, 지번 조합형 주소가 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-
+                // 도로명, 지번 조합형 주소가 있을 경우, 괄호까지 추가한 최종 문자열을 만든다
                 if(extraRoadAddr !== ''){
-
                     extraRoadAddr = ' (' + extraRoadAddr + ')';
-
                 }
-
                 // 도로명, 지번 주소의 유무에 따라 해당 조합형 주소를 추가한다.
-
                 if(fullRoadAddr !== ''){
-
                     fullRoadAddr += extraRoadAddr;
-
                 }
-
-
-
                 // 우편번호와 주소 정보를 해당 필드에 넣는다.
-
                 document.getElementById('address').value = data.zonecode.concat(" ").concat(fullRoadAddr);
-
-                
-
             }
-
         }).open();
-
     }
-
 </script>
 
 <script type="text/javascript">
-
-	
-
 	$(document).ready(function(){
-
-	    
-
 	    // 옵션추가 버튼 클릭시
-
 		$("#addItemBtn").click(function(){
-
 			// item 의 최대번호 구하기
-
 			var lastItemNo = $("#developer_join tr:last").attr("class").replace("item", "");
-
-			
-
 			if(lastItemNo >=20){
-
 	        	alert("최대 개수는 20개입니다.");
-
 	        }else{
-
 	        	$("#developer_join tr:eq(17)").find("td:eq(0)").attr("rowspan", (parseInt(lastItemNo)+1));
-
 	        	$("#developer_join tr:eq(16)").find("td:eq(0)").find("input:eq(0)").attr("value", (parseInt(lastItemNo)+1));
-
-		        
-
 	        	var newitem = $("#developer_join tr:last").clone();
-
 				newitem.removeClass();
-
 				if(lastItemNo==1){
-
 					newitem.find("td:eq(0)").remove();
-
 					newitem.find("td:eq(1)").find("button:eq(0)").attr("class", "delBtn");
-
 					newitem.find("td:eq(1)").find("button:eq(0)").attr("onclick", " ");
-
 				}
-
 				newitem.find("td:eq(0)").find("select:eq(0)").attr("id","select"+(parseInt(lastItemNo)+1));
-
 				newitem.find("td:eq(0)").find("select:eq(0)").attr("name","select"+(parseInt(lastItemNo)+1));
-
 				newitem.find("td:eq(0)").find("input:eq(0)").attr("id","language"+(parseInt(lastItemNo)+1));
-
 				newitem.find("td:eq(0)").find("input:eq(0)").attr("name","language"+(parseInt(lastItemNo)+1));
-
-				
-
-				
-
+				newitem.find("td:eq(1)").find("button:eq(0)").attr("value",(parseInt(lastItemNo)+1).toString());
+			 	
 				newitem.find("td:eq(0)").find("label:eq(0)").find("input:eq(0)").attr("name","language_level"+(parseInt(lastItemNo)+1));
-
 		        newitem.find("td:eq(0)").find("label:eq(1)").find("input:eq(0)").attr("name","language_level"+(parseInt(lastItemNo)+1));
-
 		        newitem.find("td:eq(0)").find("label:eq(2)").find("input:eq(0)").attr("name","language_level"+(parseInt(lastItemNo)+1));      
-
+		        newitem.attr("id","item"+(parseInt(lastItemNo)+1));
 		        newitem.addClass("item"+(parseInt(lastItemNo)+1));
-
 				$("#developer_join").append(newitem);
-
 				document.getElementById("language"+(parseInt(lastItemNo)+1)).setAttribute("type","hidden");
-
-				
-
 	        }
 
 		});
-
-	                  
-
 		// 삭제버튼 클릭시
 
 		$(".delBtn").live("click", function(){
-
-			var clickedRow = $(this).parent().parent();
-
-			var cls = clickedRow.attr("class");
-
-			
-
-			// 각 항목의 첫번째 row를 삭제한 경우 다음 row에 td 하나를 추가해 준다.
-
-			if( clickedRow.find("td:eq(0)").attr("rowspan") ){
-
-				if( clickedRow.next().hasClass(cls) ){
-
-					clickedRow.next().prepend(clickedRow.find("td:eq(0)"));
-
+			var i;
+			if(document.getElementById("language_count").value > this.value){
+				for( i=0; i<document.getElementById("language_count").value -this.value;i++){
+					document.getElementById("item".concat((parseInt(this.value)+1+i).toString())).className = "item".concat((parseInt(this.value)+i).toString());
+					document.getElementById("item".concat((parseInt(this.value)+1+i).toString())).setAttribute("id","item".concat((parseInt(this.value)+i).toString()));
+					document.getElementById("select".concat((parseInt(this.value)+1+i).toString())).setAttribute("id","select".concat((parseInt(this.value)+i).toString()));
+					document.getElementsByName("select".concat((parseInt(this.value)+1+i).toString()))[0].setAttribute("name","select".concat((parseInt(this.value)+i).toString()));
+					document.getElementById("language".concat((parseInt(this.value)+1+i).toString())).setAttribute("id","language".concat((parseInt(this.value)+i).toString()));
+					document.getElementsByName("language".concat((parseInt(this.value)+1+i).toString()))[0].setAttribute("name","language".concat((parseInt(this.value)+i).toString()));
+					document.getElementsByName("language_level".concat((parseInt(this.value)+1+i).toString()))[0].setAttribute("name","language_level".concat((parseInt(this.value)+i).toString()));
+					document.getElementsByName("language_level".concat((parseInt(this.value)+1+i).toString()))[0].setAttribute("name","language_level".concat((parseInt(this.value)+i).toString()));
+					document.getElementsByName("language_level".concat((parseInt(this.value)+1+i).toString()))[0].setAttribute("name","language_level".concat((parseInt(this.value)+i).toString()));
 				}
-
 			}
-
-			clickedRow.remove();
-
+			
+			document.getElementById("language_count").value = document.getElementById("language_count").value - 1;
+			var clickedRow = $(this).parent().parent();
+			clickedRow.remove();//객체의 삭제
 		});
-
-	
-
 	});
 
 	function idCheck(){
+		
 		var id = document.getElementById("id").value;
 		var reg_uid = /^[1-9][0-9]{7}$/;//아이디 유효성확인.
-
 		if( reg_uid.test(id) != true ) {
-		
 	           alert("8자리 숫자만 넣으셔야 합니다.");
-
 	           document.myform.signupID.value="";
-
 	           document.myform.signupID.focus();
-
 	           return false;
-
 	    }
-		
 		window.open("${pageContext.request.contextPath}/LoginController/idcheck.do?id="+id+"","id중복 체크","width=100,height=100");
-		
-		
-		
 	}
 	function langugeEtc(s,select_name){
 
-		
-
 		var num = select_name.substr(6,select_name.length-6);
-
 		var name = "language".concat(num.toString());
-
-		
 
 		if(s.substr(0,3)=="etc"){
 
@@ -241,195 +140,157 @@
 		document.getElementById(object).setAttribute("value",input);
 
 	}
-
 	
+	function delRow(value){
+		var i;
+		if(document.getElementById("language_count").value > this.value){
+			for( i=0; i<document.getElementById("language_count").value -this.value;i++){
+				document.getElementById("item".concat((parseInt(this.value)+1+i).toString())).className = "item".concat((parseInt(this.value)+i).toString());
+				document.getElementById("item".concat((parseInt(this.value)+1+i).toString())).setAttribute("id","item".concat((parseInt(this.value)+i).toString()));
+				document.getElementById("select".concat((parseInt(this.value)+1+i).toString())).setAttribute("id","select".concat((parseInt(this.value)+i).toString()));
+				document.getElementsByName("select".concat((parseInt(this.value)+1+i).toString()))[0].setAttribute("name","select".concat((parseInt(this.value)+i).toString()));
+				document.getElementById("language".concat((parseInt(this.value)+1+i).toString())).setAttribute("id","language".concat((parseInt(this.value)+i).toString()));
+				document.getElementsByName("language".concat((parseInt(this.value)+1+i).toString()))[0].setAttribute("name","language".concat((parseInt(this.value)+i).toString()));
+				document.getElementsByName("language_level".concat((parseInt(this.value)+1+i).toString()))[0].setAttribute("name","language_level".concat((parseInt(this.value)+i).toString()));
+				document.getElementsByName("language_level".concat((parseInt(this.value)+1+i).toString()))[0].setAttribute("name","language_level".concat((parseInt(this.value)+i).toString()));
+				document.getElementsByName("language_level".concat((parseInt(this.value)+1+i).toString()))[0].setAttribute("name","language_level".concat((parseInt(this.value)+i).toString()));
+			}
+		}
+		
+		document.getElementById("language_count").value = document.getElementById("language_count").value - 1;
+		var clickedRow = $(this).parent().parent();
+		clickedRow.remove();//객체의 삭제
+	}
+	
+	function dupdel(){
+		var i;
+		var k=1;
+		var j=2;
+		var language_count_value = document.getElementById("language_count").value;
+		
+		if(language_count_value==1){
+			return true;
+		}
+		for(k = 1; k<= language_count_value-1;++k){
+			for(j=k+1; j<= language_count_value;++j){
+				if((document.getElementById("language".concat(k.toString())).value.toLowerCase())==(document.getElementById("language".concat(j.toString())).value.toLowerCase())){	
+					k = 0; 
+					document.getElementById("item".concat(j.toString())).remove();
+					for( i=j+1; i<=language_count_value;i++){
+						document.getElementById("item".concat(i.toString())).className = "item".concat((i-1).toString());
+						document.getElementById("item".concat(i.toString())).setAttribute("id","item".concat((i-1).toString()));
+						document.getElementById("select".concat(i.toString())).setAttribute("id","select".concat((i-1).toString()));
+						document.getElementsByName("select".concat(i.toString()))[0].setAttribute("name","select".concat((i-1).toString()));
+						document.getElementById("language".concat(i.toString())).setAttribute("id","language".concat((i-1).toString()));
+						document.getElementsByName("language".concat(i.toString()))[0].setAttribute("name","language".concat((i-1).toString()));
+						document.getElementsByName("language_level".concat(i.toString()))[0].setAttribute("name","language_level".concat((i-1).toString()));
+						document.getElementsByName("language_level".concat(i.toString()))[0].setAttribute("name","language_level".concat((i-1).toString()));
+						document.getElementsByName("language_level".concat(i.toString()))[0].setAttribute("name","language_level".concat((i-1).toString()));
+					}
+					document.getElementById("language_count").value = language_count_value - 1;
+					language_count_value = document.getElementById("language_count").value;
+					
+					j =2;
+					break;
+				}
+			}
+		}
+	}
 
 	function check() {
 
 		var reg_uid = /^[1-9][0-9]{7}$/;//아이디 유효성확인.
-
 		var reg_email = /^[_a-z0-9-](.[_a-z0-9-]+)*@[a-z0-9-](.[a-z0-9-]+)*$/;
-
 		var reg_ssn = /^(?:[0-9]{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[1,2][0-9]|3[0,1]))-[1-4][0-9]{6}$/;
-
 		var reg_phone = /^[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}$/;
 
-		var address_button = 
-
 		id = document.myform.signupID.value;
-
 		name = document.myform.signupName.value;
-
 		pass1 = document.myform.signupPW.value;
-
 		pass2 = document.myform.signupPW2.value;
-
 		ssn = document.myform.ssn.value;
-
 		phone = document.myform.phone.value;
-
 		email = document.myform.email.value;
-
 		address = document.myform.address.value;
-
 		gender = document.myform.gender.value;
-
 		university = document.myform.university.value;
-
 		depart = document.myform.depart.value;
-
 		major = document.myform.major.value;
-
 		graduation = document.myform.graduation.value;
-
 		career = document.myform.career.value;
-
 		tech_level = document.myform.tech_level.value;
-
-		
+		dupdel();
 
 		if (name == "") {
-
 			alert("이름를 입력해 주세요");
-
 			document.myform.signupName.focus();
-
 			return false;
-
 		} else if( reg_uid.test(id) != true ) {
-
 	           alert("8자리 숫자만 넣으셔야 합니다.");
-
 	           document.myform.signupID.value="";
-
 	           document.myform.signupID.focus();
-
 	           return false;
-
 	    }else if (pass1 == "") {
-
 			alert("암호를 입력해 주세요");
-
 			document.myform.signupPW.focus();
-
 			return false;
-
 		} else if (pass2 == "") {
-
 			alert("암호 확인을 입력해 주세요");
-
 			document.myform.signupPW2.focus();
-
 			return false;
-
 		} else if(pass1!=pass2){
-
 			alert("암호 확인값이 다릅니다.");
-
 			document.myform.signupPW2.focus();
-
 			document.myform.signupPW2.value="";
-
 			return false;
-
 		}else if( reg_ssn.test(ssn) != true ) {
-
 	           alert("주민번호를 재대로 입력해주세요.");
-
 	           document.myform.ssn.value="";
-
 	           document.myform.ssn.focus();
-
 	           return false;
-
 	    }else if( reg_phone.test(phone) != true ) {
-
 	           alert("연락처를 재대로 입력해주세요.");
-
 	           document.myform.phone.value="";
-
 	           document.myform.phone.focus();
-
 	           return false;
-
 	    }else if( reg_email.test(email) != true ) {
-
 	           alert("이메일을 재대로 입력해주세요.");
-
 	           document.myform.email.value="";
-
 	           document.myform.email.focus();
-
 	           return false;
-
 	    }else if (address == "") {
-
 			alert("주소를 입력해 주세요");
-
 			document.myform.address.focus();
-
 			return false;
-
 		}else if (gender == "") {
-
 			alert("성별을 입력해 주세요");
-
 			document.myform.gender.focus();
-
 			return false;
-
 		}else if (university == "") {
-
 			alert("대학을 입력해 주세요");
-
 			document.myform.university.focus();
-
 			return false;
-
 		}else if (depart == "") {
-
 			alert("학과(부)을 입력해 주세요");
-
 			document.myform.depart.focus();
-
 			return false;
-
 		}else if (major == "") {
-
 			alert("전공을 입력해 주세요");
-
 			document.myform.major.focus();
-
 			return false;
-
 		}else if (graduation == "") {
-
 			alert("학위를 선택해 주세요");
-
 			document.myform.graduation.focus();
-
 			return false;
-
 		}else if (career == "") {
-
 			alert("경력을 입력해주세요");
-
 			document.myform.career.focus();
-
 			return false;
-
 		}
-
 		else {
-
 			alert("제출합니다.");
-
 		}
-
 	}
-
-   
-
 </script>
 </head>
 <body>
@@ -537,7 +398,7 @@
 			<td colspan="3"><input type="hidden" id="language_count" name="language_count" value="1"><button id="addItemBtn" onclick="return false;">개발 가능 언어 추가</button></td>
 		</tr>
 		
-		<tr class="item1">
+		<tr id ="item1" class="item1">
 			<td rowspan=2>사용 가능 언어</td>
 			<td>
 				<select id="select1" name="select1" onclick="langugeEtc(this.value,this.name)" >
@@ -558,10 +419,12 @@
 				<label><input type="radio" value="20" name="language_level1">중</label>
 				<label><input type="radio" value="30" name="language_level1" checked>하</label>
 			</td>
-			<td><button class="" onclick="alert('첫 행은 삭제가 불가능합니다.'); return false">삭제</button></td>
+			<td><button class="" value="1" onclick="alert('첫 행은 삭제가 불가능합니다.'); return false">삭제</button></td>
 		</tr>
+		
 	</table>
 
+	
 	<button type="submit" class="btn_signup">제출</button>
 	</form>
 	<form

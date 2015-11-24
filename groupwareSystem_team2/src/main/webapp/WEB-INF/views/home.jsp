@@ -1,12 +1,30 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page session="false"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="kr.ac.mju.prompt.model.UserInfo"%>
+<%@ page import="kr.ac.mju.prompt.model.UserBean"%>
+<%@page import="org.apache.commons.beanutils.BeanUtils"%>
+
+<script language="javascript">
+    history.go(1);
+</script> 
+<%
+response.setHeader("pragma", "no-cache");              
+response.setHeader("Cache-control", "no-cache, no-store, must-revalidate");             
+response.setHeader("Expires", "0"); 
+%> 
 <html>
 <head>
+
 <title>Home</title>
+
 </head>
+
 <body>
+
+
 	<h1>Login</h1>
 	<table>
 		<form
@@ -30,14 +48,14 @@
 		<td><form
 				action="${pageContext.request.contextPath}/LoginController/signupPage"
 				method="POST">
-<input type="hidden" name="joincat" value="common"> 
+				<input type="hidden" name="joincat" value="common">
 				<button type="submit">Join</button>
 			</form></td>
 		</tr>
 		<td><form
 				action="${pageContext.request.contextPath}/LoginController/signupPage"
 				method="POST">
-				<input type="hidden"  name="joincat" value="developer"> 
+				<input type="hidden" name="joincat" value="developer">
 				<button type="submit">Developer Join</button>
 			</form></td>
 		</tr>

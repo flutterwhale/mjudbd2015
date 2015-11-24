@@ -72,15 +72,11 @@ public class signupBean {
 		System.out.println("signupBean(비 개발자) 생성완료");
 
 	}
-	/*
-	 * public signupBean(String name, String ssn, String phone, String cat,
-	 * String addr, int gender, String a_career, String career, String
-	 * portfolio, String language, int language_level, int tech_level, int di,
-	 * int permission, int position_Name) {
-	 * 
-	 * 
-	 * }
-	 */
+	
+
+	public signupBean() {
+		// TODO Auto-generated constructor stub
+	}
 
 	public String getMsg() {
 		return msg;

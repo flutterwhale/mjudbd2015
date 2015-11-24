@@ -16,9 +16,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class LoginDAO {
 
-	
-	
-	
 	public UserInfo login(int id, String PW) {
 		// TODO Auto-generated method stub
 		System.out.println(" login DAO :input " + id + " / " + PW);
@@ -47,13 +44,6 @@ public class LoginDAO {
 				System.out.println("loginDAO.login: -> " + rID + " 아이디가 존재 합니다.");
 				String query2 = "SELECT * FROM dbd2015.t_user join dbd2015.t_position on t_user.User_Identifier = t_position.User_Identifier  join  dbd2015.t_department on t_department.Department_Identifier = t_position.Department_Identifier  WHERE t_user.User_Identifier = '"
 						+ rID + "' and t_user.Password = '" + PW + "' ;";
-
-				// SELECT * FROM dbd2015.t_user join dbd2015.t_position on
-				// t_user.User_Identifier = t_position.User_Identifier join
-				// dbd2015.t_department on t_department.Department_Identifier =
-				// t_position.Department_Identifier where
-				// t_user.User_Identifier='60102339' and t_user.Password =
-				// '1234';
 
 				System.out.println("loginDAO : 쿼리 >" + query2);
 				rs2 = stmt.executeQuery(query2);
@@ -224,7 +214,7 @@ public class LoginDAO {
 
 							System.out.println(" 프로그래밍 언어 추가 : " + query);
 							stmt.executeUpdate(query);
-							
+
 						}
 
 					}
@@ -268,8 +258,6 @@ public class LoginDAO {
 
 			}
 
-		
-
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -303,39 +291,38 @@ public class LoginDAO {
 	}
 
 	public String checkID(String id) {
-		System.out.println("id 중복 확인"+ id);
-		String result=null;
+		System.out.println("id 중복 확인" + id);
+		String result = null;
 		Statement stmt = null;
 		Connection conn = null;
 		ResultSet rs = null;
-		
+
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection("jdbc:mysql://117.123.66.137:8089/dbd2015", "park", "pjw49064215");
 			stmt = conn.createStatement();
 			String query = "SELECT * FROM dbd2015.t_user where User_Identifier ='" + id + "' ;";
-			
+
 			rs = stmt.executeQuery(query);
 
-			if (rs.next()){
+			if (rs.next()) {
 
 				int rID = rs.getInt("User_Identifier");
-				System.out.println("loginDAO.checkID: "+ id +" -> " + rID + " 아이디가 존재 합니다.");
+				System.out.println("loginDAO.checkID: " + id + " -> " + rID + " 아이디가 존재 합니다.");
 				result = "false";
-			}else{
-				
-				System.out.println("loginDAO.checkID: "+ id +" 해당 아이디는 사용 가능합니다.");
-				result="true";
+			} else {
+
+				System.out.println("loginDAO.checkID: " + id + " 해당 아이디는 사용 가능합니다.");
+				result = "true";
 			}
-			
-			
+
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally {
+		} finally {
 			try {
 				if (rs != null) {
 					rs.close();
@@ -354,13 +341,78 @@ public class LoginDAO {
 			}
 
 		}
-		
+
 		return result;
-		
+
 	}
-	
-	
-	public signupBean showMember(signupBean sb) {
+
+	public signupBean showMember(String id) {
+
+		System.out.println(" login DAO.showMember: 개인 정보 확인");
+		UserInfo Uinfo = new UserInfo();
+		Statement stmt = null;
+		Connection conn = null;
+		ResultSet rs = null, rs2 = null;
+
+		signupBean member =new signupBean();
+		try {
+
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = DriverManager.getConnection("jdbc:mysql://117.123.66.137:8089/dbd2015", "park", "pjw49064215");
+			stmt = conn.createStatement();
+
+			String query1 = "SELECT * FROM dbd2015.t_user join dbd2015.t_position on t_user.User_Identifier = t_position.User_Identifier  join  dbd2015.t_department on t_department.Department_Identifier = t_position.Department_Identifier  WHERE t_user.User_Identifier = '"
+					+ id + "' ;";
+
+			System.out.println("loginDAO.showMember : 쿼리 >" + query1);
+			rs = stmt.executeQuery(query1);
+
+			if (rs.first()) {
+
+				member.setId(Integer.parseInt(id));
+				member.setName(rs.getString("Name"));
+
+				
+				int gdepart = rs.getInt("Department_Identifier"); // 부서
+				int gpermission = rs.getInt("Permission"); // 권한 구분 !!
+				int gposition = rs.getInt("Position_Name"); // 직급 !!!!
+
+
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+
+				if (rs2 != null) {
+					rs2.close();
+				}
+
+				if (stmt != null) {
+					stmt.close();
+				}
+
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+		return member;
+	}
+
+	public signupBean editMember(signupBean sb) {
 
 		System.out.println("개인 정보 수정");
 		UserInfo Uinfo = new UserInfo();
