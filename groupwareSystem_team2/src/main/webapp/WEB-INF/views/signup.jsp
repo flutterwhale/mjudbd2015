@@ -3,130 +3,143 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>회원 가입</title>
-<script type="text/javascript">
-	function check() {
-		a = document.myform.signupName.value
-		b = document.myform.signupPW.value
-		c = document.myform.signupPW2.value
-		if (a == "") {
-			alert("이름를 입력해 주세요")
-			document.myform.signupName.focus();
-			return false;
-		} else if (b == "") {
-			alert("암호를 입력해 주세요")
-			document.myform.signupPW.focus();
-			return false;
-		} else if (c == "") {
-			alert("암호 확인을 입력해 주세요")
-			document.myform.signupPW2.focus();
-			return false;
-		} else {
-			alert("제출합니다.")
+	<link rel="stylesheet" href="http://bootswatch.com/flatly/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>회원 가입</title>
+	<script type="text/javascript">
+		function check() {
+			a = document.myform.signupName.value
+			b = document.myform.signupPW.value
+			c = document.myform.signupPW2.value
+			if (a == "") {
+				alert("이름를 입력해 주세요")
+				document.myform.signupName.focus();
+				return false;
+			} else if (b == "") {
+				alert("암호를 입력해 주세요")
+				document.myform.signupPW.focus();
+				return false;
+			} else if (c == "") {
+				alert("암호 확인을 입력해 주세요")
+				document.myform.signupPW2.focus();
+				return false;
+			} else {
+				alert("제출합니다.")
+			}
 		}
-	}
-</script>
+	</script>
 </head>
 <body>
+	<nav class="navbar navbar-default">
+  		<div class="container-fluid">
+    		<div class="navbar-header">
+      			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        			<span class="sr-only">Toggle navigation</span>
+        			<span class="icon-bar"></span>
+        			<span class="icon-bar"></span>
+        			<span class="icon-bar"></span>
+      			</button>
+      			<a class="navbar-brand" href="#">GruopwareSystem</a>
+    		</div>
 
-	<table>
-		<form onSubmit="return check()"
-			action="${pageContext.request.contextPath}/LoginController/signup"
+    		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      			<ul class="nav navbar-nav navbar-right">
+        			<li><a href="#">DatabaseSystem Team Project</a></li>
+      			</ul>
+    		</div>
+  		</div>
+	</nav>
+	
+		<form class="form-horizontal" onSubmit="return check()" action="${pageContext.request.contextPath}/LoginController/signup"
 			method="POST" name="myform">
-			<tr>
-				<td><h2>개인 정보</h2></td>
-			</tr>
-			<tr>
-				<td>이름</td>
-				<td><input id="name" type="text" name="signupName" size="8"
-					maxlength="8"></td>
-				<td>최대8글자</td>
-			</tr>
-			<tr>
-				<td>아이디</td>
-				<td><input id="id" type="text" name="signupID" size="8"
-					maxlength="8"></td>
-				<td>8자리 숫자사용</td>
-			</tr>
-			<tr>
-				<td>비밀번호</td>
-				<td><input id="pw" type="password" name="signupPW" size="15"
-					maxlength="15"></td>
-				<td>최대 15글자</td>
-			</tr>
-			<tr>
-				<td>비밀번호확인</td>
-				<td><input id="pw2" type="password" name="signupPW2" size="15"
-					maxlength="15"></td>
-				<td>최대 15글자</td>
-			</tr>
-			<tr>
-				<td>주민 번호</td>
-				<td><input id="ssn" type="text" name="ssn" size="14"
-					maxlength="14"></td>
-				<td></td>
-			</tr>
-			<tr>
-				<td>연락처</td>
-				<td><input id="phone" type="text" name="phone" size="15"
-					maxlength="13"></td>
-				<td></td>
-			</tr>
-			<tr>
-				<td>email</td>
-				<td><input id="email" type="text" name="email" size="15"
-					maxlength="30"></td>
-				<td></td>
-			</tr>
-			<tr>
-				<td>주소</td>
-				<td><textarea id="address" name="address" cols="30" rows="3"></textarea></td>
-			</tr>
-			<tr>
-				<td>성별</td>
-				<td><label><input type="radio" value="1" name="gender">남자</label><label><input
-						type="radio" value="0" name="gender">여자</label></td>
-			</tr>
+			<h2>개인 정보</h2>
+			<div class="form-group">
+				<label for="inputname" class="col-sm-2 control-label">이름</label>
+    			<div class="col-sm-10">
+      				<input type="text" class="form-control" style="width:200px;" id="name" name="signupName" placeholder="최대8글자" size="8" maxlength="8">
+    			</div>
+    		</div>
+    		<div class="form-group">
+				<label for="inputname" class="col-sm-2 control-label">아이디</label>
+    			<div class="col-sm-10">
+      				<input type="text" class="form-control" style="width:200px;" id="id" name="signupID" placeholder="8자리 숫자 사용" size="8" maxlength="8">
+    			</div>
+    		</div>
+			<div class="form-group">
+				<label for="inputname" class="col-sm-2 control-label">비밀번호</label>
+    			<div class="col-sm-10">
+      				<input type="password" class="form-control" style="width:200px;" id="pw" name="signupPW" placeholder="최대15글자" size="15" maxlength="15">
+    			</div>
+    		</div>
+			<div class="form-group">
+				<label for="inputname" class="col-sm-2 control-label">비밀번호 확인</label>
+    			<div class="col-sm-10">
+      				<input type="password" class="form-control" style="width:200px;" id="pw2" name="signupPW2" placeholder="최대15글자" size="15" maxlength="15">
+    			</div>
+    		</div>	
+			<div class="form-group">
+				<label for="inputname" class="col-sm-2 control-label">주민 번호</label>
+    			<div class="col-sm-10">
+      				<input type="text" class="form-control" style="width:200px;" id="ssn" name="ssn" size="14" maxlength="14">
+    			</div>
+    		</div>	
+			<div class="form-group">
+				<label for="inputname" class="col-sm-2 control-label">연락처</label>
+    			<div class="col-sm-10">
+      				<input type="text" class="form-control" style="width:200px;" id="phone" name="phone" size="15" maxlength="13">
+    			</div>
+    		</div>
+			<div class="form-group">
+				<label for="inputname" class="col-sm-2 control-label">email</label>
+    			<div class="col-sm-10">
+      				<input type="text" class="form-control" style="width:200px;" id="email" name="email" size="15" maxlength="30">
+    			</div>
+    		</div>	
+			<div class="form-group">
+				<label for="inputname" class="col-sm-2 control-label">주소</label>
+    			<div class="col-sm-10">
+      				<textarea class="form-control" style="width:600px;" id="address" name="address" cols="30" rows="3"></textarea>
+    			</div>
+    		</div>
+			<div class="radio">
+				<label for="inputname" class="col-sm-2 control-label">성별</label>
+    			<label>
+      				<input type="radio" value="1" name="gender">남자
+      			</label>
+      			<label>
+      				<input type="radio" value="0" name="gender">여자
+      			</label>
+    		</div>
+    		
+			<h2>기타 정보</h2>
+			<div class="form-group">
+				<label for="inputname" class="col-sm-2 control-label">최종학력</label>
+    			<div class="col-sm-10">
+      				<input id="university" class="form-control" style="width:200px;" type="text" name="university" size="10" maxlength="10">학교 
+      				<input id="major" class="form-control" style="width:200px;" type="text" name="major" size="10" maxlength="10">학과 
+      				<input id="entrance" class="form-control" style="width:200px;" type="text" name="entrance" size="10" maxlength="10">입학/
+      				<input id="graduation" class="form-control" style="width:200px;" type="text" name="graduation" size="10" maxlength="10">졸업
+    			</div>
+    		</div>	
+			<div class="form-group">
+				<label for="inputname" class="col-sm-2 control-label">경력</label>
+    			<div class="col-sm-10">
+      				<textarea id="career" class="form-control" style="width:600px;" name="career" cols="30" rows="5"></textarea>
+      			</div>
+    		</div>
+			<div class="form-group">
+				<label for="inputname" class="col-sm-2 control-label">포트폴리오 업로드</label>
+    			<div class="col-sm-10">
+      				<input type="file" id="portfolio" name="portfolio">
+      			</div>
+    		</div>
 
-
-			<br>
-			<tr>
-				<td><h2>기타 정보</h2></td>
-			</tr>
-			<tr>
-				<td>최종학력 :</td>
-				<td><input id="university" type="text" name="university"
-					size="10" maxlength="10">학교 <input id="major" type="text"
-					name="major" size="10" maxlength="10">학과 <input
-					id="entrance" type="text" name="entrance" size="10" maxlength="10">입학/
-
-
-
-				
-				<td><input id="graduation" type="text" name="graduation"
-					size="10" maxlength="10">졸업</td>
-
-			</tr>
-			<tr>
-				<td>경력</td>
-				<td><textarea id="career" name="career" cols="30" rows="5"></textarea></td>
-			</tr>
-
-			<tr>
-
-				<td>포트폴리오 업로드</td>
-				<td><input type="file" id="portfolio" name="portfolio"></td>
-
-			</tr>
-	</table>
-
-	<button type="submit" class="btn_signup">제출</button>
-	</form>
-	<form
-		action="${pageContext.request.contextPath}/LoginController/logout.do"
-		method="GET">
-		<button type="submit" class="btn_back">뒤로가기</button>
-	</form>
+			<button type="submit" class="btn btn-primary">제출</button>
+		</form>
+		<form action="${pageContext.request.contextPath}/LoginController/logout.do" method="GET">
+			<button type="submit" class="btn btn-primary">뒤로가기</button>
+		</form>
 </body>
 </html>
