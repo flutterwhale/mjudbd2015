@@ -303,13 +303,13 @@
 		       	 <div class="form-group">
 		       	 </div>
 		       	 <div class="form-group">
-		            <label for="inputname" class="col-sm-4 control-label">이&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;름</label>
+		            <label for="inputname" class="col-sm-4 control-label" class="text-right">이름</label>
 		             <div class="col-sm-6">
 		                  <input type="text" class="form-control" style="width:200px;" id="name" name="signupName" placeholder="최대8글자" size="8" maxlength="8">
 		             </div>
 		         </div>
 		         <div class="form-group">
-		            <label for="inputname" class="col-sm-4 control-label">아&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;이&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;디</label>
+		            <label for="inputname" class="col-sm-4 control-label" class="text-right">아이디</label>
 		             <div class="col-sm-3">
 		                  <input type="text" class="form-control" style="width:200px;" id="id" name="signupID" placeholder="8자리 숫자 사용" size="8" maxlength="8">
 		                  
@@ -320,45 +320,45 @@
 		            
 		          </div>
 		         <div class="form-group">
-		            <label for="inputname" class="col-sm-4 control-label">비&nbsp;&nbsp;&nbsp;밀&nbsp;&nbsp;&nbsp;번&nbsp;&nbsp;&nbsp;호&nbsp;</label>
+		            <label for="inputname" class="col-sm-4 control-label" class="text-right">비밀번호</label>
 		             <div class="col-sm-6">
 		                  <input type="password" class="form-control" style="width:200px;" id="pw" name="signupPW" placeholder="최대15글자" size="15" maxlength="15">
 		             </div>
 		          </div>
 		         <div class="form-group">
-		            <label for="inputname" class="col-sm-4 control-label">비밀번호 확인</label>
+		            <label for="inputname" class="col-sm-4 control-label" class="text-right">비밀번호 확인</label>
 		             <div class="col-sm-6">
 		                  <input type="password" class="form-control" style="width:200px;" id="pw2" name="signupPW2" placeholder="최대15글자" size="15" maxlength="15">
 		             </div>
 		          </div>   
 		         <div class="form-group">
-		            <label for="inputname" class="col-sm-4 control-label">주&nbsp;&nbsp;&nbsp;민&nbsp;&nbsp;&nbsp;번&nbsp;&nbsp;&nbsp;호&nbsp;</label>
+		            <label for="inputname" class="col-sm-4 control-label" class="text-right">주민번호</label>
 		             <div class="col-sm-6">
 		                  <input type="text" class="form-control" style="width:200px;" id="ssn" name="ssn" size="14" placeholder="910111-1234567"maxlength="14">
 		             </div>
 		          </div>   
 		         <div class="form-group">
-		            <label for="inputname" class="col-sm-4 control-label">연&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;락&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;처</label>
+		            <label for="inputname" class="col-sm-4 control-label" class="text-right">연락처</label>
 		             <div class="col-sm-6">
 		                  <input type="text" class="form-control" style="width:200px;" id="phone" name="phone" size="15" placeholder="010-1234-1234" maxlength="13">
 		             </div>
 		          </div>
 		         <div class="form-group">
-		            <label for="inputname" class="col-sm-4 control-label">e&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;m&nbsp;&nbsp;&nbsp;a&nbsp;&nbsp;&nbsp;i&nbsp;&nbsp;&nbsp;l</label>
+		            <label for="inputname" class="col-sm-4 control-label" class="text-right">email</label>
 		             <div class="col-sm-6">
 		                  <input type="text" class="form-control" style="width:200px;" id="email" name="email" size="15" placeholder="prompt@prompt.co.kr" maxlength="30">
 		             </div>
 		          </div>   
 		         
 		         <div class="form-group">
-		            <label for="inputname" class="col-sm-4 control-label">주&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;소</label>
+		            <label for="inputname" class="col-sm-4 control-label" class="text-right">주소</label>
 		            <div class="col-sm-6">
 						<input type="button" class="col-lg-2 btn btn-info" onclick="sample4_execDaumPostcode()" value="우편번호"/> 
 						<input type="text"id="address" class="col-lg-4 form-control" style="width:400px;" name="address" size="50" placeholder="클릭해서 주소를 입력해주세요." onclick="sample4_execDaumPostcode()"/> 
 			        </div>
 		         </div>
 		         <div class="form-group">
-		            <label for="inputname" class="col-sm-4 control-label">성&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;별</label>
+		            <label for="inputname" class="col-sm-4 control-label" class="text-right">성별</label>
 		            <div class="col-sm-2">
 			            <label class="radio-inline"><input type="radio"  value="1" name="gender" checked>남자</label>
 		            </div>
@@ -376,18 +376,18 @@
 	       	<div class="form-group">
 	       	</div>
 	        <div class="form-group">
-	            <label for="inputname" class="col-sm-4 control-label">최&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;종&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;학&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;력</label>
+	            <label for="inputname" class="col-sm-4 control-label" class="text-right">최종학력</label>
 	            <div class="col-sm-8">
-		            <div class="col-sm-4">              
+		            <div class="col-sm-3">              
 		                <input id="university" type="text" class="form-control" name="university" style="width:200px;" size="10" maxlength="10" placeholder="명지대" >
 					</div>
-					<div class="col-sm-2">              
+					<div class="col-sm-1">              
 		                <label class="control-label">학교</label>
 					</div>
-					<div class="col-sm-4">
+					<div class="col-sm-3">
 						<input id="depart" type="text" class="form-control" name="depart" style="width:200px;" size="10" maxlength="10" placeholder="컴퓨공">
 					</div>
-					<div class="col-sm-2">              
+					<div class="col-sm-1">              
 		                <label class="control-label">학과(부)</label>
 					</div>
 				</div>
@@ -395,13 +395,13 @@
 			<div class="form-group">
 	      		<label for="inputname" class="col-sm-4 control-label"></label>
 				<div class="col-sm-8">
-					<div class="col-sm-4">
+					<div class="col-sm-3">
 						<input id="major" type="text" class="form-control" name="major" style="width:200px;" size="10" maxlength="10" placeholder="컴퓨공학">
 					</div>
-					<div class="col-sm-2">              
+					<div class="col-sm-1">              
 		                <label class="control-label">전공</label>
 					</div>
-					<div class="col-sm-4">	
+					<div class="col-sm-3">	
 						<select id="graduation" name="graduation" class="form-control"style="width:200px;">
 		                    <option value="박사" >박사</option>
 		                    <option value="박사수료" >박사수료</option>
@@ -421,13 +421,13 @@
 	             </div>
 	          </div>
 	          <div class="form-group">
-	            <label for="inputname" class="col-sm-4 control-label">경&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;력</label>
+	            <label for="inputname" class="col-sm-4 control-label" class="text-right">경력</label>
 	            <div class="col-sm-6">
 	                  <textarea id="career" class="form-control" style="width:600px;" name="career" cols="30" rows="5" placeholder="기존 회사의 경력을 기술해주세요."></textarea>
 	               </div>
 	          </div>
 	         <div class="form-group">
-	            <label for="inputname" class="col-sm-4 control-label">고&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;용&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;관&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;계</label>
+	            <label for="inputname" class="col-sm-4 control-label" class="text-right">고용관계</label>
 	            <div class="col-sm-2">
 			        <label class="radio-inline"><input type="radio" value="FreeLancer" name="isFreelancer"> 프리랜서</label>
 		        </div>
@@ -436,13 +436,13 @@
 		        </div>
 	         </div>
 	         <div class="form-group">
-	            <label for="inputname" class="col-sm-4 control-label">포트폴리오 업로드</label>
+	            <label for="inputname" class="col-sm-4 control-label" class="text-right">포트폴리오 업로드</label>
 	            <div class="col-sm-6">
 	                  <label class="control-label"><input class="btn btn-primary btn-xs" type="file" id="portfolio" style="width:300px;" name="portfolio"></label>
 	             </div>
 	         </div>
 	          <div class="form-group">
-	           	<label for="inputname" class="col-sm-4 control-label">KOSA&nbsp;&nbsp;기술&nbsp;&nbsp;등급</label>
+	           	<label for="inputname" class="col-sm-4 control-label" class="text-right">KOSA 기술 등급</label>
 	            <div class="col-sm-2">
 			    	<label class="radio-inline"><input class="radio-inline" type="radio" value="10"name="tech_level"> 고급</label> 
 		        </div>
@@ -454,7 +454,7 @@
 		        </div>
 	         </div>
 	         <div class="form-group"> 
-		     	<label for="inputname" class="col-sm-4 control-label">프로그래밍&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;언어</label>
+		     	<label for="inputname" class="col-sm-4 control-label" class="text-right">프로그래밍 언어</label>
 		     	<div class="col-sm-5"> 
 		         
 		         <table id="developer_join" class="table table-striped table-hover " style="width:600px;">
@@ -463,7 +463,7 @@
 				         	<td colspan="3"><input type="hidden" id="language_count" name="language_count" value="1"><button type="button" class="btn btn-info" id="addItemBtn" onclick="return false;">개발 가능 언어 추가</button></td>
 						 </tr>
 						 <tr id ="item1" class="item1">
-							<td rowspan=2 align="center" valign="middle"><label for="inputname" class="">언어별 능력</label></td>
+							<td rowspan=2 align="center" valign="middle"><label for="inputname" class="text-right">언어별 능력</label></td>
 							<td>
 								<select id="select1" name="select1" class="form-control" onclick="langugeEtc(this.value,this.name)" >
 				                    <option value="C" selected>C</option>
