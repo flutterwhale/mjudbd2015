@@ -3,10 +3,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@include file="session.jsp"%>
 <%@ page import="kr.ac.mju.prompt.model.UserInfo"%>
 <%@ page import="kr.ac.mju.prompt.model.UserBean"%>
 <%@page import="org.apache.commons.beanutils.BeanUtils"%>
-<!-- <script language="javascript">
+<!-- 
+<script language="javascript">
 	history.go(1);
 </script>
  -->
@@ -21,25 +23,25 @@
 <body>
 
 	<%
-		response.setHeader("pragma", "no-cache");
+	/* 	response.setHeader("pragma", "no-cache");
 		response.setHeader("Cache-control", "no-cache, no-store, must-revalidate");
 		response.setHeader("Expires", "0");
-
-		if (session.getAttribute("code") == null) {
-			response.sendRedirect("home");
+ */
+		/* if (session.getAttribute("code") == null) {
+			response.sendRedirect("logout.do");
 
 		}
 
 		System.out.println(
-				"code : " + session.getAttribute("code") + " / " + session.getAttribute("code").getClass());
-		System.out.println("session_name : " + session.getAttribute("session_name"));
+				" code : " + session.getAttribute("code") + " / " + session.getAttribute("code").getClass());
+		System.out.println("session_name : " + session.getAttribute("session_name")); */
 		//if (session.getAttribute("code").equals("0")) {
 		//로그인 성공 
 		System.out.println("session_name : " + session.getAttribute("session_name"));
 		UserInfo ui = (UserInfo) session.getAttribute("userinfo");
 		UserBean myuser = ui.getMyUser();
 		session.setAttribute("myUser", myuser);
-		session.setAttribute("session_name", myuser.getName());
+		session.setAttribute("session_name", myuser.getId());
 
 		//}
 		//response.sendRedirect("/LoginController/main");

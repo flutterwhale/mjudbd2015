@@ -30,13 +30,13 @@ public class LoginController {
 	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
 	@RequestMapping(value = "/LoginController/login.do", method = RequestMethod.POST)
-	public String login(HttpServletRequest request, Locale locale, Model model) throws UnsupportedEncodingException {
+	public String login(HttpSession session, HttpServletRequest request, Locale locale, Model model) throws UnsupportedEncodingException {
 
 		Date date = new Date();
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
 
 		String formattedDate = dateFormat.format(date);
-
+		
 		model.addAttribute("serverTime", formattedDate);
 
 		request.setCharacterEncoding("utf-8");
@@ -63,7 +63,7 @@ public class LoginController {
 
 		if (ui.getErrorCode() == 0) { // 로그인 성공 정보 0
 			logger.info("0 : 로그인 일치");
-			HttpSession session = request.getSession(true);
+			session = request.getSession(true);
 			// request.setAttribute("code", "0");
 			session.setAttribute("userinfo", ui);
 			session.setAttribute("session_name", ui.getMyUser().getId());
@@ -82,10 +82,9 @@ public class LoginController {
 	@RequestMapping(value = "/LoginController/main", method = RequestMethod.GET)
 	public String main(HttpSession session) {
 		logger.info("메인화면");
-		if (session.getAttribute("sessionUser") != null) {
+		if (session.getAttribute("session_name") != null) {
 
-			logger.info(session.getAttribute("sessionUser").toString() + " / "
-					+ session.getAttribute("sessionName").toString() + " 해당 사용자가 로그인중입니다. ");
+			logger.info(session.getAttribute("session_name").toString() + " 해당 사용자가 로그인중입니다. ");
 		}
 		return "main";
 	}
@@ -109,7 +108,12 @@ public class LoginController {
 	public String logout(HttpSession session, Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
 		logger.info("로그아웃");
-		session.setAttribute("session_name", "null");
+		if (session.getAttribute("session_name") != null) {
+
+			logger.info(session.getAttribute("session_name").toString() + " 해당 사용자가 로그인중입니다. ");
+		}		
+		session.invalidate();
+		//session.setAttribute("session_name", "null");
 		// logger.info(session.getId()+" 로그아웃 :
 		// "+session.getAttribute("myUser"));
 		// session.invalidate();
@@ -119,23 +123,16 @@ public class LoginController {
 		String formattedDate = dateFormat.format(date);
 
 		model.addAttribute("serverTime", formattedDate);
-		session.invalidate();
 
-		/*
-		 * if (session.getAttribute("sessionUser") != null) {
-		 * logger.info(session.getAttribute("sessionUser").toString() + " / " +
-		 * session.getAttribute("sessionName").toString() +
-		 * " 해당 사용자가 로그아웃 하였습니다. ");
-		 * 
-		 * 
-		 * }
-		 */
 		return "home";
 	}
 
 	@RequestMapping(value = "/LoginController/signupPage", method = RequestMethod.POST)
 	public String signupPage(HttpSession session, HttpServletRequest request) {
+		if (session.getAttribute("session_name") != null) {
 
+			logger.info(session.getAttribute("session_name").toString() + " 해당 사용자가 로그인중입니다. ");
+		}	
 		String joincat = request.getParameter("joincat");
 		logger.info("회원 가입: " + joincat);
 
@@ -156,29 +153,6 @@ public class LoginController {
 
 	}
 
-	@RequestMapping(value = "/LoginController/editMemberPage", method = RequestMethod.POST)
-	public String editPage(HttpSession session, HttpServletRequest request) {
-
-		String joincat = request.getParameter("joincat");
-		logger.info("회원 가입: " + joincat);
-
-		if (session.getAttribute("sessionUser") != null) {
-			logger.info(session.getAttribute("sessionUser").toString() + " / "
-					+ session.getAttribute("sessionName").toString() + " 해당 사용자가 로그아웃 하였습니다. ");
-			session.removeAttribute("sessionUser");
-		}
-
-		if (joincat.equals("common")) {
-			logger.info("signup_common");
-			return "editMember";
-
-		} else {
-			logger.info("signup_developer");
-			return "editMember_developer";
-		}
-
-	}
-	
 	
 	@RequestMapping(value = "/LoginController/signup", method = RequestMethod.POST) // 비개발자
 																					// 등록
@@ -295,6 +269,10 @@ public class LoginController {
 	@RequestMapping(value = "/LoginController/showMemberPage", method = RequestMethod.GET)
 	public String showMember(HttpSession session, HttpServletRequest request)
 			throws UnsupportedEncodingException {
+		if (session.getAttribute("session_name") != null) {
+
+			logger.info(session.getAttribute("session_name").toString() + " 해당 사용자가 로그인중입니다. ");
+		}	
 				UserBean u = (UserBean)session.getAttribute("loginbean");
 		logger.info("개인 정보 확인: " + u.getName() + " : " + u.getId() + " / " + u.getCat() );
 		signupBean show = loginService.showMember( u.getId()+"",((UserInfo) session.getAttribute("userinfo")));
@@ -304,6 +282,50 @@ public class LoginController {
 		
 	}
 
+	@RequestMapping(value = "/LoginController/editMemberPage", method = RequestMethod.POST)
+	public String editPage(HttpSession session, HttpServletRequest request) {
+		if (session.getAttribute("session_name") != null) {
 
+			logger.info(session.getAttribute("session_name").toString() + " 해당 사용자가 로그인중입니다. ");
+		}	
+		String cat = (String) request.getAttribute("cat");
+		String id = (String) request.getAttribute("sID");
+		
+		logger.info("정보 업데이트 : cat : " + cat + " id " + id);
+
+		
+		if (cat == null) { // null 값이면 일반 사용자  //common은 일반 개발자 //FreeLancer는 외부자 
+			logger.info("signup_common");
+			return "editMember";
+
+		} else {
+			logger.info("signup_developer");
+			return "editMember_developer";
+		}
+
+	}
+	@RequestMapping(value = "/LoginController/updateMember.do", method = RequestMethod.POST)
+	public String updateMember(HttpSession session, HttpServletRequest request) {
+		if (session.getAttribute("session_name") != null) {
+
+			logger.info(session.getAttribute("session_name").toString() + " 해당 사용자가 로그인중입니다. ");
+		}	
+		String cat = (String) request.getAttribute("cat");
+		String id = (String) request.getAttribute("sID");
+		
+		logger.info("정보 업데이트 : cat : " + cat + " id " + id);
+
+		
+		if (cat == null) { // null 값이면 일반 사용자  //common은 일반 개발자 //FreeLancer는 외부자 
+			logger.info("signup_common");
+			return "editMember";
+
+		} else {
+			logger.info("signup_developer");
+			return "editMember_developer";
+		}
+
+	}
+	
 
 }

@@ -22,7 +22,7 @@
 		String sID = session.getAttribute("session_name").toString();
 		UserInfo sUinfo = (UserInfo)session.getAttribute("userinfo");
 		signupBean showBean = (signupBean)request.getAttribute("showBean");
-		
+		session.setAttribute("showBean", showBean);	
 		System.out.println("session ID " + sID + " cat "+ sUinfo.getMyUser().getCat());
 	%>
 
@@ -34,34 +34,31 @@
 			</tr>
 		<tr>
 			<td>이름</td>
-			<td><input id="name" type="text" name="signupName" size="8" maxlength="8" disabled="disabled" value="<%=showBean.getName() %>"></td>
+			<td><input id="name" type="text" name="signupName" size="8" maxlength="8" disabled="disabled" value="<%=showBean.getName()%>"></td>
 		</tr>
 		<tr>
 			<td>아이디</td>
-			<td><input id="id" type="text" name="signupID" size="8" maxlength="8" disabled="disabled"></td>
+			<td><input id="id" type="text" name="signupID" size="8" maxlength="8" disabled="disabled" value= " <%=showBean.getId()%>"></td>
 		</tr>
-		<tr>
-			<td>주민 번호</td>
-			<td><input id="ssn" type="text" name="ssn" size="14" maxlength="14" disabled="disabled"></td>
-		</tr>
+	
 		<tr>
 			<td>연락처</td>
-			<td><input id="phone" type="text" name="phone" size="15" maxlength="13" disabled="disabled"></td>
+			<td><input id="phone" type="text" name="phone" size="15" maxlength="13" disabled="disabled" value="<%=showBean.getPhone()%>"></td>
 		</tr>
 		<tr>
 			<td>email</td>
-			<td><input id="email" type="text" name="email" size="15" maxlength="30" disabled="disabled"></td>
+			<td><input id="email" type="text" name="email" size="15" maxlength="30" disabled="disabled" value="<%=showBean.getEmail()%>"></td>
 		</tr>
 		<tr>
 			<td>주소</td>
 			<td colspan="2">
-				<input type="text"id="address" name="address" size="50" disabled="disabled" />
+				<input type="text"id="address" name="address" size="50" disabled="disabled"  value="<%=showBean.getAddr()%>"/>
 			</td>
 		</tr>
 		<tr>
 			<td>성별</td>
 			<td colspan="2">
-			<label><input type="radio" value="1" name="gender" checked>남자</label>
+			<label><input type="radio" value="1" name="gender" checked>남자</label> 
 		</tr>
 		<tr>
 			<td colspan="3"><h2>기타 정보</h2></td>
@@ -69,24 +66,24 @@
 		<tr>
 			<td>학력 :</td>
 			<td colspan="2">
-				<input id="university" type="text" name="university" size="10" maxlength="10" disabled="disabled">학교 
-				<input id="depart" type="text" name="depart" size="10" maxlength="10" disabled="disabled">학과(부) 
+				<input id="university" type="text" name="university" size="10" maxlength="10" disabled="disabled" value="<%=showBean.getA_career() %>">학력 
+				<!-- <input id="depart" type="text" name="depart" size="10" maxlength="10" disabled="disabled">학과(부) 
 				<input id="major" type="text" name="major" size="10" maxlength="10" disabled="disabled">전공
-				<input  type="text" id="graduation" name="graduation" value="" disabled="disabled"> 
+				<input  type="text" id="graduation" name="graduation" value="" disabled="disabled">  -->
                  
 			</td>
 		</tr>
 		<tr>
 			<td>경력</td>
-			<td colspan="2"><textarea id="career" name="career" cols="65" rows="5" disabled="disabled"></textarea></td>
+			<td colspan="2"><textarea id="career" name="career" cols="65" rows="5" disabled="disabled" value="<%=showBean.getCareer() %>"></textarea></td>
 		</tr>
 		<tr>
 			<td>고용관계</td>
-			<td colspan="2"><label><input type="radio" value="FreeLancer" name="isFreelancer"> 프리랜서</label> 
+			<td colspan="2"><label><input type="radio" value="FreeLancer" name="isFreelancer" value="<%=showBean.getIsFreeLancer()%>"> 프리랜서</label> 
 		</tr>
 		<tr>
 			<td>나의 포트폴리오</td>
-			<td colspan="2"><input type="file" id="portfolio" name="portfolio"></td>
+			<td colspan="2"><input type="file" id="portfolio" name="portfolio" <%=showBean.getPortfolio() %>></td>
 		</tr>
 		<tr>
 			<td>기술 등급</td>
@@ -111,91 +108,15 @@
 	<form
 		action="${pageContext.request.contextPath}/LoginController/editMemberPage"
 		method="POST">
-		<input type="hidden" name="user_id" value=<%=sID%>>
+		<input type="hidden" name="id"  value="<%=sID%>"> 
+		<input type="hidden" name="cat"  value="<%=sUinfo.getMyUser().getCat()%>"> 
 		<button>정보 수정하기</button>
 	</form>
-	
+
 	<button type="button"
             onclick="location.replace('${pageContext.request.contextPath}/LoginController/main')">뒤로 가기</button>
 	
 	
-<%-- 
-	<%
-		if (myLectures.isEmpty()) {
-	%>
-
-	<h2>등록된 강좌가 없습니다.</h2>
-	<form
-		action="${pageContext.request.contextPath}/LectureController/insertLecturePage"
-		method="POST">
-		<input type="hidden" name="user_id" value=<%=sID%>>
-		<button>강좌 개설하기</button>
-		<br />
-	</form>
-	<%
-		System.out.println("등록된 강좌가 없습니다.");
-		} else {
-	%>
-	<table>
-		<tr align="center">
-			<td width="150">강좌ID</td>
-			<td width="150">강좌명</td>
-			<td width="150">학기</td>
-			<td width="150">학점</td>
-			<td width="150">현재 인원</td>
-			<td width="120">최대 인원</td>
-			<td width="150">성적 입력</td>
-			<td width="150">강좌 삭제</td>
-		</tr>
-		--%>
-	<%-- 	<%
-		 	for (Lecture c : myLectures) {
-		%>
-
-
-
-		<tr align="center">
-			<td width="150"><%=c.getLectureID()%></td>
-
-			<td width="150"><%=c.getLectureName()%></td>
-			<td width="150"><%=c.getSemester()%></td>
-			<td width="120"><%=c.getHackjeom()%></td>
-			<td width="120"><%=c.getCurNum()%></td>
-			<td width="120"><%=c.getLimitNum()%></td>
-			<td width="150">
-
-				<form
-					action="${pageContext.request.contextPath}/LectureController/showStudentPage"
-					method="GET">
-					<input type="hidden" name="lecture_id" value=<%=c.getLectureID()%>>
-					<input type="hidden" name="user_id" value=<%=sID%>>
-
-
-					<button class="btn_insertgrade" type="submit">학생 목록</button>
-			</td>
-			</form>
-			</td>
-			<td width="150">
-
-				<form
-					action="${pageContext.request.contextPath}/LectureController/deleteLecture"
-					method="post">
-					<input type="hidden" name="lecture_id" value=<%=c.getLectureID()%>>
-					<input type="hidden" name="user_id" value=<%=sID%>>
-
-					<button class="btn_registForLecture" type="submit">강좌 삭제</button>
-			</td>
-			</form>
-		</tr>
-
-
-
-		<%
-			}
-			}
-		%> 
-		</table>
-		--%>
 	
 </body>
 </html>

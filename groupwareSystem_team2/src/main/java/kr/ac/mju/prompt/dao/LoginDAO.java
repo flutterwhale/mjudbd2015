@@ -155,10 +155,10 @@ public class LoginDAO {
 
 			System.out.println("프리랜서? " + sb.getIsFreeLancer());
 
-			String query = "INSERT INTO `dbd2015`.`t_user` (`Name`,`User_Identifier`, `SocialSecurtyNum`, `Gender`, `Phone_Number`, `Address`, `Academic_Career`, `Technic_Level`, `Career`, `Email`, `Password`) "
+			String query = "INSERT INTO `dbd2015`.`t_user` (`Name`,`User_Identifier`, `SocialSecurtyNum`, `Gender`, `Phone_Number`, `Address`, `Academic_Career`, `Technic_Level`, `Career`, `Email`, `Password`, `cat`) "
 					+ "VALUES ('" + sb.getName() + "', '" + sb.getId() + "', '" + sb.getSsn() + "', '" + sb.getGender()
 					+ "', '" + sb.getPhone() + "', '" + sb.getAddr() + "', '" + sb.getA_career() + "', '"
-					+ sb.getTech_level() + "', '" + sb.getCareer() + "', '" + sb.getEmail() + "', '" + sb.getPassword()
+					+ sb.getTech_level() + "', '" + sb.getCareer() + "', '" + sb.getEmail() + "', '" + sb.getPassword()+"','"+ sb.getIsFreeLancer()
 					+ "');";
 
 			System.out.println("insert query? : " + query);
@@ -166,14 +166,13 @@ public class LoginDAO {
 			System.out.println("insert result? " + result);
 			if (result == 1) {
 				System.out.println("insert 2 :" + sb.getIsFreeLancer());
-				if (sb.getIsFreeLancer().isEmpty()) {
+				if (sb.getIsFreeLancer()==null) {
 					System.out.println("일반 직원 속성 추가");
 					query = "INSERT INTO `dbd2015`.`t_position` (`Department_Identifier`, `User_Identifier`, `Position_Name`) VALUES ('0', '"
 							+ sb.getId() + "', '0');";
 					result2 = stmt.executeUpdate(query);
 					System.out.println("insert result2? " + result2);
-				}
-				if (sb.getIsFreeLancer().equals("common") == true) {
+				}else if (sb.getIsFreeLancer().equals("common") == true) {
 					System.out.println("일반 개발자 속성 추가");
 
 					query = "INSERT INTO `dbd2015`.`t_position` (`Department_Identifier`, `User_Identifier`, `Position_Name`) VALUES ('0', '"
@@ -200,8 +199,7 @@ public class LoginDAO {
 
 					}
 
-				}
-				if (sb.getIsFreeLancer().equals("FreeLancer") == true) {
+				}else 	if (sb.getIsFreeLancer().equals("FreeLancer") == true) {
 
 					System.out.println("프리랜서 기본 속성 추가");
 					query = "INSERT INTO `dbd2015`.`t_position` (`Department_Identifier`, `User_Identifier`, `Position_Name`) VALUES ('0', '"

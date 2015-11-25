@@ -1,5 +1,12 @@
+<%@page import="kr.ac.mju.prompt.model.signupBean"%>
+<%@page import="kr.ac.mju.prompt.model.UserInfo"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+
+<%@page import="java.util.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -69,12 +76,7 @@ function check() {
 		alert("이름를 입력해 주세요");
 		document.myform.signupName.focus();
 		return false;
-	} else if( reg_uid.test(id) != true ) {
-           alert("아이디는 1로 시작하는 8자리 숫자만 넣으셔야 합니다.");
-           document.myform.signupID.value="";
-           document.myform.signupID.focus();
-           return false;
-    }else if (pass1 == "") {
+	}else if (pass1 == "") {
 		alert("암호를 입력해 주세요");
 		document.myform.signupPW.focus();
 		return false;
@@ -135,32 +137,22 @@ function check() {
 		alert("제출합니다.");
 	}
 }
-function idCheck(){
-	var id = document.getElementById("id").value;
-	var reg_uid = /^[1-9][0-9]{7}$/;//아이디 유효성확인.
-
-	if( reg_uid.test(id) != true ) {
-	
-           alert("8자리 숫자만 넣으셔야 합니다.");
-
-           document.myform.signupID.value="";
-
-           document.myform.signupID.focus();
-
-           return false;
-
-    }
-	
-	window.open("${pageContext.request.contextPath}/LoginController/idcheck.do?id="+id+"","id중복 체크","width=100,height=100");
-	
-	
-	
-}
 </script>
+<%
+		String sID = session.getAttribute("session_name").toString();
+		UserInfo sUinfo = (UserInfo)session.getAttribute("userinfo");
+		signupBean showBean = (signupBean)request.getAttribute("showBean");
+		request.setAttribute("editMember_developer : showBean", showBean)	;	
+		System.out.println("editMember_developer: session ID " + sID);
+	%>
+
 </head>
 <body>
+
+
+
 	<form onSubmit="return check()"
-			action="${pageContext.request.contextPath}/LoginController/signup"
+			action="${pageContext.request.contextPath}/LoginController/updateMember.do"
 			method="POST" name="myform">
 			<table id="developer_join" border="1">
 		<tr>
@@ -250,6 +242,6 @@ function idCheck(){
 	<button type="submit" class="btn_signup">제출</button>
 	</form>
 	<button type="button"
-            onclick="location.replace('${pageContext.request.contextPath}/LoginController/logout.do')">뒤로가기</button>
+            onclick="location.replace('${pageContext.request.contextPath}/LoginController/logout.do')">뒤로 가기</button>
 </body>
 </html>

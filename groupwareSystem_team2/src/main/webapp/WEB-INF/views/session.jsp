@@ -8,9 +8,19 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
 </head>
 <body>
+
+<%
+if (session.getAttribute("code") == null) {
+	response.sendRedirect("logout.do");
+
+}
+String sID = session.getAttribute("session_name").toString();
+System.out.println("session ID " + sID);
+
+//System.out.println( " code : " + session.getAttribute("code") + " / " + session.getAttribute("code").getClass());
+%>
 
 </body>
 </html>

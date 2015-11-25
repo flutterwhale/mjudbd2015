@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@include file="session.jsp"%>
 <%@ page import="kr.ac.mju.prompt.model.UserInfo"%>
 <%@ page import="kr.ac.mju.prompt.model.UserBean"%>
 <%@page import="org.apache.commons.beanutils.BeanUtils"%>
@@ -18,13 +19,13 @@
 <body>
 	
 	<%
- 		response.setHeader("pragma", "no-cache");
+ 	/* 	response.setHeader("pragma", "no-cache");
 		response.setHeader("Cache-control", "no-cache, no-store, must-revalidate");
-		response.setHeader("Expires", "0"); 
+		response.setHeader("Expires", "0");  */
 
 		if(session.getAttribute("code")==null){
 			System.out.println("session is null : ");
-		//	response.sendRedirect("LoginController/home");
+			response.sendRedirect("logout.do");
 			
 		} 
 		
@@ -63,6 +64,15 @@
 	<button type="button"
 		onclick="location.href='${pageContext.request.contextPath}/LoginController/showMemberPage'">개인
 		정보</button>
+	<button type="button"
+		onclick="location.href='${pageContext.request.contextPath}/ProjectController/showDirectory'">인명부
+	</button>
+	<button type="button"
+		onclick="location.href='${pageContext.request.contextPath}/ProjectController/showProjectTable'">프로젝트
+	</button>
+	<button type="button"
+		onclick="location.href='${pageContext.request.contextPath}/ProjectController/showObtainTable'">수주
+		현황</button>
 	<%
 		if (loginbean.getPermission() == 11) { // PM 권한
 				System.out.println(loginbean.getPermission() + ": PM 권한 로그인");
@@ -70,7 +80,7 @@
 
 
 	<button type="button"
-		onclick="location.href='${pageContext.request.contextPath}/CourseController/insertCoursePage'">프로젝트
+		onclick="location.href='${pageContext.request.contextPath}/ProjectController/showPMProjectTable'">프로젝트
 		관리</button>
 
 
@@ -103,14 +113,18 @@
 				//수주현황
 				//모든 프로젝트
 	%>
-	<button>수주 현황</button>
-	<button>프로젝트 현황</button>
+	<button type="button"
+		onclick="location.href='${pageContext.request.contextPath}/ProjectController/showObtainTable'">수주
+		현황</button>
+	<button type="button"
+		onclick="location.href='${pageContext.request.contextPath}/ProjectController/showPMProjectTable'">프로젝트
+		관리</button>
 	<%
 		} else if (loginbean.getDi() == 12) { //영업부 메뉴
 
 				//수주 현황
 	%>
-	<button>수주 현황</button>
+	<button type="button">프로젝트 관리</button>
 	<%
 		} else if (loginbean.getDi() == 15) { // 인사관리팀 메뉴
 	%>
@@ -126,7 +140,9 @@
 				//업무 일지
 				//프로젝트
 	%>
-	<button>프로젝트</button>
+	<button type="button"
+		onclick="location.href='${pageContext.request.contextPath}/ProjectController/showProjectTable'">프로젝트
+	</button>
 	<button>업무 일지</button>
 	<%
 		}
@@ -160,6 +176,5 @@
 			} //가입 대기 아닌 경우 끝
 		}
 	%>
-
 </body>
 </html>
