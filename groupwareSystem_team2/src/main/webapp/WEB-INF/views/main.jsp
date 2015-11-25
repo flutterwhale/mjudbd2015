@@ -7,7 +7,7 @@
 <%@ page import="kr.ac.mju.prompt.model.UserBean"%>
 <%@page import="org.apache.commons.beanutils.BeanUtils"%>
 <jsp:useBean id="loginbean" class="kr.ac.mju.prompt.model.UserBean"
-		scope="session" />
+	scope="session" />
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -16,7 +16,7 @@
 <title>Main</title>
 </head>
 <body>
-	
+
 	<%
 /* 		response.setHeader("pragma", "no-cache");
 		response.setHeader("Cache-control", "no-cache, no-store, must-revalidate");
@@ -56,10 +56,12 @@
 	<button type="button"
 		onclick="location.href='${pageContext.request.contextPath}/LoginController/showMemberPage'">개인
 		정보</button>
-				<button type="button"
+	<button type="button"
 		onclick="location.href='${pageContext.request.contextPath}/HomeController/showProjectTable'">프로젝트
-		</button>
-	
+	</button>
+	<button type="button"
+		onclick="location.href='${pageContext.request.contextPath}/HomeController/showObtainTable'">수주 현황
+	</button>
 	<%
 		if (loginbean.getPermission() == 11) { // PM 권한
 				System.out.println(loginbean.getPermission() + ": PM 권한 로그인");
@@ -100,14 +102,18 @@
 				//수주현황
 				//모든 프로젝트
 	%>
-	<button>수주 현황</button>
+	<button type="button"
+		onclick="location.href='${pageContext.request.contextPath}/HomeController/showObtainTable'">수주 현황
+	</button>
 	<button>프로젝트 현황</button>
 	<%
 		} else if (loginbean.getDi() == 12) { //영업부 메뉴
 
 				//수주 현황
 	%>
-	<button>수주 현황</button>
+	<button type="button"
+		onclick="location.href='${pageContext.request.contextPath}/HomeController/showObtainTable'">수주 현황
+	</button>
 	<%
 		} else if (loginbean.getDi() == 15) { // 인사관리팀 메뉴
 	%>
@@ -123,7 +129,9 @@
 				//업무 일지
 				//프로젝트
 	%>
-	<button>프로젝트</button>
+	<button type="button"
+		onclick="location.href='${pageContext.request.contextPath}/HomeController/showProjectTable'">프로젝트
+	</button>
 	<button>업무 일지</button>
 	<%
 		}

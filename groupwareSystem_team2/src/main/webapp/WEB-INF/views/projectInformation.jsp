@@ -22,24 +22,24 @@
 	type="text/javascript"></script>
 </head>
 <body>
-	<div class="project">
+	<div class="project_wrapper">
 		<h1>1124 프로젝트</h1>
 		<div class="project_information">
 			<table class="project_information_table" border="1" width="920px">
 				<tr>
-					<td width="170px">설명</td>
+					<th width="170px">설명</td>
 					<td width="750px">프로젝트이다.</td>
 				</tr>
 				<tr>
-					<td>부가 설명</td>
+					<th>부가 설명</td>
 					<td>디비설 프로젝트이다.</td>
 				</tr>
 				<tr>
-					<td>예산</td>
+					<th>예산</td>
 					<td>0</td>
 				</tr>
 				<tr>
-					<td>PM</td>
+					<th>PM</td>
 					<td>SDAGVARGERHTRJYGHFDSERG</td>
 				</tr>
 			</table>
@@ -94,7 +94,7 @@
 					<td></td>
 				</tr>
 				<tr>
-					<td width="150px">문서 등록</td>
+					<th width="150px">문서 등록</td>
 					<td colspan="3"><input type="file" id="portfolio" name="portfolio"></td>
 				</tr>
 			</table>

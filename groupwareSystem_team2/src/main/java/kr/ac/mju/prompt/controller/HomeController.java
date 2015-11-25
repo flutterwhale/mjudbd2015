@@ -67,6 +67,49 @@ public class HomeController {
 		return "projectInformation";//jsp 파일 이름. 
 	}
 	
+	@RequestMapping(value = "/HomeController/showObtainTable", method = RequestMethod.GET)
+	public String showObtainTable(HttpSession session, Locale locale, Model model) {
+		logger.info("Welcome home! The client locale is {}.", locale);
+		session.invalidate();
+		Date date = new Date();
+		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+		
+		String formattedDate = dateFormat.format(date);
+		
+		model.addAttribute("serverTime", formattedDate );
+		
+		return "obtainTable";//jsp 파일 이름. 
+	}
+	
+	
+	@RequestMapping(value = "/HomeController/showObtainInformation", method = RequestMethod.GET)
+	public String showObtainInformation(HttpSession session, Locale locale, Model model) {
+		logger.info("Welcome home! The client locale is {}.", locale);
+		session.invalidate();
+		Date date = new Date();
+		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+		
+		String formattedDate = dateFormat.format(date);
+		
+		model.addAttribute("serverTime", formattedDate );
+		
+		return "obtainInformation";//jsp 파일 이름. 
+	}
+	
+	@RequestMapping(value = "/HomeController/showObtainAdd", method = RequestMethod.GET)
+	public String showObtainAdd(HttpSession session, Locale locale, Model model) {
+		logger.info("Welcome home! The client locale is {}.", locale);
+		session.invalidate();
+		Date date = new Date();
+		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+		
+		String formattedDate = dateFormat.format(date);
+		
+		model.addAttribute("serverTime", formattedDate );
+		
+		return "obtainAdd";//jsp 파일 이름. 
+	}
+	
 	
 	
 }
