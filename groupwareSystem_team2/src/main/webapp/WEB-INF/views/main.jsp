@@ -56,6 +56,10 @@
 	<button type="button"
 		onclick="location.href='${pageContext.request.contextPath}/LoginController/showMemberPage'">개인
 		정보</button>
+				<button type="button"
+		onclick="location.href='${pageContext.request.contextPath}/HomeController/showProjectTable'">프로젝트
+		</button>
+	
 	<%
 		if (loginbean.getPermission() == 11) { // PM 권한
 				System.out.println(loginbean.getPermission() + ": PM 권한 로그인");

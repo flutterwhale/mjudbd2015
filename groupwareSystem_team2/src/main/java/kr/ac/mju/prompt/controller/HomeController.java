@@ -38,4 +38,35 @@ public class HomeController {
 		return "home";
 	}
 	
+	
+	@RequestMapping(value = "/HomeController/showProjectTable", method = RequestMethod.GET)
+	public String showProjectTable(HttpSession session, Locale locale, Model model) {
+		logger.info("Welcome home! The client locale is {}.", locale);
+		session.invalidate();
+		Date date = new Date();
+		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+		
+		String formattedDate = dateFormat.format(date);
+		
+		model.addAttribute("serverTime", formattedDate );
+		
+		return "projectTable";//jsp 파일 이름. 
+	}
+	
+	@RequestMapping(value = "/HomeController/showProjectInformation", method = RequestMethod.GET)
+	public String showProject(HttpSession session, Locale locale, Model model) {
+		logger.info("Welcome home! The client locale is {}.", locale);
+		session.invalidate();
+		Date date = new Date();
+		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+		
+		String formattedDate = dateFormat.format(date);
+		
+		model.addAttribute("serverTime", formattedDate );
+		
+		return "projectInformation";//jsp 파일 이름. 
+	}
+	
+	
+	
 }
