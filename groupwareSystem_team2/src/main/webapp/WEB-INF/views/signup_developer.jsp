@@ -310,7 +310,7 @@
 		         </div>
 		         <div class="form-group">
 		            <label for="inputname" class="col-sm-4 control-label">아&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;이&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;디</label>
-		             <div class="col-sm-2">
+		             <div class="col-sm-3">
 		                  <input type="text" class="form-control" style="width:200px;" id="id" name="signupID" placeholder="8자리 숫자 사용" size="8" maxlength="8">
 		                  
 		             </div>
@@ -378,13 +378,13 @@
 	        <div class="form-group">
 	            <label for="inputname" class="col-sm-4 control-label">최&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;종&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;학&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;력</label>
 	            <div class="col-sm-8">
-		            <div class="col-sm-3">              
+		            <div class="col-sm-4">              
 		                <input id="university" type="text" class="form-control" name="university" style="width:200px;" size="10" maxlength="10" placeholder="명지대" >
 					</div>
-					<div class="col-sm-1">              
+					<div class="col-sm-2">              
 		                <label class="control-label">학교</label>
 					</div>
-					<div class="col-sm-3">
+					<div class="col-sm-4">
 						<input id="depart" type="text" class="form-control" name="depart" style="width:200px;" size="10" maxlength="10" placeholder="컴퓨공">
 					</div>
 					<div class="col-sm-2">              
@@ -395,13 +395,13 @@
 			<div class="form-group">
 	      		<label for="inputname" class="col-sm-4 control-label"></label>
 				<div class="col-sm-8">
-					<div class="col-sm-3">
+					<div class="col-sm-4">
 						<input id="major" type="text" class="form-control" name="major" style="width:200px;" size="10" maxlength="10" placeholder="컴퓨공학">
 					</div>
-					<div class="col-sm-1">              
+					<div class="col-sm-2">              
 		                <label class="control-label">전공</label>
 					</div>
-					<div class="col-sm-3">	
+					<div class="col-sm-4">	
 						<select id="graduation" name="graduation" class="form-control"style="width:200px;">
 		                    <option value="박사" >박사</option>
 		                    <option value="박사수료" >박사수료</option>
