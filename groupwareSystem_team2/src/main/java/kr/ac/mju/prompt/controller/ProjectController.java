@@ -1,6 +1,7 @@
 package kr.ac.mju.prompt.controller;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
@@ -13,8 +14,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
-import kr.ac.mju.prompt.service.LoginService;
+import kr.ac.mju.prompt.model.UserBean;
+import kr.ac.mju.prompt.model.obtainBean;
+import kr.ac.mju.prompt.model.projectBean;
 import kr.ac.mju.prompt.service.ProjectService;
 
 @Controller
@@ -26,20 +30,20 @@ public class ProjectController {
 	private static final Logger logger = LoggerFactory.getLogger(ProjectController.class);
 	
 	@RequestMapping(value = "/ProjectController/showProjectTable", method = RequestMethod.GET)
-	public String showProjectTable(HttpSession session, Locale locale, Model model) {
+	public ModelAndView showProjectTable(HttpSession session) {
+		logger.info("showProjectTable:프로젝트 전체 목록 보기");
 		if (session.getAttribute("session_name") != null) {
 
 			logger.info(session.getAttribute("session_name").toString() + " 해당 사용자가 로그인중입니다. ");
 		}	
-		logger.info("Welcome home! The client locale is {}.", locale);
-		Date date = new Date();
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
 		
-		String formattedDate = dateFormat.format(date);
+		ModelAndView model = new ModelAndView();
+		ArrayList<projectBean> allProjects = projectService.getAllProjects();
+		model.addObject("AllProject", allProjects);
+		model.setViewName("projectTable");  //jsp 이름 (view이름)
 		
-		model.addAttribute("serverTime", formattedDate );
 		
-		return "projectTable";//jsp 파일 이름. 
+		return model;
 	}
 	
 	@RequestMapping(value = "/ProjectController/showProjectInformation", method = RequestMethod.GET)
@@ -60,20 +64,17 @@ public class ProjectController {
 	}
 	
 	@RequestMapping(value = "/ProjectController/showObtainTable", method = RequestMethod.GET)
-	public String showObtainTable(HttpSession session, Locale locale, Model model) {
-		logger.info("Welcome home! The client locale is {}.", locale);
+	public ModelAndView showObtainTable(HttpSession session) {
 		if (session.getAttribute("session_name") != null) {
 
 			logger.info(session.getAttribute("session_name").toString() + " 해당 사용자가 로그인중입니다. ");
 		}	
-		Date date = new Date();
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+		ModelAndView model = new ModelAndView();
+		ArrayList<obtainBean> allObatain = projectService.getAllObtains();
+		model.addObject("allObatain", allObatain);
+		model.setViewName("obtainTable");  //jsp 이름 (view이름)
 		
-		String formattedDate = dateFormat.format(date);
-		
-		model.addAttribute("serverTime", formattedDate );
-		
-		return "obtainTable";//jsp 파일 이름. 
+		return model;
 	}
 	
 	
@@ -95,20 +96,19 @@ public class ProjectController {
 	}
 	
 	@RequestMapping(value = "/ProjectController/showObtainAdd", method = RequestMethod.GET)
-	public String showObtainAdd(HttpSession session, Locale locale, Model model) {
-		logger.info("Welcome home! The client locale is {}.", locale);
+	public ModelAndView showObtainAdd(HttpSession session) {
+		logger.info("showObtainAdd:권한으로 검색하기");
 		if (session.getAttribute("session_name") != null) {
 
 			logger.info(session.getAttribute("session_name").toString() + " 해당 사용자가 로그인중입니다. ");
 		}	
-		Date date = new Date();
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
 		
-		String formattedDate = dateFormat.format(date);
+		ModelAndView model = new ModelAndView();
+		ArrayList<UserBean> permissionlist = projectService.getMember_permission(11);
+		model.addObject("PermissionList", permissionlist);
+		model.setViewName("obtainAdd");  //jsp 이름 (view이름)
 		
-		model.addAttribute("serverTime", formattedDate );
-		
-		return "obtainAdd";//jsp 파일 이름. 
+		return model;//jsp 파일 이름. 
 	}
 	
 	@RequestMapping(value = "/ProjectController/showPMProjectTable", method = RequestMethod.GET)

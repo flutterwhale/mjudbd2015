@@ -1,17 +1,17 @@
+<%@page import="kr.ac.mju.prompt.model.UserBean"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@page import="java.util.*"%>
 <%@ page import="kr.ac.mju.prompt.model.UserInfo"%>
-<%@ page import="kr.ac.mju.prompt.model.UserBean"%>
+<%@ page import="kr.ac.mju.prompt.model.projectBean"%>
 <%@page import="org.apache.commons.beanutils.BeanUtils"%>
-<script language="javascript">
-	history.go(1);
-</script>
 
-
-
+<%
+	ArrayList<UserBean> list = (ArrayList<UserBean>) request.getAttribute("PermissionList");
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -26,29 +26,31 @@
 		<div class="obtain_add">
 			<table class="obtain_add_table">
 				<tr>
-					<th>PM 추가</th>
+					<th>PM 선택</th> <th>ID</th>
 				</tr>
+				<%
+					if (list.isEmpty()) {
+				%>
+
+				<h2>PM이 존재 하지 않습니다.</h2>
+
+				<%
+					System.out.println("PM이 존재 하지 않습니다.");
+					} else {
+
+						for (UserBean c : list) {
+				%>
 				<tr>
-					<td><input type="radio" name="pm">딸기</td>
+					<td><input type="radio" name="pm" value="<%=c.getId()%>"></td><td><%=c.getName() %>/<%=c.getId()%></td>
 				</tr>
-				<tr>
-					<td><input type="radio" name="pm">메론</td>
-				</tr>
-				<tr>
-					<td><input type="radio" name="pm">자두</td>
-				</tr>
-				<tr>
-					<td><input type="radio" name="pm">키위</td>
-				</tr>
-				<tr>
-					<td><input type="radio" name="pm">사과</td>
-				</tr>
-				<tr>
-					<td><input type="radio" name="pm">땅콩</td>
-				</tr>
+				<%
+					}
+					}
+				%>
 				<tr>
 					<td><button type="submit">완료</button>
 				</tr>
+				
 			</table>
 		</div>
 	</div>

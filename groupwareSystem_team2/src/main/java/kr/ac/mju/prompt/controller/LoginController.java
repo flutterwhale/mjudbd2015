@@ -81,7 +81,7 @@ public class LoginController {
 
 	@RequestMapping(value = "/LoginController/main", method = RequestMethod.GET)
 	public String main(HttpSession session) {
-		logger.info("메인화면");
+		logger.info("메인화면=>login");
 		if (session.getAttribute("session_name") != null) {
 
 			logger.info(session.getAttribute("session_name").toString() + " 해당 사용자가 로그인중입니다. ");

@@ -33,8 +33,7 @@
 	<bean id="loginService" class="kr.ac.mju.prompt.service.LoginService" />
 
 	<!-- Dao Section -->
-	<bean id="courseDAO" class="kr.ac.mju.prompt.dao.CourseDAO" />
-		<bean id="projectDAO" class="kr.ac.mju.prompt.dao.LoginDAO" />
+		<bean id="projectDAO" class="kr.ac.mju.prompt.dao.ProjectDAO" />
 	<bean id="loginDAO" class="kr.ac.mju.prompt.dao.LoginDAO" />
 
 	

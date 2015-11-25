@@ -12,7 +12,10 @@
 <body>
 
 <%
-if (session.getAttribute("code") == null) {
+if (session.getAttribute("session_name") == null) {
+	
+	
+	
 	response.sendRedirect("logout.do");
 
 }

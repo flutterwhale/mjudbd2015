@@ -1,5 +1,6 @@
 package kr.ac.mju.prompt.model;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -7,72 +8,21 @@ public class projectBean {
 	private String msg = "";
 	private int code;
 	// 기본 정보
-	private int id;
-	private String name;
-	private String password;
-	private String ssn;
-	private String phone;
 
-	private String addr;
-	private String email;
-	private int gender;
-
-	// 기타정보
-	private String a_career;
-	private String career;
-	private String portfolio;
-	// 개발자 정보
-	private String isFreeLancer;
-	private String language;
-	private int language_level;
-	private int tech_level;
-	private ArrayList language_list;
-	private ArrayList language_level_list;
-	// 부서 정보
-	private int di;
-	private int permission;
-	private int position_Name;
-
-	public projectBean(String isFreeLancer, String name, String id, String password, String ssn, String phone,
-			String addr, String email, String gender, String a_career, String career, String portfolio,  ArrayList language_list,ArrayList language_level_list, String tech_level) {
-		
-		this.setIsFreeLancer(isFreeLancer);
-		this.setName(name);
-		this.setId(Integer.parseInt(id));
-		this.setPassword(password);
-		this.setSsn(ssn);
-		this.setPhone(phone);
-		this.setAddr(addr);
-		this.setGender(Integer.parseInt(gender));
-		this.setA_career(a_career);
-		this.setEmail(email);
-		this.setCareer(career);
-		this.setPortfolio(portfolio);
-		this.setLanguage_list(language_list);
-		this.setLanguage_level_list(language_level_list);
-		this.setTech_level(Integer.parseInt(tech_level));
-		System.out.println("signupBean(개발자) 생성완료");
-
-	}
-
-	public projectBean(String name,String id, String password, String ssn, String phone, String addr, String email, String gender,
-			String a_career, String career, String portfolio) {
-		
-		this.setName(name);
-		this.setId(Integer.parseInt(id));
-		this.setPassword(password);
-		this.setSsn(ssn);
-		this.setPhone(phone);
-		this.setAddr(addr);
-		this.setGender(Integer.parseInt(gender));
-		this.setA_career(a_career);
-		this.setEmail(email);
-		this.setCareer(career);
-		this.setPortfolio(portfolio);
-		System.out.println("signupBean(비 개발자) 생성완료");
-
-	}
-	
+	private int Project_Identifier;
+	private String project_Name;
+	private int Projectmanager_Identifier;
+	private String PM_name;
+	private Date start_Date;
+	private Date end_Date;
+	private String project_Description;
+	private int status;
+	private String project_Price;
+	private String comment;
+	private String project_Document;
+	private String product;
+	private int project_Evaluation;
+	private String dispatch_Location;
 
 	public projectBean() {
 		// TODO Auto-generated constructor stub
@@ -94,166 +44,116 @@ public class projectBean {
 		this.code = code;
 	}
 
-	public int getId() {
-		return id;
+	public String getProject_Name() {
+		return project_Name;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setProject_Name(String project_Name) {
+		this.project_Name = project_Name;
 	}
 
-	public String getName() {
-		return name;
+	public int getProjectmanager_Identifier() {
+		return Projectmanager_Identifier;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setProjectmanager_Identifier(int projectmanager_Identifier) {
+		Projectmanager_Identifier = projectmanager_Identifier;
 	}
 
-	public String getPassword() {
-		return password;
+	public Date getStart_Date() {
+		return start_Date;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setStart_Date(Date start_Date) {
+		this.start_Date = start_Date;
 	}
 
-	public int getDi() {
-		return di;
+	public Date getEnd_Date() {
+		return end_Date;
 	}
 
-	public void setDi(int di) {
-		this.di = di;
+	public void setEnd_Date(Date end_Date) {
+		this.end_Date = end_Date;
 	}
 
-	public int getPermission() {
-		return permission;
+	public String getProject_Description() {
+		return project_Description;
 	}
 
-	public void setPermission(int permission) {
-		this.permission = permission;
+	public void setProject_Description(String project_Description) {
+		this.project_Description = project_Description;
 	}
 
-	public int getPosition_Name() {
-		return position_Name;
+	public int getStatus() {
+		return status;
 	}
 
-	public void setPosition_Name(int position_Name) {
-		this.position_Name = position_Name;
+	public void setStatus(int status) {
+		this.status = status;
 	}
 
-	public String getSsn() {
-		return ssn;
+	public String getProject_Price() {
+		return project_Price;
 	}
 
-	public void setSsn(String ssn) {
-		this.ssn = ssn;
+	public void setProject_Price(String project_Price) {
+		this.project_Price = project_Price;
 	}
 
-	public String getPhone() {
-		return phone;
+	public String getComment() {
+		return comment;
 	}
 
-	public void setPhone(String phone) {
-		this.phone = phone;
+	public void setComment(String comment) {
+		this.comment = comment;
 	}
 
-	public String getAddr() {
-		return addr;
+	public String getProject_Document() {
+		return project_Document;
 	}
 
-	public void setAddr(String addr) {
-		this.addr = addr;
+	public void setProject_Document(String project_Document) {
+		this.project_Document = project_Document;
 	}
 
-	public int getGender() {
-		return gender;
+	public String getProduct() {
+		return product;
 	}
 
-	public void setGender(int gender) {
-		this.gender = gender;
+	public void setProduct(String product) {
+		this.product = product;
 	}
 
-	public String getA_career() {
-		return a_career;
+	public int getProject_Evaluation() {
+		return project_Evaluation;
 	}
 
-	public void setA_career(String a_career) {
-		this.a_career = a_career;
+	public void setProject_Evaluation(int project_Evaluation) {
+		this.project_Evaluation = project_Evaluation;
 	}
 
-	public String getLanguage() {
-		return language;
+	public String getDispatch_Location() {
+		return dispatch_Location;
 	}
 
-	public void setLanguage(String language) {
-		this.language = language;
+	public void setDispatch_Location(String dispatch_Location) {
+		this.dispatch_Location = dispatch_Location;
 	}
 
-	public int getLanguage_level() {
-		return language_level;
+	public int getProject_Identifier() {
+		return Project_Identifier;
 	}
 
-	public void setLanguage_level(int language_level) {
-		this.language_level = language_level;
+	public void setProject_Identifier(int project_Identifier) {
+		Project_Identifier = project_Identifier;
 	}
 
-	public int getTech_level() {
-		return tech_level;
+	public String getPM_name() {
+		return PM_name;
 	}
 
-	public void setTech_level(int tech_level) {
-		this.tech_level = tech_level;
+	public void setPM_name(String pM_name) {
+		PM_name = pM_name;
 	}
-
-	public String getCareer() {
-		return career;
-	}
-
-	public void setCareer(String career) {
-		this.career = career;
-	}
-
-	public String getPortfolio() {
-		return portfolio;
-	}
-
-	public void setPortfolio(String portfolio) {
-		this.portfolio = portfolio;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getIsFreeLancer() {
-		return isFreeLancer;
-	}
-
-	public void setIsFreeLancer(String isFreeLancer) {
-		this.isFreeLancer = isFreeLancer;
-	}
-
-	public ArrayList getLanguage_list() {
-		return language_list;
-	}
-
-	public void setLanguage_list(ArrayList language_list) {
-		this.language_list = language_list;
-	}
-
-	public ArrayList getLanguage_level_list() {
-		return language_level_list;
-	}
-
-	public void setLanguage_level_list(ArrayList language_level_list) {
-		this.language_level_list = language_level_list;
-	}
-
-
 
 }

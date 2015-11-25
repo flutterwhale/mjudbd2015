@@ -5,12 +5,10 @@
 	pageEncoding="UTF-8"%>
 <%@ page import="kr.ac.mju.prompt.model.UserInfo"%>
 <%@ page import="kr.ac.mju.prompt.model.UserBean"%>
+<%@page import="java.util.*"%>
+<%@ page import="kr.ac.mju.prompt.model.obtainBean"%>
 <%@page import="org.apache.commons.beanutils.BeanUtils"%>
-<script language="javascript">
-	history.go(1);
-</script>
-
-
+<% ArrayList<obtainBean> allObatain  = (ArrayList<obtainBean>)request.getAttribute("allObatain"); %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -29,139 +27,45 @@
 				<tr>
 					<td width="70px">번호</td>
 					<td width="200px">이름</td>
-					<td width="250px">일정</td>
+					<td width="250px">시작일</td>
+					<td width="250px">마감일</td>
 					<td width="300px">설명</td>
 					<td width="200px">주문 회사</td>
 					<td width="200px">작성자</td>
 					<td width="180px">현재 상태</td>
-					<td width="200px">PM</td>
+					<td width="200px">PM 배정</td>
 				</tr>
+				<%
+					if (allObatain.isEmpty()) {
+				%>
+				<h2>등록된 수주현황이 없습니다.</h2>
+
+				<%
+					System.out.println("등록된 수주현황이 없습니다.");
+					} else {
+
+						for (obtainBean c : allObatain) {
+				%>
+				
 				<tr>
-					<td>a</td>
-					<td>a</td>
-					<td>a</td>
-					<td>a</td>
-					<td>a</td>
-					<td>a</td>
-					<td>a</td>
+					<td><%=c.getObtain_Order_Identifier() %></td>
+					<td><%=c.getObtain_Name() %></td>
+					<td><%=c.getStart_Date() %></td>
+					<td><%=c.getEnd_Date() %></td>
+					<td><%=c.getComment() %></td>
+					<td><%=c.getOrder_Company()%></td>
+					<td><%=c.getWriter_User()%>/<%=c.getWriter_name() %></td>
+					<td><%=c.getPresent_Status() %></td>
 					<td>
 						<button type="button"
 							onclick="location.href='${pageContext.request.contextPath}/ProjectController/showObtainAdd'">추가
 						</button>
 					</td>
 				</tr>
-				<tr>
-					<td>b</td>
-					<td>b</td>
-					<td>b</td>
-					<td>b</td>
-					<td>b</td>
-					<td>b</td>
-					<td>b</td>
-					<td>
-						<button type="button"
-							onclick="location.href='${pageContext.request.contextPath}/ProjectController/showObtainAdd'">추가
-						</button>
-					</td>
-				</tr>
-				<tr>
-					<td>c</td>
-					<td>c</td>
-					<td>c</td>
-					<td>c</td>
-					<td>c</td>
-					<td>c</td>
-					<td>c</td>
-					<td>
-						<button type="button"
-							onclick="location.href='${pageContext.request.contextPath}/ProjectController/showObtainAdd'">추가
-						</button>
-					</td>
-				</tr>
-				<tr>
-					<td>d</td>
-					<td>d</td>
-					<td>d</td>
-					<td>d</td>
-					<td>d</td>
-					<td>d</td>
-					<td>d</td>
-					<td>
-						<button type="button"
-							onclick="location.href='${pageContext.request.contextPath}/ProjectController/showObtainAdd'">추가
-						</button>
-					</td>
-				</tr>
-				<tr>
-					<td>e</td>
-					<td>e</td>
-					<td>e</td>
-					<td>e</td>
-					<td>e</td>
-					<td>e</td>
-					<td>e</td>
-					<td>
-						<button type="button"
-							onclick="location.href='${pageContext.request.contextPath}/ProjectController/showObtainAdd'">추가
-						</button>
-					</td>
-				</tr>
-				<tr>
-					<td>f</td>
-					<td>f</td>
-					<td>f</td>
-					<td>f</td>
-					<td>f</td>
-					<td>f</td>
-					<td>f</td>
-					<td>
-						<button type="button"
-							onclick="location.href='${pageContext.request.contextPath}/ProjectController/showObtainAdd'">추가
-						</button>
-					</td>
-				</tr>
-				<tr>
-					<td>g</td>
-					<td>g</td>
-					<td>g</td>
-					<td>g</td>
-					<td>g</td>
-					<td>g</td>
-					<td>g</td>
-					<td>
-						<button type="button"
-							onclick="location.href='${pageContext.request.contextPath}/ProjectController/showObtainAdd'">추가
-						</button>
-					</td>
-				</tr>
-				<tr>
-					<td>h</td>
-					<td>h</td>
-					<td>h</td>
-					<td>h</td>
-					<td>h</td>
-					<td>h</td>
-					<td>h</td>
-					<td>
-						<button type="button"
-							onclick="location.href='${pageContext.request.contextPath}/ProjectController/showObtainAdd'">추가
-						</button>
-					</td>
-				</tr>
-				<tr>
-					<td>i</td>
-					<td>i</td>
-					<td>i</td>
-					<td>i</td>
-					<td>i</td>
-					<td>i</td>
-					<td>i</td>
-					<td>
-						<button type="button"
-							onclick="location.href='${pageContext.request.contextPath}/ProjectController/showObtainAdd'">추가
-						</button>
-					</td>
-				</tr>
+					<%
+					}
+					}
+				%>
 			</table>
 		</div>
 	</div>

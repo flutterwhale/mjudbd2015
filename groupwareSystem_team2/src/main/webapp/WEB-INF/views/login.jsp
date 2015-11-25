@@ -23,10 +23,10 @@
 <body>
 
 	<%
-	/* 	response.setHeader("pragma", "no-cache");
+	 	response.setHeader("pragma", "no-cache");
 		response.setHeader("Cache-control", "no-cache, no-store, must-revalidate");
 		response.setHeader("Expires", "0");
- */
+ 
 		/* if (session.getAttribute("code") == null) {
 			response.sendRedirect("logout.do");
 
@@ -37,7 +37,7 @@
 		System.out.println("session_name : " + session.getAttribute("session_name")); */
 		//if (session.getAttribute("code").equals("0")) {
 		//로그인 성공 
-		System.out.println("session_name : " + session.getAttribute("session_name"));
+		System.out.println("login.jsp -> session_id : " + session.getAttribute("session_name"));
 		UserInfo ui = (UserInfo) session.getAttribute("userinfo");
 		UserBean myuser = ui.getMyUser();
 		session.setAttribute("myUser", myuser);
@@ -48,6 +48,7 @@
 	%>
 	<%-- 	<jsp:forward page ="/LoginController/main"  /> --%>
 	<script language="javascript">
+	
 		location.replace('main');
 	</script>
 

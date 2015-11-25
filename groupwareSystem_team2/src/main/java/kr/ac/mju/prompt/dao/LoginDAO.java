@@ -8,18 +8,23 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import kr.ac.mju.prompt.controller.LoginController;
 import kr.ac.mju.prompt.model.UserBean;
 import kr.ac.mju.prompt.model.UserInfo;
 import kr.ac.mju.prompt.model.signupBean;
 
 @Repository
 public class LoginDAO {
-
+	@Autowired
+	private static final Logger logger = LoggerFactory.getLogger(LoginDAO.class);
 	public UserInfo login(int id, String PW) {
 		// TODO Auto-generated method stub
-		System.out.println(" login DAO :input " + id + " / " + PW);
+		logger.info(" login DAO :input " + id + " / " + PW);
 		UserInfo Uinfo = new UserInfo();
 		Statement stmt = null;
 		Connection conn = null;
@@ -41,11 +46,11 @@ public class LoginDAO {
 			if (rs.next()) {
 
 				int rID = rs.getInt("User_Identifier");
-				System.out.println("loginDAO.login: -> " + rID + " 아이디가 존재 합니다.");
+				logger.info(rID + " 아이디가 존재 합니다.");
 				String query2 = "SELECT * FROM dbd2015.t_user join dbd2015.t_position on t_user.User_Identifier = t_position.User_Identifier  join  dbd2015.t_department on t_department.Department_Identifier = t_position.Department_Identifier  WHERE t_user.User_Identifier = '"
 						+ rID + "' and t_user.Password = '" + PW + "' ;";
 
-				System.out.println("loginDAO : 쿼리 >" + query2);
+				logger.info("쿼리 >" + query2);
 				rs2 = stmt.executeQuery(query2);
 
 				if (rs2.first()) {
@@ -58,7 +63,7 @@ public class LoginDAO {
 					int gpermission = rs2.getInt("Permission"); // 권한 구분 !!
 					int gposition = rs2.getInt("Position_Name"); // 직급 !!!!
 					String cat = rs2.getString("cat");
-					System.out.println("loginDAO :  두번째 쿼리 결과" + gID + " pw " + gpw + " name " + gname + " permission "
+					logger.info("loginDAO :  두번째 쿼리 결과" + gID + " pw " + gpw + " name " + gname + " permission "
 							+ gpermission + " Department code / name " + gdepart + " Position " + gposition);
 					loginsuccess = true;
 
@@ -71,16 +76,16 @@ public class LoginDAO {
 					user.setCat(cat);
 				
 				} else { // pw가 없음.
-					System.out.println("loginDAO : PW가 일치 하지 않습니다.");
-					System.out.println("loginDAO : PW불일치로 로그인 실패");
+					logger.info("loginDAO : PW가 일치 하지 않습니다.");
+					logger.info("loginDAO : PW불일치로 로그인 실패");
 					Uinfo.setErrorCode(121);
 					user.setMsg("121");
 				}
 			} else {// id 가 없음
 
 				loginsuccess = false;
-				System.out.println("loginDAO : 아이디가 존재하지 않습니다.");
-				System.out.println("loginDAO : ID 없음으로  로그인 실패");
+				logger.info("loginDAO : 아이디가 존재하지 않습니다.");
+				logger.info("loginDAO : ID 없음으로  로그인 실패");
 				Uinfo.setErrorCode(122);
 				user.setMsg("122");
 			}
@@ -119,14 +124,14 @@ public class LoginDAO {
 
 			
 
-			System.out.println("loginDAO : 로그인 성공 ");
+			logger.info("loginDAO : 로그인 성공 ");
 			Uinfo.setMyUser(user);
 			Uinfo.setErrorCode(0);
 			user.setMsg("0");
 			return Uinfo;
 
 		} else {
-			System.out.println("loginDAO : 로그인 실패 ");
+			logger.info("loginDAO : 로그인 실패 ");
 
 			Uinfo.setMyUser(user);
 			// Uinfo.setErrorCode(99);//실패 코드
@@ -449,9 +454,7 @@ public class LoginDAO {
 
 			}
 
-			rs.close();
-			pstmt.close();
-			conn.close();
+		
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
