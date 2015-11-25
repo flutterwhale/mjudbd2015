@@ -18,22 +18,19 @@
 <body>
 
 	<%
-/* 		response.setHeader("pragma", "no-cache");
-		response.setHeader("Cache-control", "no-cache, no-store, must-revalidate");
-		response.setHeader("Expires", "0"); */
+		/* 		response.setHeader("pragma", "no-cache");
+				response.setHeader("Cache-control", "no-cache, no-store, must-revalidate");
+				response.setHeader("Expires", "0"); */
 
 		System.out.println("code : " + session.getAttribute("code"));
 		System.out.println("session_name : " + session.getAttribute("session_name"));
 		if (session.getAttribute("code").equals("0")) {
 			//로그인 성공 
 			System.out.println("session_name : " + session.getAttribute("session_name"));
-			UserInfo ui = (UserInfo)session.getAttribute("userinfo");
+			UserInfo ui = (UserInfo) session.getAttribute("userinfo");
 			System.out.println(ui.getMyUser().getName());
 			UserBean myuser = ui.getMyUser();
 			BeanUtils.copyProperties(loginbean, myuser);
-
-			
-			
 	%>
 
 
@@ -57,11 +54,14 @@
 		onclick="location.href='${pageContext.request.contextPath}/LoginController/showMemberPage'">개인
 		정보</button>
 	<button type="button"
+		onclick="location.href='${pageContext.request.contextPath}/HomeController/showDirectory'">인명부
+	</button>
+	<button type="button"
 		onclick="location.href='${pageContext.request.contextPath}/HomeController/showProjectTable'">프로젝트
 	</button>
 	<button type="button"
-		onclick="location.href='${pageContext.request.contextPath}/HomeController/showObtainTable'">수주 현황
-	</button>
+		onclick="location.href='${pageContext.request.contextPath}/HomeController/showObtainTable'">수주
+		현황</button>
 	<%
 		if (loginbean.getPermission() == 11) { // PM 권한
 				System.out.println(loginbean.getPermission() + ": PM 권한 로그인");
@@ -69,7 +69,7 @@
 
 
 	<button type="button"
-		onclick="location.href='${pageContext.request.contextPath}/CourseController/insertCoursePage'">프로젝트
+		onclick="location.href='${pageContext.request.contextPath}/HomeController/showPMProjectTable'">프로젝트
 		관리</button>
 
 
@@ -103,17 +103,17 @@
 				//모든 프로젝트
 	%>
 	<button type="button"
-		onclick="location.href='${pageContext.request.contextPath}/HomeController/showObtainTable'">수주 현황
-	</button>
-	<button>프로젝트 현황</button>
+		onclick="location.href='${pageContext.request.contextPath}/HomeController/showObtainTable'">수주
+		현황</button>
+	<button type="button"
+		onclick="location.href='${pageContext.request.contextPath}/HomeController/showPMProjectTable'">프로젝트
+		관리</button>
 	<%
 		} else if (loginbean.getDi() == 12) { //영업부 메뉴
 
 				//수주 현황
 	%>
-	<button type="button"
-		onclick="location.href='${pageContext.request.contextPath}/HomeController/showObtainTable'">수주 현황
-	</button>
+	<button type="button">프로젝트 관리</button>
 	<%
 		} else if (loginbean.getDi() == 15) { // 인사관리팀 메뉴
 	%>

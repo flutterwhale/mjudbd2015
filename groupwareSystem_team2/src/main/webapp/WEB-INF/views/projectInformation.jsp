@@ -99,6 +99,30 @@
 				</tr>
 			</table>
 		</div>
+		<div class="project_Evaluation">
+			<h2>PM 전용 프로젝트 평가</h2>
+			<table class="project_Evaluation_table" border="1" width="920px">
+				<tr>
+					<th width="100px">번호
+					</td>
+					<th width="140px">평가자
+					</td>
+					<th width="140px">피평가자
+					</td>
+					<th width="360px">내용
+					</td>
+					<th width="180px">평가일자
+					</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+			</table>
+		</div>
 		<div class="project_code">
 			<p> 프로젝트 코드 </p>
 			<p> MJU60112348 </p>
@@ -109,6 +133,8 @@
 		<button type="button"
 			onclick="location.href='${pageContext.request.contextPath}/HomeController/showProjectTable'">프로젝트
 			목록</button>
+			<button type="button"> [PM 전용] PM 프로젝트 목록으로 가는 버튼</button>
+			<button type="button"> [PM 전용] 수정버튼</button>
 	</div>
 </body>
 </html>

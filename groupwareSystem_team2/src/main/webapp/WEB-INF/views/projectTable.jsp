@@ -34,8 +34,8 @@
 </script>
 </head>
 <body>
-	<div class=project_table>
-		<div class=project_button>
+	<div class="project_table_Wrapper">
+		<div class="project_button">
 			<button type="button" class="btn_present_project">현재 프로젝트</button>
 			<button type="button" class="btn_post_project">과거 프로젝트</button>
 		</div>
