@@ -127,7 +127,7 @@ public class LoginController {
 		return "home";
 	}
 
-	@RequestMapping(value = "/LoginController/signupPage", method = RequestMethod.POST)
+	@RequestMapping(value = "/LoginController/signupPage", method = RequestMethod.GET)
 	public String signupPage(HttpSession session, HttpServletRequest request) {
 		if (session.getAttribute("session_name") != null) {
 

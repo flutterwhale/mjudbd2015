@@ -51,7 +51,7 @@ response.setHeader("Expires", "0");
 			<div class="form-group"></div>
 			<div class="form-group">
 				<label for="inputid" class="col-sm-4 control-label">ID</label>
-				<input type="text" class="col-sm-5 form-control" style="width:200px;" name="user_id" placeholder="user_id">
+				<input type="text" class="col-sm-5 form-control" maxlength="8" max="8" style="width:200px;" name="user_id" placeholder="user_id">
 			</div>			
 			<div class="form-group">
       			<label for="inputPassword" class="col-sm-4 control-label">PW</label>
@@ -67,15 +67,7 @@ response.setHeader("Expires", "0");
     		</div>
   		</fieldset>
 	</form>
-			
-	<form action="${pageContext.request.contextPath}/LoginController/signupPage" method="POST">
-		<input type="hidden" name="joincat" value="common"> 
-		<button type="submit" class="btn btn-primary">Join</button>
-	</form>
-	<form action="${pageContext.request.contextPath}/LoginController/signupPage" method="POST">
-		<input type="hidden"  name="joincat" value="developer"> 
-		<button type="submit" class="btn btn-primary">Developer Join</button>
-	</form>
+	
 	<div class = "well well-sm">
 		<p>The time on the server is ${serverTime}.</p> 
 		<p>ID/PW 찾기 사내 번호 010 4906 4215</p>
