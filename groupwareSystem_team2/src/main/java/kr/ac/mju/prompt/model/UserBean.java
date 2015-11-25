@@ -1,7 +1,7 @@
 package kr.ac.mju.prompt.model;
 
 public class UserBean {
-	private String msg = ""; 
+	private String msg = "";
 	private int code;
 	private int id;
 	private String name;
@@ -9,19 +9,18 @@ public class UserBean {
 	private int di;
 	private int permission;
 	private int position_Name;
-	
-	public UserBean(){
-		
-	} //생성자. 파라미터 없음.
+	private String cat;
 
-	
+	public UserBean() {
+
+	} // 생성자. 파라미터 없음.
 
 	public UserBean(int id, String name, String pw) {
 		// TODO Auto-generated constructor stub
-		this.id=id;
+		this.id = id;
 		this.name = name;
 		this.password = pw;
-		
+
 	}
 
 	public int getId() {
@@ -88,5 +87,12 @@ public class UserBean {
 		this.code = code;
 	}
 
+	public String getCat() {
+		return cat;
+	}
+
+	public void setCat(String cat) {
+		this.cat = cat;
+	}
 
 }

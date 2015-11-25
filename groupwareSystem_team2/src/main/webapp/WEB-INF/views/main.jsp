@@ -18,17 +18,24 @@
 <body>
 	
 	<%
-/* 		response.setHeader("pragma", "no-cache");
+ 		response.setHeader("pragma", "no-cache");
 		response.setHeader("Cache-control", "no-cache, no-store, must-revalidate");
-		response.setHeader("Expires", "0"); */
+		response.setHeader("Expires", "0"); 
 
+		if(session.getAttribute("code")==null){
+			System.out.println("session is null : ");
+		//	response.sendRedirect("LoginController/home");
+			
+		} 
+		
 		System.out.println("code : " + session.getAttribute("code"));
 		System.out.println("session_name : " + session.getAttribute("session_name"));
+		System.out.println("session_cat : " + session.getAttribute("cat"));
 		if (session.getAttribute("code").equals("0")) {
 			//로그인 성공 
-			System.out.println("session_name : " + session.getAttribute("session_name"));
+			//System.out.println("session_name : " + session.getAttribute("session_name"));
 			UserInfo ui = (UserInfo)session.getAttribute("userinfo");
-			System.out.println(ui.getMyUser().getName());
+			
 			UserBean myuser = ui.getMyUser();
 			BeanUtils.copyProperties(loginbean, myuser);
 
@@ -46,7 +53,7 @@
 		<p>
 			(으)로 로그인하였습니다.
 			<button type="button"
-				onclick="location.href='${pageContext.request.contextPath}/LoginController/logout.do'">로그아웃</button>
+				onclick="location.replace('${pageContext.request.contextPath}/LoginController/logout.do')">로그아웃</button>
 	</h2>
 
 	</p>

@@ -6,7 +6,7 @@ public class UserInfo {
 	private UserBean myUser;
 	private int Code;
 	private String msg;
-
+	
 	public UserInfo() {
 
 	}

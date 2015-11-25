@@ -8,7 +8,7 @@ import kr.ac.mju.prompt.model.UserInfo;
 import kr.ac.mju.prompt.model.signupBean;
 
 @Service
-public class LoginService {
+public class ProjectService {
 
 	@Autowired
 	private LoginDAO loginDAO;
@@ -31,10 +31,5 @@ public class LoginService {
 		System.out.println("login Service.idcheck :"+id);
 
 		return loginDAO.checkID(id);
-	}
-	public signupBean showMember(String id, UserInfo userInfo) {
-		System.out.println("login Service.showMember :"+id +" " + userInfo.getMyUser().getCat());
-
-		return loginDAO.showMember(id, userInfo);
 	}
 }

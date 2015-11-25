@@ -1,3 +1,5 @@
+<%@page import="kr.ac.mju.prompt.model.signupBean"%>
+<%@page import="kr.ac.mju.prompt.model.UserInfo"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -18,7 +20,10 @@
 
 	<%
 		String sID = session.getAttribute("session_name").toString();
-		System.out.println("session ID " + sID);
+		UserInfo sUinfo = (UserInfo)session.getAttribute("userinfo");
+		signupBean showBean = (signupBean)request.getAttribute("showBean");
+		
+		System.out.println("session ID " + sID + " cat "+ sUinfo.getMyUser().getCat());
 	%>
 
 	<h2>내 정보 조회</h2>
@@ -29,7 +34,7 @@
 			</tr>
 		<tr>
 			<td>이름</td>
-			<td><input id="name" type="text" name="signupName" size="8" maxlength="8" disabled="disabled"></td>
+			<td><input id="name" type="text" name="signupName" size="8" maxlength="8" disabled="disabled" value="<%=showBean.getName() %>"></td>
 		</tr>
 		<tr>
 			<td>아이디</td>
@@ -104,19 +109,14 @@
 
 
 	<form
-		action="${pageContext.request.contextPath}/LoginController/updateMember"
+		action="${pageContext.request.contextPath}/LoginController/editMemberPage"
 		method="POST">
 		<input type="hidden" name="user_id" value=<%=sID%>>
 		<button>정보 수정하기</button>
 	</form>
 	
-	<form
-		action="${pageContext.request.contextPath}/LoginController/main"
-		method="GET">
-		
-		<button>메인화면으로</button>
-	</form>
-	
+	<button type="button"
+            onclick="location.replace('${pageContext.request.contextPath}/LoginController/main')">뒤로 가기</button>
 	
 	
 <%-- 

@@ -1,10 +1,9 @@
 package kr.ac.mju.prompt.model;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Map;
 
-public class signupBean {
+public class projectBean {
 	private String msg = "";
 	private int code;
 	// 기본 정보
@@ -22,26 +21,19 @@ public class signupBean {
 	private String a_career;
 	private String career;
 	private String portfolio;
-	
-	//등록 정보
-	private String Office_Number;
-	private Date Joining_Date;
-	private Date Retired_Date;
-	private String comment;
-	
 	// 개발자 정보
 	private String isFreeLancer;
 	private String language;
+	private int language_level;
 	private int tech_level;
 	private ArrayList language_list;
 	private ArrayList language_level_list;
-	
 	// 부서 정보
 	private int di;
 	private int permission;
 	private int position_Name;
 
-	public signupBean(String isFreeLancer, String name, String id, String password, String ssn, String phone,
+	public projectBean(String isFreeLancer, String name, String id, String password, String ssn, String phone,
 			String addr, String email, String gender, String a_career, String career, String portfolio,  ArrayList language_list,ArrayList language_level_list, String tech_level) {
 		
 		this.setIsFreeLancer(isFreeLancer);
@@ -63,7 +55,7 @@ public class signupBean {
 
 	}
 
-	public signupBean(String name,String id, String password, String ssn, String phone, String addr, String email, String gender,
+	public projectBean(String name,String id, String password, String ssn, String phone, String addr, String email, String gender,
 			String a_career, String career, String portfolio) {
 		
 		this.setName(name);
@@ -82,7 +74,7 @@ public class signupBean {
 	}
 	
 
-	public signupBean() {
+	public projectBean() {
 		// TODO Auto-generated constructor stub
 	}
 
@@ -198,6 +190,14 @@ public class signupBean {
 		this.language = language;
 	}
 
+	public int getLanguage_level() {
+		return language_level;
+	}
+
+	public void setLanguage_level(int language_level) {
+		this.language_level = language_level;
+	}
+
 	public int getTech_level() {
 		return tech_level;
 	}
@@ -253,41 +253,6 @@ public class signupBean {
 	public void setLanguage_level_list(ArrayList language_level_list) {
 		this.language_level_list = language_level_list;
 	}
-
-	public String getOffice_Number() {
-		return Office_Number;
-	}
-
-	public void setOffice_Number(String office_Number) {
-		Office_Number = office_Number;
-	}
-
-
-	public String getComment() {
-		return comment;
-	}
-
-	public void setComment(String comment) {
-		this.comment = comment;
-	}
-
-	public Date getJoining_Date() {
-		return Joining_Date;
-	}
-
-	public void setJoining_Date(Date joining_Date) {
-		Joining_Date = joining_Date;
-	}
-
-	public Date getRetired_Date() {
-		return Retired_Date;
-	}
-
-	public void setRetired_Date(Date retired_Date) {
-		Retired_Date = retired_Date;
-	}
-
-	
 
 
 

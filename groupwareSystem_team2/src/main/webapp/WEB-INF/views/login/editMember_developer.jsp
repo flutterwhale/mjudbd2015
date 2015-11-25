@@ -164,7 +164,7 @@ function idCheck(){
 			method="POST" name="myform">
 			<table id="developer_join" border="1">
 		<tr>
-			<td colspan="3"><h2>개인 정보</h2></td>
+			<td colspan="3"><h2>개인 정보 수정 페이지 </h2></td>
 			</tr>
 		<tr>
 			<td>이름</td>
@@ -250,6 +250,6 @@ function idCheck(){
 	<button type="submit" class="btn_signup">제출</button>
 	</form>
 	<button type="button"
-            onclick="location.replace('${pageContext.request.contextPath}/LoginController/logout.do')">뒤로 가기</button>
+            onclick="location.replace('${pageContext.request.contextPath}/LoginController/logout.do')">뒤로가기</button>
 </body>
 </html>

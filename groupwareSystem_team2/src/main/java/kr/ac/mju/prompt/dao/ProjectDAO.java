@@ -2,7 +2,6 @@ package kr.ac.mju.prompt.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -15,7 +14,7 @@ import kr.ac.mju.prompt.model.UserInfo;
 import kr.ac.mju.prompt.model.signupBean;
 
 @Repository
-public class LoginDAO {
+public class ProjectDAO {
 
 	public UserInfo login(int id, String PW) {
 		// TODO Auto-generated method stub
@@ -24,9 +23,10 @@ public class LoginDAO {
 		Statement stmt = null;
 		Connection conn = null;
 		ResultSet rs = null, rs2 = null;
+		ArrayList al = new ArrayList();
 		boolean loginsuccess = false;
-		UserBean user = new UserBean();
-		//UserBean b = new UserBean();
+
+		UserBean b = new UserBean();
 
 		try {
 
@@ -35,7 +35,7 @@ public class LoginDAO {
 			stmt = conn.createStatement();
 
 			String query = "SELECT * FROM dbd2015.t_user where User_Identifier ='" + id + "' ;";
-			
+
 			rs = stmt.executeQuery(query);
 
 			if (rs.next()) {
@@ -57,32 +57,45 @@ public class LoginDAO {
 																		// code
 					int gpermission = rs2.getInt("Permission"); // 권한 구분 !!
 					int gposition = rs2.getInt("Position_Name"); // 직급 !!!!
-					String cat = rs2.getString("cat");
 					System.out.println("loginDAO :  두번째 쿼리 결과" + gID + " pw " + gpw + " name " + gname + " permission "
 							+ gpermission + " Department code / name " + gdepart + " Position " + gposition);
 					loginsuccess = true;
 
-					user.setId(gID);
-					user.setPassword(gpw);
-					user.setName(gname);
-					user.setDi(gdepart);
-					user.setPermission(gpermission);
-					user.setPosition_Name(gposition);
-					user.setCat(cat);
-				
+					al.clear();
+					al.add(rs2.getInt("User_Identifier"));
+					b.setId(gID);
+					al.add(rs2.getString("Password"));
+					b.setPassword(gpw);
+					al.add(rs2.getString("Name"));
+					b.setName(gname);
+					al.add(rs2.getInt("Department_Identifier"));
+					b.setDi(gdepart);
+					al.add(rs2.getInt("Permission"));
+					b.setPermission(gpermission);
+					al.add(rs2.getInt("Position_Name"));
+					b.setPosition_Name(gposition);
+
+					rs2.close();
 				} else { // pw가 없음.
 					System.out.println("loginDAO : PW가 일치 하지 않습니다.");
 					System.out.println("loginDAO : PW불일치로 로그인 실패");
 					Uinfo.setErrorCode(121);
-					user.setMsg("121");
+					b.setMsg("121");
+					rs2.close();
 				}
+				rs.close();
+				stmt.close();
+				conn.close();
 			} else {// id 가 없음
 
 				loginsuccess = false;
 				System.out.println("loginDAO : 아이디가 존재하지 않습니다.");
 				System.out.println("loginDAO : ID 없음으로  로그인 실패");
 				Uinfo.setErrorCode(122);
-				user.setMsg("122");
+				b.setMsg("122");
+				rs.close();
+				stmt.close();
+				conn.close();
 			}
 
 		} catch (SQLException e) {
@@ -114,15 +127,21 @@ public class LoginDAO {
 			}
 
 		}
-		
+		UserBean user = new UserBean();
+
 		if (loginsuccess) {
 
-			
+			user.setId((Integer) al.get(0));
+			user.setPassword(al.get(1).toString());
+			user.setName(al.get(2).toString());
+			user.setDi((Integer) al.get(3));
+			user.setPermission((Integer) al.get(4));
+			user.setPosition_Name((Integer) al.get(5));
 
 			System.out.println("loginDAO : 로그인 성공 ");
 			Uinfo.setMyUser(user);
 			Uinfo.setErrorCode(0);
-			user.setMsg("0");
+			b.setMsg("0");
 			return Uinfo;
 
 		} else {
@@ -327,14 +346,15 @@ public class LoginDAO {
 
 	}
 
-	public signupBean showMember(String id, UserInfo userInfo) {
+	public signupBean showMember(String id) {
 
-		System.out.println(" login DAO.showMember: 개인 정보 확인 id " + id + ":  cat :" + userInfo.getMyUser().getCat());
+		System.out.println(" login DAO.showMember: 개인 정보 확인");
+		UserInfo Uinfo = new UserInfo();
 		Statement stmt = null;
 		Connection conn = null;
 		ResultSet rs = null, rs2 = null;
 
-		signupBean member = new signupBean();
+		signupBean member =new signupBean();
 		try {
 
 			Class.forName("com.mysql.jdbc.Driver");
@@ -344,37 +364,19 @@ public class LoginDAO {
 			String query1 = "SELECT * FROM dbd2015.t_user join dbd2015.t_position on t_user.User_Identifier = t_position.User_Identifier  join  dbd2015.t_department on t_department.Department_Identifier = t_position.Department_Identifier  WHERE t_user.User_Identifier = '"
 					+ id + "' ;";
 
-			System.out.println("loginDAO.showMember : 쿼리 > " + query1);
+			System.out.println("loginDAO.showMember : 쿼리 >" + query1);
 			rs = stmt.executeQuery(query1);
 
 			if (rs.first()) {
-				member.setIsFreeLancer(rs.getString("cat"));
 
 				member.setId(Integer.parseInt(id));
 				member.setName(rs.getString("Name"));
-				member.setSsn(rs.getString("SocialSecurtyNum"));
-				member.setGender(Integer.parseInt(rs.getString("Gender")));
-				member.setPhone(rs.getString("Phone_Number"));
-				member.setEmail(rs.getString("Email"));
-				member.setPassword(rs.getString("Password"));
-				member.setAddr(rs.getString("Address"));
-				member.setA_career(rs.getString("Academic_Career"));
 
-				member.setCareer(rs.getString("Career"));
-				member.setJoining_Date(rs.getDate("Joining_Date"));
-				member.setRetired_Date(rs.getDate("Retired_Date"));
-				member.setComment(rs.getString("comment"));
-				member.setOffice_Number(rs.getString("office_Number"));
-				member.setPortfolio(rs.getString("Career_File"));
+				
+				int gdepart = rs.getInt("Department_Identifier"); // 부서
+				int gpermission = rs.getInt("Permission"); // 권한 구분 !!
+				int gposition = rs.getInt("Position_Name"); // 직급 !!!!
 
-				member.setPermission(rs.getInt("Permission"));
-				member.setPosition_Name(rs.getInt("Position_Name"));
-				member.setDi(rs.getInt("Department_Identifier"));
-
-				member.setTech_level(Integer.parseInt(rs.getString("Technic_Level")));
-				// 별도 쿼리 필요
-				// member.setLanguage_list(language_list);
-				// member.setLanguage_level_list(language_level_list);
 
 			}
 
@@ -408,81 +410,6 @@ public class LoginDAO {
 
 		}
 		return member;
-	}
-
-	public ArrayList<signupBean> getDepartUser(String di) {
-		// TODO Auto-generated method stub
-		/* 해당 부서 직원 리스트 */
-		ArrayList<signupBean> sb_list = new ArrayList<signupBean>();
-		PreparedStatement pstmt = null;
-		Connection conn = null;
-		ResultSet rs = null;
-
-		try {
-
-			Class.forName("com.mysql.jdbc.Driver");
-			Connection connection = DriverManager.getConnection("jdbc:mysql://117.123.66.137:8089/dbd2015", "park",
-					"pjw49064215");
-
-			String query = "SELECT LectureID,LectureName,Hackjeom,currentNum,LimitNum, semester FROM lms.tlecture WHERE LteacherID=?;";
-			conn = connection;
-			pstmt = (PreparedStatement) conn.prepareStatement(query);
-
-			pstmt.setString(1, di);
-			rs = pstmt.executeQuery();
-
-			System.out.println("부서 아이디 " + di);
-			sb_list.clear();
-
-			while (rs.next()) {
-
-				System.out.println(rs.getString("LectureName") + " " + rs.getString("LectureID"));
-				signupBean sb = new signupBean();
-				/*
-				 * lecture.setLectureID(rs.getInt("LectureID"));
-				 * lecture.setLectureName(rs.getString("LectureName"));
-				 * lecture.setSemester(rs.getString("semester"));
-				 * lecture.setHackjeom(rs.getInt("Hackjeom"));
-				 * lecture.setCurNum(rs.getInt("currentNum"));
-				 * lecture.setLimitNum(rs.getInt("LimitNum"));
-				 */
-
-				sb_list.add(sb);
-
-			}
-
-			rs.close();
-			pstmt.close();
-			conn.close();
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			try {
-				if (rs != null) {
-					rs.close();
-				}
-
-				if (pstmt != null) {
-					pstmt.close();
-				}
-
-				if (conn != null) {
-					conn.close();
-				}
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-		}
-
-		return sb_list;
-
 	}
 
 	public signupBean editMember(signupBean sb) {

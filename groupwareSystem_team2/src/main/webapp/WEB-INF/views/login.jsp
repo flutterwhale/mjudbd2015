@@ -6,12 +6,10 @@
 <%@ page import="kr.ac.mju.prompt.model.UserInfo"%>
 <%@ page import="kr.ac.mju.prompt.model.UserBean"%>
 <%@page import="org.apache.commons.beanutils.BeanUtils"%>
-<script language="javascript">
+<!-- <script language="javascript">
 	history.go(1);
 </script>
-
-
-
+ -->
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -21,35 +19,35 @@
 <title>Main</title>
 </head>
 <body>
-	<jsp:useBean id="loginbean" class="kr.ac.mju.prompt.model.UserBean"
-		scope="session" />
+
 	<%
 		response.setHeader("pragma", "no-cache");
 		response.setHeader("Cache-control", "no-cache, no-store, must-revalidate");
 		response.setHeader("Expires", "0");
 
-		System.out.println("code : " + session.getAttribute("code"));
-		System.out.println("session_name : " + session.getAttribute("session_name"));
-		if (session.getAttribute("code").equals("0")) {
-			//로그인 성공 
-			System.out.println("session_name : " + session.getAttribute("session_name"));
-			UserInfo ui = (UserInfo)session.getAttribute("userinfo");
-			System.out.println(ui.getMyUser().getName());
-			UserBean myuser = ui.getMyUser();
-			//session.setAttribute("myUser", myuser);
-			session.setAttribute("session_name", myuser.getName());
-			BeanUtils.copyProperties(loginbean, myuser);
+		if (session.getAttribute("code") == null) {
+			response.sendRedirect("home");
 
-			loginbean.setCode(ui.getErrorCode());
-
-			System.out.println(" loginbean test  " + loginbean.getId() + " : " + loginbean.getCode());
-		
-			
 		}
-		response.sendRedirect("main");
-		 
+
+		System.out.println(
+				"code : " + session.getAttribute("code") + " / " + session.getAttribute("code").getClass());
+		System.out.println("session_name : " + session.getAttribute("session_name"));
+		//if (session.getAttribute("code").equals("0")) {
+		//로그인 성공 
+		System.out.println("session_name : " + session.getAttribute("session_name"));
+		UserInfo ui = (UserInfo) session.getAttribute("userinfo");
+		UserBean myuser = ui.getMyUser();
+		session.setAttribute("myUser", myuser);
+		session.setAttribute("session_name", myuser.getName());
+
+		//}
+		//response.sendRedirect("/LoginController/main");
 	%>
-<%-- 	<jsp:forward page ="/LoginController/main"  /> --%>
+	<%-- 	<jsp:forward page ="/LoginController/main"  /> --%>
+	<script language="javascript">
+		location.replace('main');
+	</script>
 
 </body>
 </html>
