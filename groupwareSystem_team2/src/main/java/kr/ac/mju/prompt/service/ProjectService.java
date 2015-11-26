@@ -45,4 +45,24 @@ public class ProjectService {
 		
 		return projectDAO.getUserInfo(string);
 	}
+	
+	public projectBean insertProject (String pid,String oid){
+		logger.info("insertProject  pm id : "+pid+ " oId : "+oid);
+	
+		return projectDAO.intsertProject(pid, oid);
+	}
+
+	public obtainBean insertObtain(String wid) {
+		// TODO Auto-generated method stub
+		logger.info("insertObtain  writer id : "+wid);
+		
+		return projectDAO.insertObtain(wid);
+	}
+	public obtainBean getObtains(String oid) {
+		// TODO Auto-generated method stub
+		logger.info("selectObtain  oid : "+oid);
+		
+		return projectDAO.showObtain(oid);
+	}
+	
 }

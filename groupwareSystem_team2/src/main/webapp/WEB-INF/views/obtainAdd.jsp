@@ -64,14 +64,14 @@
 						for (UserBean c : list) {
 				%>
 				<tr>
-					<td><input type="radio" name="pm" value="<%=c.getId()%>"></td><td><%=c.getName() %>/<%=c.getId()%></td>
+					<td><input type="radio" name="pm" value="<%=c.getId()%>"></td><td><a href='${pageContext.request.contextPath}/LoginController/retrieveUser?id=<%=c.getId()%>'><%=c.getId()%></a> / <%=c.getName() %></td>
 				</tr>
 				<%
 					}
 					}
 				%>
 				<tr>
-					<td><button type="submit" class="btn btn-primary">완료</button>
+					<td><button type="submit" class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/ProjectController/showObtainTable'">>완료</button>
 				</tr>
 				
 			</table>

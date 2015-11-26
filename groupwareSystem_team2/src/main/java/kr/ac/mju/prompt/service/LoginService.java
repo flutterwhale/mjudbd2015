@@ -40,4 +40,13 @@ public class LoginService {
 
 		return loginDAO.showMember(id);
 	}
+	public signupBean updateMember(signupBean userInfo){
+		return loginDAO.editMember(userInfo);
+	}
+	public void deleteMemberLanguage(String id){
+		loginDAO.deleteLanguage(id);
+	}
+	public int searchMemberDepart(String id){
+		return loginDAO.searchDepart(id);
+	}
 }

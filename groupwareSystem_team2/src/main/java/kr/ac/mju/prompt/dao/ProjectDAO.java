@@ -405,61 +405,7 @@ public class ProjectDAO {
 
 	}
 
-	public String checkID(String id) {
-		System.out.println("id 중복 확인" + id);
-		String result = null;
-		Statement stmt = null;
-		Connection conn = null;
-		ResultSet rs = null;
-
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			conn = DriverManager.getConnection("jdbc:mysql://117.123.66.137:8089/dbd2015", "park", "pjw49064215");
-			stmt = conn.createStatement();
-			String query = "SELECT * FROM dbd2015.t_user where User_Identifier ='" + id + "' ;";
-
-			rs = stmt.executeQuery(query);
-
-			if (rs.next()) {
-
-				int rID = rs.getInt("User_Identifier");
-				System.out.println("loginDAO.checkID: " + id + " -> " + rID + " 아이디가 존재 합니다.");
-				result = "false";
-			} else {
-
-				System.out.println("loginDAO.checkID: " + id + " 해당 아이디는 사용 가능합니다.");
-				result = "true";
-			}
-
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			try {
-				if (rs != null) {
-					rs.close();
-				}
-
-				if (stmt != null) {
-					stmt.close();
-				}
-
-				if (conn != null) {
-					conn.close();
-				}
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-		}
-
-		return result;
-
-	}
+	
 
 	public ArrayList<UserBean> showMember_permssion(int p) {
 
@@ -654,5 +600,90 @@ public class ProjectDAO {
 		}
 
 		return sb;
+	}
+	public projectBean intsertProject(String pid , String oid){
+		logger.info("intsertProject : pid "+pid+ " oid " + oid);
+		//프로젝트 추가 로직, 선택된 pm id 와 수주 번호
+	projectBean pjBean = new projectBean();
+	
+	//select   oid  값 불러와서 
+	// insert project 에 설명과 기타 등등. 
+	
+	
+		return pjBean;
+	}
+
+	public obtainBean showObtain(String oid) {
+		logger.info("showObtain : " + oid);
+		// TODO Auto-generated method stub
+		obtainBean ob = null ;
+		
+		//insert query
+		
+		String result = null;
+		Statement stmt = null;
+		Connection conn = null;
+		ResultSet rs = null;
+
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = DriverManager.getConnection("jdbc:mysql://117.123.66.137:8089/dbd2015", "park", "pjw49064215");
+			stmt = conn.createStatement();
+			String query = "SELECT Obtain_Order_Identifier, Obtain_Name,Start_Date,End_Date,Present_Status,Order_Company,t_obtain_order.Comment AS oComment,Writer_User, t_user.Name AS writer_name FROM dbd2015.t_obtain_order join dbd2015.t_user on t_user.User_Identifier = dbd2015.t_obtain_order.Writer_User where Obtain_Order_Identifier='" + oid + "' ;";
+
+			rs = stmt.executeQuery(query);
+
+			if (rs.first()) {
+
+				int oID = rs.getInt("Obtain_Order_Identifier");
+				logger.info(" result  id:  "+ oid + " "+ rs.getString("Obtain_Name"));
+
+				
+				
+				
+				ob = new obtainBean(oID,rs.getString("Obtain_Name"),rs.getString("oComment"),rs.getInt("Present_Status"),rs.getString("Order_Company"),rs.getDate("Start_Date"),rs.getDate("End_Date"),rs.getInt("Writer_User"),rs.getString("writer_name"));
+				
+				
+			}
+
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+
+				if (stmt != null) {
+					stmt.close();
+				}
+
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+
+		return ob;
+
+		
+	}
+	
+	public obtainBean insertObtain(String wid) {
+		logger.info("insertObtain : " + wid);
+		// TODO Auto-generated method stub
+		obtainBean ob = new obtainBean();
+		
+		//insert query
+		
+		return null;
 	}
 }

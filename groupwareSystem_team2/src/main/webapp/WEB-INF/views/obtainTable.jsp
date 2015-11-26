@@ -70,17 +70,17 @@
 				%>
 				
 				<tr align="center">
-					<td><%=c.getObtain_Order_Identifier() %></td>
-					<td><%=c.getObtain_Name() %></td>
+					<td><a href='${pageContext.request.contextPath}/ProjectController/showObtainInformation?oid=<%=c.getObtain_Order_Identifier() %>'><%=c.getObtain_Order_Identifier() %></a></td>
+					<td><a href='${pageContext.request.contextPath}/ProjectController/showObtainInformation?oid=<%=c.getObtain_Order_Identifier() %>'><%=c.getObtain_Name() %></td>
 					<td><%=c.getStart_Date() %></td>
 					<td><%=c.getEnd_Date() %></td>
 					<td><%=c.getComment() %></td>
 					<td><%=c.getOrder_Company()%></td>
-					<td><%=c.getWriter_User()%>/<%=c.getWriter_name() %></td>
+					<td><a href='${pageContext.request.contextPath}/LoginController/retrieveUser?id=<%=c.getWriter_User()%>'><%=c.getWriter_User()%></a>/<%=c.getWriter_name() %></td>
 					<td><%=c.getPresent_Status() %></td>
 					<td>
 						<button type="button" class="btn btn-success"
-							onclick="location.href='${pageContext.request.contextPath}/ProjectController/showObtainAdd'">추가
+							onclick="location.href='${pageContext.request.contextPath}/ProjectController/showObtainAdd?oid=<%=c.getObtain_Order_Identifier()%>'">추가
 						</button>
 					</td>
 				</tr>
@@ -94,7 +94,7 @@
 	<div class="main_button">
 
 		<button type="button" class="btn btn-primary"
-			onclick="location.href='${pageContext.request.contextPath}/ProjectController/showObtainInformation'">수주
+			onclick="location.href='${pageContext.request.contextPath}/ProjectController/newObtain'">제안 올리기
 		</button>
 		 <button type="button" class="btn btn-default"
             onclick="location.replace('${pageContext.request.contextPath}/LoginController/main')">메인화면</button>

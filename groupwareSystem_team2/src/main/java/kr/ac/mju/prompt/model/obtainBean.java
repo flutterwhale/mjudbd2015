@@ -15,7 +15,21 @@ public class obtainBean {
 	private String Writer_name;
 	
 	
-	public obtainBean(){
+	public obtainBean(int obtain_Order_Identifier, String obtain_Name, String comment, int present_Status,
+			String order_Company, Date start_Date, Date end_Date, int writer_User, String writer_name) {
+		super();
+		Obtain_Order_Identifier = obtain_Order_Identifier;
+		Obtain_Name = obtain_Name;
+		Comment = comment;
+		Present_Status = present_Status;
+		Order_Company = order_Company;
+		Start_Date = start_Date;
+		End_Date = end_Date;
+		Writer_User = writer_User;
+		Writer_name = writer_name;
+	}
+	public obtainBean() {
+		// TODO Auto-generated constructor stub
 	}
 	public int getObtain_Order_Identifier() {
 		return Obtain_Order_Identifier;

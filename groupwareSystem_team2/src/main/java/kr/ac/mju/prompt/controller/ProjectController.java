@@ -34,6 +34,60 @@ public class ProjectController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(ProjectController.class);
 
+	
+	@RequestMapping(value = "/ProjectController/newProject", method = RequestMethod.GET)
+	public ModelAndView InsertProject(HttpSession session,HttpServletRequest request) {
+		logger.info("InsertProject:프로젝트 추가하기 pid: "+request.getParameter("pid") +" oid : "+request.getParameter("oid"));
+		if (session.getAttribute("session_name") != null) {
+
+			logger.info(session.getAttribute("session_name").toString() + " 해당 사용자가 로그인중입니다. ");
+		}
+
+		
+		ModelAndView model = new ModelAndView();
+		projectBean pjBean = projectService.insertProject(request.getParameter("pid"), request.getParameter("oid"));
+		model.addObject("ProjectBean", pjBean);
+		model.setViewName("projectInformation"); // jsp 이름 (view이름)
+
+		return model;
+	}
+	@RequestMapping(value = "/ProjectController/showObtainInformation", method = RequestMethod.GET)
+	public ModelAndView showObtain(HttpSession session, HttpServletRequest request) {
+		logger.info("showObtain:제안서 정보 oid: "+request.getParameter("oid") );
+		if (session.getAttribute("session_name") != null) {
+
+			logger.info(session.getAttribute("session_name").toString() + " 해당 사용자가 로그인중입니다. ");
+		}
+
+		
+		ModelAndView model = new ModelAndView();
+		obtainBean obtainBean = projectService.getObtains(request.getParameter("oid"));
+		model.addObject("obtainBean", obtainBean);
+		model.setViewName("obtainInformation"); // jsp 이름 (view이름)
+
+		return model;
+	}
+	
+	
+	@RequestMapping(value = "/ProjectController/newObtain", method = RequestMethod.GET)
+	public ModelAndView InsertObtain(HttpSession session,HttpServletRequest request) {
+		logger.info("InsertObtain:제안서 추가하기 pid: "+request.getParameter("wid") );
+		if (session.getAttribute("session_name") != null) {
+
+			logger.info(session.getAttribute("session_name").toString() + " 해당 사용자가 로그인중입니다. ");
+		}
+
+		
+		ModelAndView model = new ModelAndView();
+		obtainBean obtainBean = projectService.insertObtain(request.getParameter("wid"));
+		model.addObject("obtainBean", obtainBean);
+		model.setViewName("obtainTable"); // jsp 이름 (view이름)
+
+		return model;
+	}
+	
+	
+	
 	@RequestMapping(value = "/ProjectController/showProjectTable", method = RequestMethod.GET)
 	public ModelAndView showProjectTable(HttpSession session) {
 		logger.info("showProjectTable:프로젝트 전체 목록 보기");
@@ -81,27 +135,12 @@ public class ProjectController {
 		return model;
 	}
 
-	@RequestMapping(value = "/ProjectController/showObtainInformation", method = RequestMethod.GET)
-	public String showObtainInformation(HttpSession session, Locale locale, Model model) {
-		logger.info("Welcome home! The client locale is {}.", locale);
-		if (session.getAttribute("session_name") != null) {
-
-			logger.info(session.getAttribute("session_name").toString() + " 해당 사용자가 로그인중입니다. ");
-		}
-		Date date = new Date();
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-
-		String formattedDate = dateFormat.format(date);
-
-		model.addAttribute("serverTime", formattedDate);
-
-		return "obtainInformation";// jsp 파일 이름.
-	}
+	
 
 	//permission == pm 검색 
 	@RequestMapping(value = "/ProjectController/showObtainAdd", method = RequestMethod.GET)
-	public ModelAndView showObtainAdd(HttpSession session) {
-		logger.info("showObtainAdd:권한으로 검색하기");
+	public ModelAndView showObtainAdd(HttpSession session,HttpServletRequest request) {
+		logger.info("showObtainAdd: PM 추가 페이지 이동 , 제안서 id "+request.getParameter("oid"));
 
 		ModelAndView model = new ModelAndView();
 		ArrayList<UserBean> permissionlist = projectService.getMember_permission(11);

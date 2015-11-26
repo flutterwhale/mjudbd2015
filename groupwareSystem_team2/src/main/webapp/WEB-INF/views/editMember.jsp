@@ -210,7 +210,8 @@
 		         <div class="form-group">
 		            <label for="inputname" class="col-sm-4 control-label">아이디</label>
 		             <div class="col-sm-2">
-		                  <input type="text" class="form-control" style="width:200px;" id="id" name="signupID" placeholder="8자리 숫자 사용" size="8" maxlength="8" disabled="disabled" value="<%=showBean.getId()%>">
+		                  <input type="text" class="form-control" style="width:200px;" id="id" name="signupIDDisable" placeholder="8자리 숫자 사용" size="8" maxlength="8" disabled="disabled" value="<%=showBean.getId()%>">
+		             	  <input type="hidden" class="form-control" style="width:200px;" id="id" name="signupID" placeholder="8자리 숫자 사용" size="8" maxlength="8" value="<%=showBean.getId()%>">
 		             </div>
 		          </div>
 		         <div class="form-group">

@@ -510,7 +510,7 @@ public class LoginDAO {
 		Statement stmt = null;
 		Connection conn = null;
 		ResultSet rs = null;
-		int result, result2 = 0, result3 = 0;
+		int result, result2 = 0;
 
 		System.out.println("가입. name " + sb.getName() + " IsFreeLancer : " + sb.getIsFreeLancer());
 
@@ -522,71 +522,46 @@ public class LoginDAO {
 
 			System.out.println("프리랜서? " + sb.getIsFreeLancer());
 
-			String query = "INSERT INTO `dbd2015`.`t_user` (`Name`,`User_Identifier`, `SocialSecurtyNum`, `Gender`, `Phone_Number`, `Address`, `Academic_Career`, `Technic_Level`, `Career`, `Email`, `Password`) "
-					+ "VALUES ('" + sb.getName() + "', '" + sb.getId() + "', '" + sb.getSsn() + "', '" + sb.getGender()
-					+ "', '" + sb.getPhone() + "', '" + sb.getAddr() + "', '" + sb.getA_career() + "', '"
-					+ sb.getTech_level() + "', '" + sb.getCareer() + "', '" + sb.getEmail() + "', '" + sb.getPassword()
-					+ "');";
-
+			String query = 
+					"UPDATE dbd2015.t_user SET "
+					+ "Phone_Number="+"'"+sb.getPhone()+"'"+", "
+					+ "Address="+"'"+sb.getAddr()+"'"+", "
+					+ "Academic_Career="+"'"+sb.getA_career()+"'"+", "
+					+ "Technic_Level="+"'"+sb.getTech_level()+"'"+", "
+					+ "Career="+"'"+sb.getCareer()+"'"+", "
+					+ "Career_File="+"'"+"./none"+"' ,"
+					+ "Email="+"'"+sb.getEmail()+"'"+", "
+					+ "Password="+"'"+sb.getPassword()+"'"
+					+ " WHERE `User_Identifier`="+"'"+sb.getId()+"';";
+					
 			System.out.println("insert query? : " + query);
 
 			result = stmt.executeUpdate(query);
-			if (sb.getIsFreeLancer().isEmpty()) {
-				System.out.println("일반 직원 속성 추가");
-				query = "INSERT INTO `dbd2015`.`t_position` (`Department_Identifier`, `User_Identifier`, `Position_Name`) VALUES ('0', '"
-						+ sb.getId() + "', '0');";
-				result2 = stmt.executeUpdate(query);
+			
+			int depart_id=searchDepart(Integer.toString(sb.getId()));
+			
+			/*if (depart_id == 17 || depart_id == 99) {
 
-			} else if (sb.getIsFreeLancer().equals("Common")) {
-				System.out.println("일반 개발자 속성 추가");
+				ArrayList ll = sb.getLanguage_list();
+				ArrayList lll = sb.getLanguage_level_list();
+				for (int i = 0; i <= ll.size(); i++) {
+					query = "INSERT INTO dbd2015.t_programming_technical_level (Language, Language_Level, User_Identifier) VALUES ('"
+							+ ll.get(i) + "', '" + lll.get(i) + "', '" + sb.getId() + "');";
 
-				query = "INSERT INTO `dbd2015`.`t_position` (`Department_Identifier`, `User_Identifier`, `Position_Name`) VALUES ('0', '"
-						+ sb.getId() + "', '0');";
-				result2 = stmt.executeUpdate(query);
-
-				if (result2 == 1) {
-
-					ArrayList ll = sb.getLanguage_list();
-					ArrayList lll = sb.getLanguage_level_list();
-					for (int i = 0; i <= ll.size(); i++) {
-						query = "INSERT INTO `dbd2015`.`t_programming_technical_level` (`Language`, `Language_Level`, `User_Identifier`) VALUES ('"
-								+ ll.get(i) + "', '" + lll.get(i) + "', '" + sb.getId() + "');";
-
-						System.out.println(" 프로그래밍 언어 추가 : " + query);
-						if (stmt.executeUpdate(query) == 1) {
-							result2 = 0;
-							System.out.println("언어 추가 실패");
-							break;
-						}
+					System.out.println(" 프로그래밍 언어 추가 : " + query);
+					if (stmt.executeUpdate(query) == 1) {
+						result2 = 0;
+						System.out.println("언어 추가 실패");
+						break;
+					}else{
+						result2 = 1;
 					}
 				}
-
-			} else if (sb.getIsFreeLancer().equals("FreeLancer")) {
-
-				System.out.println("프리랜서 기본 속성 추가");
-				query = "INSERT INTO `dbd2015`.`t_position` (`Department_Identifier`, `User_Identifier`, `Position_Name`) VALUES ('00', '"
-						+ sb.getId() + "', '99');";
-				result2 = stmt.executeUpdate(query);
-
-				if (result2 == 1) {
-
-					ArrayList ll = sb.getLanguage_list();
-					ArrayList lll = sb.getLanguage_level_list();
-					for (int i = 0; i <= ll.size(); i++) {
-						query = "INSERT INTO `dbd2015`.`t_programming_technical_level` (`Language`, `Language_Level`, `User_Identifier`) VALUES ('"
-								+ ll.get(i) + "', '" + lll.get(i) + "', '" + sb.getId() + "');";
-
-						System.out.println(" 프로그래밍 언어 추가 : " + query);
-						if (stmt.executeUpdate(query) == 1) {
-							result2 = 0;
-							System.out.println("언어 추가 실패");
-							break;
-						}
-					}
-				}
-			}
-
-			if (result == 1 && result2 == 1) {
+			}else{
+				result2 = 1;
+			}*/
+			result2 = 1;
+			if (result == 1 && result2 ==1) {
 
 				System.out.println("insert 쿼리 성공");
 
@@ -631,5 +606,117 @@ public class LoginDAO {
 		}
 
 		return sb;
+	}
+	public void deleteLanguage(String id) {
+
+		System.out.println("개인 정보 수정");
+		Statement stmt = null;
+		Connection conn = null;
+		ResultSet rs = null;
+		int result = 0;
+
+		try {
+
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = DriverManager.getConnection("jdbc:mysql://117.123.66.137:8089/dbd2015", "park", "pjw49064215");
+			stmt = conn.createStatement();
+
+
+			String query = 
+					"DELETE * FROM t_programming_technical_level WHERE User_Identifier="+"'"+id+"';";
+							
+			System.out.println("insert query? : " + query);
+
+			result = stmt.executeUpdate(query);
+			
+			if (result == 1) {
+				System.out.println("delete 쿼리 성공");
+			} else {
+				System.out.println("쿼리 실패");
+			}
+
+			stmt.close();
+			conn.close();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			// e.printStackTrace();
+			System.out.println("잘못된 값이 들어 왔습니다.");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+
+				if (stmt != null) {
+					stmt.close();
+				}
+
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+
+	}
+	public int searchDepart(String id) {
+		
+		System.out.println("개인의 부서정보 조회");
+		int result = 0;
+		Statement stmt = null;
+		Connection conn = null;
+		ResultSet rs = null;
+
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = DriverManager.getConnection("jdbc:mysql://117.123.66.137:8089/dbd2015", "park", "pjw49064215");
+			stmt = conn.createStatement();
+			String query = "SELECT * FROM t_position WHERE User_Identifier='"+id+"';";
+			System.out.println("insert query? : " + query);
+
+			rs = stmt.executeQuery(query);
+
+			if (rs.next()) {
+				int rID = rs.getInt("Department_Identifier");
+				result = rID;
+			} else {
+				result = 0;
+			}
+
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+
+				if (stmt != null) {
+					stmt.close();
+				}
+
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+
+		return result;
+
 	}
 }

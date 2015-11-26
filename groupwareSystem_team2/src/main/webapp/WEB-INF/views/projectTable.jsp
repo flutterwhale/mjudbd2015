@@ -109,7 +109,7 @@
 						<td width="250px"><%=c.getEnd_Date()%></td>
 						<td width="300px"><%=c.getProject_Description()%></td>
 						<td width="200px"><%=c.getDispatch_Location()%></td>
-						<td width="200px"><%=c.getProjectmanager_Identifier()%>/<%=c.getPM_name()%></td>
+						<td width="200px"><a href='${pageContext.request.contextPath}/LoginController/retrieveUser?id=<%=c.getProjectmanager_Identifier()%>'><%=c.getProjectmanager_Identifier()%></a>/<%=c.getPM_name()%></td>
 						<td width="180px"><%=c.getStatus()%></td>
 					</tr>
 

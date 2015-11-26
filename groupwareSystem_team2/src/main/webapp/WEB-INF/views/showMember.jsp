@@ -140,13 +140,13 @@
 	       	<div class="form-group">
 	       	</div>
 	        
-	         <div class="form-group">
+	       <div class="form-group">
 	            <label for="inputname" class="col-sm-4 control-label">고용관계</label>
 	            <div class="col-sm-2">
-			        <label class="radio-inline"><input type="radio" value="FreeLancer" name="isFreelancer" disabled="disabled"<% if(!showBean.getIsFreeLancer().equals("common")){  %>checked <%} %>> 프리랜서</label>
+			        <label class="radio-inline"><input type="radio" value="FreeLancer" name="isFreelancer" disabled="disabled"<% if(showBean.getDi()==99){  %>checked <%} %>> 프리랜서</label>
 		        </div>
 		        <div class="col-sm-2">
-			        <label class="radio-inline"><input type="radio" value="common" name="isFreelancer"  disabled="disabled" <% if(showBean.getIsFreeLancer().equals("common")){  %>checked <%} %>> 정직원</label> 
+			        <label class="radio-inline"><input type="radio" value="common" name="isFreelancer"  disabled="disabled" <% if(showBean.getDi()==17){  %>checked <%} %>> 정직원</label> 
 		        </div>
 	         </div>
 	          

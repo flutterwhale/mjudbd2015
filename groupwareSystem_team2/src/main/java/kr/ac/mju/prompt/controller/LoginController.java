@@ -318,8 +318,8 @@ public class LoginController {
 
 			logger.info(session.getAttribute("session_name").toString() + " 해당 사용자가 로그인중입니다. ");
 		}	
-		String cat = (String) request.getAttribute("cat");
-		String id = (String) request.getAttribute("sID");
+		String cat = (String) request.getParameter("cat");
+		String id = (String) request.getParameter("id");
 		
 		logger.info("정보 업데이트 : cat : " + cat + " id " + id);
 
@@ -339,26 +339,77 @@ public class LoginController {
 
 	}
 	@RequestMapping(value = "/LoginController/updateMember.do", method = RequestMethod.POST)
-	public String updateMember(HttpSession session, HttpServletRequest request) {
+	public String updateMember(HttpSession session, HttpServletRequest request) throws UnsupportedEncodingException {
 		if (session.getAttribute("session_name") != null) {
-
-			logger.info(session.getAttribute("session_name").toString() + " 해당 사용자가 로그인중입니다. ");
+			//logger.info(session.getAttribute("session_name").toString() + " �빐�떦 �궗�슜�옄媛� 濡쒓렇�씤以묒엯�땲�떎. ");
 		}	
-		String cat = (String) request.getAttribute("cat");
-		String id = (String) request.getAttribute("sID");
+		request.setCharacterEncoding("utf-8");
+		String id = (String) request.getParameter("signupID");
 		
-		logger.info("정보 업데이트 : cat : " + cat + " id " + id);
-
+		String pw1 = (String) request.getParameter("signupPW");
 		
-		if (cat == null) { // null 값이면 일반 사용자  //common은 일반 개발자 //FreeLancer는 외부자 
-			logger.info("signup_common");
-			return "editMember";
+		String password = request.getParameter("signupPW");// 鍮꾨�踰덊샇
 
-		} else {
-			logger.info("signup_developer");
-			return "editMember_developer";
-		}
+		String phone = request.getParameter("phone");// �뿰�씫泥�
+		String email = request.getParameter("email");// �뿰�씫泥�
+		String addr = request.getParameter("address"); // 二쇱냼
+		
+		// 湲고� �젙蹂�
+		String university = request.getParameter("university"); // 理쒖쥌�븰�젰
+		String major = request.getParameter("major");
+		String depart = request.getParameter("depart");
+		String graduation = request.getParameter("graduation");
+		String academic_career = university + "." + depart + "." + major + "." + graduation;
 
+		String career = request.getParameter("career");
+
+		String portfolio = request.getParameter("portfolio");
+		
+		int part_id = loginService.searchMemberDepart(id);
+		
+		signupBean sb = new signupBean();//湲곕낯�젙蹂� 誘몃━ 鍮덉뿉 �떞�븘�몺.
+		
+		sb.setId(Integer.parseInt(id));
+		sb.setPassword(password);
+		sb.setPhone(phone);
+		sb.setAddr(addr);
+		sb.setEmail(email);
+		sb.setA_career(academic_career);
+		sb.setCareer(career);
+		sb.setPortfolio(portfolio);
+		
+		System.out.println("遺��꽌 ID " + part_id);
+		
+		/*if(part_id==17||part_id==99){
+			loginService.deleteMemberLanguage(id);//�궗�슜�옄 �븘�씠�뵒瑜� �봽濡쒓렇�옒諛� �뼵�뼱 �궡�뿭�쓽 �궘�젣
+			
+			int tech_level = Integer.parseInt(request.getParameter("tech_level").toString());
+			sb.setTech_level(tech_level);
+			
+			int language_count = Integer.parseInt(request.getParameter("language_count"));
+			System.out.println("異붽��맂 language 媛쒖닔 " + language_count);
+	
+			ArrayList<String> language_list = new ArrayList<String>();
+			ArrayList<Integer> language_level_list = new ArrayList<Integer>();
+	
+			for (int i = 1; i <= language_count; i++) {
+				language_list.add(new String(request.getParameter("language" + i)));
+				language_level_list.add(new Integer(request.getParameter("language_level" + i)));
+			}
+	
+			for (int i = 0; i < language_count; i++) {
+				System.out.println(i + "language>" + language_list.get(i).toString());
+				System.out.println(i + "level==>" + language_level_list.get(i).toString());
+			}
+			sb.setLanguage_list(language_list);
+			sb.setLanguage_level_list(language_level_list);
+		}*/
+	 
+		
+		signupBean ui = loginService.updateMember(sb);
+		request.setAttribute("code", ui.getCode());
+
+		return "main";
 	}
 	
 
