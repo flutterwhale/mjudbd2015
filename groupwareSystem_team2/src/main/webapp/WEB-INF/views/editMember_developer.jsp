@@ -10,6 +10,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<link rel="stylesheet" href="http://bootswatch.com/flatly/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>회원 가입</title>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
@@ -148,100 +151,126 @@ function check() {
 
 </head>
 <body>
+	<nav class="navbar navbar-default">
+  		<div class="container-fluid">
+    		<div class="navbar-header">
+      			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        			<span class="sr-only">Toggle navigation</span>
+        			<span class="icon-bar"></span>
+        			<span class="icon-bar"></span>
+        			<span class="icon-bar"></span>
+      			</button>
+      			<a class="navbar-brand" href="${pageContext.request.contextPath}/LoginController/logout.do">GruopwareSystem</a>
+    		</div>
 
+    		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      			<ul class="nav navbar-nav navbar-right">
+        			<li><a href="https://tahiti.mju.ac.kr/moodle/">메뉴</a></li>
+      			</ul>
+    		</div>
+  		</div>
+	</nav>
 
-
-	<form onSubmit="return check()"
+	<div style="margin:10px 40px;">
+		<h2>개인 정보 수정 페이지</h2>
+		<div>
+			<form onSubmit="return check()"
 			action="${pageContext.request.contextPath}/LoginController/updateMember.do"
 			method="POST" name="myform">
-			<table id="developer_join" border="1">
-		<tr>
-			<td colspan="3"><h2>개인 정보 수정 페이지 </h2></td>
-			</tr>
-		<tr>
-			<td>이름</td>
-			<td><input id="name" type="text" name="signupName" size="8" maxlength="8"></td>
-			<td>최대8글자</td>
-		</tr>
-		<tr>
-			<td>아이디</td>
-			<td><input id="id" type="text" name="signupID" size="8" maxlength="8"  ><button type="button"  onclick="idCheck()">id 중복 체크</button></td>
-			<td>8자리 숫자사용</td>
-		</tr>
-		<tr>
-			<td>비밀번호</td>
-			<td><input id="pw" type="password" name="signupPW" size="15" maxlength="15"></td>
-			<td>최대 15글자</td>
-		</tr>
-		<tr>
-			<td>비밀번호확인</td>
-			<td><input id="pw2" type="password" name="signupPW2" size="15" maxlength="15"></td>
-			<td>최대 15글자</td>
-		</tr>
-		<tr>
-			<td>주민 번호</td>
-			<td><input id="ssn" type="text" name="ssn" size="14" maxlength="14"></td>
-			<td>-를 포함하여 작성</td>
-		</tr>
-		<tr>
-			<td>연락처</td>
-			<td><input id="phone" type="text" name="phone" size="15" maxlength="13"></td>
-			<td>010-0000-0000형태 작성.</td>
-		</tr>
-		<tr>
-			<td>email</td>
-			<td><input id="email" type="text" name="email" size="15" maxlength="30"></td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>주소</td>
-			<td colspan="2">
-				<input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기">
-				<input type="text"id="address" name="address" size="50" onclick="sample4_execDaumPostcode()"/>
-			</td>
-		</tr>
-		<tr>
-			<td>성별</td>
-			<td colspan="2">
-			<label><input type="radio" value="1" name="gender">남자</label>
-			<label><input type="radio" value="0" name="gender" checked>여자</label></td>
-		</tr>
-			<tr>
-				<td colspan="3"><h2>기타 정보</h2></td>
-			</tr>
-			<tr>
-				<td>학력 :</td>
-				<td colspan="2">
-					<input id="university" type="text" name="university" size="10" maxlength="10">학교 
-					<input id="depart" type="text" name="depart" size="10" maxlength="10">학과(부) 
-					<input id="major" type="text" name="major" size="10" maxlength="10">전공
-					<select id="graduation" name="graduation" >
-	                    <option value="박사" >박사</option>
-	                    <option value="박사수료" >박사수료</option>
-	                    <option value="박사재학" >박사재학</option>
-	                    <option value="석사" >석사</option>
-	                    <option value="석사수료" >석사수료</option>
-	                    <option value="석사재학" >석사재학</option>
-	                    <option value="학사" >학사</option>
-	                    <option value="학사수료" >학사수료</option>
-	                    <option value="학사재학">학사재학</option>
-	                    <option value="고등학교졸">고등학교졸</option>
-	                </select>
-				</td>
-			</tr>
-			<tr>
-			<td>경력</td>
-				<td colspan="2"><textarea id="career" name="career" cols="65" rows="5"></textarea></td>
-			</tr>
-			<tr>
-				<td>포트폴리오 업로드</td>
-				<td colspan="2"><input type="file" id="portfolio" name="portfolio"></td>
-			</tr>
-	</table>
+				<table class="table table-striped table-hover" id="developer_join">
+					<tr>
+						<td colspan="3"><strong>개인 정보 수정 페이지 </strong></td>
+					</tr>
+					<tr>
+						<td>이름</td>
+						<td><input id="name" type="text" name="signupName" size="8" maxlength="8"></td>
+						<td>최대8글자</td>
+					</tr>
+					<tr>
+						<td>아이디</td>
+						<td><input id="id" type="text" name="signupID" size="8" maxlength="8"  ><button type="button"  onclick="idCheck()">id 중복 체크</button></td>
+						<td>8자리 숫자사용</td>
+					</tr>
+					<tr>
+						<td>비밀번호</td>
+						<td><input id="pw" type="password" name="signupPW" size="15" maxlength="15"></td>
+						<td>최대 15글자</td>
+					</tr>
+					<tr>
+						<td>비밀번호확인</td>
+						<td><input id="pw2" type="password" name="signupPW2" size="15" maxlength="15"></td>
+						<td>최대 15글자</td>
+					</tr>
+					<tr>
+						<td>주민 번호</td>
+						<td><input id="ssn" type="text" name="ssn" size="14" maxlength="14"></td>
+						<td>-를 포함하여 작성</td>
+					</tr>
+					<tr>
+						<td>연락처</td>
+						<td><input id="phone" type="text" name="phone" size="15" maxlength="13"></td>
+						<td>010-0000-0000형태 작성.</td>
+					</tr>
+					<tr>
+						<td>email</td>
+						<td><input id="email" type="text" name="email" size="15" maxlength="30"></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>주소</td>
+						<td colspan="2">
+							<input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기">
+							<input type="text"id="address" name="address" size="50" onclick="sample4_execDaumPostcode()"/>
+						</td>
+					</tr>
+					<tr>
+						<td>성별</td>
+						<td colspan="2">
+						<label><input type="radio" value="1" name="gender">남자</label>
+						<label><input type="radio" value="0" name="gender" checked>여자</label></td>
+					</tr>
+						<tr>
+							<td colspan="3"><h2>기타 정보</h2></td>
+						</tr>
+						<tr>
+							<td>학력 :</td>
+							<td colspan="2">
+								<input id="university" type="text" name="university" size="10" maxlength="10">학교 
+								<input id="depart" type="text" name="depart" size="10" maxlength="10">학과(부) 
+								<input id="major" type="text" name="major" size="10" maxlength="10">전공
+								<select id="graduation" name="graduation" >
+				                    <option value="박사" >박사</option>
+				                    <option value="박사수료" >박사수료</option>
+				                    <option value="박사재학" >박사재학</option>
+				                    <option value="석사" >석사</option>
+				                    <option value="석사수료" >석사수료</option>
+				                    <option value="석사재학" >석사재학</option>
+				                    <option value="학사" >학사</option>
+				                    <option value="학사수료" >학사수료</option>
+				                    <option value="학사재학">학사재학</option>
+				                    <option value="고등학교졸">고등학교졸</option>
+				                </select>
+							</td>
+						</tr>
+						<tr>
+						<td>경력</td>
+							<td colspan="2"><textarea id="career" name="career" cols="65" rows="5"></textarea></td>
+						</tr>
+						<tr>
+							<td>포트폴리오 업로드</td>
+							<td colspan="2"><input type="file" id="portfolio" name="portfolio"></td>
+						</tr>
+				</table>
 
-	<button type="submit" class="btn_signup">제출</button>
-	</form>
-	<button type="button"
-            onclick="location.replace('${pageContext.request.contextPath}/LoginController/logout.do')">뒤로 가기</button>
+				<button class="btn btn-primary" type="submit" class="btn_signup">제출</button>
+			</form>
+		</div>
+		<div class="main_botton">
+			<button class="btn btn-primary" type="button"
+   		         onclick="location.replace('${pageContext.request.contextPath}/LoginController/logout.do')">뒤로 가기</button>
+   		    <button class="btn btn-default" type="button"
+    	        onclick="location.replace('${pageContext.request.contextPath}/LoginController/main')">메인화면</button>
+		</div>
+	</div>
 </body>
 </html>
