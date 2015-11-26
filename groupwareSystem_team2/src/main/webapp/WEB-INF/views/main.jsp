@@ -99,16 +99,16 @@
 	</table>
 	</div>
 	<div style="float:letf">
-	<button class="btn btn-primary" style="width:200px;" type="button"
+	<button class="btn btn-primary" style="width:200px; margin:0 0 10px;" type="button"
 		onclick="location.href='${pageContext.request.contextPath}/LoginController/showMemberPage'">개인
 		정보</button>
-	<button class="btn btn-primary" style="width:200px;" type="button"
+	<button class="btn btn-primary" style="width:200px; margin:0 0 10px;" type="button"
 		onclick="location.href='${pageContext.request.contextPath}/ProjectController/showDirectory'">인명부
 	</button>
-	<button class="btn btn-primary" style="width:200px;" type="button"
+	<button class="btn btn-primary" style="width:200px; margin:0 0 10px;" type="button"
 		onclick="location.href='${pageContext.request.contextPath}/ProjectController/showProjectTable'">프로젝트
 	</button>
-	<button class="btn btn-primary" style="width:200px;" type="button"
+	<button class="btn btn-primary" style="width:200px; margin:0 0 10px;" type="button"
 		onclick="location.href='${pageContext.request.contextPath}/ProjectController/showObtainTable'">수주
 		현황</button>
 	<%
@@ -117,7 +117,7 @@
 	%>
 
 
-	<button class="btn btn-primary" style="width:200px;" type="button"
+	<button class="btn btn-primary" style="width:200px; margin:0 0 10px;" type="button"
 		onclick="location.href='${pageContext.request.contextPath}/ProjectController/showPMProjectTable'">프로젝트
 		관리</button>
 
@@ -133,7 +133,7 @@
 		action="${pageContext.request.contextPath}/LectureController/insertLecturePage"
 		method="POST">
 		<%-- <input type="hidden" name="user_id" value=<%=uid%>> --%>
-		<button class="btn btn-primary" style="width:200px;">프로젝트 관리</button>
+		<button class="btn btn-primary" style="width:200px; margin:0 0 10px;">프로젝트 관리</button>
 
 	</form>
 
@@ -151,10 +151,10 @@
 				//수주현황
 				//모든 프로젝트
 	%>
-	<button class="btn btn-primary" style="width:200px;" type="button"
+	<button class="btn btn-primary" style="width:200px; margin:0 0 10px;" type="button"
 		onclick="location.href='${pageContext.request.contextPath}/ProjectController/showObtainTable'">수주
 		현황</button>
-	<button class="btn btn-primary" style="width:200px;" type="button"
+	<button class="btn btn-primary" style="width:200px; margin:0 0 10px;" type="button"
 		onclick="location.href='${pageContext.request.contextPath}/ProjectController/showPMProjectTable'">프로젝트
 		관리</button>
 	<%
@@ -162,7 +162,7 @@
 
 				//수주 현황
 	%>
-	<button class="btn btn-primary" style="width:200px;" type="button">프로젝트 관리</button>
+	<button class="btn btn-primary" style="width:200px; margin:0 0 10px;" type="button">프로젝트 관리</button>
 	<%
 		} else if (loginbean.getDi() == 15) { // 인사관리팀 메뉴
 	%>
@@ -178,10 +178,10 @@
 				//업무 일지
 				//프로젝트
 	%>
-	<button class="btn btn-primary" style="width:200px;" type="button"
+	<button class="btn btn-primary" style="width:200px; margin:0 0 10px;" type="button"
 		onclick="location.href='${pageContext.request.contextPath}/ProjectController/showProjectTable'">프로젝트
 	</button>
-	<button class="btn btn-primary" style="width:200px;">업무 일지</button>
+	<button class="btn btn-primary" style="width:200px; margin:0 0 10px;">업무 일지</button>
 	<%
 		}
 			if (loginbean.getPosition_Name() == 0 || loginbean.getDi() == 0) { //가입 대기 상태 
@@ -198,16 +198,16 @@
 
 					System.out.println(loginbean.getPermission() + ": 프리랜서(외부인력팀) 로그인");
 	%>
-	<button class="btn btn-primary" style="width:200px;">메신저</button>
+	<button class="btn btn-primary" style="width:200px; margin:0 0 10px;">메신저</button>
 	<%
 		} else {
 	%>
 
 	<!-- 공통 메뉴 -->
 
-	<button class="btn btn-primary" style="width:200px;">전자결재</button>
-	<button class="btn btn-primary" style="width:200px;">메신저</button>
-	<button class="btn btn-primary" style="width:200px;">게시판</button>
+	<button class="btn btn-primary" style="width:200px; margin:0 0 10px;">전자결재</button>
+	<button class="btn btn-primary" style="width:200px; margin:0 0 10px;">메신저</button>
+	<button class="btn btn-primary" style="width:200px; margin:0 0 10px;">게시판</button>
 	<%
 		} // 외부 인력 아닌 기본 공통 메뉴
 
