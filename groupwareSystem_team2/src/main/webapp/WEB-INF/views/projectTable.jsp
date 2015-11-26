@@ -15,6 +15,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<link rel="stylesheet" href="http://bootswatch.com/flatly/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>ProjectTable</title>
 <script
@@ -34,14 +37,34 @@
 </script>
 </head>
 <body>
-	<div class="project_table_Wrapper">
+	<nav class="navbar navbar-default">
+  		<div class="container-fluid">
+    		<div class="navbar-header">
+      			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        			<span class="sr-only">Toggle navigation</span>
+        			<span class="icon-bar"></span>
+        			<span class="icon-bar"></span>
+        			<span class="icon-bar"></span>
+      			</button>
+      			<a class="navbar-brand" href="${pageContext.request.contextPath}/LoginController/logout.do">GruopwareSystem</a>
+    		</div>
+
+    		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      			<ul class="nav navbar-nav navbar-right">
+        			<li><a href="https://tahiti.mju.ac.kr/moodle/">메뉴</a></li>
+      			</ul>
+    		</div>
+  		</div>
+	</nav>
+
+	<div class="project_table_Wrapper" style="margin:10px 40px;">
 		<div class="project_button">
-			<button type="button" class="btn_present_project">현재 프로젝트</button>
-			<button type="button" class="btn_post_project">과거 프로젝트</button>
+			<button class="btn btn-default" type="button" >현재 프로젝트</button>
+			<button class="btn btn-default" type="button" >과거 프로젝트</button>
 		</div>
 		<div class="project_present">
 			<h1>현재 프로젝트</h1>
-			<table class="project_present_table" border="1" width="1400px"
+			<table class="table table-striped table-hover" border="1" width="1400px"
 				height="300px">
 				<tr align="center">
 					<td width="70px">번호</td>
@@ -187,17 +210,16 @@
 				</tr>
 			</table>
 		</div>
+		<div class="main_button">
+	
+			<button class="btn btn-primary" type="button"
+				onclick="location.href='${pageContext.request.contextPath}/ProjectController/showProjectInformation'">프로젝트
+			</button>
+	
+			<button class="btn btn-primary" type="button"
+				onclick="location.replace('${pageContext.request.contextPath}/LoginController/main')">메인화면</button>
+	
+		</div>
 	</div>
-	<div class="main_button">
-
-		<button type="button"
-			onclick="location.href='${pageContext.request.contextPath}/ProjectController/showProjectInformation'">프로젝트
-		</button>
-
-		<button type="button"
-			onclick="location.replace('${pageContext.request.contextPath}/LoginController/main')">메인화면</button>
-
-	</div>
-
 </body>
 </html>
