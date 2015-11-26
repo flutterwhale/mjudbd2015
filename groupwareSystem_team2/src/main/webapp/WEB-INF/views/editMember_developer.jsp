@@ -265,9 +265,11 @@ function check() {
 				<button class="btn btn-primary" type="submit" class="btn_signup">제출</button>
 			</form>
 		</div>
-		<div>
+		<div class="main_botton">
 			<button class="btn btn-primary" type="button"
    		         onclick="location.replace('${pageContext.request.contextPath}/LoginController/logout.do')">뒤로 가기</button>
+   		    <button class="btn btn-default" type="button"
+    	        onclick="location.replace('${pageContext.request.contextPath}/LoginController/main')">메인화면</button>
 		</div>
 	</div>
 </body>

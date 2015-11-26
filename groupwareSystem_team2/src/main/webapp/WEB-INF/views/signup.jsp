@@ -325,7 +325,9 @@
 				</div>
 		    </div>
 		</form>
-		
+		<div class = "well well-sm">
+		<p>The time on the server is ${serverTime}.</p> 
+	</div>
 		
 	</body>
 </html>

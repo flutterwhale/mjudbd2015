@@ -66,6 +66,7 @@
   		</div>
 	</nav>
 
+<div class="container">
 	<div style="float:left; margin:10px 40px;">
 	<table class="table table-striped table-hover" style="width:300px;">
 		<tr>
@@ -217,5 +218,8 @@
 	%>
 	</div>
 </div>
+	<div class = "well well-sm">
+		<p>The time on the server is ${serverTime}.</p> 
+	</div>
 </body>
 </html>

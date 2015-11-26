@@ -162,5 +162,8 @@
             onclick="location.replace('${pageContext.request.contextPath}/LoginController/main')">메인화면</button>
 	</div>
 </div>	
+<div class = "well well-sm">
+		<p>The time on the server is ${serverTime}.</p> 
+	</div>
 </body>
 </html>

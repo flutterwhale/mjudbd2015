@@ -98,7 +98,7 @@
 
 					<tr align="center">
 						<td width="70px"><%=c.getProject_Identifier()%></td>
-						<td width="200px"><%=c.getProject_Name()%></td>
+						<td width="200px"><a href="${pageContext.request.contextPath}/ProjectController/showProjectInformation"><%=c.getProject_Name()%></a></td>
 						<td width="250px"><%=c.getStart_Date()%></td>
 						<td width="250px"><%=c.getEnd_Date()%></td>
 						<td width="300px"><%=c.getProject_Description()%></td>
@@ -109,7 +109,7 @@
 
 				</form>
 				<%
-					}
+						}
 					}
 				%>
 			</table>
@@ -216,10 +216,13 @@
 				onclick="location.href='${pageContext.request.contextPath}/ProjectController/showProjectInformation'">프로젝트
 			</button>
 	
-			<button class="btn btn-primary" type="button"
+			<button class="btn btn-default" type="button"
 				onclick="location.replace('${pageContext.request.contextPath}/LoginController/main')">메인화면</button>
 	
 		</div>
+	</div>
+	<div class = "well well-sm">
+		<p>The time on the server is ${serverTime}.</p> 
 	</div>
 </body>
 </html>

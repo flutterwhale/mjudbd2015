@@ -88,7 +88,7 @@
 			<tr>
 				<td>학력 :</td>
 				<td colspan="2">
-					<input id="university" type="text" name="university" size="20" maxlength="20" disabled="disabled" value="<%=showBean.getA_career() %>">학력 
+					<input id="university" type="text" name="university" size="20" maxlength="20" disabled="disabled" value="<%=showBean.getA_career() %>"> 
 					<!-- <input id="depart" type="text" name="depart" size="10" maxlength="10" disabled="disabled">학과(부) 
 					<input id="major" type="text" name="major" size="10" maxlength="10" disabled="disabled">전공
 					<input  type="text" id="graduation" name="graduation" value="" disabled="disabled">  -->

@@ -157,6 +157,8 @@ System.out.println("session_name : " + session.getAttribute("session_name"));
 
 
 	</div>
-
+<div class = "well well-sm">
+		<p>The time on the server is ${serverTime}.</p> 
+	</div>
 </body>
 </html>
