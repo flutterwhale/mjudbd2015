@@ -6,10 +6,7 @@
 <%@ page import="kr.ac.mju.prompt.model.UserInfo"%>
 <%@ page import="kr.ac.mju.prompt.model.UserBean"%>
 <%@page import="org.apache.commons.beanutils.BeanUtils"%>
-<script language="javascript">
-	history.go(1);
-</script>
-
+	<%@include file="session.jsp"%>
 
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">

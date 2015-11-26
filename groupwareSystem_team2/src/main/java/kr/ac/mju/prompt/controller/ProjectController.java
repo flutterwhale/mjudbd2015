@@ -28,8 +28,9 @@ import kr.ac.mju.prompt.service.ProjectService;
 public class ProjectController {
 
 	@Autowired
-	private LoginService loginService;
 	private ProjectService projectService;
+	private LoginService loginService;
+	
 	private static final Logger logger = LoggerFactory.getLogger(ProjectController.class);
 
 	@RequestMapping(value = "/ProjectController/showProjectTable", method = RequestMethod.GET)
@@ -96,7 +97,8 @@ public class ProjectController {
 		return "obtainInformation";// jsp 파일 이름.
 	}
 
-	@RequestMapping(value = "/ProjectController/showObtain1Add", method = RequestMethod.GET)
+	//permission == pm 검색 
+	@RequestMapping(value = "/ProjectController/showObtainAdd", method = RequestMethod.GET)
 	public ModelAndView showObtainAdd(HttpSession session) {
 		logger.info("showObtainAdd:권한으로 검색하기");
 
@@ -107,6 +109,20 @@ public class ProjectController {
 
 		return model;// jsp 파일 이름.
 	}
+	
+	@RequestMapping(value = "/ProjectController/retrieveUserList", method = RequestMethod.GET)
+	public ModelAndView showRetrieveList(HttpSession session, String input) {
+		logger.info("retrieveUserList:유저 리스트 검색하기");
+
+		ModelAndView model = new ModelAndView();
+		ArrayList<UserBean> permissionlist = projectService.getMember_permission(11);
+		model.addObject("PermissionList", permissionlist);
+		model.setViewName("obtainAdd"); // jsp 이름 (view이름)
+
+		return model;// jsp 파일 이름.
+	}
+	
+	
 	@RequestMapping(value = "/ProjectController/retrieveUser", method = RequestMethod.GET)
 	public String retrieveMember(HttpServletRequest request,HttpSession session){
 		logger.info("retrieveMember:ID로 User정보 검색하기" + request.getParameter("id"));

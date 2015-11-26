@@ -40,8 +40,8 @@
 	</script> -->
 
 	<%
+		System.out.println("=============main.jsp=============");
 		System.out.println("code : " + session.getAttribute("code"));
-			System.out.println("session_name : " + session.getAttribute("session_name"));
 			System.out.println("session_cat : " + session.getAttribute("cat"));
 			if (session.getAttribute("code").equals("0")) {
 				//로그인 성공 

@@ -8,6 +8,7 @@
 <%@page import="java.util.*"%>
 <%@ page import="kr.ac.mju.prompt.model.obtainBean"%>
 <%@page import="org.apache.commons.beanutils.BeanUtils"%>
+	<%@include file="session.jsp"%>
 <% ArrayList<obtainBean> allObatain  = (ArrayList<obtainBean>)request.getAttribute("allObatain"); %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
