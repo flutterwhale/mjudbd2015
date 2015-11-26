@@ -24,16 +24,16 @@
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"
 	type="text/javascript"></script>
 <script>
-	$(document).ready(function() {
-		$(".btn_present_project").click(function() {
-			$(".project_post").hide();
-			$(".project_present").show();
-		});
-		$(".btn_post_project").click(function() {
-			$(".project_present").hide();
-			$(".project_post").show();
-		});
-	});
+   $(document).ready(function() {
+      $("#btn_present_project").click(function() {
+         $(".project_post").hide();
+         $(".project_present").show();
+      });
+      $("#btn_post_project").click(function() {
+         $(".project_present").hide();
+         $(".project_post").show();
+      });
+   });
 </script>
 </head>
 <body>
@@ -59,9 +59,10 @@
 
 	<div class="project_table_Wrapper" style="margin:10px 40px;">
 		<div class="project_button">
-			<button class="btn btn-default" type="button" >현재 프로젝트</button>
-			<button class="btn btn-default" type="button" >과거 프로젝트</button>
-		</div>
+         <button id="btn_present_project" class="btn btn-default" type="button" >현재 프로젝트</button>
+         <button id="btn_post_project" class="btn btn-default" type="button" >과거 프로젝트</button>
+      </div>
+		
 		<div class="project_present">
 			<h1>현재 프로젝트</h1>
 			<table class="table table-striped table-hover" border="1" width="1400px"
@@ -210,7 +211,7 @@
 				</tr>
 			</table>
 		</div>
-		<div class="main_button">
+		<div class="main_button" style="padding:10px 0px;">
 	
 			<button class="btn btn-primary" type="button"
 				onclick="location.href='${pageContext.request.contextPath}/ProjectController/showProjectInformation'">프로젝트

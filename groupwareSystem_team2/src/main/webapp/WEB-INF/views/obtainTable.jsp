@@ -13,6 +13,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<link rel="stylesheet" href="http://bootswatch.com/flatly/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>obtainTable</title>
 <script
@@ -20,11 +23,30 @@
 	type="text/javascript"></script>
 </head>
 <body>
-	<div class="obtain_table_wrapper">
+	<nav class="navbar navbar-default">
+  		<div class="container-fluid">
+    		<div class="navbar-header">
+      			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        			<span class="sr-only">Toggle navigation</span>
+        			<span class="icon-bar"></span>
+        			<span class="icon-bar"></span>
+        			<span class="icon-bar"></span>
+      			</button>
+      			<a class="navbar-brand" href="${pageContext.request.contextPath}/LoginController/logout.do">GruopwareSystem</a>
+    		</div>
+
+    		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      			<ul class="nav navbar-nav navbar-right">
+        			<li><a href="https://tahiti.mju.ac.kr/moodle/">메뉴</a></li>
+      			</ul>
+    		</div>
+  		</div>
+	</nav>
+	<div class="obtain_table_wrapper" style="margin:10px 40px;">
 		<div class="obtain">
 			<h1>수주 현황</h1>
-			<table class="obtain_table" border="1" width="1600px" height="300px">
-				<tr>
+			<table class="table table-striped table-hover" border="1" width="1600px" height="300px">
+				<tr align=center>
 					<td width="70px">번호</td>
 					<td width="200px">이름</td>
 					<td width="250px">시작일</td>
@@ -47,7 +69,7 @@
 						for (obtainBean c : allObatain) {
 				%>
 				
-				<tr>
+				<tr align=center>
 					<td><%=c.getObtain_Order_Identifier() %></td>
 					<td><%=c.getObtain_Name() %></td>
 					<td><%=c.getStart_Date() %></td>
@@ -57,7 +79,7 @@
 					<td><%=c.getWriter_User()%>/<%=c.getWriter_name() %></td>
 					<td><%=c.getPresent_Status() %></td>
 					<td>
-						<button type="button"
+						<button class="btn btn-primary" style="height:50px;" type="button"
 							onclick="location.href='${pageContext.request.contextPath}/ProjectController/showObtainAdd'">추가
 						</button>
 					</td>
@@ -68,15 +90,15 @@
 				%>
 			</table>
 		</div>
-	</div>
-	<div class="main_button">
-
-		<button type="button"
-			onclick="location.href='${pageContext.request.contextPath}/ProjectController/showObtainInformation'">수주
-		</button>
-		 <button type="button"
-            onclick="location.replace('${pageContext.request.contextPath}/LoginController/main')">메인화면</button>
-
+		<div class="main_button" style="padding:10px 0px;">
+	
+			<button class="btn btn-primary" type="button"
+				onclick="location.href='${pageContext.request.contextPath}/ProjectController/showObtainInformation'">수주
+			</button>
+			 <button class="btn btn-primary" type="button"
+	            onclick="location.replace('${pageContext.request.contextPath}/LoginController/main')">메인화면</button>
+	
+		</div>
 	</div>
 </body>
 </html>
