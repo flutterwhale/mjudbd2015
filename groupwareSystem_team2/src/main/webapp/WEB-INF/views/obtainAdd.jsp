@@ -16,15 +16,38 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<link rel="stylesheet" href="http://bootswatch.com/flatly/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <title>obtain add</title>
 <script
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"
 	type="text/javascript"></script>
 </head>
 <body>
+<nav class="navbar navbar-default">
+  		<div class="container-fluid">
+    		<div class="navbar-header">
+      			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        			<span class="sr-only">Toggle navigation</span>
+        			<span class="icon-bar"></span>
+        			<span class="icon-bar"></span>
+        			<span class="icon-bar"></span>
+      			</button>
+      			<a class="navbar-brand" href="${pageContext.request.contextPath}/LoginController/main">GruopwareSystem</a>
+    		</div>
+
+    		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      			<ul class="nav navbar-nav navbar-right">
+        			<li><a href="https://tahiti.mju.ac.kr/moodle/">메뉴</a></li>
+      			</ul>
+    		</div>
+  		</div>
+	</nav>
+	<div class="container">
 	<div class="obtain_add_wrapper">
 		<div class="obtain_add">
-			<table class="obtain_add_table">
+			<table class="table table-bordered" border="1" width="300px" height="300px" >
 				<tr>
 					<th>PM 선택</th> <th>ID</th>
 				</tr>
@@ -48,17 +71,18 @@
 					}
 				%>
 				<tr>
-					<td><button type="submit">완료</button>
+					<td><button type="submit" class="btn btn-primary">완료</button>
 				</tr>
 				
 			</table>
 		</div>
 	</div>
-	<div class="obtain_Table_button">
-		<button type="button"
+	<div class="main_button">
+		<button type="button" class="btn btn-default"
 			onclick="location.href='${pageContext.request.contextPath}/ProjectController/showObtainTable'">수주 목록</button>
-	</div>
-	 <button type="button"
+	 	<button type="button" class="btn btn-default"
             onclick="location.replace('${pageContext.request.contextPath}/LoginController/main')">메인화면</button>
+            </div>
+     </div>
 </body>
 </html>
