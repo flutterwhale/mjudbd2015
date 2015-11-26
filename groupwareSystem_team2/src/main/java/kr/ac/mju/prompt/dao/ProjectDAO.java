@@ -26,62 +26,103 @@ public class ProjectDAO {
 	@Autowired
 	private static final Logger logger = LoggerFactory.getLogger(ProjectDAO.class);
 
-	public signupBean getUserInfo(String sid) {
-		logger.info("DAO : 해당 유저 정보 확인하기"+sid);
+	public signupBean getUserInfo(String id) {
+		logger.info("DAO : 해당 유저 정보 확인하기" + id);
 		PreparedStatement pstmt = null;
-		Connection conn = null;
 		Statement stmt = null;
-		ResultSet rs = null;
-		signupBean user = new signupBean();
+		Connection conn = null;
+		ResultSet rs = null, rs2 = null;
+
+		signupBean member = new signupBean();
 		try {
+
 			Class.forName("com.mysql.jdbc.Driver");
-			
-			conn =  DriverManager.getConnection("jdbc:mysql://117.123.66.137:8089/dbd2015", "park",
-					"pjw49064215");
-			
-			
-			
-			String query = "SELECT * FROM dbd2015.t_user join dbd2015.t_position on t_user.User_Identifier = t_position.User_Identifier WHERE t_user.User_Identifier="+sid+" ;";
-			
-			while (rs.first()) {
+			conn = DriverManager.getConnection("jdbc:mysql://117.123.66.137:8089/dbd2015", "park", "pjw49064215");
+			stmt = conn.createStatement();
 
-				logger.info(rs.getString("project_Name") + " " + rs.getInt("projectmanager_Identifier"));
+			String query1 = "SELECT * FROM dbd2015.t_user join dbd2015.t_position on t_user.User_Identifier = t_position.User_Identifier  join  dbd2015.t_department on t_department.Department_Identifier = t_position.Department_Identifier  WHERE t_user.User_Identifier = '"
+					+ id + "' ;";
 
-				projectBean pbean = new projectBean();
+			System.out.println("ProjectDAO.getUserInfo : 쿼리1 > " + query1);
+			rs = stmt.executeQuery(query1);
 
-				pbean.setProject_Identifier(rs.getInt("project_Identifier"));
-				pbean.setProject_Name(rs.getString("project_Name"));
-				pbean.setProjectmanager_Identifier(rs.getInt("projectmanager_Identifier"));
-				pbean.setPM_name(rs.getString("PMname"));
-				pbean.setStart_Date(rs.getDate("start_Date"));
-				pbean.setEnd_Date(rs.getDate("end_Date"));
-				pbean.setProject_Description(rs.getString("project_Description"));
-				pbean.setStatus(rs.getInt("status"));
-				pbean.setProject_Price(rs.getString("project_Price"));
-				pbean.setComment(rs.getString("pComment"));
-				pbean.setProject_Document(rs.getString("project_Document"));
-				pbean.setProject_Evaluation(rs.getInt("project_Evaluation"));
-				pbean.setDispatch_Location(rs.getString("dispatch_Location"));
+			if (rs.first()) {
+				member.setIsFreeLancer(rs.getString("cat"));
 
+				member.setId(Integer.parseInt(id));
+				member.setName(rs.getString("Name"));
+				member.setSsn(rs.getString("SocialSecurtyNum"));
+				member.setGender(Integer.parseInt(rs.getString("Gender")));
+				member.setPhone(rs.getString("Phone_Number"));
+				member.setEmail(rs.getString("Email"));
+				member.setPassword(rs.getString("Password"));
+				member.setAddr(rs.getString("Address"));
+				member.setA_career(rs.getString("Academic_Career"));
+
+				member.setCareer(rs.getString("Career"));
+				member.setJoining_Date(rs.getDate("Joining_Date"));
+				member.setRetired_Date(rs.getDate("Retired_Date"));
+				member.setComment(rs.getString("comment"));
+				member.setOffice_Number(rs.getString("office_Number"));
+				member.setPortfolio(rs.getString("Career_File"));
+				member.setPermission(rs.getInt("Permission"));
+				member.setPosition_Name(rs.getInt("Position_Name"));
+				member.setDi(rs.getInt("Department_Identifier"));
+
+				member.setTech_level(Integer.parseInt(rs.getString("Technic_Level")));
 
 			}
-			
-			
-			
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			String query2 = "SELECT * FROM dbd2015.t_programming_technical_level WHERE User_Identifier = '" + id
+					+ "' ;";
+
+			System.out.println("ProjectDAO.getUserInfo : 쿼리2 > " + query2);
+			rs2 = stmt.executeQuery(query2);
+			ArrayList language_list = new ArrayList();
+			ArrayList language_level_list = new ArrayList();
+
+			while (true) {
+				if (rs2.next()) {
+					language_list.add(rs2.getString("Language"));
+					language_level_list.add(rs2.getInt("Language_Level"));
+				} else {
+					break;
+				}
+			}
+
+			member.setLanguage_list(language_list);
+			member.setLanguage_level_list(language_level_list);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+
+				if (rs2 != null) {
+					rs2.close();
+				}
+
+				if (stmt != null) {
+					stmt.close();
+				}
+
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
 		}
-		
-		
-	
-		
-		return user;
+		return member;
 	}
-	
+
 	public ArrayList<projectBean> getAllProject() {
 		// TODO Auto-generated method stub
 		ArrayList<projectBean> allProject = new ArrayList<projectBean>();
@@ -94,8 +135,7 @@ public class ProjectDAO {
 		try {
 
 			Class.forName("com.mysql.jdbc.Driver");
-			conn =  DriverManager.getConnection("jdbc:mysql://117.123.66.137:8089/dbd2015", "park",
-					"pjw49064215");
+			conn = DriverManager.getConnection("jdbc:mysql://117.123.66.137:8089/dbd2015", "park", "pjw49064215");
 
 			String query = "SELECT Project_Identifier, Project_Name, Projectmanager_Identifier,Start_Date,End_Date,Project_Description ,Status,Project_Price,t_project.Comment AS pComment,Project_Document, Product ,Project_Evaluation ,Dispatch_Location, t_user.Name AS PMname FROM dbd2015.t_project join dbd2015.t_user on t_user.User_Identifier = t_project.Projectmanager_Identifier ;";
 			// pstmt = (PreparedStatement) conn.prepareStatement(query);
@@ -186,7 +226,6 @@ public class ProjectDAO {
 
 				obtainBean oBean = new obtainBean();
 
-				
 				oBean.setObtain_Order_Identifier(rs.getInt("obtain_Order_Identifier"));
 				oBean.setObtain_Name(rs.getString("obtain_Name"));
 				oBean.setComment(rs.getString("oComment"));
@@ -196,7 +235,7 @@ public class ProjectDAO {
 				oBean.setEnd_Date(rs.getDate("end_Date"));
 				oBean.setWriter_User(rs.getInt("writer_User"));
 				oBean.setWriter_name(rs.getString("writer_name"));
-				
+
 				allObatain.add(oBean);
 
 			}
@@ -424,12 +463,12 @@ public class ProjectDAO {
 
 	public ArrayList<UserBean> showMember_permssion(int p) {
 
-		logger.info("권한에 따른 멤버 리스트 확인 "+p);
+		logger.info("권한에 따른 멤버 리스트 확인 " + p);
 		Statement stmt = null;
 		Connection conn = null;
 		ResultSet rs = null, rs2 = null;
 		ArrayList<UserBean> member_List = new ArrayList<UserBean>();
-		
+
 		try {
 
 			Class.forName("com.mysql.jdbc.Driver");
@@ -443,8 +482,8 @@ public class ProjectDAO {
 			rs = stmt.executeQuery(query1);
 
 			while (rs.next()) {
-				logger.info(rs.getString("Name") + "/ "+rs.getInt("User_Identifier")+" " + rs.getInt("Permission"));
-				
+				logger.info(rs.getString("Name") + "/ " + rs.getInt("User_Identifier") + " " + rs.getInt("Permission"));
+
 				UserBean member = new UserBean();
 				member.setId(rs.getInt("User_Identifier"));
 				member.setName(rs.getString("Name"));

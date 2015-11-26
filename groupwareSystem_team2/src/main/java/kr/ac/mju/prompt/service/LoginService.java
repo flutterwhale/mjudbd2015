@@ -35,9 +35,9 @@ public class LoginService {
 
 		return loginDAO.checkID(id);
 	}
-	public signupBean showMember(String id, UserInfo userInfo) {
-		logger.info("login Service.showMember :"+id +" " + userInfo.getMyUser().getCat());
+	public signupBean showMember(String id) {
+		logger.info("login Service.showMember :"+id );
 
-		return loginDAO.showMember(id, userInfo);
+		return loginDAO.showMember(id);
 	}
 }

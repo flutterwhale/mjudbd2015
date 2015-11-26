@@ -21,13 +21,14 @@ import kr.ac.mju.prompt.model.UserBean;
 import kr.ac.mju.prompt.model.obtainBean;
 import kr.ac.mju.prompt.model.projectBean;
 import kr.ac.mju.prompt.model.signupBean;
+import kr.ac.mju.prompt.service.LoginService;
 import kr.ac.mju.prompt.service.ProjectService;
 
 @Controller
 public class ProjectController {
 
 	@Autowired
-	// private LoginService loginService;
+	private LoginService loginService;
 	private ProjectService projectService;
 	private static final Logger logger = LoggerFactory.getLogger(ProjectController.class);
 
@@ -107,14 +108,16 @@ public class ProjectController {
 		return model;// jsp 파일 이름.
 	}
 	@RequestMapping(value = "/ProjectController/retrieveUser", method = RequestMethod.GET)
-	public ModelAndView retrieveMember(HttpServletRequest request){
+	public String retrieveMember(HttpServletRequest request,HttpSession session){
 		logger.info("retrieveMember:ID로 User정보 검색하기" + request.getParameter("id"));
 		ModelAndView model = new ModelAndView();
-		signupBean userInfo = projectService.getMemberInfo(request.getParameter("id"));
-		model.addObject("UserInfo", userInfo);
-		model.setViewName("UserInfo");
-		
-		return model;
+		//signupBean userInfo = projectService.getMemberInfo(request.getParameter("id"));
+	//	request.setAttribute("showBean", show);
+			
+	//	signupBean userInfo = (signupBean) session.getAttribute("signupBean"));
+		signupBean show = loginService.showMember(request.getParameter("id"));
+		request.setAttribute("showBean", show);
+		return "userProfile";
 	}
 
 	@RequestMapping(value = "/ProjectController/showPMProjectTable", method = RequestMethod.GET)

@@ -293,7 +293,7 @@ public class LoginController {
 		}	
 				UserBean u = (UserBean)session.getAttribute("loginbean");
 		logger.info("개인 정보 확인: " + u.getName() + " : " + u.getId() + " / " + u.getCat() );
-		signupBean show = loginService.showMember( u.getId()+"",((UserInfo) session.getAttribute("userinfo")));
+		signupBean show = loginService.showMember( u.getId()+"");
 		request.setAttribute("showBean", show);
 		return "showMember";
 		

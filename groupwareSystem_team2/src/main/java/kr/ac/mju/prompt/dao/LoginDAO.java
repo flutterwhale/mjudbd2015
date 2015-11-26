@@ -134,7 +134,7 @@ public class LoginDAO {
 			logger.info("loginDAO : 로그인 실패 ");
 
 			Uinfo.setMyUser(user);
-			// Uinfo.setErrorCode(99);//실패 코드
+			//=- Uinfo.setErrorCode(99);//실패 코드
 			return Uinfo;
 
 		}
@@ -330,9 +330,9 @@ public class LoginDAO {
 
 	}
 
-	public signupBean showMember(String id, UserInfo userInfo) {
+	public signupBean showMember(String id) {
 
-		System.out.println(" login DAO.showMember: 개인 정보 확인 id " + id + ":  cat :" + userInfo.getMyUser().getCat());
+		System.out.println(" login DAO.showMember: 개인 정보 확인 id " + id );
 		Statement stmt = null;
 		Connection conn = null;
 		ResultSet rs = null, rs2 = null;
@@ -370,17 +370,33 @@ public class LoginDAO {
 				member.setOffice_Number(rs.getString("office_Number"));
 				member.setPortfolio(rs.getString("Career_File"));
 
+				
 				member.setPermission(rs.getInt("Permission"));
 				member.setPosition_Name(rs.getInt("Position_Name"));
 				member.setDi(rs.getInt("Department_Identifier"));
 
 				member.setTech_level(Integer.parseInt(rs.getString("Technic_Level")));
-				// 별도 쿼리 필요
-				// member.setLanguage_list(language_list);
-				// member.setLanguage_level_list(language_level_list);
+				
 
 			}
+			String query2 = "SELECT * FROM dbd2015.t_programming_technical_level WHERE User_Identifier = '"+ id + "' ;";
 
+			System.out.println("loginDAO.showMember : 쿼리 > " + query2);
+			rs2 = stmt.executeQuery(query2);
+			ArrayList language_list = new ArrayList(); 
+			ArrayList language_level_list = new ArrayList(); 
+			
+			while (true) {
+				if(rs2.next()){
+					language_list.add(rs2.getString("Language"));
+					language_level_list.add(rs2.getInt("Language_Level"));
+				}else{
+					break;
+				}
+			}
+			
+			member.setLanguage_list(language_list);
+			member.setLanguage_level_list(language_level_list);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -412,6 +428,7 @@ public class LoginDAO {
 		}
 		return member;
 	}
+
 
 	public ArrayList<signupBean> getDepartUser(String di) {
 		// TODO Auto-generated method stub

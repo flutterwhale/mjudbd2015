@@ -32,7 +32,7 @@
 		System.out.println("session ID " + sID + " cat "+ sUinfo.getMyUser().getCat());
 	%>
 
-	<h2>내 정보 조회</h2>
+	<h2> <%=showBean.getId()%>/<%=showBean.getName()%> 정보 조회</h2>
 
 <table id="developer_join" border="1">
 		<tr>
