@@ -199,6 +199,7 @@ public class ProjectDAO {
 	}
 
 	public ArrayList<obtainBean> getAllObtain() {
+		logger.info("전체 수주 현황");
 		// TODO Auto-generated method stub
 		ArrayList<obtainBean> allObatain = new ArrayList<obtainBean>();
 		ArrayList<obtainBean> Past_Obatain = new ArrayList<obtainBean>();
@@ -213,12 +214,11 @@ public class ProjectDAO {
 			Connection connection = DriverManager.getConnection("jdbc:mysql://117.123.66.137:8089/dbd2015", "park",
 					"pjw49064215");
 
-			String query = "SELECT Obtain_Order_Identifier, Obtain_Name,Start_Date,End_Date,Present_Status,Order_Company,t_obtain_order.Comment AS oComment,Writer_User, t_user.Name AS writer_name FROM dbd2015.t_obtain_order join dbd2015.t_user on t_user.User_Identifier = dbd2015.t_obtain_order.Writer_User ;";
+			String query = "SELECT Obtain_Order_Identifier, Obtain_Name,Start_Date,End_Date,Present_Status,Order_Company,t_obtain_order.Comment AS oComment,Writer_User, t_user.Name AS writer_name ,pm_id FROM dbd2015.t_obtain_order join dbd2015.t_user on t_user.User_Identifier = dbd2015.t_obtain_order.Writer_User ;";
 			conn = connection;
 
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(query);
-			logger.info("전체 수주 현황");
 
 			while (rs.next()) {
 
@@ -235,7 +235,7 @@ public class ProjectDAO {
 				oBean.setEnd_Date(rs.getDate("end_Date"));
 				oBean.setWriter_User(rs.getInt("writer_User"));
 				oBean.setWriter_name(rs.getString("writer_name"));
-
+				oBean.setPM(rs.getString("pm_id"));
 				allObatain.add(oBean);
 
 			}
@@ -405,8 +405,6 @@ public class ProjectDAO {
 
 	}
 
-	
-
 	public ArrayList<UserBean> showMember_permssion(int p) {
 
 		logger.info("권한에 따른 멤버 리스트 확인 " + p);
@@ -472,154 +470,49 @@ public class ProjectDAO {
 		return member_List;
 	}
 
-	public signupBean editMember(signupBean sb) {
+	public int intsertProject(String pid, obtainBean oBean) {
+		logger.info("intsertProject : pid " + pid + " oid " + oBean.getObtain_Order_Identifier());
+		// 프로젝트 추가 로직, 선택된 pm id 와 수주 번호
+		int result = 0;
 
-		System.out.println("개인 정보 수정");
-		UserInfo Uinfo = new UserInfo();
+		// select oid 값 불러와서
+		// insert project 에 설명과 기타 등등.
 		Statement stmt = null;
 		Connection conn = null;
 		ResultSet rs = null;
-		int result, result2 = 0, result3 = 0;
 
-		System.out.println("가입. name " + sb.getName() + " IsFreeLancer : " + sb.getIsFreeLancer());
-
+		// insert query
 		try {
-
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection("jdbc:mysql://117.123.66.137:8089/dbd2015", "park", "pjw49064215");
 			stmt = conn.createStatement();
 
-			System.out.println("프리랜서? " + sb.getIsFreeLancer());
-
-			String query = "INSERT INTO `dbd2015`.`t_user` (`Name`,`User_Identifier`, `SocialSecurtyNum`, `Gender`, `Phone_Number`, `Address`, `Academic_Career`, `Technic_Level`, `Career`, `Email`, `Password`) "
-					+ "VALUES ('" + sb.getName() + "', '" + sb.getId() + "', '" + sb.getSsn() + "', '" + sb.getGender()
-					+ "', '" + sb.getPhone() + "', '" + sb.getAddr() + "', '" + sb.getA_career() + "', '"
-					+ sb.getTech_level() + "', '" + sb.getCareer() + "', '" + sb.getEmail() + "', '" + sb.getPassword()
-					+ "');";
+			String query = "INSERT INTO `dbd2015`.`t_project` (`Project_Name`, `Projectmanager_Identifier`, `Start_Date`, `End_Date`, `Status`, `Project_Description`) VALUES ('"
+					+ oBean.getObtain_Name() + "', '" + pid + "', '" + oBean.getStart_Date() + "', '"
+					+ oBean.getEnd_Date() + "', '10', '" + oBean.getComment() + "');";
 
 			System.out.println("insert query? : " + query);
-
 			result = stmt.executeUpdate(query);
-			if (sb.getIsFreeLancer().isEmpty()) {
-				System.out.println("일반 직원 속성 추가");
-				query = "INSERT INTO `dbd2015`.`t_position` (`Department_Identifier`, `User_Identifier`, `Position_Name`) VALUES ('0', '"
-						+ sb.getId() + "', '0');";
-				result2 = stmt.executeUpdate(query);
+			System.out.println("insert result? " + result);
 
-			} else if (sb.getIsFreeLancer().equals("Common")) {
-				System.out.println("일반 개발자 속성 추가");
-
-				query = "INSERT INTO `dbd2015`.`t_position` (`Department_Identifier`, `User_Identifier`, `Position_Name`) VALUES ('0', '"
-						+ sb.getId() + "', '0');";
-				result2 = stmt.executeUpdate(query);
-
-				if (result2 == 1) {
-
-					ArrayList ll = sb.getLanguage_list();
-					ArrayList lll = sb.getLanguage_level_list();
-					for (int i = 0; i <= ll.size(); i++) {
-						query = "INSERT INTO `dbd2015`.`t_programming_technical_level` (`Language`, `Language_Level`, `User_Identifier`) VALUES ('"
-								+ ll.get(i) + "', '" + lll.get(i) + "', '" + sb.getId() + "');";
-
-						System.out.println(" 프로그래밍 언어 추가 : " + query);
-						if (stmt.executeUpdate(query) == 1) {
-							result2 = 0;
-							System.out.println("언어 추가 실패");
-							break;
-						}
-					}
-				}
-
-			} else if (sb.getIsFreeLancer().equals("FreeLancer")) {
-
-				System.out.println("프리랜서 기본 속성 추가");
-				query = "INSERT INTO `dbd2015`.`t_position` (`Department_Identifier`, `User_Identifier`, `Position_Name`) VALUES ('00', '"
-						+ sb.getId() + "', '99');";
-				result2 = stmt.executeUpdate(query);
-
-				if (result2 == 1) {
-
-					ArrayList ll = sb.getLanguage_list();
-					ArrayList lll = sb.getLanguage_level_list();
-					for (int i = 0; i <= ll.size(); i++) {
-						query = "INSERT INTO `dbd2015`.`t_programming_technical_level` (`Language`, `Language_Level`, `User_Identifier`) VALUES ('"
-								+ ll.get(i) + "', '" + lll.get(i) + "', '" + sb.getId() + "');";
-
-						System.out.println(" 프로그래밍 언어 추가 : " + query);
-						if (stmt.executeUpdate(query) == 1) {
-							result2 = 0;
-							System.out.println("언어 추가 실패");
-							break;
-						}
-					}
-				}
-			}
-
-			if (result == 1 && result2 == 1) {
-
-				System.out.println("insert 쿼리 성공");
-
-				Uinfo.setMySignupBean(sb);
-				Uinfo.setErrorCode(222);
-
-			} else {
-				System.out.println("쿼리 실패");
-				Uinfo.setErrorCode(200);
-
-			}
-
-			stmt.close();
-			conn.close();
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			// e.printStackTrace();
-			System.out.println("잘못된 값이 들어 왔습니다.");
-			Uinfo.setErrorCode(201);
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} finally {
-			try {
-				if (rs != null) {
-					rs.close();
-				}
-
-				if (stmt != null) {
-					stmt.close();
-				}
-
-				if (conn != null) {
-					conn.close();
-				}
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
-		return sb;
-	}
-	public projectBean intsertProject(String pid , String oid){
-		logger.info("intsertProject : pid "+pid+ " oid " + oid);
-		//프로젝트 추가 로직, 선택된 pm id 와 수주 번호
-	projectBean pjBean = new projectBean();
-	
-	//select   oid  값 불러와서 
-	// insert project 에 설명과 기타 등등. 
-	
-	
-		return pjBean;
+		return result;
 	}
 
 	public obtainBean showObtain(String oid) {
 		logger.info("showObtain : " + oid);
 		// TODO Auto-generated method stub
-		obtainBean ob = null ;
-		
-		//insert query
-		
+		obtainBean ob = null;
+
+		// insert query
+
 		String result = null;
 		Statement stmt = null;
 		Connection conn = null;
@@ -629,21 +522,21 @@ public class ProjectDAO {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection("jdbc:mysql://117.123.66.137:8089/dbd2015", "park", "pjw49064215");
 			stmt = conn.createStatement();
-			String query = "SELECT Obtain_Order_Identifier, Obtain_Name,Start_Date,End_Date,Present_Status,Order_Company,t_obtain_order.Comment AS oComment,Writer_User, t_user.Name AS writer_name FROM dbd2015.t_obtain_order join dbd2015.t_user on t_user.User_Identifier = dbd2015.t_obtain_order.Writer_User where Obtain_Order_Identifier='" + oid + "' ;";
+			String query = "SELECT Obtain_Order_Identifier, Obtain_Name,Start_Date,End_Date,Present_Status,Order_Company,t_obtain_order.Comment AS oComment,Writer_User, t_user.Name AS writer_name , pm_id FROM dbd2015.t_obtain_order join dbd2015.t_user on t_user.User_Identifier = dbd2015.t_obtain_order.Writer_User where Obtain_Order_Identifier='"
+					+ oid + "' ;";
 
 			rs = stmt.executeQuery(query);
 
 			if (rs.first()) {
 
 				int oID = rs.getInt("Obtain_Order_Identifier");
-				logger.info(" result  id:  "+ oid + " "+ rs.getString("Obtain_Name"));
+				logger.info(" result  id:  " + oid + " " + rs.getString("Obtain_Name"));
 
-				
-				
-				
-				ob = new obtainBean(oID,rs.getString("Obtain_Name"),rs.getString("oComment"),rs.getInt("Present_Status"),rs.getString("Order_Company"),rs.getDate("Start_Date"),rs.getDate("End_Date"),rs.getInt("Writer_User"),rs.getString("writer_name"));
-				
-				
+				ob = new obtainBean(oID, rs.getString("Obtain_Name"), rs.getString("oComment"),
+						rs.getInt("Present_Status"), rs.getString("Order_Company"), rs.getDate("Start_Date"),
+						rs.getDate("End_Date"), rs.getInt("Writer_User"), rs.getString("writer_name"),
+						rs.getString("pm_id"));
+
 			}
 
 		} catch (ClassNotFoundException e) {
@@ -674,16 +567,39 @@ public class ProjectDAO {
 
 		return ob;
 
-		
 	}
-	
-	public obtainBean insertObtain(String wid) {
-		logger.info("insertObtain : " + wid);
+
+	public int insertObtain(obtainBean ob) {
+		logger.info("insert query : " + ob);
 		// TODO Auto-generated method stub
-		obtainBean ob = new obtainBean();
-		
-		//insert query
-		
-		return null;
+		Statement stmt = null;
+		Connection conn = null;
+		ResultSet rs = null;
+		int result = 0;
+
+		// insert query
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = DriverManager.getConnection("jdbc:mysql://117.123.66.137:8089/dbd2015", "park", "pjw49064215");
+			stmt = conn.createStatement();
+
+			String query = "INSERT INTO `dbd2015`.`t_obtain_order` (`Obtain_Name`, `Comment`, `Present_Status`, `Order_Company`, `End_Date`, `Start_Date`, `Writer_User`)"
+					+ "VALUES ('" + ob.getObtain_Name() + "', '" + ob.getComment() + "', '" + ob.getPresent_Status()
+					+ "', '" + ob.getOrder_Company() + "', '" + ob.getEnd_Date() + "', '" + ob.getStart_Date() + "', '"
+					+ ob.getWriter_User() + "');";
+
+			System.out.println("insert query? : " + query);
+			result = stmt.executeUpdate(query);
+			System.out.println("insert result? " + result);
+
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return result;
 	}
 }

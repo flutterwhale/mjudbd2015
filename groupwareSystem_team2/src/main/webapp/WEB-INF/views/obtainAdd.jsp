@@ -4,6 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@include file="session.jsp"%>
 <%@page import="java.util.*"%>
 <%@ page import="kr.ac.mju.prompt.model.UserInfo"%>
 <%@ page import="kr.ac.mju.prompt.model.projectBean"%>
@@ -47,7 +48,7 @@
 	<div class="container">
 	<div class="obtain_add_wrapper">
 		<div class="obtain_add">
-			<table class="table table-bordered" border="1" width="300px" height="300px" >
+			<table class="table table-bordered" border="1" width="100px" height="300px" >
 				<tr>
 					<th>PM 선택</th> <th>ID</th>
 				</tr>
@@ -64,16 +65,11 @@
 						for (UserBean c : list) {
 				%>
 				<tr>
-					<td><input type="radio" name="pm" value="<%=c.getId()%>"></td><td><a href='${pageContext.request.contextPath}/LoginController/retrieveUser?id=<%=c.getId()%>'><%=c.getId()%></a> / <%=c.getName() %></td>
+					<td><button type="submit" class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/ProjectController/newProject?pid=<%=c.getId()%>&oid=<%=request.getParameter("oid")%>'">프로젝트 등록</button></td><td><a href='${pageContext.request.contextPath}/LoginController/retrieveUser?id=<%=c.getId()%>'><%=c.getId()%></a> / <%=c.getName() %></td>
 				</tr>
 				<%
-					}
-					}
+					}	}
 				%>
-				<tr>
-					<td><button type="submit" class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/ProjectController/showObtainTable'">>완료</button>
-				</tr>
-				
 			</table>
 		</div>
 	</div>

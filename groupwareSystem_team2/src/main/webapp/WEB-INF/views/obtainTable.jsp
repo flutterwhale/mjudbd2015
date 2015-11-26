@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@include file="session.jsp"%>
 <%@ page import="kr.ac.mju.prompt.model.UserInfo"%>
 <%@ page import="kr.ac.mju.prompt.model.UserBean"%>
 <%@page import="java.util.*"%>
@@ -78,10 +79,19 @@
 					<td><%=c.getOrder_Company()%></td>
 					<td><a href='${pageContext.request.contextPath}/LoginController/retrieveUser?id=<%=c.getWriter_User()%>'><%=c.getWriter_User()%></a>/<%=c.getWriter_name() %></td>
 					<td><%=c.getPresent_Status() %></td>
-					<td>
+					<td> 
+					
+					<% 
+					
+					if(c.getPM()==null){
+					%>
 						<button type="button" class="btn btn-success"
 							onclick="location.href='${pageContext.request.contextPath}/ProjectController/showObtainAdd?oid=<%=c.getObtain_Order_Identifier()%>'">추가
 						</button>
+						 <%} else {
+							%>
+							<a href='${pageContext.request.contextPath}/LoginController/retrieveUser?id=<%= c.getPM() %>'><%= c.getPM() %></a>
+						<% } %>
 					</td>
 				</tr>
 					<%
@@ -94,7 +104,7 @@
 	<div class="main_button">
 
 		<button type="button" class="btn btn-primary"
-			onclick="location.href='${pageContext.request.contextPath}/ProjectController/newObtain'">제안 올리기
+			onclick="location.href='${pageContext.request.contextPath}/ProjectController/newObtainPage'">제안 올리기
 		</button>
 		 <button type="button" class="btn btn-default"
             onclick="location.replace('${pageContext.request.contextPath}/LoginController/main')">메인화면</button>

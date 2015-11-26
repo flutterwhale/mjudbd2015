@@ -22,41 +22,43 @@ public class ProjectService {
 	
 	public ArrayList<projectBean> getAllProjects() {
 		// TODO Auto-generated method stub
-		logger.info("¸ğµç ÇÁ·ÎÁ§Æ® ¸ñ·Ï");
+		logger.info("ëª¨ë“  í”„ë¡œì íŠ¸ ëª©ë¡");
 
 		return projectDAO.getAllProject();
 	}
 	
 	public ArrayList<obtainBean> getAllObtains() {
 		// TODO Auto-generated method stub
-		logger.info("¸ğµç ¼öÁÖ ¸ñ·Ï");
+		logger.info("ëª¨ë“  ìˆ˜ì£¼ ëª©ë¡");
 
 		return projectDAO.getAllObtain();
 	}
 
 	public ArrayList<UserBean> getMember_permission(int p) {
 		// TODO Auto-generated method stub
-		logger.info("¸ğµç ÇÁ·ÎÁ§Æ® ¸ñ·Ï");
+		logger.info("ëª¨ë“  í”„ë¡œì íŠ¸ ëª©ë¡");
 
 		return projectDAO.showMember_permssion(p);
 	}
 	public signupBean getMemberInfo(String string) {
-		logger.info("ÇØ´ç À¯Àú Á¤º¸ "+string);
+		logger.info("í•´ë‹¹ ìœ ì € ì •ë³´ "+string);
 		
 		return projectDAO.getUserInfo(string);
 	}
 	
-	public projectBean insertProject (String pid,String oid){
-		logger.info("insertProject  pm id : "+pid+ " oId : "+oid);
+	public int insertProject (String pid,obtainBean obtainBean){
+		logger.info("insertProject  pm id : "+pid+ " oId : "+obtainBean);
 	
-		return projectDAO.intsertProject(pid, oid);
+		
+		
+		return projectDAO.intsertProject(pid, obtainBean);
 	}
 
-	public obtainBean insertObtain(String wid) {
+	public int insertObtain(obtainBean ob) {
 		// TODO Auto-generated method stub
-		logger.info("insertObtain  writer id : "+wid);
+		logger.info("insertObtain :");
 		
-		return projectDAO.insertObtain(wid);
+		return projectDAO.insertObtain(ob);
 	}
 	public obtainBean getObtains(String oid) {
 		// TODO Auto-generated method stub

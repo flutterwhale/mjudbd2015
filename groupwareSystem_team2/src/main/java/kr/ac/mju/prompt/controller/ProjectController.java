@@ -1,6 +1,8 @@
 package kr.ac.mju.prompt.controller;
 
 import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
@@ -20,46 +22,41 @@ import org.springframework.web.servlet.ModelAndView;
 import kr.ac.mju.prompt.model.UserBean;
 import kr.ac.mju.prompt.model.obtainBean;
 import kr.ac.mju.prompt.model.projectBean;
-import kr.ac.mju.prompt.model.signupBean;
-import kr.ac.mju.prompt.service.LoginService;
 import kr.ac.mju.prompt.service.ProjectService;
 
 @Controller
 public class ProjectController {
 
 	@Autowired
-	//private LoginService loginService;
+	// private LoginService loginService;
 	private ProjectService projectService;
-	
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(ProjectController.class);
 
-	
 	@RequestMapping(value = "/ProjectController/newProject", method = RequestMethod.GET)
-	public ModelAndView InsertProject(HttpSession session,HttpServletRequest request) {
-		logger.info("InsertProject:프로젝트 추가하기 pid: "+request.getParameter("pid") +" oid : "+request.getParameter("oid"));
+	public String InsertProject(HttpSession session, HttpServletRequest request) {
+		logger.info("InsertProject:프로젝트 추가하기 pid: " + request.getParameter("pid") + " oid : "
+				+ request.getParameter("oid"));
 		if (session.getAttribute("session_name") != null) {
 
 			logger.info(session.getAttribute("session_name").toString() + " 해당 사용자가 로그인중입니다. ");
 		}
 
+		 projectService.insertProject(request.getParameter("pid"), projectService.getObtains(request.getParameter("oid")));
 		
-		ModelAndView model = new ModelAndView();
-		projectBean pjBean = projectService.insertProject(request.getParameter("pid"), request.getParameter("oid"));
-		model.addObject("ProjectBean", pjBean);
-		model.setViewName("projectInformation"); // jsp 이름 (view이름)
+		
 
-		return model;
+		return "redirect:showObtainTable";
 	}
+
 	@RequestMapping(value = "/ProjectController/showObtainInformation", method = RequestMethod.GET)
 	public ModelAndView showObtain(HttpSession session, HttpServletRequest request) {
-		logger.info("showObtain:제안서 정보 oid: "+request.getParameter("oid") );
+		logger.info("showObtain:제안서 정보 oid: " + request.getParameter("oid"));
 		if (session.getAttribute("session_name") != null) {
 
 			logger.info(session.getAttribute("session_name").toString() + " 해당 사용자가 로그인중입니다. ");
 		}
 
-		
 		ModelAndView model = new ModelAndView();
 		obtainBean obtainBean = projectService.getObtains(request.getParameter("oid"));
 		model.addObject("obtainBean", obtainBean);
@@ -67,27 +64,73 @@ public class ProjectController {
 
 		return model;
 	}
+
+	@RequestMapping(value = "/ProjectController/newObtainPage", method = RequestMethod.GET)
+	public ModelAndView InsertObtainPage(HttpSession session,HttpServletRequest request) {
 	
-	
-	@RequestMapping(value = "/ProjectController/newObtain", method = RequestMethod.GET)
-	public ModelAndView InsertObtain(HttpSession session,HttpServletRequest request) {
-		logger.info("InsertObtain:제안서 추가하기 pid: "+request.getParameter("wid") );
+		logger.info("InsertObtain:제안서 추가하기 " );
 		if (session.getAttribute("session_name") != null) {
 
 			logger.info(session.getAttribute("session_name").toString() + " 해당 사용자가 로그인중입니다. ");
 		}
 
 		
+		
 		ModelAndView model = new ModelAndView();
-		obtainBean obtainBean = projectService.insertObtain(request.getParameter("wid"));
-		model.addObject("obtainBean", obtainBean);
-		model.setViewName("obtainTable"); // jsp 이름 (view이름)
+		//UserInfo ui = loginService.signup(sb);
+		//return "insertObtainPage";
+	//	model.addObject("obtainBean", oBean);
+		model.setViewName("insertObtainPage"); // jsp 이름 (view이름)
 
 		return model;
 	}
-	
-	
-	
+
+	@RequestMapping(value = "/ProjectController/insertObtain", method = RequestMethod.POST)
+	public String InsertObtain(HttpSession session, HttpServletRequest request) {
+		logger.info("InsertObtain:제안서 추가하기 pid: " + session.getAttribute("session_name"));
+		if (session.getAttribute("session_name") != null) {
+
+			logger.info(session.getAttribute("session_name").toString() + " 해당 사용자가 로그인중입니다. ");
+		}
+
+		
+		String sdate = request.getParameter("start_date");
+		String edate = request.getParameter("end_date");
+		
+		 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		  Date sdateparsed = null;
+		  Date edateparsed = null ;
+		try {
+			sdateparsed = format.parse(sdate);
+			 edateparsed = format.parse(edate);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		  
+		  java.sql.Date sqlStartDate = new java.sql.Date(sdateparsed.getTime());
+		  java.sql.Date sqlEndDate = new java.sql.Date(edateparsed.getTime());
+		
+		
+		
+		obtainBean oBean = new obtainBean();
+		System.out.println(">> " +sqlStartDate + " / " + sqlEndDate+ " " + session.getAttribute("session_name")+" "+ request.getParameter("subject") +" "+request.getParameter("contents"));
+		//request.getParameter("start_date"),request.getParameter("end_date"),
+		//request.getParameter("order_company"),request.getParameter("contents"),request.getParameter("wid")
+		oBean.setWriter_User((Integer) session.getAttribute("session_name"));
+		oBean.setObtain_Name(request.getParameter("subject"));;
+		oBean.setOrder_Company(request.getParameter("order_company"));
+		oBean.setPresent_Status(10);//기본 값
+		oBean.setStart_Date((java.sql.Date) sqlStartDate);
+		oBean.setEnd_Date((java.sql.Date) sqlEndDate);
+		oBean.setComment(request.getParameter("contents"));
+
+		System.out.println(" insert !!!!! 결과 :"+projectService.insertObtain(oBean));
+		
+//redirect:insertCoursePage
+		return "redirect:showObtainTable";///ProjectController/showObtainTable
+	}
+
 	@RequestMapping(value = "/ProjectController/showProjectTable", method = RequestMethod.GET)
 	public ModelAndView showProjectTable(HttpSession session) {
 		logger.info("showProjectTable:프로젝트 전체 목록 보기");
@@ -135,12 +178,10 @@ public class ProjectController {
 		return model;
 	}
 
-	
-
-	//permission == pm 검색 
+	// permission == pm 검색
 	@RequestMapping(value = "/ProjectController/showObtainAdd", method = RequestMethod.GET)
-	public ModelAndView showObtainAdd(HttpSession session,HttpServletRequest request) {
-		logger.info("showObtainAdd: PM 추가 페이지 이동 , 제안서 id "+request.getParameter("oid"));
+	public ModelAndView showObtainAdd(HttpSession session, HttpServletRequest request) {
+		logger.info("showObtainAdd: PM 추가 페이지 이동 , 제안서 id " + request.getParameter("oid"));
 
 		ModelAndView model = new ModelAndView();
 		ArrayList<UserBean> permissionlist = projectService.getMember_permission(11);
@@ -149,7 +190,7 @@ public class ProjectController {
 
 		return model;// jsp 파일 이름.
 	}
-	
+
 	@RequestMapping(value = "/ProjectController/retrieveUserList", method = RequestMethod.GET)
 	public ModelAndView showRetrieveList(HttpSession session, String input) {
 		logger.info("retrieveUserList:유저 리스트 검색하기");
@@ -161,21 +202,21 @@ public class ProjectController {
 
 		return model;// jsp 파일 이름.
 	}
-	
+
 	/*
-	@RequestMapping(value = "/ProjectController/retrieveUser", method = RequestMethod.GET)
-	public String retrieveMember(HttpServletRequest request,HttpSession session){
-		logger.info("retrieveMember:ID로 User정보 검색하기 " + request.getParameter("id"));
-		//ModelAndView model = new ModelAndView();
-		//signupBean userInfo = projectService.getMemberInfo(request.getParameter("id"));
-	//	request.setAttribute("showBean", show);
-			
-	//	signupBean userInfo = (signupBean) session.getAttribute("signupBean"));
-		signupBean show = loginService.showMember(request.getParameter("id"));
-		request.setAttribute("showBean", show);
-		return "userProfile";
-	}
-*/
+	 * @RequestMapping(value = "/ProjectController/retrieveUser", method =
+	 * RequestMethod.GET) public String retrieveMember(HttpServletRequest
+	 * request,HttpSession session){ logger.info(
+	 * "retrieveMember:ID로 User정보 검색하기 " + request.getParameter("id"));
+	 * //ModelAndView model = new ModelAndView(); //signupBean userInfo =
+	 * projectService.getMemberInfo(request.getParameter("id")); //
+	 * request.setAttribute("showBean", show);
+	 * 
+	 * // signupBean userInfo = (signupBean)
+	 * session.getAttribute("signupBean")); signupBean show =
+	 * loginService.showMember(request.getParameter("id"));
+	 * request.setAttribute("showBean", show); return "userProfile"; }
+	 */
 	@RequestMapping(value = "/ProjectController/showPMProjectTable", method = RequestMethod.GET)
 	public String showPMProjectTable(HttpSession session, Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
@@ -210,4 +251,3 @@ public class ProjectController {
 		return "directory";// jsp 파일 이름.
 	}
 }
-

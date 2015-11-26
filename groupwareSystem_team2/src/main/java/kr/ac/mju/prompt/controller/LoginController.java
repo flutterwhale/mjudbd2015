@@ -341,21 +341,21 @@ public class LoginController {
 	@RequestMapping(value = "/LoginController/updateMember.do", method = RequestMethod.POST)
 	public String updateMember(HttpSession session, HttpServletRequest request) throws UnsupportedEncodingException {
 		if (session.getAttribute("session_name") != null) {
-			//logger.info(session.getAttribute("session_name").toString() + " �빐�떦 �궗�슜�옄媛� 濡쒓렇�씤以묒엯�땲�떎. ");
+			logger.info(session.getAttribute("session_name").toString() + " 해당 사용자가 로그인중입니다. ");
 		}	
 		request.setCharacterEncoding("utf-8");
 		String id = (String) request.getParameter("signupID");
 		
 		String pw1 = (String) request.getParameter("signupPW");
 		
-		String password = request.getParameter("signupPW");// 鍮꾨�踰덊샇
+		String password = request.getParameter("signupPW");// 비밀번호
 
-		String phone = request.getParameter("phone");// �뿰�씫泥�
-		String email = request.getParameter("email");// �뿰�씫泥�
-		String addr = request.getParameter("address"); // 二쇱냼
+		String phone = request.getParameter("phone");// 연락처
+		String email = request.getParameter("email");// 연락처
+		String addr = request.getParameter("address"); // 주소
 		
-		// 湲고� �젙蹂�
-		String university = request.getParameter("university"); // 理쒖쥌�븰�젰
+		// 기타 정보
+		String university = request.getParameter("university"); // 최종학력
 		String major = request.getParameter("major");
 		String depart = request.getParameter("depart");
 		String graduation = request.getParameter("graduation");
@@ -367,7 +367,7 @@ public class LoginController {
 		
 		int part_id = loginService.searchMemberDepart(id);
 		
-		signupBean sb = new signupBean();//湲곕낯�젙蹂� 誘몃━ 鍮덉뿉 �떞�븘�몺.
+		signupBean sb = new signupBean();//기본정보 미리 빈에 담아둠.
 		
 		sb.setId(Integer.parseInt(id));
 		sb.setPassword(password);
@@ -378,16 +378,16 @@ public class LoginController {
 		sb.setCareer(career);
 		sb.setPortfolio(portfolio);
 		
-		System.out.println("遺��꽌 ID " + part_id);
+		System.out.println("부서 ID " + part_id);
 		
-		/*if(part_id==17||part_id==99){
-			loginService.deleteMemberLanguage(id);//�궗�슜�옄 �븘�씠�뵒瑜� �봽濡쒓렇�옒諛� �뼵�뼱 �궡�뿭�쓽 �궘�젣
+		if(part_id==17||part_id==99){
+			/*loginService.deleteMemberLanguage(id);//사용자 아이디를 프로그래밍 언어 내역의 삭제
 			
 			int tech_level = Integer.parseInt(request.getParameter("tech_level").toString());
 			sb.setTech_level(tech_level);
 			
 			int language_count = Integer.parseInt(request.getParameter("language_count"));
-			System.out.println("異붽��맂 language 媛쒖닔 " + language_count);
+			System.out.println("추가된 language 개수 " + language_count);
 	
 			ArrayList<String> language_list = new ArrayList<String>();
 			ArrayList<Integer> language_level_list = new ArrayList<Integer>();
@@ -402,14 +402,14 @@ public class LoginController {
 				System.out.println(i + "level==>" + language_level_list.get(i).toString());
 			}
 			sb.setLanguage_list(language_list);
-			sb.setLanguage_level_list(language_level_list);
-		}*/
+			sb.setLanguage_level_list(language_level_list);*/
+		}
 	 
 		
 		signupBean ui = loginService.updateMember(sb);
 		request.setAttribute("code", ui.getCode());
 
-		return "main";
+		return "login";
 	}
 	
 

@@ -11,12 +11,13 @@ public class obtainBean {
 	private String Order_Company;
 	private Date Start_Date;
 	private Date End_Date;
-	private int Writer_User; 
+	private int Writer_User;
+	private String PM; 
 	private String Writer_name;
 	
 	
 	public obtainBean(int obtain_Order_Identifier, String obtain_Name, String comment, int present_Status,
-			String order_Company, Date start_Date, Date end_Date, int writer_User, String writer_name) {
+			String order_Company, Date start_Date, Date end_Date, int writer_User, String writer_name, String pm) {
 		super();
 		Obtain_Order_Identifier = obtain_Order_Identifier;
 		Obtain_Name = obtain_Name;
@@ -27,6 +28,7 @@ public class obtainBean {
 		End_Date = end_Date;
 		Writer_User = writer_User;
 		Writer_name = writer_name;
+		setPM(pm);
 	}
 	public obtainBean() {
 		// TODO Auto-generated constructor stub
@@ -85,6 +87,13 @@ public class obtainBean {
 	public void setWriter_name(String writer_name) {
 		Writer_name = writer_name;
 	}
+	public String getPM() {
+		return PM;
+	}
+	public void setPM(String pM) {
+		PM = pM;
+	}
+
 	
 	
 	
