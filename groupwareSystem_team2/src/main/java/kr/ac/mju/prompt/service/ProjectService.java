@@ -29,7 +29,7 @@ public class ProjectService {
 	
 	public ArrayList<obtainBean> getAllObtains() {
 		// TODO Auto-generated method stub
-		logger.info("모든 프로젝트 목록");
+		logger.info("모든 수주 목록");
 
 		return projectDAO.getAllObtain();
 	}

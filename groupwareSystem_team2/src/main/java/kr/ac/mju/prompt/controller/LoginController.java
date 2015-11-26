@@ -299,6 +299,18 @@ public class LoginController {
 		
 		
 	}
+	@RequestMapping(value = "/LoginController/retrieveUser", method = RequestMethod.GET)
+	public String retrieveMember(HttpServletRequest request,HttpSession session){
+		logger.info("retrieveMember:ID로 User정보 검색하기 " + request.getParameter("id"));
+		//ModelAndView model = new ModelAndView();
+		//signupBean userInfo = projectService.getMemberInfo(request.getParameter("id"));
+	//	request.setAttribute("showBean", show);
+			
+	//	signupBean userInfo = (signupBean) session.getAttribute("signupBean"));
+		signupBean show = loginService.showMember(request.getParameter("id"));
+		request.setAttribute("showBean", show);
+		return "userProfile";
+	}
 
 	@RequestMapping(value = "/LoginController/editMemberPage", method = RequestMethod.POST)
 	public String editPage(HttpSession session, HttpServletRequest request) {

@@ -28,8 +28,9 @@ import kr.ac.mju.prompt.service.ProjectService;
 public class ProjectController {
 
 	@Autowired
+	//private LoginService loginService;
 	private ProjectService projectService;
-	private LoginService loginService;
+	
 	
 	private static final Logger logger = LoggerFactory.getLogger(ProjectController.class);
 
@@ -122,11 +123,11 @@ public class ProjectController {
 		return model;// jsp 파일 이름.
 	}
 	
-	
+	/*
 	@RequestMapping(value = "/ProjectController/retrieveUser", method = RequestMethod.GET)
 	public String retrieveMember(HttpServletRequest request,HttpSession session){
-		logger.info("retrieveMember:ID로 User정보 검색하기" + request.getParameter("id"));
-		ModelAndView model = new ModelAndView();
+		logger.info("retrieveMember:ID로 User정보 검색하기 " + request.getParameter("id"));
+		//ModelAndView model = new ModelAndView();
 		//signupBean userInfo = projectService.getMemberInfo(request.getParameter("id"));
 	//	request.setAttribute("showBean", show);
 			
@@ -135,7 +136,7 @@ public class ProjectController {
 		request.setAttribute("showBean", show);
 		return "userProfile";
 	}
-
+*/
 	@RequestMapping(value = "/ProjectController/showPMProjectTable", method = RequestMethod.GET)
 	public String showPMProjectTable(HttpSession session, Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
@@ -170,3 +171,4 @@ public class ProjectController {
 		return "directory";// jsp 파일 이름.
 	}
 }
+
