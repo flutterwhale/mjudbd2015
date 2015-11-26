@@ -74,6 +74,7 @@
 		<button type="button"
 			onclick="location.href='${pageContext.request.contextPath}/ProjectController/showObtainInformation'">수주
 		</button>
+		
 		 <button type="button"
             onclick="location.replace('${pageContext.request.contextPath}/LoginController/main')">메인화면</button>
 

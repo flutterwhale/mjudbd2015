@@ -1,3 +1,4 @@
+<%@page import="com.mysql.jdbc.interceptors.SessionAssociationInterceptor"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page session="false"%>
 
@@ -5,12 +6,13 @@
 	pageEncoding="UTF-8"%>
 	
 <script language="javascript">
-   // history.go(1);
+   //history.go(1);
 </script> 
 <%
 response.setHeader("pragma", "no-cache");              
 response.setHeader("Cache-control", "no-cache, no-store, must-revalidate");             
 response.setHeader("Expires", "0"); 
+
 %> 	
 	
 <html>
@@ -21,6 +23,16 @@ response.setHeader("Expires", "0");
 <title>Home</title>
 </head>
 <body>
+
+
+<%
+
+
+
+%>
+
+
+
 	<nav class="navbar navbar-default">
   		<div class="container-fluid">
     		<div class="navbar-header">
@@ -67,6 +79,7 @@ response.setHeader("Expires", "0");
     		</div>
   		</fieldset>
 	</form>
+	
 	
 	<div class = "well well-sm">
 		<p>The time on the server is ${serverTime}.</p> 

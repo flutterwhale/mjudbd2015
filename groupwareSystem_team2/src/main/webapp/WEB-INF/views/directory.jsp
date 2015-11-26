@@ -13,17 +13,13 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<%
+		response.setHeader("pragma", "no-cache");
+		response.setHeader("Cache-control", "no-cache, no-store, must-revalidate");
+		response.setHeader("Expires", "0");
+		 %>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>회사 인명부</title>
-
-<link rel="stylesheet" href="../jquery.treeview.css" />
-<link rel="stylesheet" href="../screen.css" />
-
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
-<script src="../jquery.cookie.js"></script>
-<script src="../jquery.treeview.js" type="text/javascript"></script>
-<script src="../jquery.treeview.edit.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 	$(

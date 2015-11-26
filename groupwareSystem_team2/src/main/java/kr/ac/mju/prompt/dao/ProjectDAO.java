@@ -26,6 +26,62 @@ public class ProjectDAO {
 	@Autowired
 	private static final Logger logger = LoggerFactory.getLogger(ProjectDAO.class);
 
+	public signupBean getUserInfo(String sid) {
+		logger.info("DAO : 해당 유저 정보 확인하기"+sid);
+		PreparedStatement pstmt = null;
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+		signupBean user = new signupBean();
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			
+			conn =  DriverManager.getConnection("jdbc:mysql://117.123.66.137:8089/dbd2015", "park",
+					"pjw49064215");
+			
+			
+			
+			String query = "SELECT * FROM dbd2015.t_user join dbd2015.t_position on t_user.User_Identifier = t_position.User_Identifier WHERE t_user.User_Identifier="+sid+" ;";
+			
+			while (rs.first()) {
+
+				logger.info(rs.getString("project_Name") + " " + rs.getInt("projectmanager_Identifier"));
+
+				projectBean pbean = new projectBean();
+
+				pbean.setProject_Identifier(rs.getInt("project_Identifier"));
+				pbean.setProject_Name(rs.getString("project_Name"));
+				pbean.setProjectmanager_Identifier(rs.getInt("projectmanager_Identifier"));
+				pbean.setPM_name(rs.getString("PMname"));
+				pbean.setStart_Date(rs.getDate("start_Date"));
+				pbean.setEnd_Date(rs.getDate("end_Date"));
+				pbean.setProject_Description(rs.getString("project_Description"));
+				pbean.setStatus(rs.getInt("status"));
+				pbean.setProject_Price(rs.getString("project_Price"));
+				pbean.setComment(rs.getString("pComment"));
+				pbean.setProject_Document(rs.getString("project_Document"));
+				pbean.setProject_Evaluation(rs.getInt("project_Evaluation"));
+				pbean.setDispatch_Location(rs.getString("dispatch_Location"));
+
+
+			}
+			
+			
+			
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+	
+		
+		return user;
+	}
+	
 	public ArrayList<projectBean> getAllProject() {
 		// TODO Auto-generated method stub
 		ArrayList<projectBean> allProject = new ArrayList<projectBean>();
@@ -38,11 +94,10 @@ public class ProjectDAO {
 		try {
 
 			Class.forName("com.mysql.jdbc.Driver");
-			Connection connection = DriverManager.getConnection("jdbc:mysql://117.123.66.137:8089/dbd2015", "park",
+			conn =  DriverManager.getConnection("jdbc:mysql://117.123.66.137:8089/dbd2015", "park",
 					"pjw49064215");
 
 			String query = "SELECT Project_Identifier, Project_Name, Projectmanager_Identifier,Start_Date,End_Date,Project_Description ,Status,Project_Price,t_project.Comment AS pComment,Project_Document, Product ,Project_Evaluation ,Dispatch_Location, t_user.Name AS PMname FROM dbd2015.t_project join dbd2015.t_user on t_user.User_Identifier = t_project.Projectmanager_Identifier ;";
-			conn = connection;
 			// pstmt = (PreparedStatement) conn.prepareStatement(query);
 			// rs = pstmt.executeQuery();
 			stmt = conn.createStatement();

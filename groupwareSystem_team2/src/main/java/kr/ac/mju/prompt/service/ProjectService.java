@@ -11,6 +11,7 @@ import kr.ac.mju.prompt.dao.ProjectDAO;
 import kr.ac.mju.prompt.model.UserBean;
 import kr.ac.mju.prompt.model.obtainBean;
 import kr.ac.mju.prompt.model.projectBean;
+import kr.ac.mju.prompt.model.signupBean;
 
 @Service
 public class ProjectService {
@@ -39,5 +40,9 @@ public class ProjectService {
 
 		return projectDAO.showMember_permssion(p);
 	}
-
+	public signupBean getMemberInfo(String string) {
+		logger.info("해당 유저 정보 "+string);
+		
+		return projectDAO.getUserInfo(string);
+	}
 }

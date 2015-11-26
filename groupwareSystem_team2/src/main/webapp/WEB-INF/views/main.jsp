@@ -3,12 +3,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	<%@include file="session.jsp"%>
+<%@include file="session.jsp"%>
+<%@include file="mapper.jsp"%>
 <%@ page import="kr.ac.mju.prompt.model.UserInfo"%>
 <%@ page import="kr.ac.mju.prompt.model.UserBean"%>
 <%@page import="org.apache.commons.beanutils.BeanUtils"%>
 <jsp:useBean id="loginbean" class="kr.ac.mju.prompt.model.UserBean"
-		scope="session" />
+	scope="session" />
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -17,31 +18,38 @@
 <title>Main</title>
 </head>
 <body>
-	
+
 	<%
- 	/* 	response.setHeader("pragma", "no-cache");
+		response.setHeader("pragma", "no-cache");
 		response.setHeader("Cache-control", "no-cache, no-store, must-revalidate");
-		response.setHeader("Expires", "0");  */
+		response.setHeader("Expires", "0");
 
-		if(session.getAttribute("code")==null){
+		if (session.getAttribute("session_name") == null) {
 			System.out.println("session is null : ");
-			response.sendRedirect("logout.do");
-			
-		} 
-		
-		System.out.println("code : " + session.getAttribute("code"));
-		System.out.println("session_name : " + session.getAttribute("session_name"));
-		System.out.println("session_cat : " + session.getAttribute("cat"));
-		if (session.getAttribute("code").equals("0")) {
-			//로그인 성공 
-			//System.out.println("session_name : " + session.getAttribute("session_name"));
-			UserInfo ui = (UserInfo)session.getAttribute("userinfo");
-			
-			UserBean myuser = ui.getMyUser();
-			BeanUtils.copyProperties(loginbean, myuser);
+			////response.sendRedirect("logout.do");
+	%>
+	<script language="javascript">
+		location.replace('main');
+	</script>
 
-			
-			
+	<%
+		} else {
+	%>
+	<!-- <script language="javascript">
+		alert("환영합니다.");
+	</script> -->
+
+	<%
+		System.out.println("code : " + session.getAttribute("code"));
+			System.out.println("session_name : " + session.getAttribute("session_name"));
+			System.out.println("session_cat : " + session.getAttribute("cat"));
+			if (session.getAttribute("code").equals("0")) {
+				//로그인 성공 
+				//System.out.println("session_name : " + session.getAttribute("session_name"));
+				UserInfo ui = (UserInfo) session.getAttribute("userinfo");
+
+				UserBean myuser = ui.getMyUser();
+				BeanUtils.copyProperties(loginbean, myuser);
 	%>
 
 
@@ -49,8 +57,9 @@
 		Id<jsp:getProperty property="id" name="loginbean" /></br> 직급코드<jsp:getProperty
 			property="position_Name" name="loginbean" /></br> 이름<jsp:getProperty
 			property="name" name="loginbean" /></br> 권한<jsp:getProperty
-			property="permission" name="loginbean" /></br> 부서코드<jsp:getProperty
-			property="di" name="loginbean" /></br>
+			property="permission" name="loginbean" /></br> 부서 :<%=Depart_map.get(loginbean.getDi())%><%-- <jsp:getProperty
+			property="di" name="loginbean" /> --%>
+		</br>
 		<p>
 			(으)로 로그인하였습니다.
 			<button type="button"
@@ -58,7 +67,7 @@
 	</h2>
 
 	</p>
-	<p>The time on the server is ${serverTime}.</p>
+
 
 
 	<button type="button"
@@ -75,7 +84,7 @@
 		현황</button>
 	<%
 		if (loginbean.getPermission() == 11) { // PM 권한
-				System.out.println(loginbean.getPermission() + ": PM 권한 로그인");
+					System.out.println(loginbean.getPermission() + ": PM 권한 로그인");
 	%>
 
 
@@ -87,7 +96,7 @@
 
 	<%
 		} else if (loginbean.getPermission() == 12) {//PL 권한
-				System.out.println(loginbean.getPermission() + ": PL 권한 로그인");
+					System.out.println(loginbean.getPermission() + ": PL 권한 로그인");
 	%>
 
 
@@ -103,15 +112,15 @@
 
 	<%
 		} else if (loginbean.getPermission() == 13) { //개발자
-				System.out.println(loginbean.getPermission() + ": 개발자 상태 로그인(프로젝트 투입 직원 권한 )");
+					System.out.println(loginbean.getPermission() + ": 개발자 상태 로그인(프로젝트 투입 직원 권한 )");
 	%>
 
 	<%
 		}
-			if (loginbean.getDi() == 10) { // 경영진 메뉴
-				System.out.println(loginbean.getPermission() + ": 경영진 메뉴");
-				//수주현황
-				//모든 프로젝트
+				if (loginbean.getDi() == 10) { // 경영진 메뉴
+					System.out.println(loginbean.getPermission() + ": 경영진 메뉴");
+					//수주현황
+					//모든 프로젝트
 	%>
 	<button type="button"
 		onclick="location.href='${pageContext.request.contextPath}/ProjectController/showObtainTable'">수주
@@ -122,7 +131,7 @@
 	<%
 		} else if (loginbean.getDi() == 12) { //영업부 메뉴
 
-				//수주 현황
+					//수주 현황
 	%>
 	<button type="button">프로젝트 관리</button>
 	<%
@@ -131,14 +140,14 @@
 	<button>인사 관리</button>
 	<%
 		//인사 관리
-			} else if (loginbean.getDi() == 13) {//총무팀 메뉴
-				//프로젝트 관리?
+				} else if (loginbean.getDi() == 13) {//총무팀 메뉴
+					//프로젝트 관리?
 	%>
 
 	<%
 		} else if (loginbean.getDi() == 17) { //개발팀
-				//업무 일지
-				//프로젝트
+					//업무 일지
+					//프로젝트
 	%>
 	<button type="button"
 		onclick="location.href='${pageContext.request.contextPath}/ProjectController/showProjectTable'">프로젝트
@@ -146,19 +155,19 @@
 	<button>업무 일지</button>
 	<%
 		}
-			if (loginbean.getPosition_Name() == 0 || loginbean.getDi() == 0) { //가입 대기 상태 
+				if (loginbean.getPosition_Name() == 0 || loginbean.getDi() == 0) { //가입 대기 상태 
 
-				System.out.println(loginbean.getPermission() + ": 가입 대기 상태 로그인");
+					System.out.println(loginbean.getPermission() + ": 가입 대기 상태 로그인");
 	%>
 	<p>가입 대기 상태 입니다. 인사관리부의 승인을 기다립니다.</p>
 
 	<%
 		} else { //가입 대기가 아니라면?
-				System.out.println(loginbean.getPermission() + ": 일반 직원 로그인, 공통 메뉴 보임");
+					System.out.println(loginbean.getPermission() + ": 일반 직원 로그인, 공통 메뉴 보임");
 
-				if (loginbean.getPosition_Name() == 99) { // 외부인력팀
+					if (loginbean.getPosition_Name() == 99) { // 외부인력팀
 
-					System.out.println(loginbean.getPermission() + ": 프리랜서(외부인력팀) 로그인");
+						System.out.println(loginbean.getPermission() + ": 프리랜서(외부인력팀) 로그인");
 	%>
 	<button>메신저</button>
 	<%
@@ -173,8 +182,9 @@
 	<%
 		} // 외부 인력 아닌 기본 공통 메뉴
 
-			} //가입 대기 아닌 경우 끝
-		}
+				} //가입 대기 아닌 경우 끝
+			}
+		} // session 유효한가?
 	%>
 </body>
 </html>

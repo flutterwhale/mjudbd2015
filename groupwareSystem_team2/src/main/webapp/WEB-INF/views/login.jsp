@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	<%@include file="session.jsp"%>
+	
 <%@ page import="kr.ac.mju.prompt.model.UserInfo"%>
 <%@ page import="kr.ac.mju.prompt.model.UserBean"%>
 <%@page import="org.apache.commons.beanutils.BeanUtils"%>
@@ -37,18 +37,25 @@
 		System.out.println("session_name : " + session.getAttribute("session_name")); */
 		//if (session.getAttribute("code").equals("0")) {
 		//로그인 성공 
+		
+		UserInfo ui = (UserInfo)  request.getAttribute("userinfo");
+			session.setAttribute("userinfo",ui);
+			UserBean myuser = ui.getMyUser();
+			session.setAttribute("myUser", myuser);
+			session.setAttribute("session_name", myuser.getId());
+			session.setAttribute("cat", myuser.getCat());
+			session.setAttribute("code", "0");
+		
 		System.out.println("login.jsp -> session_id : " + session.getAttribute("session_name"));
-		UserInfo ui = (UserInfo) session.getAttribute("userinfo");
-		UserBean myuser = ui.getMyUser();
-		session.setAttribute("myUser", myuser);
-		session.setAttribute("session_name", myuser.getId());
+	//	session.getAttribute("userinfo");
+	
 
 		//}
 		//response.sendRedirect("/LoginController/main");
 	%>
 	<%-- 	<jsp:forward page ="/LoginController/main"  /> --%>
 	<script language="javascript">
-	
+		alert("환영합니다.");
 		location.replace('main');
 	</script>
 

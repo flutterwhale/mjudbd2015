@@ -14,6 +14,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<%
+		response.setHeader("pragma", "no-cache");
+		response.setHeader("Cache-control", "no-cache, no-store, must-revalidate");
+		response.setHeader("Expires", "0");
+		 %>
 <title>정보 조회</title>
 </head>
 <body>

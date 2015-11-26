@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import kr.ac.mju.prompt.model.UserBean;
 import kr.ac.mju.prompt.model.UserInfo;
@@ -30,7 +32,7 @@ public class LoginController {
 	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
 	@RequestMapping(value = "/LoginController/login.do", method = RequestMethod.POST)
-	public String login(HttpSession session, HttpServletRequest request, Locale locale, Model model) throws UnsupportedEncodingException {
+	public ModelAndView login(HttpSession session, HttpServletRequest request, Locale locale, Model model) throws UnsupportedEncodingException {
 
 		Date date = new Date();
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
@@ -43,19 +45,23 @@ public class LoginController {
 		String userID = request.getParameter("user_id"); // home.jsp 에서 input 에서
 															// 넘어온 parameter
 		String userPW = request.getParameter("user_password");
-
+		ModelAndView modelview = new ModelAndView();
 		if (0 == userID.length()) {
 			logger.info("97 : id 입력하지 않음");
 			logger.info("로그인 시도 ID:" + userID + ", PW:" + userPW);
 			request.setAttribute("code", 97);
 
-			return "loginRetrun";
+			modelview.setViewName("loginRetrun");
+			
+			//return "loginRetrun";
+			return modelview;
 		} else if (0 == userPW.length()) {
 			logger.info("96 : pw 입력하지 않음");
 			request.setAttribute("code", 96);
 			logger.info("로그인 시도 ID:" + userID + ", PW:" + userPW);
-			return "loginRetrun";
-
+			//return "loginRetrun";
+			modelview.setViewName("loginRetrun");
+			return modelview;
 		}
 		logger.info("로그인 시도 ID:" + userID + ", PW:" + userPW);
 		UserInfo ui = loginService.login(userID, userPW); // loginservice 요청
@@ -63,19 +69,27 @@ public class LoginController {
 
 		if (ui.getErrorCode() == 0) { // 로그인 성공 정보 0
 			logger.info("0 : 로그인 일치");
-			session = request.getSession(true);
+		//	session = request.getSession(true);
 			// request.setAttribute("code", "0");
-			session.setAttribute("userinfo", ui);
+	/*		session.setAttribute("userinfo", ui);
 			session.setAttribute("session_name", ui.getMyUser().getId());
 			session.setAttribute("cat", ui.getMyUser().getCat());
-			session.setAttribute("code", "0");
+			session.setAttribute("code", "0");*/
+		//	return "login";
+			
+			modelview.addObject("userinfo", ui);
+			modelview.setViewName("login"); // jsp 이름 (view이름)
 
-			return "login";
+			
+			
+			return modelview;
 		} else {
 			// session.setAttribute("sessionCheck", 0);
 			request.setAttribute("code", ui.getErrorCode());
 			logger.info("99 : 로그인 실패");
-			return "loginRetrun";
+			//return "loginRetrun";
+			modelview.setViewName("loginRetrun");
+			return modelview;
 		}
 	}
 
@@ -107,12 +121,16 @@ public class LoginController {
 	@RequestMapping(value = "/LoginController/logout.do", method = RequestMethod.GET)
 	public String logout(HttpSession session, Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
-		logger.info("로그아웃");
-		if (session.getAttribute("session_name") != null) {
-
-			logger.info(session.getAttribute("session_name").toString() + " 해당 사용자가 로그인중입니다. ");
-		}		
+		logger.info(">>>>>>>>>>>>>>>>>로그아웃 ");
+		
 		session.invalidate();
+			logger.info("로그아웃 성공?");
+			
+		
+		
+		
+		//logger.info(session.getAttribute("session_name").toString() + " 해당 사용자가 로그인중입니다. ");
+		
 		//session.setAttribute("session_name", "null");
 		// logger.info(session.getId()+" 로그아웃 :
 		// "+session.getAttribute("myUser"));
@@ -294,11 +312,15 @@ public class LoginController {
 		logger.info("정보 업데이트 : cat : " + cat + " id " + id);
 
 		
-		if (cat == null) { // null 값이면 일반 사용자  //common은 일반 개발자 //FreeLancer는 외부자 
+		
+		
+		
+		
+		if (cat == null) { // null 값이면 일반 사용자  
 			logger.info("signup_common");
-			return "editMember";
+			return "editMember"; //일반 사용자 
 
-		} else {
+		} else { //개발자 모드  //common은 일반 개발자 //FreeLancer는 외부자 
 			logger.info("signup_developer");
 			return "editMember_developer";
 		}
