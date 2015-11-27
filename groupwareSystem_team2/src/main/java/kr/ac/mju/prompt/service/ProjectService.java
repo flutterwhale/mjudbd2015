@@ -72,5 +72,12 @@ public class ProjectService {
 		logger.info("deleteObtain  oid : "+oid);
 		return projectDAO.deleteObtain(oid);
 	}
+
+	public int updateObtain(obtainBean ob) {
+		// TODO Auto-generated method stub
+		
+		
+		return projectDAO.updateObtain(ob);
+	}
 	
 }

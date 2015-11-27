@@ -487,18 +487,15 @@ public class ProjectDAO {
 			stmt = conn.createStatement();
 
 			String query = "INSERT INTO `dbd2015`.`t_project` (`Project_Name`,  `Start_Date`, `End_Date`, `Status`, `Project_Description` ,`Projectmanager_Identifier`) VALUES ('"
-					+ oBean.getObtain_Name() + "', '" + oBean.getStart_Date() + "', '"
-					+ oBean.getEnd_Date() + "', '10', '" + oBean.getComment() + "' ,'"+pid+"');";
-
-			
+					+ oBean.getObtain_Name() + "', '" + oBean.getStart_Date() + "', '" + oBean.getEnd_Date()
+					+ "', '10', '" + oBean.getComment() + "' ,'" + pid + "');";
 
 			result = stmt.executeUpdate(query);
 			System.out.println("query 1 " + query);
-						String query2 = "DELETE FROM `dbd2015`.`t_obtain_order` WHERE `Obtain_Order_Identifier`='"+oBean.getObtain_Order_Identifier() + "';";
-				System.out.println("query 2 " + query2);
-				result2 = stmt.executeUpdate(query2);				
-		
-
+			String query2 = "DELETE FROM `dbd2015`.`t_obtain_order` WHERE `Obtain_Order_Identifier`='"
+					+ oBean.getObtain_Order_Identifier() + "';";
+			System.out.println("query 2 " + query2);
+			result2 = stmt.executeUpdate(query2);
 
 			System.out.println("insert result? " + result + " / " + result2);
 
@@ -622,12 +619,11 @@ public class ProjectDAO {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection("jdbc:mysql://117.123.66.137:8089/dbd2015", "park", "pjw49064215");
 			stmt = conn.createStatement();
-			String query = "DELETE FROM `dbd2015`.`t_obtain_order` WHERE `Obtain_Order_Identifier`='"+oid+ "';";
+			String query = "DELETE FROM `dbd2015`.`t_obtain_order` WHERE `Obtain_Order_Identifier`='" + oid + "';";
 			result = stmt.executeUpdate(query);
 			System.out.println("query 1 " + query);
-						
 
-			System.out.println("insert result? " + result );
+			System.out.println("insert result? " + result);
 
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -636,6 +632,41 @@ public class ProjectDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return result;
+	}
+
+	public int updateObtain(obtainBean ob) {
+		logger.info("update query : " + ob.getObtain_Name() + " id "+ob.getObtain_Order_Identifier());
+		// TODO Auto-generated method stub
+		Statement stmt = null;
+		Connection conn = null;
+		int result = 0;
+
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = DriverManager.getConnection("jdbc:mysql://117.123.66.137:8089/dbd2015", "park", "pjw49064215");
+			stmt = conn.createStatement();
+
+			System.out.println(
+					"obean writer " + ob.getWriter_User() + " stdat" + ob.getStart_Date() + " ed" + ob.getEnd_Date());
+
+			String query = "UPDATE `dbd2015`.`t_obtain_order` SET `Obtain_Name`='" + ob.getObtain_Name()
+					+ "', `Comment`='" + ob.getComment() + "', `Present_Status`='" + ob.getPresent_Status()
+					+ "', `End_Date`='" + ob.getEnd_Date() + "', `Start_Date`='" +  ob.getStart_Date()
+					+ "' WHERE `Obtain_Order_Identifier`='" + ob.getObtain_Order_Identifier() + "';";
+
+			System.out.println("update query? : " + query);
+			result = stmt.executeUpdate(query);
+			System.out.println("update result? " + result);
+
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		return result;
 	}
 

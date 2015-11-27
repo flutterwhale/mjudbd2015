@@ -48,15 +48,15 @@
 			<h1>수주 현황</h1>
 			<table class="table table-striped table-hover" border="1">
 				<tr align="center">
-					<td width="70px">번호</td>
+					<td width="50px">번호</td>
 					<td width="200px">이름</td>
-					<td width="200px">시작일</td>
-					<td width="200px">마감일</td>
+					<td width="120px">시작일</td>
+					<td width="120px">마감일</td>
 					<td width="250px">설명</td>
-					<td width="180px">주문 회사</td>
-					<td width="200px">작성자</td>
-					<td width="100px">현재 상태</td>
-					<td width="150px">PM 배정</td>
+					<td width="120px">주문 회사</td>
+					<td width="60px">작성자</td>
+					<td width="80px">현재 상태</td>
+					<td width="100px">PM 배정</td>
 				</tr>
 				<%
 					if (allObatain.isEmpty()) {
@@ -77,7 +77,7 @@
 					<td><%=c.getEnd_Date() %></td>
 					<td><%=c.getComment() %></td>
 					<td><%=c.getOrder_Company()%></td>
-					<td><a href='${pageContext.request.contextPath}/LoginController/retrieveUser?id=<%=c.getWriter_User()%>'><%=c.getWriter_User()%></a>/<%=c.getWriter_name() %></td>
+					<td><a href='${pageContext.request.contextPath}/LoginController/retrieveUser?id=<%=c.getWriter_User()%>'><%=c.getWriter_User()%></a><br/><%=c.getWriter_name() %></td>
 					<td><%=c.getPresent_Status() %></td>
 					<td> 
 					

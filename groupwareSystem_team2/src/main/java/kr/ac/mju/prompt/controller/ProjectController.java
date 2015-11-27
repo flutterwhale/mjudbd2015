@@ -86,7 +86,7 @@ public class ProjectController {
 
 		return model;
 	}
-	@RequestMapping(value = "/ProjectController/deleteObtainPage", method = RequestMethod.GET)
+	@RequestMapping(value = "/ProjectController/deleteObtainPage", method = RequestMethod.POST)
 	public ModelAndView DeleteObtainPage(HttpSession session,HttpServletRequest request) {
 	
 		logger.info("DeleteObtain:제안서 제거하기  제거하려는 사람?:" +request.getParameter("id") + " 수주 아이디" +request.getParameter("oid") );
@@ -108,6 +108,49 @@ public class ProjectController {
 		model.setViewName("redirect:showObtainTable"); // jsp 이름 (view이름)
 
 		return model;
+	}
+	@RequestMapping(value = "/ProjectController/updateObtain", method = RequestMethod.POST)
+	public String updateObtain(HttpSession session, HttpServletRequest request) {
+		logger.info("InsertObtain:제안서 수정하기 wid: " + session.getAttribute("session_name")+ " oid "+ request.getParameter("oid"));
+		if (session.getAttribute("session_name") != null) {
+
+			logger.info(session.getAttribute("session_name").toString() + " 해당 사용자가 로그인중입니다. ");
+		}
+
+		
+		String sdate = request.getParameter("start_date");
+		String edate = request.getParameter("end_date");
+		
+		 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		  Date sdateparsed = null;
+		  Date edateparsed = null ;
+		try {
+			sdateparsed = format.parse(sdate);
+			 edateparsed = format.parse(edate);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		  
+		  java.sql.Date sqlStartDate = new java.sql.Date(sdateparsed.getTime());
+		  java.sql.Date sqlEndDate = new java.sql.Date(edateparsed.getTime());
+		
+		
+		
+		obtainBean oBean = new obtainBean();
+		System.out.println(">>sqlStartDate " +sqlStartDate + " / sqlEndDate" + sqlEndDate+ " setWriter_User " + session.getAttribute("session_name")+" setObtain_Name "+ request.getParameter("subject") +" contents "+request.getParameter("contents") +" status "+request.getParameter("status"));
+		oBean.setWriter_User((Integer) session.getAttribute("session_name"));
+		oBean.setObtain_Name(request.getParameter("subject"));;
+		oBean.setOrder_Company(request.getParameter("order_company"));
+		oBean.setPresent_Status(Integer.parseInt(request.getParameter("status")));
+		oBean.setStart_Date((java.sql.Date) sqlStartDate);
+		oBean.setEnd_Date((java.sql.Date) sqlEndDate);
+		oBean.setComment(request.getParameter("contents"));
+		oBean.setObtain_Order_Identifier(Integer.parseInt(request.getParameter("oid")));
+		System.out.println("obean writer "+oBean.getWriter_User() + " stdat" + oBean.getStart_Date() +" ed"+ oBean.getEnd_Date());
+		System.out.println(" update !!!!! 결과 :"+projectService.updateObtain(oBean));
+		
+		return "redirect:showObtainTable";///ProjectController/showObtainTable
 	}
 
 	
