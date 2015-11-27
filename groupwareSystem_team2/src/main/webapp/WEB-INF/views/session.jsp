@@ -13,10 +13,11 @@
 <body>
 
 	<%
+	System.out.println("session.jsp loaded.");
 		if (session.getAttribute("session_name") == null) {
 
-			System.out.println("===========세션정보 없음===============");
-			System.out.println("=========== home 으로===============");
+			System.out.println("===============세션정보 없음===============");
+			System.out.println("===============home 으로================");
 
 			//	response.sendRedirect("home");
 	%>
@@ -25,9 +26,10 @@
 	<%
 		} else {
 
-			System.out.println("===========세션정보 확인됨===============");
+			System.out.println("===============세션정보 확인됨===============");
 			String sID = session.getAttribute("session_name").toString();
-			System.out.println("session ID " + sID);
+
+			System.out.println("========= session ID: " + sID + " =========");
 		}
 	%>
 

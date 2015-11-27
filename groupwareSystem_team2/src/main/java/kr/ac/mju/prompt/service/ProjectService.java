@@ -53,6 +53,12 @@ public class ProjectService {
 		
 		return projectDAO.intsertProject(pid, obtainBean);
 	}
+	public ArrayList<signupBean> DepartmentMemberList(String di) {
+		logger.info("=============DepartmentMemberList Service=============");
+		logger.info("login Service.DepartmentMemberList :" + di);
+		
+		return projectDAO.getDepartUser(di);
+	}
 
 	public int insertObtain(obtainBean ob) {
 		// TODO Auto-generated method stub

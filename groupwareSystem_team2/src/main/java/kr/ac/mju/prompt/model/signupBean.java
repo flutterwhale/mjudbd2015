@@ -7,7 +7,7 @@ import java.util.Map;
 public class signupBean {
 	private String msg = "";
 	private int code;
-	// ±âº» Á¤º¸
+	// ï¿½âº» ï¿½ï¿½ï¿½ï¿½
 	private int id;
 	private String name;
 	private String password;
@@ -18,31 +18,30 @@ public class signupBean {
 	private String email;
 	private int gender;
 
-	// ±âÅ¸Á¤º¸
+	// ï¿½ï¿½Å¸ï¿½ï¿½ï¿½ï¿½
 	private String a_career;
 	private String career;
 	private String portfolio;
 	
-	//µî·Ï Á¤º¸
+	//ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	private String Office_Number;
 	private Date Joining_Date;
 	private Date Retired_Date;
 	private String comment;
 	
-	// °³¹ßÀÚ Á¤º¸
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	private String isFreeLancer;
-	private String language;
 	private int tech_level;
-	private ArrayList language_list;
-	private ArrayList language_level_list;
+	private ArrayList<String> language_list;
+	private ArrayList<Integer> language_level_list;
 	
-	// ºÎ¼­ Á¤º¸
+	// ï¿½Î¼ï¿½ ï¿½ï¿½ï¿½ï¿½
 	private int di;
 	private int permission;
 	private int position_Name;
 
 	public signupBean(String isFreeLancer, String name, String id, String password, String ssn, String phone,
-			String addr, String email, String gender, String a_career, String career, String portfolio,  ArrayList language_list,ArrayList language_level_list, String tech_level) {
+			String addr, String email, String gender, String a_career, String career, String portfolio,  ArrayList language_list, ArrayList language_level_list, String tech_level) {
 		
 		this.setIsFreeLancer(isFreeLancer);
 		this.setName(name);
@@ -59,7 +58,6 @@ public class signupBean {
 		this.setLanguage_list(language_list);
 		this.setLanguage_level_list(language_level_list);
 		this.setTech_level(Integer.parseInt(tech_level));
-		System.out.println("signupBean(°³¹ßÀÚ) »ý¼º¿Ï·á");
 
 	}
 
@@ -77,7 +75,6 @@ public class signupBean {
 		this.setEmail(email);
 		this.setCareer(career);
 		this.setPortfolio(portfolio);
-		System.out.println("signupBean(ºñ °³¹ßÀÚ) »ý¼º¿Ï·á");
 
 	}
 	
@@ -190,13 +187,13 @@ public class signupBean {
 		this.a_career = a_career;
 	}
 
-	public String getLanguage() {
-		return language;
-	}
-
-	public void setLanguage(String language) {
-		this.language = language;
-	}
+//	public String getLanguage() {
+//		return language;
+//	}
+//
+//	public void setLanguage(String language) {
+//		this.language = language;
+//	}
 
 	public int getTech_level() {
 		return tech_level;
@@ -238,19 +235,19 @@ public class signupBean {
 		this.isFreeLancer = isFreeLancer;
 	}
 
-	public ArrayList getLanguage_list() {
+	public ArrayList<String> getLanguage_list() {
 		return language_list;
 	}
 
-	public void setLanguage_list(ArrayList language_list) {
+	public void setLanguage_list(ArrayList<String> language_list) {
 		this.language_list = language_list;
 	}
 
-	public ArrayList getLanguage_level_list() {
+	public ArrayList<Integer> getLanguage_level_list() {
 		return language_level_list;
 	}
 
-	public void setLanguage_level_list(ArrayList language_level_list) {
+	public void setLanguage_level_list(ArrayList<Integer> language_level_list) {
 		this.language_level_list = language_level_list;
 	}
 

@@ -1,11 +1,15 @@
+<%@page import="kr.ac.mju.prompt.model.signupBean"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@include file="session.jsp"%>
+<%@include file="mapper.jsp"%>
+
+<%@page import="java.util.*"%>
 <%@ page import="kr.ac.mju.prompt.model.UserInfo"%>
-<%@ page import="kr.ac.mju.prompt.model.UserBean"%>
+<%@ page import="kr.ac.mju.prompt.model.signupBean"%>
 <%@page import="org.apache.commons.beanutils.BeanUtils"%>
 <jsp:useBean id="loginbean" class="kr.ac.mju.prompt.model.UserBean"
 	scope="session" />
@@ -67,51 +71,67 @@
 		System.out.println("session_name : " + session.getAttribute("session_name"));
 	%>
 
-	<div class="directory_wrapper"  style="float: left; size: auto; padding-right: 20px; margin-right: 20px;">
+	<div class="directory_wrapper"
+		style="float: left; size: auto; padding-right: 20px; margin-right: 20px;">
 		<h1>회사 인명부</h1>
 		<ul id="browser" class="filetree">
 			<li class="closed"><span class="folder">회사</span>
 				<ul>
-					<li><span class="file">사장</span></li>
-					<li><span class="file">부사장</span></li>
-					<li><span class="file">상무</span></li>
-					<li><span class="file">이사</span></li>
-					<li class="closed"><span class="folder">영업부</span>
+					<li><span class="file"><a
+							href="${pageContext.request.contextPath}/ProjectController/getDepartMemberlist?did=10">임원진</a></span></li>
+
+					<ul id="folder21">
+						<li><span class="file">사장</span></li>
+
+						<li><span class="file">부사장</span></li>
+						<li><span class="file">상무</span></li>
+						<li><span class="file">이사</span></li>
+					</ul>
+					<li class="closed"><span class="folder"><a
+							href="${pageContext.request.contextPath}/ProjectController/getDepartMemberlist?did=12">영업부</a></span>
 						<ul id="folder21">
 							<li><span class="file">직원1</span></li>
 							<li><span class="file">직원2</span></li>
 						</ul></li>
-					<li class="closed"><span class="folder">총무부</span>
+					<li class="closed"><span class="folder"><a
+							href="${pageContext.request.contextPath}/ProjectController/getDepartMemberlist?did=13">총무부</a></span>
 						<ul id="folder21">
 							<li><span class="file">직원1</span></li>
 							<li><span class="file">직원2</span></li>
-							<li class="closed"><span class="folder">회계팀</span>
-								<ul id="folder21">
-									<li><span class="file">직원1</span></li>
-									<li><span class="file">직원2</span></li>
-								</ul></li>
+							<li class="closed"><span class="folder"><a
+									href="${pageContext.request.contextPath}/ProjectController/getDepartMemberlist?did=14">회계팀</a><span>
+										<ul id="folder21">
+											<li><span class="file">직원1</span></li>
+											<li><span class="file">직원2</span></li>
+										</ul></li>
 						</ul></li>
-					<li class="closed"><span class="folder">인사관리부</span>
+					<li class="closed"><span class="folder"><a
+							href="${pageContext.request.contextPath}/ProjectController/getDepartMemberlist?did=15">인사관리부</a></span>
 						<ul id="folder21">
 							<li><span class="file">직원1</span></li>
 							<li><span class="file">직원2</span></li>
-							<li class="closed"><span class="folder">가입대기</span>
+							<li class="closed"><span class="folder"><a
+									href="${pageContext.request.contextPath}/ProjectController/getDepartMemberlist?did=0">등록
+										대기</a></span>
 								<ul id="folder21">
 									<li><span class="file">직원1</span></li>
 									<li><span class="file">직원2</span></li>
 								</ul></li>
 
 						</ul></li>
-					<li class="closed"><span class="folder">마케팅부</span>
+					<li class="closed"><span class="folder"><a
+							href="${pageContext.request.contextPath}/ProjectController/getDepartMemberlist?did=11">마케팅부</a></span>
 						<ul id="folder21">
 							<li><span class="file">직원1</span></li>
 							<li><span class="file">직원2</span></li>
 						</ul></li>
-					<li class="closed"><span class="folder">개발부</span>
+					<li class="closed"><span class="folder"><a
+							href="${pageContext.request.contextPath}/ProjectController/getDepartMemberlist?did=17">개발부</a></span>
 						<ul id="folder21">
 							<li><span class="file">직원1</span></li>
 							<li><span class="file">직원2</span></li>
-							<li class="closed"><span class="folder">외부인력팀</span>
+							<li class="closed"><span class="folder"><a
+									href="${pageContext.request.contextPath}/ProjectController/getDepartMemberlist?did=99">외부인력팀</a></span>
 								<ul id="folder21">
 									<li><span class="file">직원1</span></li>
 									<li><span class="file">직원2</span></li>
@@ -120,45 +140,20 @@
 				</ul></li>
 
 		</ul>
-	</div>
-
-	<div align="center" style="float: right;">
-
-		<table>
-			<tr>
-				<td>test1</td>
-				<td>test1</td>
-				<td>test1</td>
-				<td>test1</td>
-				<td>test1</td>
-			</tr>
-			<tr>
-				<td>test1</td>
-				<td>test1</td>
-				<td>test1</td>
-				<td>test1</td>
-				<td>test1</td>
-			</tr>
-			<tr>
-				<td>test1</td>
-				<td>test1</td>
-				<td>test1</td>
-				<td>test1</td>
-				<td>test1</td>
-			</tr>
-		</table>
 
 
+		<div class="main_button">
+
+
+			<button type="button"
+				onclick="location.replace('${pageContext.request.contextPath}/LoginController/main')">메인화면</button>
+
+
+		</div>
 
 	</div>
-	<div class="main_button">
 
 
-		<button type="button"
-			onclick="location.replace('${pageContext.request.contextPath}/LoginController/main')">메인화면</button>
-
-
-	</div>
 
 </body>
 </html>

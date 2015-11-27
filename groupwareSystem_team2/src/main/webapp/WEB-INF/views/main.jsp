@@ -32,7 +32,6 @@
 
 		if (session.getAttribute("session_name") == null) {
 			System.out.println("session is null : ");
-			////response.sendRedirect("logout.do");
 	%>
 	<script language="javascript">
 		location.replace('main');
@@ -46,7 +45,7 @@
 	</script> -->
 
 	<%
-		System.out.println("=============main.jsp=============");
+		System.out.println("=============== main.jsp ===============");
 		System.out.println("code : " + session.getAttribute("code"));
 			System.out.println("session_cat : " + session.getAttribute("cat"));
 			if (session.getAttribute("code").equals("0")) {

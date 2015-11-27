@@ -14,7 +14,7 @@
 
 	<%
 
-		System.out.println("mapper loaded");
+		System.out.println("mapper loaded.");
 
 
 		HashMap<Integer ,String> Depart_map = new HashMap<Integer ,String>();
