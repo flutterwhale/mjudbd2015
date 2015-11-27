@@ -42,10 +42,12 @@ public class ProjectController {
 			logger.info(session.getAttribute("session_name").toString() + " 해당 사용자가 로그인중입니다. ");
 		}
 
+		if(request.getParameter("pid")!=null){
+		
 		 projectService.insertProject(request.getParameter("pid"), projectService.getObtains(request.getParameter("oid")));
 		
 		
-
+		}
 		return "redirect:showObtainTable";
 	}
 
@@ -84,7 +86,31 @@ public class ProjectController {
 
 		return model;
 	}
+	@RequestMapping(value = "/ProjectController/deleteObtainPage", method = RequestMethod.GET)
+	public ModelAndView DeleteObtainPage(HttpSession session,HttpServletRequest request) {
+	
+		logger.info("DeleteObtain:제안서 제거하기  제거하려는 사람?:" +request.getParameter("id") + " 수주 아이디" +request.getParameter("oid") );
+		if (session.getAttribute("session_name") != null) {
 
+			logger.info(session.getAttribute("session_name").toString() + " 해당 사용자가 로그인중입니다. ");
+		}
+
+		if(session.getAttribute("session_name").toString().equals(request.getParameter("id").toString())){
+			
+			logger.info("삭제 가능!" +request.getParameter("oid"));
+			
+			projectService.deleteObtain(request.getParameter("oid"));
+		}
+		
+		
+		ModelAndView model = new ModelAndView();
+		
+		model.setViewName("redirect:showObtainTable"); // jsp 이름 (view이름)
+
+		return model;
+	}
+
+	
 	@RequestMapping(value = "/ProjectController/insertObtain", method = RequestMethod.POST)
 	public String InsertObtain(HttpSession session, HttpServletRequest request) {
 		logger.info("InsertObtain:제안서 추가하기 pid: " + session.getAttribute("session_name"));

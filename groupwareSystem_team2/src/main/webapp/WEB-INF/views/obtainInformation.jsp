@@ -1,4 +1,4 @@
-<%@page import="kr.ac.mju.prompt.model.obtainBean"%>
+ <%@page import="kr.ac.mju.prompt.model.obtainBean"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -12,6 +12,8 @@
 obtainBean oBean = (obtainBean)request.getAttribute("obtainBean");
 %>
 
+
+</script> 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -20,6 +22,7 @@ obtainBean oBean = (obtainBean)request.getAttribute("obtainBean");
 <script
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"
 	type="text/javascript"></script>
+	
 </head>
 <body>
 	<div class="obtain_wrapper">
@@ -37,8 +40,9 @@ obtainBean oBean = (obtainBean)request.getAttribute("obtainBean");
 		</div>
 	</div>
 
-<button type="button"
-		>수정하기 ? 삭제하기 ?</button>
+<button type="button">수정</button>
+<button type="button" onclick="location.href='${pageContext.request.contextPath}//ProjectController/deleteObtainPage?id=<%=oBean.getWriter_User() %>&oid=<%=oBean.getObtain_Order_Identifier() %>'">삭제 </button>
+
 
 	<div class="obtain_Table_button">
 		<button type="button"

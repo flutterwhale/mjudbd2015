@@ -473,27 +473,34 @@ public class ProjectDAO {
 	public int intsertProject(String pid, obtainBean oBean) {
 		logger.info("intsertProject : pid " + pid + " oid " + oBean.getObtain_Order_Identifier());
 		// 프로젝트 추가 로직, 선택된 pm id 와 수주 번호
-		int result = 0;
+		int result = 0, result2 = 0;
 
 		// select oid 값 불러와서
 		// insert project 에 설명과 기타 등등.
 		Statement stmt = null;
 		Connection conn = null;
 		ResultSet rs = null;
-
 		// insert query
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection("jdbc:mysql://117.123.66.137:8089/dbd2015", "park", "pjw49064215");
 			stmt = conn.createStatement();
 
-			String query = "INSERT INTO `dbd2015`.`t_project` (`Project_Name`, `Projectmanager_Identifier`, `Start_Date`, `End_Date`, `Status`, `Project_Description`) VALUES ('"
-					+ oBean.getObtain_Name() + "', '" + pid + "', '" + oBean.getStart_Date() + "', '"
-					+ oBean.getEnd_Date() + "', '10', '" + oBean.getComment() + "');";
+			String query = "INSERT INTO `dbd2015`.`t_project` (`Project_Name`,  `Start_Date`, `End_Date`, `Status`, `Project_Description` ,`Projectmanager_Identifier`) VALUES ('"
+					+ oBean.getObtain_Name() + "', '" + oBean.getStart_Date() + "', '"
+					+ oBean.getEnd_Date() + "', '10', '" + oBean.getComment() + "' ,'"+pid+"');";
 
-			System.out.println("insert query? : " + query);
+			
+
 			result = stmt.executeUpdate(query);
-			System.out.println("insert result? " + result);
+			System.out.println("query 1 " + query);
+						String query2 = "DELETE FROM `dbd2015`.`t_obtain_order` WHERE `Obtain_Order_Identifier`='"+oBean.getObtain_Order_Identifier() + "';";
+				System.out.println("query 2 " + query2);
+				result2 = stmt.executeUpdate(query2);				
+		
+
+
+			System.out.println("insert result? " + result + " / " + result2);
 
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -602,4 +609,34 @@ public class ProjectDAO {
 
 		return result;
 	}
+
+	public int deleteObtain(String oid) {
+		// TODO Auto-generated method stub
+		logger.info("deleteObtain : " + oid);
+		Statement stmt = null;
+		Connection conn = null;
+		ResultSet rs = null;
+		int result = 0;
+
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = DriverManager.getConnection("jdbc:mysql://117.123.66.137:8089/dbd2015", "park", "pjw49064215");
+			stmt = conn.createStatement();
+			String query = "DELETE FROM `dbd2015`.`t_obtain_order` WHERE `Obtain_Order_Identifier`='"+oid+ "';";
+			result = stmt.executeUpdate(query);
+			System.out.println("query 1 " + query);
+						
+
+			System.out.println("insert result? " + result );
+
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
+
 }

@@ -66,5 +66,11 @@ public class ProjectService {
 		
 		return projectDAO.showObtain(oid);
 	}
+
+	public int deleteObtain(String oid) {
+		// TODO Auto-generated method stub
+		logger.info("deleteObtain  oid : "+oid);
+		return projectDAO.deleteObtain(oid);
+	}
 	
 }
