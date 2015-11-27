@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	<%@include file="session.jsp"%>
+<%@include file="session.jsp"%>
 <%@ page import="kr.ac.mju.prompt.model.UserInfo"%>
 <%@ page import="kr.ac.mju.prompt.model.UserBean"%>
 <%@page import="org.apache.commons.beanutils.BeanUtils"%>
@@ -14,10 +14,10 @@
 <html>
 <head>
 <%
-		response.setHeader("pragma", "no-cache");
-		response.setHeader("Cache-control", "no-cache, no-store, must-revalidate");
-		response.setHeader("Expires", "0");
-		 %>
+	response.setHeader("pragma", "no-cache");
+	response.setHeader("Cache-control", "no-cache, no-store, must-revalidate");
+	response.setHeader("Expires", "0");
+%>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>회사 인명부</title>
 
@@ -61,15 +61,13 @@
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"
 	type="text/javascript"></script>
 <body>
-<%
+	<%
+		System.out.println("directory.jsp  code : " + session.getAttribute("code") + " / "
+				+ session.getAttribute("code").getClass());
+		System.out.println("session_name : " + session.getAttribute("session_name"));
+	%>
 
-System.out.println(
-		"directory.jsp  code : " + session.getAttribute("code") + " / " + session.getAttribute("code").getClass());
-System.out.println("session_name : " + session.getAttribute("session_name"));
-
-%>
-
-	<div class="directory_wrapper">
+	<div class="directory_wrapper"  style="float: left; size: auto; padding-right: 20px; margin-right: 20px;">
 		<h1>회사 인명부</h1>
 		<ul id="browser" class="filetree">
 			<li class="closed"><span class="folder">회사</span>
@@ -120,22 +118,44 @@ System.out.println("session_name : " + session.getAttribute("session_name"));
 								</ul></li>
 						</ul></li>
 				</ul></li>
-			<li><span class="file">File 4</span></li>
+
 		</ul>
 	</div>
-	
-	<div>
-	
-	
-	
-	
-	
+
+	<div align="center" style="float: right;">
+
+		<table>
+			<tr>
+				<td>test1</td>
+				<td>test1</td>
+				<td>test1</td>
+				<td>test1</td>
+				<td>test1</td>
+			</tr>
+			<tr>
+				<td>test1</td>
+				<td>test1</td>
+				<td>test1</td>
+				<td>test1</td>
+				<td>test1</td>
+			</tr>
+			<tr>
+				<td>test1</td>
+				<td>test1</td>
+				<td>test1</td>
+				<td>test1</td>
+				<td>test1</td>
+			</tr>
+		</table>
+
+
+
 	</div>
 	<div class="main_button">
 
 
-		 <button type="button"
-            onclick="location.replace('${pageContext.request.contextPath}/LoginController/main')">메인화면</button>
+		<button type="button"
+			onclick="location.replace('${pageContext.request.contextPath}/LoginController/main')">메인화면</button>
 
 
 	</div>

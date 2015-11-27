@@ -28,7 +28,7 @@ public class ProjectDAO {
 
 	public signupBean getUserInfo(String id) {
 		logger.info("DAO : 해당 유저 정보 확인하기" + id);
-		PreparedStatement pstmt = null;
+		//PreparedStatement pstmt = null;
 		Statement stmt = null;
 		Connection conn = null;
 		ResultSet rs = null, rs2 = null;
@@ -270,114 +270,75 @@ public class ProjectDAO {
 
 	}
 
-	public UserInfo signup(signupBean sb) {
+	public ArrayList<signupBean> showMember_depart(int d) {
 
-		System.out.println("회원 가입 ");
-		UserInfo Uinfo = new UserInfo();
+		logger.info("부서에 따른 멤버 리스트 " + d);
 		Statement stmt = null;
 		Connection conn = null;
-		ResultSet rs = null;
-		int result, result2 = 0, result3 = 0;
-
-		System.out.println("가입. name " + sb.getName() + " IsFreeLancer : " + sb.getIsFreeLancer());
-
+		ResultSet rs = null, rs2 = null;
+		ArrayList<signupBean> member_List = new ArrayList<signupBean>();
+		signupBean member = new signupBean();
 		try {
 
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection("jdbc:mysql://117.123.66.137:8089/dbd2015", "park", "pjw49064215");
 			stmt = conn.createStatement();
+		
+			String query1 = "SELECT * FROM dbd2015.t_user join dbd2015.t_position on t_user.User_Identifier = t_position.User_Identifier  join  dbd2015.t_department on t_department.Department_Identifier = t_position.Department_Identifier  where t_position.Department_Identifier ='"
+					+ d + "' ;";
 
-			System.out.println("프리랜서? " + sb.getIsFreeLancer());
+			System.out.println("ProjectDAO.getUserInfo : 쿼리1 > " + query1);
+			rs = stmt.executeQuery(query1);
 
-			String query = "INSERT INTO `dbd2015`.`t_user` (`Name`,`User_Identifier`, `SocialSecurtyNum`, `Gender`, `Phone_Number`, `Address`, `Academic_Career`, `Technic_Level`, `Career`, `Email`, `Password`) "
-					+ "VALUES ('" + sb.getName() + "', '" + sb.getId() + "', '" + sb.getSsn() + "', '" + sb.getGender()
-					+ "', '" + sb.getPhone() + "', '" + sb.getAddr() + "', '" + sb.getA_career() + "', '"
-					+ sb.getTech_level() + "', '" + sb.getCareer() + "', '" + sb.getEmail() + "', '" + sb.getPassword()
-					+ "');";
+			if (rs.first()) {
+				member.setIsFreeLancer(rs.getString("cat"));
 
-			System.out.println("insert query? : " + query);
-			result = stmt.executeUpdate(query);
-			System.out.println("insert result? " + result);
-			if (result == 1) {
-				System.out.println("insert 2 :" + sb.getIsFreeLancer());
-				if (sb.getIsFreeLancer().isEmpty()) {
-					System.out.println("일반 직원 속성 추가");
-					query = "INSERT INTO `dbd2015`.`t_position` (`Department_Identifier`, `User_Identifier`, `Position_Name`) VALUES ('0', '"
-							+ sb.getId() + "', '0');";
-					result2 = stmt.executeUpdate(query);
-					System.out.println("insert result2? " + result2);
-				}
-				if (sb.getIsFreeLancer().equals("common") == true) {
-					System.out.println("일반 개발자 속성 추가");
+				member.setId(rs.getInt("User_Identifier"));
+				member.setName(rs.getString("Name"));
+				member.setSsn(rs.getString("SocialSecurtyNum"));
+				member.setGender(Integer.parseInt(rs.getString("Gender")));
+				member.setPhone(rs.getString("Phone_Number"));
+				member.setEmail(rs.getString("Email"));
+				member.setPassword(rs.getString("Password"));
+				member.setAddr(rs.getString("Address"));
+				member.setA_career(rs.getString("Academic_Career"));
 
-					query = "INSERT INTO `dbd2015`.`t_position` (`Department_Identifier`, `User_Identifier`, `Position_Name`) VALUES ('0', '"
-							+ sb.getId() + "', '0');";
-					result2 = stmt.executeUpdate(query);
-					System.out.println("insert result2? " + result2);
-					if (result2 == 1) {
-						System.out.println("1차 쿼리 성공?");
-						ArrayList ll = sb.getLanguage_list();
-						ArrayList lll = sb.getLanguage_level_list();
-						System.out.println(" ll  size :" + ll.size());
-						System.out.println(" lll  size :" + ll.size());
-						for (int i = 0; i < ll.size(); i++) {
+				member.setCareer(rs.getString("Career"));
+				member.setJoining_Date(rs.getDate("Joining_Date"));
+				member.setRetired_Date(rs.getDate("Retired_Date"));
+				member.setComment(rs.getString("comment"));
+				member.setOffice_Number(rs.getString("office_Number"));
+				member.setPortfolio(rs.getString("Career_File"));
+				member.setPermission(rs.getInt("Permission"));
+				member.setPosition_Name(rs.getInt("Position_Name"));
+				member.setDi(rs.getInt("Department_Identifier"));
 
-							System.out.println(" ll  get :" + ll.get(i));
-							System.out.println(" lll  get :" + lll.get(i));
-							query = "INSERT INTO `dbd2015`.`t_programming_technical_level` (`Language`, `Language_Level`, `User_Identifier`) VALUES ('"
-									+ ll.get(i) + "', '" + lll.get(i) + "', '" + sb.getId() + "');";
-
-							System.out.println(" 프로그래밍 언어 추가 : " + query);
-							stmt.executeUpdate(query);
-
-						}
-
-					}
-
-				}
-				if (sb.getIsFreeLancer().equals("FreeLancer") == true) {
-
-					System.out.println("프리랜서 기본 속성 추가");
-					query = "INSERT INTO `dbd2015`.`t_position` (`Department_Identifier`, `User_Identifier`, `Position_Name`) VALUES ('0', '"
-							+ sb.getId() + "', '99');";
-					result2 = stmt.executeUpdate(query);
-					System.out.println("insert result2? " + result2);
-					if (result2 == 1) {
-
-						ArrayList ll = sb.getLanguage_list();
-						ArrayList lll = sb.getLanguage_level_list();
-						for (int i = 0; i < ll.size(); i++) {
-							System.out.println(" ll  get" + ll.get(i));
-							System.out.println(" lll  get" + lll.get(i));
-
-							query = "INSERT INTO `dbd2015`.`t_programming_technical_level` (`Language`, `Language_Level`, `User_Identifier`) VALUES ('"
-									+ ll.get(i) + "', '" + lll.get(i) + "', '" + sb.getId() + "');";
-
-							System.out.println(" 프로그래밍 언어 추가 : " + query);
-							stmt.executeUpdate(query);
-						}
-					}
-				}
+				member.setTech_level(Integer.parseInt(rs.getString("Technic_Level")));
 
 			}
-			if (result == 1 && result2 == 1) {
+			String query2 = "SELECT * FROM dbd2015.t_programming_technical_level WHERE User_Identifier = '" + d
+					+ "' ;";
 
-				System.out.println("insert 쿼리 성공");
+			System.out.println("ProjectDAO.getUserInfo : 쿼리2 > " + query2);
+			rs2 = stmt.executeQuery(query2);
+			ArrayList language_list = new ArrayList();
+			ArrayList language_level_list = new ArrayList();
 
-				Uinfo.setMySignupBean(sb);
-				Uinfo.setErrorCode(222);
-
-			} else {
-				System.out.println("쿼리 실패");
-				Uinfo.setErrorCode(200);
-
+			while (true) {
+				if (rs2.next()) {
+					language_list.add(rs2.getString("Language"));
+					language_level_list.add(rs2.getInt("Language_Level"));
+				} else {
+					break;
+				}
 			}
+
+			member.setLanguage_list(language_list);
+			member.setLanguage_level_list(language_level_list);
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			System.out.println("잘못된 값이 들어 왔습니다.");
-			Uinfo.setErrorCode(201);
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -385,6 +346,10 @@ public class ProjectDAO {
 			try {
 				if (rs != null) {
 					rs.close();
+				}
+
+				if (rs2 != null) {
+					rs2.close();
 				}
 
 				if (stmt != null) {
@@ -400,11 +365,10 @@ public class ProjectDAO {
 			}
 
 		}
-
-		return Uinfo;
-
+		return member_List;
 	}
 
+	
 	public ArrayList<UserBean> showMember_permssion(int p) {
 
 		logger.info("권한에 따른 멤버 리스트 확인 " + p);
@@ -479,7 +443,6 @@ public class ProjectDAO {
 		// insert project 에 설명과 기타 등등.
 		Statement stmt = null;
 		Connection conn = null;
-		ResultSet rs = null;
 		// insert query
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -516,8 +479,6 @@ public class ProjectDAO {
 		obtainBean ob = null;
 
 		// insert query
-
-		String result = null;
 		Statement stmt = null;
 		Connection conn = null;
 		ResultSet rs = null;
@@ -578,7 +539,6 @@ public class ProjectDAO {
 		// TODO Auto-generated method stub
 		Statement stmt = null;
 		Connection conn = null;
-		ResultSet rs = null;
 		int result = 0;
 
 		// insert query

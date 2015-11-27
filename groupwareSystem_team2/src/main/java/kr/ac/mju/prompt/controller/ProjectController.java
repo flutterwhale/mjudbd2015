@@ -319,4 +319,72 @@ public class ProjectController {
 
 		return "directory";// jsp 파일 이름.
 	}
+	
+	@RequestMapping(value = "/ProjectController/showBusinessLog", method = RequestMethod.GET)
+	public String showBusinessLog(HttpSession session, Locale locale, Model model) {
+		logger.info("Welcome home! The client locale is {}.", locale);
+		if (session.getAttribute("session_name") != null) {
+
+			logger.info(session.getAttribute("session_name").toString() + " 해당 사용자가 로그인중입니다. ");
+		}
+		Date date = new Date();
+		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+
+		String formattedDate = dateFormat.format(date);
+
+		model.addAttribute("serverTime", formattedDate);
+
+		return "businessLog";// jsp 파일 이름.
+	}
+	
+	@RequestMapping(value = "/ProjectController/showBusinessInformation", method = RequestMethod.GET)
+	public String showBusinessInformation(HttpSession session, Locale locale, Model model) {
+		logger.info("Welcome home! The client locale is {}.", locale);
+		if (session.getAttribute("session_name") != null) {
+
+			logger.info(session.getAttribute("session_name").toString() + " 해당 사용자가 로그인중입니다. ");
+		}
+		Date date = new Date();
+		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+
+		String formattedDate = dateFormat.format(date);
+
+		model.addAttribute("serverTime", formattedDate);
+
+		return "businessInformation";// jsp 파일 이름.
+	}
+	
+	@RequestMapping(value = "/ProjectController/showBusinessAdd", method = RequestMethod.GET)
+	public String showBusinessAdd(HttpSession session, Locale locale, Model model) {
+		logger.info("Welcome home! The client locale is {}.", locale);
+		if (session.getAttribute("session_name") != null) {
+
+			logger.info(session.getAttribute("session_name").toString() + " 해당 사용자가 로그인중입니다. ");
+		}
+		Date date = new Date();
+		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+
+		String formattedDate = dateFormat.format(date);
+
+		model.addAttribute("serverTime", formattedDate);
+
+		return "businessAdd";// jsp 파일 이름.
+	}
+	
+	@RequestMapping(value = "/ProjectController/showBusinessChange", method = RequestMethod.GET)
+	public String showBusinessChange(HttpSession session, Locale locale, Model model) {
+		logger.info("Welcome home! The client locale is {}.", locale);
+		if (session.getAttribute("session_name") != null) {
+
+			logger.info(session.getAttribute("session_name").toString() + " 해당 사용자가 로그인중입니다. ");
+		}
+		Date date = new Date();
+		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+
+		String formattedDate = dateFormat.format(date);
+
+		model.addAttribute("serverTime", formattedDate);
+
+		return "businessChange";// jsp 파일 이름.
+	}
 }

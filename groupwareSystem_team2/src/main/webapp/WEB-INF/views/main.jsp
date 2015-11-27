@@ -124,6 +124,12 @@
 	<button class="btn btn-primary" style="width:200px; margin:10px;" type="button"
 		onclick="location.href='${pageContext.request.contextPath}/ProjectController/showObtainTable'">수주
 		현황</button>
+		
+		
+		<button class="btn btn-primary" style="width:200px; margin:10px;" type="button"
+      onclick="location.href='${pageContext.request.contextPath}/ProjectController/showBusinessLog'">업무 일지
+   </button>
+		
 	<%
 		if (loginbean.getPermission() == 11) { // PM 권한
 				System.out.println(loginbean.getPermission() + ": PM 권한 로그인");
