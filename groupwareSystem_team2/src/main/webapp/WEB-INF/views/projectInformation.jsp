@@ -59,10 +59,33 @@
 					<th>PM</td>
 					<td>SDAGVARGERHTRJYGHFDSERG</td>
 				</tr>
+				<tr>
+					<th>상태</td>
+					<td>11</td>
+				</tr>
 			</table>
 		</div>
 		<div class="project_schedule">
 			<h3>프로젝트 일정</h3>
+			<table class="table table-striped table-hover" border="1"
+				width="750px">
+				<tr>
+					<th width="200px">일정이름
+					</td>
+					<th width="200px">시작일
+					</td>
+					<th width="200px">종료일
+					</td>
+					<th width="150px">상태
+					</td>
+				</tr>
+				<tr>
+					<td>설계</td>
+					<td>11111111</td>
+					<td>22222222</td>
+					<td>딜레이</td>
+				</tr>
+			</table>
 		</div>
 		<div class="project_user">
 			<h3>투입 인력</h3>
@@ -140,6 +163,30 @@
 				</tr>
 			</table>
 		</div>
+		<div class="project_individual_schedule">
+			<h3> 개인 일정 </h3>
+			<table class="table table-striped table-hover" border="1" width="920px">
+				<tr>
+					<th width="100px">이름
+					</td>
+					<th width="100px">역할
+					</td>
+					<th width="360px">업무
+					</td>
+					<th width="180px">시작일
+					</td>
+					<th width="180px">종료일
+					</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+			</table>
+		</div>
 		<div class="project_code">
 			<h3> 프로젝트 코드 </h3>
 			<p> MJU60112348 </p>
@@ -151,7 +198,10 @@
 			onclick="location.href='${pageContext.request.contextPath}/ProjectController/showProjectTable'">프로젝트
 			목록</button>
 			<button class="btn btn-primary" type="button"> [PM 전용] PM 프로젝트 목록으로 가는 버튼</button>
-			<button class="btn btn-primary" type="button"> [PM 전용] 수정버튼</button>
+			<button class="btn btn-primary" type="button"
+			onclick="location.replace('${pageContext.request.contextPath}/ProjectController/showPMProjectChange')"> [PM 전용] 수정버튼</button>
+			<button class="btn btn-primary" type="button"
+			onclick="location.replace('${pageContext.request.contextPath}/ProjectController/showPLProjectChange')"> [PL 전용] 개인일정 수정버튼</button>
 			 <button class="btn btn-primary" type="button"
             onclick="location.replace('${pageContext.request.contextPath}/LoginController/main')">메인화면</button>
 	</div>

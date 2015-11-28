@@ -67,6 +67,9 @@
 			<button type="button" class="btn btn-primary"
 				onclick="location.href='${pageContext.request.contextPath}/ProjectController/showBusinessLog'">업무 일지 목록
 			</button>
+			<button type="submit" class="btn btn-primary"
+				onclick="location.href='${pageContext.request.contextPath}/ProjectController/showBusinessInformation'">수정 완료
+			</button>
 		</div>
 	</div>	
 </body>

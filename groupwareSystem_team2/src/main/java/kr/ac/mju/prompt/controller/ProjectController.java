@@ -388,4 +388,58 @@ public class ProjectController {
 
 		return "businessChange";// jsp 파일 이름.
 	}
+	
+	//PM 프로젝트 수정
+	@RequestMapping(value = "/ProjectController/showPMProjectChange", method = RequestMethod.GET)
+	public String showPMProjectChange(HttpSession session, Locale locale, Model model) {
+		logger.info("Welcome home! The client locale is {}.", locale);
+		if (session.getAttribute("session_name") != null) {
+
+			logger.info(session.getAttribute("session_name").toString() + " 해당 사용자가 로그인중입니다. ");
+		}
+		Date date = new Date();
+		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+
+		String formattedDate = dateFormat.format(date);
+
+		model.addAttribute("serverTime", formattedDate);
+
+		return "PMProjectChange";// jsp 파일 이름.
+	}
+	
+	//인원 추가
+		@RequestMapping(value = "/ProjectController/showRoleAdd", method = RequestMethod.GET)
+		public String showRoleAdd(HttpSession session, Locale locale, Model model) {
+			logger.info("Welcome home! The client locale is {}.", locale);
+			if (session.getAttribute("session_name") != null) {
+
+				logger.info(session.getAttribute("session_name").toString() + " 해당 사용자가 로그인중입니다. ");
+			}
+			Date date = new Date();
+			DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+
+			String formattedDate = dateFormat.format(date);
+
+			model.addAttribute("serverTime", formattedDate);
+
+			return "roleAdd";// jsp 파일 이름.
+		}
+		
+		//PL 프로젝트 수정
+				@RequestMapping(value = "/ProjectController/showPLProjectChange", method = RequestMethod.GET)
+				public String showPLProjectChange(HttpSession session, Locale locale, Model model) {
+					logger.info("Welcome home! The client locale is {}.", locale);
+					if (session.getAttribute("session_name") != null) {
+
+						logger.info(session.getAttribute("session_name").toString() + " 해당 사용자가 로그인중입니다. ");
+					}
+					Date date = new Date();
+					DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+
+					String formattedDate = dateFormat.format(date);
+
+					model.addAttribute("serverTime", formattedDate);
+
+					return "PLProjectChange";// jsp 파일 이름.
+				}
 }

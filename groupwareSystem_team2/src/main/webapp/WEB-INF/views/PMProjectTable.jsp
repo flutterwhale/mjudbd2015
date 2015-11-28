@@ -44,7 +44,7 @@
 	<div class="PMProject_Table_Wrapper" style="margin:10px 40px;">
 		<div class="PMProject">
 			<h1>PM 프로젝트 목록</h1>
-			<table class="table table-striped table-hover" border="1" width="1200px"
+			<table class="table table-striped table-hover" border="1" width="1350px"
 				height="300px">
 				<tr align="center">
 					<td width="70px">번호</td>
@@ -53,8 +53,10 @@
 					<td width="300px">설명</td>
 					<td width="200px">파견 지역</td>
 					<td width="180px">현재 상태</td>
+					<td width="150px">역할</td>
 				</tr>
 				<tr align="center">
+					<td>a</td>
 					<td>a</td>
 					<td>a</td>
 					<td>a</td>
@@ -69,6 +71,7 @@
 					<td>b</td>
 					<td>b</td>
 					<td>b</td>
+					<td>a</td>
 				</tr>
 				<tr align="center">
 					<td>c</td>
@@ -77,6 +80,7 @@
 					<td>c</td>
 					<td>c</td>
 					<td>c</td>
+					<td>a</td>
 				</tr>
 				<tr align="center">
 					<td>d</td>
@@ -85,6 +89,7 @@
 					<td>d</td>
 					<td>d</td>
 					<td>d</td>
+					<td>a</td>
 				</tr>
 				<tr align="center">
 					<td>e</td>
@@ -93,6 +98,7 @@
 					<td>e</td>
 					<td>e</td>
 					<td>e</td>
+					<td>a</td>
 				</tr>
 				<tr align="center">
 					<td>f</td>
@@ -101,6 +107,7 @@
 					<td>f</td>
 					<td>f</td>
 					<td>f</td>
+					<td>a</td>
 				</tr>
 				<tr align="center">
 					<td>g</td>
@@ -109,6 +116,7 @@
 					<td>g</td>
 					<td>g</td>
 					<td>g</td>
+					<td>a</td>
 				</tr>
 				<tr align="center">
 					<td>h</td>
@@ -117,6 +125,7 @@
 					<td>h</td>
 					<td>h</td>
 					<td>h</td>
+					<td>a</td>
 				</tr>
 				<tr align="center">
 					<td>i</td>
@@ -125,6 +134,7 @@
 					<td>i</td>
 					<td>i</td>
 					<td>i</td>
+					<td>a</td>
 				</tr>
 			</table>
 		</div>
