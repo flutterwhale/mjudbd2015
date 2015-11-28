@@ -24,7 +24,7 @@
 	type="text/javascript"></script>
 </head>
 <body>
-<nav class="navbar navbar-default">
+	<nav class="navbar navbar-default">
   		<div class="container-fluid">
     		<div class="navbar-header">
       			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -43,16 +43,16 @@
     		</div>
   		</div>
 	</nav>
-	<div class="obtain_table_wrapper">
+	<div class="obtain_table_wrapper" style="margin:10px 40px;">
 		<div class="obtain">
 			<h1>수주 현황</h1>
 			<table class="table table-striped table-hover" border="1">
 				<tr align="center">
 					<td width="50px">번호</td>
-					<td width="200px">이름</td>
+					<td width="180px">이름</td>
 					<td width="120px">시작일</td>
 					<td width="120px">마감일</td>
-					<td width="250px">설명</td>
+					<td width="180px">설명</td>
 					<td width="120px">주문 회사</td>
 					<td width="60px">작성자</td>
 					<td width="80px">현재 상태</td>
@@ -100,18 +100,19 @@
 				%>
 			</table>
 		</div>
-	</div>
-	<div class="main_button">
 
-		<button type="button" class="btn btn-primary"
-			onclick="location.href='${pageContext.request.contextPath}/ProjectController/newObtainPage'">제안 올리기
-		</button>
-		 <button type="button" class="btn btn-default"
-            onclick="location.replace('${pageContext.request.contextPath}/LoginController/main')">메인화면</button>
-
-	</div>
-	<div class = "well well-sm">
-		<p>The time on the server is ${serverTime}.</p> 
+		<div class="main_button">
+	
+			<button type="button" class="btn btn-primary"
+				onclick="location.href='${pageContext.request.contextPath}/ProjectController/newObtainPage'">제안 올리기
+			</button>
+			 <button type="button" class="btn btn-default"
+	            onclick="location.replace('${pageContext.request.contextPath}/LoginController/main')">메인화면</button>
+	
+		</div>
+		<div class = "well well-sm">
+			<p>The time on the server is ${serverTime}.</p> 
+		</div>
 	</div>
 </body>
 </html>

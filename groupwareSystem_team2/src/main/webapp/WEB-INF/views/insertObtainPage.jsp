@@ -21,6 +21,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<link rel="stylesheet" href="http://bootswatch.com/flatly/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>obtain</title>
 <script
@@ -28,21 +31,40 @@
 	type="text/javascript"></script>
 </head>
 <body>
-	<div class="obtain_wrapper">
+	<nav class="navbar navbar-default">
+  		<div class="container-fluid">
+    		<div class="navbar-header">
+      			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        			<span class="sr-only">Toggle navigation</span>
+        			<span class="icon-bar"></span>
+        			<span class="icon-bar"></span>
+        			<span class="icon-bar"></span>
+      			</button>
+      			<a class="navbar-brand" href="${pageContext.request.contextPath}/LoginController/main">GruopwareSystem</a>
+    		</div>
+
+    		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      			<ul class="nav navbar-nav navbar-right">
+        			<li><a href="https://tahiti.mju.ac.kr/moodle/">메뉴</a></li>
+      			</ul>
+    		</div>
+  		</div>
+	</nav>
+	<div class="obtain_wrapper" style="margin:10px 40px;">
 		<h1>제안서 정보</h1>
 		<form
 			action="${pageContext.request.contextPath}/ProjectController/insertObtain"
 			method="post">
 			<div class="obtain_information">
-				<table class="obtain_information_table" border="1" width="600px">
-					<tr>
+				<table class="table table-striped table-hover" border="1" width="600px">
+					<tr align="center">
 						<td width="100px">제목</td>
 						<td width="100px">시작 날짜</td>
 						<td width="100px">종료 날짜</td>
 						<td width="100px">고객사</td>
 						<td width="200px">내용</td>
 					</tr>
-					<tr>
+					<tr align="center">
 						</td>
 						<td><input type="text" name="subject"></td>
 						<td><input type="date" id="start_date" name="start_date"
@@ -56,18 +78,16 @@
 			</div>
 
 
-			<button type="submit">등록</button>
+			<button class="btn btn-primary" type="submit">등록</button>
 		</form>
+
+		<div class="obtain_Table_button" style="padding:10px 0px;">
+			<button type="button" class="btn btn-primary"
+				onclick="location.href='${pageContext.request.contextPath}/ProjectController/showObtainTable'">수주
+				목록</button>
+			<button type="button" class="btn btn-default"
+				onclick="location.replace('${pageContext.request.contextPath}/LoginController/main')">메인화면</button>
+		</div>
 	</div>
-
-
-
-	<div class="obtain_Table_button">
-		<button type="button"
-			onclick="location.href='${pageContext.request.contextPath}/ProjectController/showObtainTable'">수주
-			목록</button>
-	</div>
-	<button type="button"
-		onclick="location.replace('${pageContext.request.contextPath}/LoginController/main')">메인화면</button>
 </body>
 </html>

@@ -122,9 +122,9 @@
 		</div>
 		<div class="project_post" style="display: none;">
 			<h1>과거 프로젝트</h1>
-			<table class="project_post_table" border="1" width="1400px"
+			<table class="table table-striped table-hover" border="1" width="1400px"
 				height="300px">
-				<tr>
+				<tr align="center">
 					<td width="70px">번호</td>
 					<td width="200px">이름</td>
 					<td width="250px">일정</td>
@@ -133,7 +133,7 @@
 					<td width="200px">PM</td>
 					<td width="180px">현재 상태</td>
 				</tr>
-				<tr>
+				<tr align="center">
 					<td>aa</td>
 					<td>aa</td>
 					<td>aa</td>
@@ -142,7 +142,7 @@
 					<td>aa</td>
 					<td>aa</td>
 				</tr>
-				<tr>
+				<tr align="center">
 					<td>b</td>
 					<td>b</td>
 					<td>b</td>
@@ -151,7 +151,7 @@
 					<td>b</td>
 					<td>b</td>
 				</tr>
-				<tr>
+				<tr align="center">
 					<td>c</td>
 					<td>c</td>
 					<td>c</td>
@@ -160,7 +160,7 @@
 					<td>c</td>
 					<td>c</td>
 				</tr>
-				<tr>
+				<tr align="center">
 					<td>d</td>
 					<td>d</td>
 					<td>d</td>
@@ -169,7 +169,7 @@
 					<td>d</td>
 					<td>d</td>
 				</tr>
-				<tr>
+				<tr align="center">
 					<td>e</td>
 					<td>e</td>
 					<td>e</td>
@@ -178,7 +178,7 @@
 					<td>e</td>
 					<td>e</td>
 				</tr>
-				<tr>
+				<tr align="center">
 					<td>f</td>
 					<td>f</td>
 					<td>f</td>
@@ -187,7 +187,7 @@
 					<td>f</td>
 					<td>f</td>
 					</trf>
-				<tr>
+				<tr align="center">
 					<td>g</td>
 					<td>g</td>
 					<td>g</td>
@@ -196,7 +196,7 @@
 					<td>g</td>
 					<td>g</td>
 				</tr>
-				<tr>
+				<tr align="center">
 					<td>h</td>
 					<td>h</td>
 					<td>h</td>
@@ -205,7 +205,7 @@
 					<td>h</td>
 					<td>h</td>
 				</tr>
-				<tr>
+				<tr align="center">
 					<td>i</td>
 					<td>i</td>
 					<td>i</td>
@@ -216,7 +216,7 @@
 				</tr>
 			</table>
 		</div>
-		<div class="main_button">
+		<div class="main_button" style="padding:10px 0px;">
 	
 			<button class="btn btn-primary" type="button"
 				onclick="location.href='${pageContext.request.contextPath}/ProjectController/showProjectInformation'">프로젝트
