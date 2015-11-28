@@ -126,9 +126,8 @@ public class ProjectDAO {
 	// 전체 프로젝트 리스트 조회 처리
 	public ArrayList<projectBean> getAllProject() {
 		// TODO Auto-generated method stub
-		logger.info("=============전체 프로젝트 리스트 조회 처리 =============");
+		logger.info("=============전체 활성화된 프로젝트 리스트 조회 처리 =============");
 		ArrayList<projectBean> allProject = new ArrayList<projectBean>();
-		// ArrayList<projectBean> Past_Project = new ArrayList<projectBean>();
 		PreparedStatement pstmt = null;
 		Connection conn = null;
 		Statement stmt = null;
@@ -139,9 +138,10 @@ public class ProjectDAO {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection("jdbc:mysql://117.123.66.137:8089/dbd2015", "park", "pjw49064215");
 
-			String query = "SELECT Project_Identifier, Project_Name, Projectmanager_Identifier,Start_Date,End_Date,Project_Description ,Status,Project_Price,t_project.Comment AS pComment,Project_Document, Product ,Project_Evaluation ,Dispatch_Location, t_user.Name AS PMname FROM dbd2015.t_project join dbd2015.t_user on t_user.User_Identifier = t_project.Projectmanager_Identifier ;";
-			// pstmt = (PreparedStatement) conn.prepareStatement(query);
-			// rs = pstmt.executeQuery();
+			String query = "SELECT Project_Identifier, Project_Name, Projectmanager_Identifier,Start_Date,End_Date,Project_Description ,Status,Project_Price,t_project.Comment AS pComment,Project_Document, Product ,Project_Evaluation ,Dispatch_Location, t_user.Name AS PMname FROM dbd2015.t_project join dbd2015.t_user on t_user.User_Identifier = t_project.Projectmanager_Identifier where End_Date > now();";
+			
+			
+			
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(query);
 			logger.info("전체 프로젝트 나열 (현재 날 이후)");
@@ -163,9 +163,10 @@ public class ProjectDAO {
 				pbean.setProject_Price(rs.getString("project_Price"));
 				pbean.setComment(rs.getString("pComment"));
 				pbean.setProject_Document(rs.getString("project_Document"));
-				pbean.setProject_Evaluation(rs.getInt("project_Evaluation"));
+				pbean.setProject_Evaluation(rs.getString("project_Evaluation"));
 				pbean.setDispatch_Location(rs.getString("dispatch_Location"));
 
+				
 				allProject.add(pbean);
 
 			}
@@ -200,6 +201,82 @@ public class ProjectDAO {
 
 	}
 
+	public ArrayList<projectBean> getPastProject() {
+		// TODO Auto-generated method stub
+		logger.info("=============과거 프로젝트 리스트 조회 처리 =============");
+		ArrayList<projectBean> Past_Project = new ArrayList<projectBean>();
+		PreparedStatement pstmt = null;
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = DriverManager.getConnection("jdbc:mysql://117.123.66.137:8089/dbd2015", "park", "pjw49064215");
+
+			String query = "SELECT Project_Identifier, Project_Name, Projectmanager_Identifier,Start_Date,End_Date,Project_Description ,Status,Project_Price,t_project.Comment AS pComment,Project_Document, Product ,Project_Evaluation ,Dispatch_Location, t_user.Name AS PMname FROM dbd2015.t_project join dbd2015.t_user on t_user.User_Identifier = t_project.Projectmanager_Identifier where End_Date < now() ;";
+			
+			
+			
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(query);
+			logger.info("과거 프로젝트 나열 (현재 날 이전)");
+
+			while (rs.next()) {
+
+				logger.info(rs.getString("project_Name") + " " + rs.getInt("projectmanager_Identifier"));
+
+				projectBean pbean = new projectBean();
+
+				pbean.setProject_Identifier(rs.getInt("project_Identifier"));
+				pbean.setProject_Name(rs.getString("project_Name"));
+				pbean.setProjectmanager_Identifier(rs.getInt("projectmanager_Identifier"));
+				pbean.setPM_name(rs.getString("PMname"));
+				pbean.setStart_Date(rs.getDate("start_Date"));
+				pbean.setEnd_Date(rs.getDate("end_Date"));
+				pbean.setProject_Description(rs.getString("project_Description"));
+				pbean.setStatus(rs.getInt("status"));
+				pbean.setProject_Price(rs.getString("project_Price"));
+				pbean.setComment(rs.getString("pComment"));
+				pbean.setProject_Document(rs.getString("project_Document"));
+				pbean.setDispatch_Location(rs.getString("dispatch_Location"));
+				pbean.setProject_Evaluation(rs.getString("project_Evaluation"));
+				
+				Past_Project.add(pbean);
+
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+
+				if (pstmt != null) {
+					pstmt.close();
+				}
+
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+
+		return Past_Project;
+
+	}
+	
 	// 해당 부서 직원 리스트 조회 처리 ArrayList<signupBean>
 	public ArrayList<signupBean> getDepartUser(String d) {
 		// TODO Auto-generated method stub

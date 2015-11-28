@@ -203,10 +203,10 @@ public class ProjectController {
 		return "redirect:showObtainTable";/// ProjectController/showObtainTable
 	}
 
-	// 프로젝트 전체 목록 
+	// 현재 프로젝트 전체 목록 
 	@RequestMapping(value = "/ProjectController/showProjectTable", method = RequestMethod.GET)
 	public ModelAndView showProjectTable(HttpSession session) {
-		logger.info("showProjectTable:프로젝트 전체 목록 보기");
+		logger.info("showProjectTable:현재 프로젝트 전체 목록 보기");
 		if (session.getAttribute("session_name") != null) {
 
 			logger.info(session.getAttribute("session_name").toString() + " 해당 사용자가 로그인중입니다. ");
@@ -214,11 +214,14 @@ public class ProjectController {
 
 		ModelAndView model = new ModelAndView();
 		ArrayList<projectBean> allProjects = projectService.getAllProjects();
+		ArrayList<projectBean> PastProjects = projectService.getPastProjects();
+		model.addObject("PastProject", PastProjects);
 		model.addObject("AllProject", allProjects);
 		model.setViewName("projectTable"); // jsp 이름 (view이름)
 
 		return model;
 	}
+
 
 	// 프로젝트 세부 정보 페이지로 이동
 	@RequestMapping(value = "/ProjectController/showProjectInformation", method = RequestMethod.GET)

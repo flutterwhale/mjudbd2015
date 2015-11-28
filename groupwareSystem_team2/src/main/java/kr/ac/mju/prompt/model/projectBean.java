@@ -7,7 +7,7 @@ import java.util.Map;
 public class projectBean {
 	private String msg = "";
 	private int code;
-	// ±âº» Á¤º¸
+	// ï¿½âº» ï¿½ï¿½ï¿½ï¿½
 
 	private int Project_Identifier;
 	private String project_Name;
@@ -21,7 +21,7 @@ public class projectBean {
 	private String comment;
 	private String project_Document;
 	private String product;
-	private int project_Evaluation;
+	private String project_Evaluation;
 	private String dispatch_Location;
 
 	public projectBean() {
@@ -124,12 +124,12 @@ public class projectBean {
 		this.product = product;
 	}
 
-	public int getProject_Evaluation() {
+	public String getProject_Evaluation() {
 		return project_Evaluation;
 	}
 
-	public void setProject_Evaluation(int project_Evaluation) {
-		this.project_Evaluation = project_Evaluation;
+	public void setProject_Evaluation(String string) {
+		this.project_Evaluation = string;
 	}
 
 	public String getDispatch_Location() {
