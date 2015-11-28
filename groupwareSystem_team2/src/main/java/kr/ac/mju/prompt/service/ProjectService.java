@@ -22,9 +22,16 @@ public class ProjectService {
 	
 	public ArrayList<projectBean> getAllProjects() {
 		// TODO Auto-generated method stub
-		logger.info("모든 프로젝트 목록");
+		logger.info("모든 현재 프로젝트 목록");
 
 		return projectDAO.getAllProject();
+	}
+	
+	public ArrayList<projectBean> getPastProjects() {
+		// TODO Auto-generated method stub
+		logger.info("모든 과거 프로젝트 목록");
+
+		return projectDAO.getPastProject();
 	}
 	
 	public ArrayList<obtainBean> getAllObtains() {
@@ -36,7 +43,7 @@ public class ProjectService {
 
 	public ArrayList<UserBean> getMember_permission(int p) {
 		// TODO Auto-generated method stub
-		logger.info("모든 프로젝트 목록");
+		logger.info("PM list");
 
 		return projectDAO.showMember_permssion(p);
 	}
