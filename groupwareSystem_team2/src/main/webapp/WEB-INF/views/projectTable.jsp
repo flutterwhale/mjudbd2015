@@ -10,6 +10,7 @@
 
 <%
 	ArrayList<projectBean> allProject = (ArrayList<projectBean>) request.getAttribute("AllProject");
+	ArrayList<projectBean> pastProject = (ArrayList<projectBean>) request.getAttribute("PastProject");
 %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -89,18 +90,14 @@
 				<h2>등록된 프로젝트가 없습니다.</h2>
 
 				<%
-					System.out.println("등록된 프로젝트가 없습니다.");
+					System.out.println("등록된 현재 프로젝트가 없습니다.");
 					} else {
 
 						for (projectBean c : allProject) {
 				%>
 				<form
-					action="${pageContext.request.contextPath}/LectureController/deleteLecture"
-					method="post">
-					<%-- 	<input type="hidden" name="lecture_id" value=<%=c.getProject_Identifier()%>>
-		<input type="hidden" name="user_id" value=<%=sID%>>
-		<input type="hidden" name="lecture_name" value=<%=c.getLectureName()%>>
-		<input type="hidden" name="hackjeom" value=<%=c.getHackjeom()%>> --%>
+					action="${pageContext.request.contextPath}/ "	method="post">
+					
 
 					<tr align="center">
 						<td width="70px"><%=c.getProject_Identifier()%></td>
@@ -131,89 +128,44 @@
 					<td width="300px">설명</td>
 					<td width="200px">파견 지역</td>
 					<td width="200px">PM</td>
+					<td width="200px">고객 평가</td>
 					<td width="180px">현재 상태</td>
 				</tr>
-				<tr align="center">
-					<td>aa</td>
-					<td>aa</td>
-					<td>aa</td>
-					<td>aa</td>
-					<td>aa</td>
-					<td>aa</td>
-					<td>aa</td>
-				</tr>
-				<tr align="center">
-					<td>b</td>
-					<td>b</td>
-					<td>b</td>
-					<td>b</td>
-					<td>b</td>
-					<td>b</td>
-					<td>b</td>
-				</tr>
-				<tr align="center">
-					<td>c</td>
-					<td>c</td>
-					<td>c</td>
-					<td>c</td>
-					<td>c</td>
-					<td>c</td>
-					<td>c</td>
-				</tr>
-				<tr align="center">
-					<td>d</td>
-					<td>d</td>
-					<td>d</td>
-					<td>d</td>
-					<td>d</td>
-					<td>d</td>
-					<td>d</td>
-				</tr>
-				<tr align="center">
-					<td>e</td>
-					<td>e</td>
-					<td>e</td>
-					<td>e</td>
-					<td>e</td>
-					<td>e</td>
-					<td>e</td>
-				</tr>
-				<tr align="center">
-					<td>f</td>
-					<td>f</td>
-					<td>f</td>
-					<td>f</td>
-					<td>f</td>
-					<td>f</td>
-					<td>f</td>
-					</trf>
-				<tr align="center">
-					<td>g</td>
-					<td>g</td>
-					<td>g</td>
-					<td>g</td>
-					<td>g</td>
-					<td>g</td>
-					<td>g</td>
-				</tr>
-				<tr align="center">
-					<td>h</td>
-					<td>h</td>
-					<td>h</td>
-					<td>h</td>
-					<td>h</td>
-					<td>h</td>
-					<td>h</td>
-				</tr>
-				<tr align="center">
-					<td>i</td>
-					<td>i</td>
-					<td>i</td>
-					<td>i</td>
-					<td>i</td>
-					<td>i</td>
-					<td>i</td>
-				</tr>
+			<%
+					if (pastProject.isEmpty()) {
+				%>
+
+				<h2>등록된 프로젝트가 없습니다.</h2>
+
+				<%
+					System.out.println("등록된 과거 프로젝트가 없습니다.");
+					} else {
+
+						for (projectBean c : pastProject) {
+				%>
+				<form
+					action="${pageContext.request.contextPath}/LectureController/deleteLecture"
+					method="post">
+					
+
+					<tr align="center">
+						<td width="70px"><%=c.getProject_Identifier()%></td>
+						<td width="200px"><a href="${pageContext.request.contextPath}/ProjectController/showProjectInformation"><%=c.getProject_Name()%></a></td>
+						<td width="250px"><%=c.getStart_Date()%></td>
+						<td width="250px"><%=c.getEnd_Date()%></td>
+						<td width="300px"><%=c.getProject_Description()%></td>
+						<td width="200px"><%=c.getDispatch_Location()%></td>
+						<td width="200px"><a href='${pageContext.request.contextPath}/LoginController/retrieveUser?id=<%=c.getProjectmanager_Identifier()%>'><%=c.getProjectmanager_Identifier()%></a>/<%=c.getPM_name()%></td>
+						<td width="200px"><%=c.getProject_Evaluation()%></td>
+						<td width="180px"><%=c.getStatus()%></td>
+					</tr>
+
+				</form>
+				<%
+						}
+					}
+				%>
+				
 			</table>
 		</div>
 		<div class="main_button" style="padding:10px 0px;">
