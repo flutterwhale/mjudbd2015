@@ -40,9 +40,7 @@
 	<%
 		} else {
 	%>
-	<!-- <script language="javascript">
-		alert("환영합니다.");
-	</script> -->
+	
 
 	<%
 		System.out.println("=============== main.jsp ===============");
@@ -93,10 +91,10 @@
 		 	</td>
 		 	
 		</tr>
-		<tr>
+		<%-- <tr>
 		 	<td>권한</td>
 		 	<td><jsp:getProperty property="permission" name="loginbean" /></td>
-		</tr>
+		</tr> --%>
 		<tr>
 		 	<td>부서</td>
 		 	<td><%=Depart_map.get(loginbean.getDi()) %></td>
@@ -106,7 +104,7 @@
 		 	onclick="location.href='${pageContext.request.contextPath}/LoginController/logout.do'">로그아웃</button></td>
 		</tr>
 		<tr>
-			<td colspan=2 align=center>The time on the server is ${serverTime}.</td>
+			<td colspan=2 align=center><%= now %>.</td>
 		</tr>
 	</table>
 	</div>
@@ -114,6 +112,10 @@
 	<button class="btn btn-primary" style="width:200px; margin:10px;" type="button"
 		onclick="location.href='${pageContext.request.contextPath}/LoginController/showMemberPage'">개인
 		정보</button>
+		
+		<button class="btn btn-primary" style="width:200px; margin:10px;" type="button"
+		onclick="location.href='${pageContext.request.contextPath}/ProjectController/memberManagement'">인사관리</button>
+		
 	<button class="btn btn-primary" style="width:200px; margin:10px;" type="button"
 		onclick="location.href='${pageContext.request.contextPath}/ProjectController/showDirectory'">인명부
 	</button>

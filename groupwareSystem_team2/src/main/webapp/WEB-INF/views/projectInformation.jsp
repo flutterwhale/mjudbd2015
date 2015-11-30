@@ -1,12 +1,18 @@
+<%@page import="kr.ac.mju.prompt.model.UscheduleBean"%>
+<%@page import="kr.ac.mju.prompt.model.PscheduleBean"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@include file="mapper.jsp"%>
+<%@include file="session.jsp"%>
 <%@ page import="kr.ac.mju.prompt.model.UserInfo"%>
 <%@ page import="kr.ac.mju.prompt.model.UserBean"%>
 <%@ page import="kr.ac.mju.prompt.model.projectBean"%>
 <%@page import="org.apache.commons.beanutils.BeanUtils"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -23,8 +29,21 @@
 	type="text/javascript"></script>
 
 <%
+ArrayList<PscheduleBean> allProjectSchedule = (ArrayList<PscheduleBean>) request
+.getAttribute("projectScheduleList");
+	UscheduleBean uscheduleBean = (UscheduleBean) request.getAttribute("usBean");
 	projectBean pBean = (projectBean) request.getAttribute("projectInfo");
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	String now = sdf.format(new Date());
 %>
+<script type="text/javascript">
+	function move() {
+		if (confirm('수정하시겠습니까?')) {
+			document.frm1.submit();
+		}
+	}
+</script>
+
 </head>
 
 <body>
@@ -57,71 +76,99 @@
 		<h1><%=pBean.getProject_Identifier()%>
 			/
 			<%=pBean.getProject_Name()%></h1>
-		<div class="project_information">
-			<table class="table table-striped table-hover" width="920px">
-				<tr>
-					<th width="170px">프로젝트 개요</th>
-					<td width="750px"><textarea name="Project_Description"><%=pBean.getProject_Description()%></textarea>
-					</td>
-				</tr>
-				<tr>
-					<th>프로젝트 일정</th>
-					<td>시작 날짜<input type="text" name="startDate"
-						value="<%=pBean.getStart_Date()%>" ></td>
-					<td>종료 날짜<input type="text" name="endDate"
-						value="<%=pBean.getEnd_Date()%>" ></td>
-				</tr>
-				<tr>
-					<th>부가 설명</th>
-					<td><textarea name="comment"><%=pBean.getComment()%></textarea></td>
-				</tr>
-				<tr>
-					<th>예산</th>
-					<td><input type="text" name="price"
-						value="<%=pBean.getProject_Price()%>" ></td>
-				</tr>
-				<tr>
-					<th>진행 상태</th>
-					<td><input type="text" name="status"
-						value="<%=pBean.getStatus()%>" ></td>
-				</tr>
-				<tr>
-					<th>파견 지역</th>
-					<td><input type="text" name="location"
-						value="<%=pBean.getDispatch_Location()%>"></td>
-				</tr>
-				<tr>
-					<th>PM</th>
-					<td><input type="text" name="pm_id"
-						value="<%=pBean.getProjectmanager_Identifier()%>"
-						readonly="readonly">/<input type="text" name="pm_name"
-						value="<%=pBean.getPM_name()%>" readonly="readonly"></td>
-				</tr>
-			</table>
-		</div>
-		<button class="btn btn-primary" type="button">[PM 전용] 프로젝트 정보
-			수정버튼</button>
+		<form name="frm1"
+			action='${pageContext.request.contextPath}/ProjectController/updateProjectInfo'
+			method="POST">
+			<div class="project_information">
+
+				<table class="table table-striped table-hover" width="920px">
+
+					<tr>
+						<th width="170px">프로젝트 개요</th>
+						<td width="750px"><textarea name="description"><%=pBean.getProject_Description()%></textarea>
+							<input type="hidden" name="pid"
+							value="<%=pBean.getProject_Identifier()%>"></td>
+					</tr>
+					<tr>
+						<th>프로젝트 일정</th>
+						<td>시작 날짜<%=pBean.getStart_Date()%></td>
+						<td>종료 날짜<input type="date" id="end_date" name="end_date"
+							min="${now}" max="2200-12-31" value="<%=pBean.getEnd_Date()%>"></td>
+					</tr>
+					<tr>
+						<th>부가 설명</th>
+						<td><textarea name="comment"><%=pBean.getComment()%></textarea></td>
+					</tr>
+					<tr>
+						<th>예산</th>
+						<td><input type="text" name="price"
+							value="<%=pBean.getProject_Price()%>"></td>
+					</tr>
+					<tr>
+						<th>진행 상태</th>
+						<td><input type="text" name="status"
+							value="<%=pBean.getStatus()%>"></td>
+					</tr>
+					<tr>
+						<th>파견 지역</th>
+						<td><input type="text" name="location"
+							value="<%=pBean.getDispatch_Location()%>"></td>
+					</tr>
+					<tr>
+						<th>PM</th>
+						<td><%=pBean.getProjectmanager_Identifier()%>/<%=pBean.getPM_name()%></td>
+					</tr>
+				</table>
+
+			</div>
+		</form>
+		<button type="submit" class="btn btn-success" style="margin: 5px"
+			onclick="move();">수정</button>
 		<div class="project_schedule">
 			<h3>프로젝트 일정</h3>
-			<button class="btn btn-primary" type="button">[PM 전용]일정 추가</button>
+			<button class="btn btn-primary" type="button"
+				onclick="location.href='${pageContext.request.contextPath}/ProjectController/ShowProjectSchedulePage?pid=<%=pBean.getProject_Identifier()%>'">[PM
+				전용]일정 추가</button>
 			<table class="table table-striped table-hover" border="1"
 				width="920px">
 				<tr>
-					<th width="70px">schedule_ID</th>
-					<td width="130px">일정 이름</td>
-					<tD width="150px">업무 내용</td>
-					<td width="170px">시작 날짜</td>
-					<td width="150px">종료 날짜</td>
-					<td width="250px">현재 상태</td>
+						<th width="70px">schedule_ID</th>
+						<td width="200px">일정 이름</td>
+						<td width="200px">내용</td>
+						<td width="200px">시작일</td>
+						<td width="200px">종료일</td>
+						<td width="200px">상태</td>
+						<td width="200px">완료율</td>
+						<td width="200px">관리</td>
 				</tr>
+				
+				<%
+							if (allProjectSchedule.isEmpty()) {
+						%>
+
+						<h2>등록된 프로젝트가 없습니다.</h2>
+
+						<%
+							System.out.println("등록된 일정이 없습니다.");
+							} else {
+
+								for (PscheduleBean c : allProjectSchedule) {
+						%>
 				<tr>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-				</tr>
+					<td><%=c.getProject_Schedule_Identifier()%></td>
+						<td><%=c.getSchedule_Name()%></td>
+						<td><%=c.getContents()%></td>
+						<td><%=c.getStart_Date() %></td>
+						<td><%=c.getEnd_Date() %></td>
+						<td><%=c.getStatus_Process()%></td>
+						<td><%=c.getProgress_Percentage()%>%</td>
+						<td><button type="submit" class="btn btn-success"
+				onclick="location.href='${pageContext.request.contextPath}/ProjectController/ShowProjectSchedulePage?sid=<%=c.getProject_Schedule_Identifier()%>&pid=<%=pBean.getProject_Identifier()%>'">관리</button>
+							</td>
+							</tr>
+						<%}} %>
+						
+				
 			</table>
 			<h3>개인 일정</h3>
 			<table class="table table-striped table-hover" border="1"
@@ -146,7 +193,7 @@
 		</div>
 		<div class="project_user">
 			<h3>투입 인력</h3>
-			<button class="btn btn-primary" type="button">[PM 전용] 인원 추가
+			<button class="btn btn-primary" type="button" onclick="location.href='${pageContext.request.contextPath}/ProjectController/showProjectMember'">[PM 전용] 인원 추가
 				버튼</button>
 			<table class="table table-striped table-hover" border="1"
 				width="920px">
@@ -191,26 +238,20 @@
 				</tr>
 			</table>
 		</div>
-		<div class="project_Evaluation">
-			<h3>프로젝트 인원 평가(완료 상태 일때)</h3>
-			<table class="table table-striped table-hover" border="1"
-				width="920px">
-				<tr>
-					<th width="100px">번호</th>
-					<th width="140px">평가자</th>
-					<th width="140px">피평가자</th>
-					<th width="360px">내용</th>
-					<th width="180px">평가일자</th>
-				</tr>
-				<tr>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-				</tr>
-			</table>
-		</div>
+		  <div class="project_evaluation">
+         <h3>프로젝트 평가</h3>
+         <table class="table table-striped table-hover" border="1"
+            width="700px">
+            <tr align="center">
+               <th width="700px">프로젝트 평가(완료 상태 일때)</th>
+            </tr>
+            
+
+         </table>
+           <button class="btn btn-primary" type="button"
+            onclick="location.href='${pageContext.request.contextPath}/ProjectController/showProjectEvaluation'">[PM
+            전용] 프로젝트 평가 버튼</button>
+      </div>
 		<div class="project_code">
 			<h3>프로젝트 산출물</h3>
 			<table class="table table-striped table-hover" border="1"
@@ -328,7 +369,7 @@
 					<td></td>
 				</tr>
 			</table>
-			<button class="btn btn-primary" type="button">[PL 전용]개인 일정
+			<button class="btn btn-primary" type="button" onclick="location.href='${pageContext.request.contextPath}/ProjectController/showUserSchedule'">[PL 전용]개인 일정
 				추가</button>
 		</div>
 		<div class="project_user">
@@ -440,7 +481,7 @@
 					<th>예산</th>
 					<td><%=pBean.getProject_Price()%></td>
 				</tr>
-					<tr>
+				<tr>
 					<th>파견 지역</th>
 					<td><%=pBean.getDispatch_Location()%></td>
 				</tr>

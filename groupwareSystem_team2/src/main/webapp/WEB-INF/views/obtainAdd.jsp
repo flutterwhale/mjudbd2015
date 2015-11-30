@@ -80,7 +80,7 @@
 					%>
 					<tr>
 						<td>
-							<form name='frm' action ='${pageContext.request.contextPath}/ProjectController/newProject'>
+							<form name='frm' action ='${pageContext.request.contextPath}/ProjectController/newProject' method="POST" >
 								<input type="hidden" name = "pid" value="<%=c.getId()%>">
 								<input type="hidden" name = "oid" value="<%=request.getParameter("oid")%>">
 								<button type="submit" class="btn btn-primary" onclick="move();" >프로젝트 등록</button>

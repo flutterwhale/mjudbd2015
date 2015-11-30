@@ -8,9 +8,12 @@
 <%@ page import="kr.ac.mju.prompt.model.UserInfo"%>
 <%@ page import="kr.ac.mju.prompt.model.UserBean"%>
 <%@page import="org.apache.commons.beanutils.BeanUtils"%>
-
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.*"%>
 <%
 	obtainBean oBean = (obtainBean) request.getAttribute("obtainBean");
+SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+String now = sdf.format(new Date());
 %>
 
 

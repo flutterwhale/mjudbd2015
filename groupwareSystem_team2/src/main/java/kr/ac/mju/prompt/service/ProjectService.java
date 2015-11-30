@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.ac.mju.prompt.dao.ProjectDAO;
+import kr.ac.mju.prompt.model.PscheduleBean;
+import kr.ac.mju.prompt.model.UscheduleBean;
 import kr.ac.mju.prompt.model.UserBean;
 import kr.ac.mju.prompt.model.obtainBean;
 import kr.ac.mju.prompt.model.projectBean;
@@ -46,9 +48,73 @@ public class ProjectService {
 	}
 
 	public projectBean getProjectInfo(String projectid){
-		logger.info("=============insertProject Service=============");
+		logger.info("=============getProjectInfo Service=============");
 		logger.info("Show Project info  projectid : " + projectid);
 		return projectDAO.getProject(projectid);
+	}
+
+	public ArrayList<PscheduleBean> getProjectScheduleList(String pid) {
+		// TODO Auto-generated method stub
+		logger.info("=============ProjectScheduleList Service=============");
+		logger.info("프로젝트 일정 목록");
+
+		return projectDAO.getProjectSchedule(pid);
+	}
+	
+	
+	//프로젝트 일정.
+	public PscheduleBean getProjectSchedule(String sid) {
+		// TODO Auto-generated method stub
+		logger.info("select ProjectSchedule  sid : " + sid);
+
+		return projectDAO.showProjectSchedule(sid);
+	}
+
+	public int deleteProjectSchedule(String sid) {
+		// TODO Auto-generated method stub
+		logger.info("deleteProjectSchedule  sid : " + sid);
+		return projectDAO.deleteProjectSchedule(sid);
+	}
+	
+	public int insertProjectSchedule(PscheduleBean psb) {
+		// TODO Auto-generated method stub
+
+		return projectDAO.insertProjectSchedule(psb);
+	}
+
+	public int updateProjectSchedule(PscheduleBean psb) {
+		// TODO Auto-generated method stub
+
+		return projectDAO.updateProjectSchedule(psb);
+	}
+	
+/*	// 개인 일정 추가
+	public UscheduleBean getProjectSchedule(String uid) {
+		// TODO Auto-generated method stub
+		logger.info("select ProjectSchedule  sid : " + uid);
+
+		return projectDAO.showProjectSchedule(sid);
+	}
+
+	public int deleteProjectSchedule(String sid) {
+		// TODO Auto-generated method stub
+		logger.info("deleteProjectSchedule  sid : " + sid);
+		return projectDAO.deleteProjectSchedule(sid);
+	}
+
+	public int updateProjectSchedule(PscheduleBean psb) {
+		// TODO Auto-generated method stub
+
+		return projectDAO.updateProjectSchedule(psb);
+	}*/
+	
+	
+	public ArrayList<UscheduleBean> getUserScheduleList(String pid) {
+		// TODO Auto-generated method stub
+		logger.info("=============UserScheduleList Service=============");
+		logger.info("프로젝트 개인 일정 목록");
+
+		return projectDAO.getUserSchedule(pid);
 	}
 	
 	
@@ -56,6 +122,15 @@ public class ProjectService {
 	 * 유저 정보 가져 오기 서비스
 	 */
 
+	
+	public ArrayList<signupBean> getMember_developer() {
+		// TODO Auto-generated method stub
+		logger.info("=============개발자 리스트가져오기 Service=============");
+
+		return projectDAO.getDepartUser("17");
+	}
+
+	
 	public ArrayList<UserBean> getMember_permission(int p) {
 		// TODO Auto-generated method stub
 		logger.info("=============PM List 가져오기 Service=============");
@@ -114,5 +189,29 @@ public class ProjectService {
 
 		return projectDAO.updateObtain(ob);
 	}
+
+	public int updateProjectInfo(projectBean pBean) {
+		// TODO Auto-generated method stub
+		logger.info("=============updateProjectInfo Service=============");
+		logger.info("update Project info  projectid : " + pBean.getProject_Identifier());
+		return projectDAO.updateProjectInfo(pBean);
+	}
+
+	//모든 멤버 출력 
+	public ArrayList<signupBean> allMemberList() {
+		// TODO Auto-generated method stub
+		logger.info("=============allMemberList Service=============");
+		
+		return projectDAO.getAllMembers();
+	}
+	public int moveDepartment(String id, String di, String po, String pe) {
+		// TODO Auto-generated method stub
+		logger.info("=============allMemberList Service=============");
+		
+		return projectDAO.moveDepart(id,di,po,pe);
+	}
+
+	
+	
 
 }

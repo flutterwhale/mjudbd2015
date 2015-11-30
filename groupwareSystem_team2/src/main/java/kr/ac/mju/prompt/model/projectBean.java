@@ -7,7 +7,6 @@ import java.util.Map;
 public class projectBean {
 	private String msg = "";
 	private int code;
-	// �⺻ ����
 
 	private int Project_Identifier;
 	private String project_Name;
