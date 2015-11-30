@@ -62,6 +62,7 @@
 						<td width="100px">시작 날짜</td>
 						<td width="100px">종료 날짜</td>
 						<td width="100px">고객사</td>
+						<td width="100px">위치</td>
 						<td width="200px">내용</td>
 					</tr>
 					<tr align="center">
@@ -72,6 +73,7 @@
 						<td><input type="date" id="end_date" name="end_date"
 							min="${now}" max="2200-12-31" value="<%=now%>"></td>
 						<td><input type="text" name="order_company"></td>
+						<td><input type="text" name="location"></td>
 						<td><input type="text" name="contents"></td>
 					</tr>
 				</table>

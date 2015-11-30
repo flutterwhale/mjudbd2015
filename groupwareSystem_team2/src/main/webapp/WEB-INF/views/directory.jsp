@@ -28,7 +28,34 @@
 %>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>회사 인명부</title>
-
+<script language="JavaScript">
+		var xmlHttp;
+	
+		function createXMLHttpRequest() {
+			if(window.ActiveXObject) {
+				xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+			} else if(window.XMLHttpRequest) {
+				xmlHttp = new XMLHttpRequest();
+			}
+		}
+	
+		function show() {
+			createXMLHttpRequest();
+			var url = "directoryRightside.jsp";
+			xmlHttp.onreadystatechange = loader;
+			xmlHttp.open("GET", url, true);
+			xmlHttp.send(null);
+		}
+	
+		function loader() {
+			if(xmlHttp.readyState == 4) {
+				if(xmlHttp.status == 200) {
+					temp = xmlHttp.responseText;
+					document.getElementById("content").innerHTML = temp;
+				}
+			}
+		}
+	</script>
 <script type="text/javascript">
 	$(
 			function() {

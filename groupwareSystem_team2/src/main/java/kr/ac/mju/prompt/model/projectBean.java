@@ -17,7 +17,7 @@ public class projectBean {
 	private Date end_Date;
 	private String project_Description;
 	private int status;
-	private String project_Price;
+	private int project_Price;
 	private String comment;
 	private String project_Document;
 	private String product;
@@ -92,12 +92,12 @@ public class projectBean {
 		this.status = status;
 	}
 
-	public String getProject_Price() {
+	public int getProject_Price() {
 		return project_Price;
 	}
 
-	public void setProject_Price(String project_Price) {
-		this.project_Price = project_Price;
+	public void setProject_Price(int i) {
+		this.project_Price = i;
 	}
 
 	public String getComment() {

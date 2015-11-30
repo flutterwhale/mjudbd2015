@@ -9,6 +9,7 @@ public class obtainBean {
 	private String Comment;
 	private int Present_Status;
 	private String Order_Company;
+	private String location;
 	private Date Start_Date;
 	private Date End_Date;
 	private int Writer_User;
@@ -16,8 +17,9 @@ public class obtainBean {
 	private String Writer_name;
 	
 	
+	
 	public obtainBean(int obtain_Order_Identifier, String obtain_Name, String comment, int present_Status,
-			String order_Company, Date start_Date, Date end_Date, int writer_User, String writer_name, String pm) {
+			String order_Company, Date start_Date, Date end_Date, int writer_User, String writer_name, String pm,String location) {
 		super();
 		Obtain_Order_Identifier = obtain_Order_Identifier;
 		Obtain_Name = obtain_Name;
@@ -29,6 +31,7 @@ public class obtainBean {
 		Writer_User = writer_User;
 		Writer_name = writer_name;
 		setPM(pm);
+		setLocation(location);
 	}
 	public obtainBean() {
 		// TODO Auto-generated constructor stub
@@ -92,6 +95,12 @@ public class obtainBean {
 	}
 	public void setPM(String pM) {
 		PM = pM;
+	}
+	public String getLocation() {
+		return location;
+	}
+	public void setLocation(String location) {
+		this.location = location;
 	}
 
 	

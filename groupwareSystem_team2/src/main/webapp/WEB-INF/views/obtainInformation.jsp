@@ -12,6 +12,16 @@
 <%
 	obtainBean oBean = (obtainBean) request.getAttribute("obtainBean");
 %>
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<link rel="stylesheet" href="http://bootswatch.com/flatly/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<title>obtain</title>
 <script type="text/javascript">
 	function move() {
 		if (confirm('수정하시겠습니까?')) {
@@ -24,19 +34,9 @@
 		}
 	}
 </script>
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<link rel="stylesheet" href="http://bootswatch.com/flatly/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>obtain</title>
 <script
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"
 	type="text/javascript"></script>
-
 </head>
 <body>
 	<nav class="navbar navbar-default">
@@ -75,6 +75,7 @@
 						<td width="100px">시작</td>
 						<td width="100px">끝</td>
 						<td width="100px">고객</td>
+						<td width="100px">위치</td>
 						<td width="200px">내용</td>
 						<td width="100px">상태</td>
 					</tr>
@@ -90,6 +91,8 @@
 							min="${now}" max="2200-12-31" value="<%=oBean.getEnd_Date()%>"></td>
 						<td><input type="text" name="order_company"
 							value="<%=oBean.getOrder_Company()%>"></td>
+							<td><input type="text" name="location"
+							value="<%=oBean.getLocation()%>"></td>
 						<td><input type="text" name="contents"
 							value="<%=oBean.getComment()%>"></td>
 						<td><input type="text" name="status"
@@ -112,6 +115,9 @@
 	</form>
 	</div>
 	<%
+	
+	System.out.println("location "+oBean.getLocation());
+	System.out.println("subject "+oBean.getObtain_Name());
 		} else {
 	%>
 
@@ -126,6 +132,7 @@
 					<td width="100px">시작</td>
 					<td width="100px">끝</td>
 					<td width="100px">고객</td>
+						<td width="100px">위치</td>
 					<td width="200px">내용</td>
 					<td width="200px">작성자</td>
 					<td width="100px">상태</td>
@@ -137,6 +144,7 @@
 					<td><%=oBean.getStart_Date()%></td>
 					<td><%=oBean.getEnd_Date()%></td>
 					<td><%=oBean.getOrder_Company()%></td>
+					<td><%=oBean.getLocation()%></td>
 					<td><%=oBean.getComment()%></td>
 					<td><a
 						href='${pageContext.request.contextPath}/LoginController/retrieveUser?id=<%=oBean.getWriter_User() %>'><%=oBean.getWriter_User()%></a>/<%=oBean.getWriter_name()%></td>

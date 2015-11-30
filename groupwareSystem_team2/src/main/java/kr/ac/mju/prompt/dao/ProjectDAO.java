@@ -139,9 +139,7 @@ public class ProjectDAO {
 			conn = DriverManager.getConnection("jdbc:mysql://117.123.66.137:8089/dbd2015", "park", "pjw49064215");
 
 			String query = "SELECT Project_Identifier, Project_Name, Projectmanager_Identifier,Start_Date,End_Date,Project_Description ,Status,Project_Price,t_project.Comment AS pComment,Project_Document, Product ,Project_Evaluation ,Dispatch_Location, t_user.Name AS PMname FROM dbd2015.t_project join dbd2015.t_user on t_user.User_Identifier = t_project.Projectmanager_Identifier where End_Date > now();";
-			
-			
-			
+
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(query);
 			logger.info("전체 프로젝트 나열 (현재 날 이후)");
@@ -160,13 +158,12 @@ public class ProjectDAO {
 				pbean.setEnd_Date(rs.getDate("end_Date"));
 				pbean.setProject_Description(rs.getString("project_Description"));
 				pbean.setStatus(rs.getInt("status"));
-				pbean.setProject_Price(rs.getString("project_Price"));
+				pbean.setProject_Price(rs.getInt("project_Price"));
 				pbean.setComment(rs.getString("pComment"));
 				pbean.setProject_Document(rs.getString("project_Document"));
 				pbean.setProject_Evaluation(rs.getString("project_Evaluation"));
 				pbean.setDispatch_Location(rs.getString("dispatch_Location"));
 
-				
 				allProject.add(pbean);
 
 			}
@@ -216,9 +213,7 @@ public class ProjectDAO {
 			conn = DriverManager.getConnection("jdbc:mysql://117.123.66.137:8089/dbd2015", "park", "pjw49064215");
 
 			String query = "SELECT Project_Identifier, Project_Name, Projectmanager_Identifier,Start_Date,End_Date,Project_Description ,Status,Project_Price,t_project.Comment AS pComment,Project_Document, Product ,Project_Evaluation ,Dispatch_Location, t_user.Name AS PMname FROM dbd2015.t_project join dbd2015.t_user on t_user.User_Identifier = t_project.Projectmanager_Identifier where End_Date < now() ;";
-			
-			
-			
+
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(query);
 			logger.info("과거 프로젝트 나열 (현재 날 이전)");
@@ -237,12 +232,12 @@ public class ProjectDAO {
 				pbean.setEnd_Date(rs.getDate("end_Date"));
 				pbean.setProject_Description(rs.getString("project_Description"));
 				pbean.setStatus(rs.getInt("status"));
-				pbean.setProject_Price(rs.getString("project_Price"));
+				pbean.setProject_Price(rs.getInt("project_Price"));
 				pbean.setComment(rs.getString("pComment"));
 				pbean.setProject_Document(rs.getString("project_Document"));
 				pbean.setDispatch_Location(rs.getString("dispatch_Location"));
 				pbean.setProject_Evaluation(rs.getString("project_Evaluation"));
-				
+
 				Past_Project.add(pbean);
 
 			}
@@ -276,7 +271,7 @@ public class ProjectDAO {
 		return Past_Project;
 
 	}
-	
+
 	// 해당 부서 직원 리스트 조회 처리 ArrayList<signupBean>
 	public ArrayList<signupBean> getDepartUser(String d) {
 		// TODO Auto-generated method stub
@@ -287,7 +282,7 @@ public class ProjectDAO {
 		Connection conn = null;
 		ResultSet rs = null, rs2 = null;
 		ArrayList<signupBean> member_List = new ArrayList<signupBean>();
-		String query1 =null;
+		String query1 = null;
 		try {
 
 			Class.forName("com.mysql.jdbc.Driver");
@@ -295,10 +290,10 @@ public class ProjectDAO {
 			stmt = conn.createStatement();
 
 			if (!d.equals("10")) {
-				 query1 = "SELECT * FROM dbd2015.t_user join dbd2015.t_position on t_user.User_Identifier = t_position.User_Identifier  join  dbd2015.t_department on t_department.Department_Identifier = t_position.Department_Identifier  where t_position.Department_Identifier ='"
+				query1 = "SELECT * FROM dbd2015.t_user join dbd2015.t_position on t_user.User_Identifier = t_position.User_Identifier  join  dbd2015.t_department on t_department.Department_Identifier = t_position.Department_Identifier  where t_position.Department_Identifier ='"
 						+ d + "' order by Position_Name ;";
 			} else {
-				 query1 = "SELECT * FROM dbd2015.t_user join dbd2015.t_position on t_user.User_Identifier = t_position.User_Identifier  join  dbd2015.t_department on t_department.Department_Identifier = t_position.Department_Identifier  where t_position.Position_Name <='13' and  t_position.Position_Name >'0' order by Position_Name ;";
+				query1 = "SELECT * FROM dbd2015.t_user join dbd2015.t_position on t_user.User_Identifier = t_position.User_Identifier  join  dbd2015.t_department on t_department.Department_Identifier = t_position.Department_Identifier  where t_position.Position_Name <='13' and  t_position.Position_Name >'0' order by Position_Name ;";
 			}
 			System.out.println("ProjectDAO.getUserInfo : 쿼리1 > " + query1);
 			rs = stmt.executeQuery(query1);
@@ -465,9 +460,9 @@ public class ProjectDAO {
 			conn = DriverManager.getConnection("jdbc:mysql://117.123.66.137:8089/dbd2015", "park", "pjw49064215");
 			stmt = conn.createStatement();
 
-			String query = "INSERT INTO `dbd2015`.`t_project` (`Project_Name`,  `Start_Date`, `End_Date`, `Status`, `Project_Description` ,`Projectmanager_Identifier`) VALUES ('"
+			String query = "INSERT INTO `dbd2015`.`t_project` (`Project_Name`,  `Start_Date`, `End_Date`, `Status`, `Project_Description` ,`Projectmanager_Identifier`,`Dispatch_Location`) VALUES ('"
 					+ oBean.getObtain_Name() + "', '" + oBean.getStart_Date() + "', '" + oBean.getEnd_Date()
-					+ "', '10', '" + oBean.getComment() + "' ,'" + pid + "');";
+					+ "', '10', '" + oBean.getComment() + "' ,'" + pid + "','"+oBean.getLocation()+"');";
 
 			result = stmt.executeUpdate(query);
 			System.out.println("query 1 " + query);
@@ -510,7 +505,7 @@ public class ProjectDAO {
 			Connection connection = DriverManager.getConnection("jdbc:mysql://117.123.66.137:8089/dbd2015", "park",
 					"pjw49064215");
 
-			String query = "SELECT Obtain_Order_Identifier, Obtain_Name,Start_Date,End_Date,Present_Status,Order_Company,t_obtain_order.Comment AS oComment,Writer_User, t_user.Name AS writer_name ,pm_id FROM dbd2015.t_obtain_order join dbd2015.t_user on t_user.User_Identifier = dbd2015.t_obtain_order.Writer_User ;";
+			String query = "SELECT Obtain_Order_Identifier,location, Obtain_Name,Start_Date,End_Date,Present_Status,Order_Company,t_obtain_order.Comment AS oComment,Writer_User, t_user.Name AS writer_name ,pm_id FROM dbd2015.t_obtain_order join dbd2015.t_user on t_user.User_Identifier = dbd2015.t_obtain_order.Writer_User  where End_Date >now();";
 			conn = connection;
 
 			stmt = conn.createStatement();
@@ -532,6 +527,7 @@ public class ProjectDAO {
 				oBean.setWriter_User(rs.getInt("writer_User"));
 				oBean.setWriter_name(rs.getString("writer_name"));
 				oBean.setPM(rs.getString("pm_id"));
+				oBean.setLocation(rs.getString("location"));
 				allObatain.add(oBean);
 
 			}
@@ -581,7 +577,7 @@ public class ProjectDAO {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection("jdbc:mysql://117.123.66.137:8089/dbd2015", "park", "pjw49064215");
 			stmt = conn.createStatement();
-			String query = "SELECT Obtain_Order_Identifier, Obtain_Name,Start_Date,End_Date,Present_Status,Order_Company,t_obtain_order.Comment AS oComment,Writer_User, t_user.Name AS writer_name , pm_id FROM dbd2015.t_obtain_order join dbd2015.t_user on t_user.User_Identifier = dbd2015.t_obtain_order.Writer_User where Obtain_Order_Identifier='"
+			String query = "SELECT Obtain_Order_Identifier,Obtain_Name,Start_Date,End_Date,Present_Status,Order_Company,t_obtain_order.Comment AS oComment,Writer_User, t_user.Name AS writer_name , pm_id, location FROM dbd2015.t_obtain_order join dbd2015.t_user on t_user.User_Identifier = dbd2015.t_obtain_order.Writer_User where Obtain_Order_Identifier='"
 					+ oid + "' ;";
 
 			rs = stmt.executeQuery(query);
@@ -589,12 +585,12 @@ public class ProjectDAO {
 			if (rs.first()) {
 
 				int oID = rs.getInt("Obtain_Order_Identifier");
-				logger.info(" result  id:  " + oid + " " + rs.getString("Obtain_Name"));
+				logger.info(" result  id:  " + oid + " name : " + rs.getString("Obtain_Name")+ " location "+ rs.getString("location"));
 
-				ob = new obtainBean(oID, rs.getString("Obtain_Name"), rs.getString("oComment"),
+				ob = new obtainBean(oID, rs.getString("Obtain_Name"),rs.getString("oComment"),
 						rs.getInt("Present_Status"), rs.getString("Order_Company"), rs.getDate("Start_Date"),
 						rs.getDate("End_Date"), rs.getInt("Writer_User"), rs.getString("writer_name"),
-						rs.getString("pm_id"));
+						rs.getString("pm_id"), rs.getString("location"));
 
 			}
 
@@ -641,9 +637,9 @@ public class ProjectDAO {
 			conn = DriverManager.getConnection("jdbc:mysql://117.123.66.137:8089/dbd2015", "park", "pjw49064215");
 			stmt = conn.createStatement();
 
-			String query = "INSERT INTO `dbd2015`.`t_obtain_order` (`Obtain_Name`, `Comment`, `Present_Status`, `Order_Company`, `End_Date`, `Start_Date`, `Writer_User`)"
+			String query = "INSERT INTO `dbd2015`.`t_obtain_order` (`Obtain_Name`, `Comment`, `Present_Status`, `Order_Company`,`location`, `End_Date`, `Start_Date`, `Writer_User`)"
 					+ "VALUES ('" + ob.getObtain_Name() + "', '" + ob.getComment() + "', '" + ob.getPresent_Status()
-					+ "', '" + ob.getOrder_Company() + "', '" + ob.getEnd_Date() + "', '" + ob.getStart_Date() + "', '"
+					+ "', '" + ob.getOrder_Company() + "', '" + ob.getLocation() + "', '" + ob.getEnd_Date() + "', '" + ob.getStart_Date() + "', '"
 					+ ob.getWriter_User() + "');";
 
 			System.out.println("insert query? : " + query);
@@ -709,8 +705,9 @@ public class ProjectDAO {
 
 			String query = "UPDATE `dbd2015`.`t_obtain_order` SET `Obtain_Name`='" + ob.getObtain_Name()
 					+ "', `Comment`='" + ob.getComment() + "', `Present_Status`='" + ob.getPresent_Status()
-					+ "', `End_Date`='" + ob.getEnd_Date() + "', `Start_Date`='" + ob.getStart_Date()
-					+ "' WHERE `Obtain_Order_Identifier`='" + ob.getObtain_Order_Identifier() + "';";
+					+ "', `location`='" + ob.getLocation() + "', `End_Date`='" + ob.getEnd_Date()
+					+ "', `Start_Date`='" + ob.getStart_Date() + "' WHERE `Obtain_Order_Identifier`='"
+					+ ob.getObtain_Order_Identifier() + "';";
 
 			System.out.println("update query? : " + query);
 			result = stmt.executeUpdate(query);
@@ -725,6 +722,79 @@ public class ProjectDAO {
 		}
 
 		return result;
+	}
+
+	// 프로젝트 정보 가져오기
+	public projectBean getProject(String projectid) {
+		// TODO Auto-generated method stub
+
+		logger.info("=============프로젝트 정보 조회 처리 =============");
+		logger.info("getProject : " + projectid);
+		// TODO Auto-generated method stub
+		projectBean pbean = new projectBean();
+		;
+
+		Statement stmt = null;
+		Connection conn = null;
+		ResultSet rs = null;
+
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = DriverManager.getConnection("jdbc:mysql://117.123.66.137:8089/dbd2015", "park", "pjw49064215");
+			stmt = conn.createStatement();
+			String query = "SELECT Project_Identifier, Project_Name, Projectmanager_Identifier,Start_Date,End_Date,Project_Description ,Status,Project_Price,t_project.Comment AS pComment,Project_Document, Product ,Project_Evaluation ,Dispatch_Location, t_user.Name AS PMname FROM dbd2015.t_project join dbd2015.t_user on t_user.User_Identifier = t_project.Projectmanager_Identifier where Project_Identifier = '"
+					+ projectid + "' ;";
+
+			rs = stmt.executeQuery(query);
+			if (rs.first()) {
+
+				logger.info(" result  id:  " + projectid + " " + rs.getInt("project_Identifier") + " "
+						+ rs.getString("Project_Name"));
+
+				pbean.setProject_Identifier(rs.getInt("project_Identifier"));
+				pbean.setProject_Name(rs.getString("project_Name"));
+				pbean.setProjectmanager_Identifier(rs.getInt("projectmanager_Identifier"));
+				pbean.setPM_name(rs.getString("PMname"));
+				pbean.setStart_Date(rs.getDate("start_Date"));
+				pbean.setEnd_Date(rs.getDate("end_Date"));
+				pbean.setProject_Description(rs.getString("project_Description"));
+				pbean.setStatus(rs.getInt("status"));
+				pbean.setProject_Price(rs.getInt("project_Price"));
+				pbean.setComment(rs.getString("pComment"));
+				pbean.setProject_Document(rs.getString("project_Document"));
+				pbean.setProject_Evaluation(rs.getString("project_Evaluation"));
+				pbean.setDispatch_Location(rs.getString("dispatch_Location"));
+
+			}
+
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+
+				if (stmt != null) {
+					stmt.close();
+				}
+
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+
+		return pbean;
+
 	}
 
 }

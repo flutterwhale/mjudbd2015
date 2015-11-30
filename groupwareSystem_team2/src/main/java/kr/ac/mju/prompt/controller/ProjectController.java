@@ -34,6 +34,10 @@ public class ProjectController {
 
 	private static final Logger logger = LoggerFactory.getLogger(ProjectController.class);
 
+	/* 
+	 * 제안서 관련 controller
+	 */
+	
 	// 제안서 삭제 후 프로젝트 추가하기 -> 제안서 리스트 화면으로 이동
 	@RequestMapping(value = "/ProjectController/newProject", method = RequestMethod.GET)
 	public String InsertProject(HttpSession session, HttpServletRequest request) {
@@ -149,10 +153,11 @@ public class ProjectController {
 		oBean.setStart_Date((java.sql.Date) sqlStartDate);
 		oBean.setEnd_Date((java.sql.Date) sqlEndDate);
 		oBean.setComment(request.getParameter("contents"));
+		oBean.setLocation(request.getParameter("location"));
 		oBean.setObtain_Order_Identifier(Integer.parseInt(request.getParameter("oid")));
 		System.out.println("obean writer " + oBean.getWriter_User() + " stdat" + oBean.getStart_Date() + " ed"
 				+ oBean.getEnd_Date());
-		System.out.println(" update !!!!! 결과 :" + projectService.updateObtain(oBean));
+		System.out.println(" update service 실행 !!!!! 결과 :" + projectService.updateObtain(oBean));
 
 		return "redirect:showObtainTable";/// ProjectController/showObtainTable
 	}
@@ -186,8 +191,6 @@ public class ProjectController {
 		obtainBean oBean = new obtainBean();
 		System.out.println(">> " + sqlStartDate + " / " + sqlEndDate + " " + session.getAttribute("session_name") + " "
 				+ request.getParameter("subject") + " " + request.getParameter("contents"));
-		// request.getParameter("start_date"),request.getParameter("end_date"),
-		// request.getParameter("order_company"),request.getParameter("contents"),request.getParameter("wid")
 		oBean.setWriter_User((Integer) session.getAttribute("session_name"));
 		oBean.setObtain_Name(request.getParameter("subject"));
 		;
@@ -196,13 +199,18 @@ public class ProjectController {
 		oBean.setStart_Date((java.sql.Date) sqlStartDate);
 		oBean.setEnd_Date((java.sql.Date) sqlEndDate);
 		oBean.setComment(request.getParameter("contents"));
-
+		oBean.setLocation(request.getParameter("location"));
 		System.out.println(" insert !!!!! 결과 :" + projectService.insertObtain(oBean));
 
 		// redirect:insertCoursePage
 		return "redirect:showObtainTable";/// ProjectController/showObtainTable
 	}
 
+	
+	/* 
+	 * 프로젝트 관련 controller
+	 */
+	
 	// 현재 프로젝트 전체 목록 
 	@RequestMapping(value = "/ProjectController/showProjectTable", method = RequestMethod.GET)
 	public ModelAndView showProjectTable(HttpSession session) {
@@ -224,8 +232,7 @@ public class ProjectController {
 
 	// 프로젝트 세부 정보 페이지로 이동
 	@RequestMapping(value = "/ProjectController/showProjectInformation", method = RequestMethod.GET)
-	public String showProject(HttpSession session, Locale locale, Model model) {
-		logger.info("Welcome home! The client locale is {}.", locale);
+	public String showProject(HttpSession session, Locale locale, Model model,HttpServletRequest request) {
 		if (session.getAttribute("session_name") != null) {
 
 			logger.info(session.getAttribute("session_name").toString() + " 해당 사용자가 로그인중입니다. ");
@@ -234,8 +241,12 @@ public class ProjectController {
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
 
 		String formattedDate = dateFormat.format(date);
-
+		logger.info("project ID "+request.getParameter("pid"));
+		projectBean pb =  projectService.getProjectInfo(request.getParameter("pid"));
 		model.addAttribute("serverTime", formattedDate);
+		
+		model.addAttribute("projectInfo",pb);
+		System.out.println("pb <<<<<<<<<<<<<<<<<<<<<<<<"+ pb.getProject_Identifier());
 
 		return "projectInformation";// jsp 파일 이름.
 	}

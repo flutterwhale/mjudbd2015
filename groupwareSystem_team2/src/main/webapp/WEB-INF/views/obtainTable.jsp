@@ -54,6 +54,7 @@
 					<td width="120px">마감일</td>
 					<td width="180px">설명</td>
 					<td width="120px">주문 회사</td>
+					<td width="120px">위치</td>
 					<td width="60px">작성자</td>
 					<td width="80px">현재 상태</td>
 					<td width="100px">PM 배정</td>
@@ -77,6 +78,7 @@
 					<td><%=c.getEnd_Date() %></td>
 					<td><%=c.getComment() %></td>
 					<td><%=c.getOrder_Company()%></td>
+					<td><%=c.getLocation()%></td>
 					<td><a href='${pageContext.request.contextPath}/LoginController/retrieveUser?id=<%=c.getWriter_User()%>'><%=c.getWriter_User()%></a><br/><%=c.getWriter_name() %></td>
 					<td><%=c.getPresent_Status() %></td>
 					<td> 
