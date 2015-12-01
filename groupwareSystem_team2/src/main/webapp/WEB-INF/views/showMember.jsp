@@ -5,6 +5,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@include file="mapper.jsp"%>
+<%@include file="session.jsp"%>
+	
 
 <%@page import="java.util.*"%>
 <%
@@ -97,13 +100,13 @@
 		          <div class="form-group">
 		            <label for="inputname" class="col-sm-4 control-label">부서</label>
 		             <div class="col-sm-6">
-		                  <input type="text" class="form-control" style="width:200px;" id="phone" name="phone" size="15" placeholder="010-1234-1234" maxlength="13" disabled="disabled" value="<%=showBean.getDi()%>">
+		                  <input type="text" class="form-control" style="width:200px;" id="phone" name="phone" size="15" placeholder="010-1234-1234" maxlength="13" disabled="disabled" value="<%=Depart_map.get(showBean.getDi())%>">
 		             </div>
 		          </div>
 		          <div class="form-group">
 		            <label for="inputname" class="col-sm-4 control-label">직급</label>
 		             <div class="col-sm-6">
-		                  <input type="text" class="form-control" style="width:200px;" id="phone" name="phone" size="15" placeholder="010-1234-1234" maxlength="13" disabled="disabled" value="<%=showBean.getPosition_Name()%>">
+		                  <input type="text" class="form-control" style="width:200px;" id="phone" name="phone" size="15" placeholder="010-1234-1234" maxlength="13" disabled="disabled" value="<%=Position_map.get(showBean.getPosition_Name())%>">
 		             </div>
 		          </div>
 		         <div class="form-group">

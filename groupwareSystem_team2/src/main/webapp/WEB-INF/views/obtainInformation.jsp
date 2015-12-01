@@ -114,7 +114,7 @@
 					</tr>
 					<tr>
 
-						<td colspan="7"><textarea form="frm" name="contents"
+						<td colspan="7"><textarea name="contents"
 								style="width: 100%; height: 200px"><%=oBean.getComment()%></textarea></td>
 					</tr>
 

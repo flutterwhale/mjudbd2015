@@ -77,7 +77,7 @@
 					<td><a href='${pageContext.request.contextPath}/ProjectController/showObtainInformation?oid=<%=c.getObtain_Order_Identifier() %>'><%=c.getObtain_Name() %></td>
 					<td><%=c.getStart_Date() %></td>
 					<td><%=c.getEnd_Date() %></td>
-					<td><%=c.getComment() %></td>
+					<td><input type="text" maxlength="70px" value="<%=c.getComment()%>" readonly="readonly"></td>
 					<td><%=c.getOrder_Company()%></td>
 					<td><%=c.getLocation()%></td>
 					<td><a href='${pageContext.request.contextPath}/LoginController/retrieveUser?id=<%=c.getWriter_User()%>'><%=c.getWriter_User()%></a><br/><%=c.getWriter_name() %></td>

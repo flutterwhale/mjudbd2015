@@ -52,7 +52,7 @@
 	</nav>
 	<div class="obtain_wrapper" style="margin:10px 40px;">
 		<h1>제안서 정보</h1>
-		<form
+		<form name="obtain_contents"
 			action="${pageContext.request.contextPath}/ProjectController/insertObtain"
 			method="post">
 			<div class="obtain_information">
@@ -75,7 +75,7 @@
 						<td><input type="text" name="location"></td>
 					</tr>
 					<tr>
-						<td colspan="5"><textarea form="obtain_contents" name="contents" style="width:100%; height:200px"> </textarea></td>
+						<td colspan="5"><textarea name="contents" style="width:100%; height:200px"> </textarea></td>
 					</tr>
 				</table>
 			</div>

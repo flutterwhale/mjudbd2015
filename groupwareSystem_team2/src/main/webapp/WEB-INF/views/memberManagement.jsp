@@ -124,13 +124,19 @@
 							<option value="99"<%if(c.getDi()==99){  %>selected <%}%>>외부인력팀</option>
 							<option value="0"<%if(c.getDi()==0){  %>selected <%}%>>가입대기팀</option>
 					</select></td>
-					<td width="200px"><select name="pe"
-						class="form-control">
+					
+					<td width="200px">
+					<%if(c.getIsFreeLancer()==null){ %>
+						-
+					<%}else{ %> 
+					<select name="pe" class="form-control">
 							<option value="11"<%if(c.getPermission()==11){  %>selected <%}%>>PM</option>
 							<option value="12"<%if(c.getPermission()==12){  %>selected <%}%>>PL</option>
 							<option value="13"<%if(c.getPermission()==13){  %>selected <%}%>>프로젝트 투입 직원</option>
 							<option value="14"<%if(c.getPermission()==14){  %>selected <%}%>>PM/PL</option>
-					</select></td>
+					</select> 
+					<%} %>
+					</td>
 					<td> <%=c.getIsFreeLancer()==null?"일반":"개발자" %></td>
 					<td width="200px"><button class="btn btn-default"
 							type="submit">수정완료</button></td>
@@ -204,13 +210,16 @@
 							<option value="99"<%if(c.getDi()==99){  %>selected <%}%>>외부인력팀</option>
 							<option value="0"<%if(c.getDi()==0){  %>selected <%}%>>가입대기팀</option>
 					</select></td>
-					<td width="200px"><select name="pe"
-						class="form-control">
+					<td width="200px">
+					<%if(c.getIsFreeLancer().equals("common") || c.getIsFreeLancer().equals("FreeLancer")){ %>
+					<select name="pe" class="form-control">
 							<option value="11"<%if(c.getPermission()==11){  %>selected <%}%>>PM</option>
 							<option value="12"<%if(c.getPermission()==12){  %>selected <%}%>>PL</option>
 							<option value="13"<%if(c.getPermission()==13){  %>selected <%}%>>프로젝트 투입 직원</option>
 							<option value="14"<%if(c.getPermission()==14){  %>selected <%}%>>PM/PL</option>
-					</select></td>
+					</select>
+					<%}else{ %> - <%} %>
+					</td>
 					<td> <%if(c.getIsFreeLancer().equals("common")){ %>개발자<% }else if(c.getIsFreeLancer().equals("FreeLancer")){%>프리랜서<%}else{ %>일반<%} %></td>
 					<td width="200px"><button class="btn btn-default"
 							type="submit"
