@@ -119,21 +119,23 @@
 					</tr>
 
 				</table>
+				<div class="main_button" style="float: right">
+					<button type="submit" class="btn btn-success" style="margin: 5px"
+						onclick="move();">수정</button>
+			</form>
+			<form name='frm2' class="col-sm-6"
+				action='${pageContext.request.contextPath}/ProjectController/deleteObtainPage'
+				method="post">
+				<input type="hidden" name="id" value="<%=oBean.getWriter_User()%>">
+				<input type="hidden" name="oid"
+					value="<%=oBean.getObtain_Order_Identifier()%>">
+				<button type="submit" class="btn btn-danger" style="margin: 5px"
+					class="col-sm-6" onclick="del();">삭제</button>
 			</form>
 		</div>
 	</div>
-	<div class="main_button" style="float: right">
-		<button type="submit" class="btn btn-success" style="margin: 5px"
-			onclick="move();">수정</button>
-		<form name='frm2' class="col-sm-6"
-			action='${pageContext.request.contextPath}/ProjectController/deleteObtainPage'
-			method="post">
-			<input type="hidden" name="id" value="<%=oBean.getWriter_User()%>">
-			<input type="hidden" name="oid"
-				value="<%=oBean.getObtain_Order_Identifier()%>">
-			<button type="submit" class="btn btn-danger" style="margin: 5px"
-				class="col-sm-6" onclick="del();">삭제</button>
-		</form>
+
+
 	</div>
 	<%
 		System.out.println("location " + oBean.getLocation());
