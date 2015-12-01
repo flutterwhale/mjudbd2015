@@ -162,7 +162,7 @@
 					<tr align="center">
 						<td width="70px"><%=c.getProject_Identifier()%></td>
 						<td width="200px"><a
-							href="${pageContext.request.contextPath}/ProjectController/showProjectInformation"><%=c.getProject_Name()%></a></td>
+							href="${pageContext.request.contextPath}/ProjectController/showProjectInformation?pid=<%=c.getProject_Identifier()%>"><%=c.getProject_Name()%></a></td>
 						<td width="250px"><%=c.getStart_Date()%></td>
 						<td width="250px"><%=c.getEnd_Date()%></td>
 						<td width="300px"><%=c.getProject_Description()%></td>
