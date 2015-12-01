@@ -126,7 +126,7 @@
 					</select></td>
 					
 					<td width="200px">
-					<%if(c.getIsFreeLancer()==null){ %>
+					<%if(c.getIsFreeLancer().equals("null")){ %>
 						-
 					<%}else{ %> 
 					<select name="pe" class="form-control">
@@ -137,7 +137,7 @@
 					</select> 
 					<%} %>
 					</td>
-					<td> <%=c.getIsFreeLancer()==null?"일반":"개발자" %></td>
+					<td> <%=c.getIsFreeLancer().equals("null")?"일반":"개발자" %></td>
 					<td width="200px"><button class="btn btn-default"
 							type="submit">수정완료</button></td>
 				</tr>
