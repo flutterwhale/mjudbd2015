@@ -27,6 +27,13 @@ public class ProjectService {
 	/*
 	 * 프로젝트 관련 서비스
 	 */
+	public int deleteProject(String pid){
+		logger.info("============= 프로젝트 삭제하기 Service=============");
+		logger.info("삭제할 project id"+pid);
+		
+		return projectDAO.deleteProject(pid);
+	}
+	
 	public ArrayList<projectBean> getAllProjects() {
 		// TODO Auto-generated method stub
 		logger.info("=============모든 현재 프로젝트 가져오기 Service=============");

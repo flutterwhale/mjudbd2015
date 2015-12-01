@@ -114,9 +114,10 @@
 					</select></td>
 					<td width="200px"><select name="di"
 						class="form-control">
-							<option value="10"<%if(c.getDi()==10){  %>selected <%}%>>영업부</option>
+				
+							<option value="10"<%if(c.getDi()==10){  %>selected <%}%>>경영부</option>
 							<option value="11"<%if(c.getDi()==11){  %>selected <%}%>>마케팅팀</option>
-							<option value="12"<%if(c.getDi()==12){  %>selected <%}%>>경영지원부</option>
+							<option value="12"<%if(c.getDi()==12){  %>selected <%}%>>영업부</option>
 							<option value="13"<%if(c.getDi()==13){  %>selected <%}%>>총무팀</option>
 							<option value="14"<%if(c.getDi()==14){  %>selected <%}%>>회계팀</option>
 							<option value="15"<%if(c.getDi()==15){  %>selected <%}%>>인사관리팀</option>

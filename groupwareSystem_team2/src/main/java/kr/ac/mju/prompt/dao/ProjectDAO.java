@@ -882,11 +882,13 @@ public class ProjectDAO {
 
 	// 제안서 내용으로 프로젝트 생성하고, 제안서 삭제 처리
 	public int intsertProject(String pid, obtainBean oBean) {
-		logger.info("=============프로젝트 추가/제안 삭제 처리=============");
+		logger.info("=============프로젝트 추가/제안 삭제 처리/role 에 pm 추가 =============");
 		logger.info("intsertProject : pid " + pid + " oid " + oBean.getObtain_Order_Identifier());
-		int result = 0, result2 = 0;
+		int result = 0, result2 = 0, result3= 0;
+		int last=0;
 		Statement stmt = null;
 		Connection conn = null;
+		ResultSet rs = null;
 		// insert query
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -899,12 +901,30 @@ public class ProjectDAO {
 
 			result = stmt.executeUpdate(query);
 			System.out.println("query 1 " + query);
-			String query2 = "DELETE FROM `dbd2015`.`t_obtain_order` WHERE `Obtain_Order_Identifier`='"
-					+ oBean.getObtain_Order_Identifier() + "';";
-			System.out.println("query 2 " + query2);
-			result2 = stmt.executeUpdate(query2);
+		
+			String lastinsert = "SELECT LAST_INSERT_ID();";
+			rs = stmt.executeQuery(lastinsert);
 
-			System.out.println("insert result? " + result + " / " + result2);
+			if(rs.first()) {
+				last	=rs.getInt("LAST_INSERT_ID()");
+				
+				System.out.println("last Insert value :"+last);
+			}
+			
+			String query2 = "INSERT INTO `dbd2015`.`t_role` (`User_Identifier`, `Project_Role`, `Start_Date`, `End_Date`, `Project_Identifier`) VALUES"
+					+ " ('" + pid + "', '11', '" + oBean.getStart_Date() + "','" + oBean.getEnd_Date()
+					+ "', '"+last+"');";
+
+			System.out.println("query2 " + query2);
+			result2 = stmt.executeUpdate(query2);
+			
+			
+			String query3 = "DELETE FROM `dbd2015`.`t_obtain_order` WHERE `Obtain_Order_Identifier`='"
+					+ oBean.getObtain_Order_Identifier() + "';";
+			System.out.println("query 3 " + query3);
+			result3 = stmt.executeUpdate(query3);
+			
+			System.out.println("insert result? " + result + " / " + result2+" / "+result3);
 
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -1502,4 +1522,36 @@ public class ProjectDAO {
 		      return Past_Project;
 
 		   }
+		   
+
+			// 경영진 프로젝트 삭제 처리
+			public int deleteProject(String pid) {
+				// TODO Auto-generated method stub
+				logger.info("=============프로젝트 삭제 처리 =============");
+				logger.info("deleteObtain : " + pid);
+				Statement stmt = null;
+				Connection conn = null;
+				int result = 0;
+
+				try {
+					Class.forName("com.mysql.jdbc.Driver");
+					conn = DriverManager.getConnection("jdbc:mysql://117.123.66.137:8089/dbd2015", "park", "pjw49064215");
+					stmt = conn.createStatement();
+					String query = "DELETE FROM `dbd2015`.`t_project` WHERE `Project_Identifier`='" + pid + "';";
+					result = stmt.executeUpdate(query);
+					System.out.println("query 1 " + query);
+
+					System.out.println("insert result? " + result);
+
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				return result;
+			}
+
+		   
 }

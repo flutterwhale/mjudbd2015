@@ -29,8 +29,8 @@
 	type="text/javascript"></script>
 
 <%
-ArrayList<PscheduleBean> allProjectSchedule = (ArrayList<PscheduleBean>) request
-.getAttribute("projectScheduleList");
+	ArrayList<PscheduleBean> allProjectSchedule = (ArrayList<PscheduleBean>) request
+			.getAttribute("projectScheduleList");
 	UscheduleBean uscheduleBean = (UscheduleBean) request.getAttribute("usBean");
 	projectBean pBean = (projectBean) request.getAttribute("projectInfo");
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -68,6 +68,8 @@ ArrayList<PscheduleBean> allProjectSchedule = (ArrayList<PscheduleBean>) request
 		</div>
 	</div>
 	</nav>
+
+
 	<%
 		if (session.getAttribute("session_name").equals(pBean.getProjectmanager_Identifier())) {
 	%>
@@ -109,16 +111,16 @@ ArrayList<PscheduleBean> allProjectSchedule = (ArrayList<PscheduleBean>) request
 					</tr>
 					<tr>
 						<th>진행 상태</th>
-						<td><select name="status" style="width:'200px'">
-								<option value="10" <%if(pBean.getStatus()==10){  %> selected
+						<td><select name="status" style="width: '200px'">
+								<option value="10" <%if (pBean.getStatus() == 10) {%> selected
 									<%}%>>착수</option>
-								<option value="11" <%if(pBean.getStatus()==11){  %> selected
+								<option value="11" <%if (pBean.getStatus() == 11) {%> selected
 									<%}%>>기획</option>
-								<option value="12" <%if(pBean.getStatus()==12){  %> selected
+								<option value="12" <%if (pBean.getStatus() == 12) {%> selected
 									<%}%>>이행</option>
-								<option value="13" <%if(pBean.getStatus()==13){  %> selected
+								<option value="13" <%if (pBean.getStatus() == 13) {%> selected
 									<%}%>>통제</option>
-								<option value="14" <%if(pBean.getStatus()==14){  %> selected
+								<option value="14" <%if (pBean.getStatus() == 14) {%> selected
 									<%}%>>종료</option>
 						</select></td>
 					</tr>
@@ -137,6 +139,9 @@ ArrayList<PscheduleBean> allProjectSchedule = (ArrayList<PscheduleBean>) request
 		</form>
 		<button type="submit" class="btn btn-success" style="margin: 5px"
 			onclick="move();">수정</button>
+
+
+
 		<div class="project_schedule">
 			<h3>프로젝트 일정</h3>
 			<button class="btn btn-primary" type="button"
@@ -156,30 +161,33 @@ ArrayList<PscheduleBean> allProjectSchedule = (ArrayList<PscheduleBean>) request
 				</tr>
 
 				<%
-							if (allProjectSchedule.isEmpty()) {
-						%>
+					if (allProjectSchedule.isEmpty()) {
+				%>
 
 				<h2>등록된 프로젝트가 없습니다.</h2>
 
 				<%
-							System.out.println("등록된 일정이 없습니다.");
-							} else {
+					System.out.println("등록된 일정이 없습니다.");
+						} else {
 
-								for (PscheduleBean c : allProjectSchedule) {
-						%>
+							for (PscheduleBean c : allProjectSchedule) {
+				%>
 				<tr>
 					<td><%=c.getProject_Schedule_Identifier()%></td>
 					<td><%=c.getSchedule_Name()%></td>
 					<td><%=c.getContents()%></td>
-					<td><%=c.getStart_Date() %></td>
-					<td><%=c.getEnd_Date() %></td>
+					<td><%=c.getStart_Date()%></td>
+					<td><%=c.getEnd_Date()%></td>
 					<td><%=Schedule_status_map.get(c.getStatus_Process())%></td>
 					<td><%=c.getProgress_Percentage()%>%</td>
 					<td><button type="submit" class="btn btn-success"
 							onclick="location.href='${pageContext.request.contextPath}/ProjectController/ShowProjectSchedulePage?sid=<%=c.getProject_Schedule_Identifier()%>&pid=<%=pBean.getProject_Identifier()%>'">관리</button>
 					</td>
 				</tr>
-				<%}} %>
+				<%
+					}
+						}
+				%>
 
 
 			</table>
@@ -629,9 +637,18 @@ ArrayList<PscheduleBean> allProjectSchedule = (ArrayList<PscheduleBean>) request
 
 			<button class="btn btn-primary" type="button"
 				onclick="location.replace('${pageContext.request.contextPath}/LoginController/main')">메인화면</button>
+
+
 		</div>
 	</div>
 
+	<%
+		}
+		if (((UserBean) session.getAttribute("myUser")).getDi() == 10) {
+	%>
+	<button class="btn btn-danger" style="margin: 5px"
+		onclick="location.replace('${pageContext.request.contextPath}/ProjectController/deleteProject?pid=<%=pBean.getProject_Identifier()%>')">[경영진]프로젝트
+		삭제</button>
 	<%
 		}
 	%>

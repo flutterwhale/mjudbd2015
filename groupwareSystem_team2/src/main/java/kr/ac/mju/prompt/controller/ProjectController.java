@@ -39,25 +39,24 @@ public class ProjectController {
 
 	// 조직도 보기
 	@RequestMapping(value = "/ProjectController/showDirectory", method = RequestMethod.GET)
-	public ModelAndView showDirectory(HttpSession session, Locale locale,HttpServletRequest request) {
+	public ModelAndView showDirectory(HttpSession session, Locale locale, HttpServletRequest request) {
 		logger.info("Welcome home! The client locale is {}.", locale);
 		if (session.getAttribute("session_name") != null) {
 
 			logger.info(session.getAttribute("session_name").toString() + " 해당 사용자가 로그인중입니다. ");
 		}
-		
+
 		HashMap d_list = projectService.getDepartInfo();
-		
-		System.out.println("부서 정보 "+d_list.get(1));
-		
-		
+
+		System.out.println("부서 정보 " + d_list.get(1));
+
 		ModelAndView model = new ModelAndView();
 		model.addObject("depart_list", d_list);
 		model.setViewName("directory"); // jsp 이름 (view이름)
 		return model;
-		
+
 	}
-	      
+
 	// permission == pm 검색
 	@RequestMapping(value = "/ProjectController/showObtainAdd", method = RequestMethod.GET)
 	public ModelAndView showObtainAdd(HttpSession session, HttpServletRequest request) {
@@ -71,17 +70,19 @@ public class ProjectController {
 		return model;// jsp 파일 이름.
 	}
 
-	//부서/직급 정보 변경하기.
+	// 부서/직급 정보 변경하기.
 	@RequestMapping(value = "/ProjectController/moveDepart", method = RequestMethod.POST)
 	public String UpdatePosistion(HttpSession session, HttpServletRequest request) {
-		logger.info("moveDepart:인사이동 pid: " + request.getParameter("uid")+ " po "+request.getParameter("po")+" di "+ request.getParameter("di")+ " po "+request.getParameter("po") +" perm " + request.getParameter("pe"));
-	
-		projectService.moveDepartment(request.getParameter("uid"), request.getParameter("di"), request.getParameter("po"), request.getParameter("pe"));
-		
+		logger.info("moveDepart:인사이동 pid: " + request.getParameter("uid") + " po " + request.getParameter("po") + " di "
+				+ request.getParameter("di") + " po " + request.getParameter("po") + " perm "
+				+ request.getParameter("pe"));
+
+		projectService.moveDepartment(request.getParameter("uid"), request.getParameter("di"),
+				request.getParameter("po"), request.getParameter("pe"));
+
 		return "redirect:memberManagement";
 	}
-	
-	
+
 	// 부서 멤버 리스트 조회하고 부서 트리 화면으로 이동
 	@RequestMapping(value = "/ProjectController/getDepartMemberlist", method = RequestMethod.GET)
 	public ModelAndView getDepartmentMemberList(HttpServletRequest request) {
@@ -531,13 +532,15 @@ public class ProjectController {
 		}
 
 		ModelAndView model = new ModelAndView();
-		ArrayList<userProjectBean> allProjects = projectService.getAllMyProjects(session.getAttribute("session_name").toString());
-		ArrayList<userProjectBean> PastProjects = projectService.getPastMyProjects(session.getAttribute("session_name").toString());
+		ArrayList<userProjectBean> allProjects = projectService
+				.getAllMyProjects(session.getAttribute("session_name").toString());
+		ArrayList<userProjectBean> PastProjects = projectService
+				.getPastMyProjects(session.getAttribute("session_name").toString());
 		model.addObject("AllProject", allProjects);
 		model.addObject("PastProject", PastProjects);
 		model.setViewName("MyProjectTable"); // jsp 이름 (view이름)
 		return model;
-		
+
 	}
 
 	// 부서 트리 화면으로 이동
@@ -649,23 +652,7 @@ public class ProjectController {
 
 	}
 
-	/*
-	 * @RequestMapping(value = "/ProjectController/showProjectSchedule", method
-	 * = RequestMethod.GET) public String showProjectSchedule(HttpSession
-	 * session,HttpServletRequest request){
-	 * 
-	 * logger.info("멤버 인사 관리 화면 ");
-	 * 
-	 * // ArrayList<signupBean> d_list =
-	 * projectService.DepartmentMemberList(request.getParameter("did"));
-	 * 
-	 * 
-	 * 
-	 * return "projectSchedule";
-	 * 
-	 * 
-	 * }
-	 */
+	
 	@RequestMapping(value = "/ProjectController/showUserSchedule", method = RequestMethod.GET)
 	public String showUserSchedule(HttpSession session, HttpServletRequest request) {
 
@@ -713,22 +700,35 @@ public class ProjectController {
 		return "projectEvaluation";
 
 	}
-	//데이터 베이스 테스트
-			@RequestMapping(value = "/ProjectController/showDepart", method = RequestMethod.GET)
-			public String showDepart(HttpSession session, Locale locale, Model model) {
-				logger.info("Welcome home! The client locale is {}.", locale);
-				if (session.getAttribute("session_name") != null) {
 
-					logger.info(session.getAttribute("session_name").toString() + " 해당 사용자가 로그인중입니다. ");
-				}
-				Date date = new Date();
-				DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+	// 데이터 베이스 테스트
+	@RequestMapping(value = "/ProjectController/showDepart", method = RequestMethod.GET)
+	public String showDepart(HttpSession session, Locale locale, Model model) {
+		logger.info("Welcome home! The client locale is {}.", locale);
+		if (session.getAttribute("session_name") != null) {
 
-				String formattedDate = dateFormat.format(date);
+			logger.info(session.getAttribute("session_name").toString() + " 해당 사용자가 로그인중입니다. ");
+		}
+		Date date = new Date();
+		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
 
-				model.addAttribute("serverTime", formattedDate);
+		String formattedDate = dateFormat.format(date);
 
-				return "depart_query";// jsp 파일 이름.
-			}
+		model.addAttribute("serverTime", formattedDate);
 
+		return "depart_query";// jsp 파일 이름.
+	}
+
+	@RequestMapping(value = "/ProjectController/deleteProject", method = RequestMethod.GET)
+	public String deleteProject(HttpSession session, HttpServletRequest request) {
+		logger.info("프로젝트 삭제 ",request.getParameter("pid"));
+
+		projectService.deleteProject(request.getParameter("pid"));
+		
+
+		return "redirect:showProjectTable";
+
+	}
+	
+	
 }

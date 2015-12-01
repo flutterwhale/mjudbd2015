@@ -24,7 +24,6 @@
 		Depart_map.put(13, "총무팀");
 		Depart_map.put(14, "회계팀");
 		Depart_map.put(15, "인사 관리팀");
-		Depart_map.put(16, "연구 개발팀");
 		Depart_map.put(17, "개발팀");
 		Depart_map.put(99, "외부 인력팀");
 		Depart_map.put(0, "가입 대기");
