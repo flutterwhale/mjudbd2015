@@ -40,7 +40,7 @@
         			<span class="icon-bar"></span>
         			<span class="icon-bar"></span>
       			</button>
-      			<a class="navbar-brand" href="${pageContext.request.contextPath}/LoginController/main">GruopwareSystem</a>
+      			<a class="navbar-brand" href="${pageContext.request.contextPath}/LoginController/main">GroupwareSystem</a>
     		</div>
 
     		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -63,18 +63,19 @@
 						<td width="100px">종료 날짜</td>
 						<td width="100px">고객사</td>
 						<td width="100px">위치</td>
-						<td width="200px">내용</td>
 					</tr>
 					<tr align="center">
 						</td>
-						<td><input type="text" name="subject"></td>
+						<td><input type="text" name="subject" style="width: 70%"></td>
 						<td><input type="date" id="start_date" name="start_date"
 							min="${now}" max="2200-12-31" value="<%=now%>"></td>
 						<td><input type="date" id="end_date" name="end_date"
 							min="${now}" max="2200-12-31" value="<%=now%>"></td>
 						<td><input type="text" name="order_company"></td>
 						<td><input type="text" name="location"></td>
-						<td><input type="text" name="contents"></td>
+					</tr>
+					<tr>
+						<td colspan="5"><textarea form="obtain_contents" name="contents" style="width:100%; height:200px"> </textarea></td>
 					</tr>
 				</table>
 			</div>

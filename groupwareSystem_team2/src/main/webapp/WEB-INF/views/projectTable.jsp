@@ -3,6 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@include file="mapper.jsp"%>
+<%@include file="session.jsp"%>
 <%@page import="java.util.*"%>
 <%@ page import="kr.ac.mju.prompt.model.UserInfo"%>
 <%@ page import="kr.ac.mju.prompt.model.projectBean"%>
@@ -57,7 +59,7 @@
 					class="icon-bar"></span>
 			</button>
 			<a class="navbar-brand"
-				href="${pageContext.request.contextPath}/LoginController/main">GruopwareSystem</a>
+				href="${pageContext.request.contextPath}/LoginController/main">GroupwareSystem</a>
 		</div>
 
 		<div class="collapse navbar-collapse"
@@ -115,7 +117,7 @@
 						<td width="200px"><%=c.getDispatch_Location()%></td>
 						<td width="200px"><a
 							href='${pageContext.request.contextPath}/LoginController/retrieveUser?id=<%=c.getProjectmanager_Identifier()%>'><%=c.getProjectmanager_Identifier()%></a>/<%=c.getPM_name()%></td>
-						<td width="180px"><%=c.getStatus()%></td>
+						<td width="180px"><%=Project_status_map.get(c.getStatus())%></td>
 					</tr>
 
 				</form>
@@ -168,7 +170,8 @@
 						<td width="200px"><a
 							href='${pageContext.request.contextPath}/LoginController/retrieveUser?id=<%=c.getProjectmanager_Identifier()%>'><%=c.getProjectmanager_Identifier()%></a>/<%=c.getPM_name()%></td>
 						<td width="200px"><%=c.getProject_Evaluation()%></td>
-						<td width="180px"><%=c.getStatus()%></td>
+						<td width="180px"><%=Project_status_map.get(c.getStatus())%></td>
+
 					</tr>
 
 				</form>

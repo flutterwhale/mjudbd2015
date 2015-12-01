@@ -109,7 +109,7 @@
 					class="icon-bar"></span>
 			</button>
 			<a class="navbar-brand"
-				href="${pageContext.request.contextPath}/LoginController/main">GruopwareSystem</a>
+				href="${pageContext.request.contextPath}/LoginController/main">GroupwareSystem</a>
 		</div>
 
 		<div class="collapse navbar-collapse"

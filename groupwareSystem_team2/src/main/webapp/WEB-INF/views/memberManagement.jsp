@@ -52,7 +52,7 @@
 					class="icon-bar"></span>
 			</button>
 			<a class="navbar-brand"
-				href="${pageContext.request.contextPath}/LoginController/main">GruopwareSystem</a>
+				href="${pageContext.request.contextPath}/LoginController/main">GroupwareSystem</a>
 		</div>
 
 		<div class="collapse navbar-collapse"
@@ -97,36 +97,39 @@
 						href='${pageContext.request.contextPath}/LoginController/retrieveUser?id=<%=c.getId()%>'><%=c.getId()%></a><input type="hidden" name="uid"
 						value="<%=c.getId()%>"></td>
 					<td width="200px"><%=c.getName()%></td>
-					<td width="200px"><%=c.getPosition_Name()%><select name="po"
+					<td width="200px"><select name="po"
 						class="form-control">
-							<option value="10">사장</option>
-							<option value="11">부사장</option>
-							<option value="12">상무</option>
-							<option value="13">이사</option>
-							<option value="14">부장</option>
-							<option value="15">차장</option>
-							<option value="16">과장</option>
-							<option value="17">대리</option>
-							<option value="18">주임</option>
-							<option value="19">사원</option>
+							<option value="10"<%if(c.getPosition_Name()==10){  %>selected <%}%>>사장</option>
+							<option value="11"<%if(c.getPosition_Name()==11){  %>selected <%}%>>부사장</option>
+							<option value="12"<%if(c.getPosition_Name()==12){  %>selected <%}%>>상무</option>
+							<option value="13"<%if(c.getPosition_Name()==13){  %>selected <%}%>>이사</option>
+							<option value="14"<%if(c.getPosition_Name()==14){  %>selected <%}%>>부장</option>
+							<option value="15"<%if(c.getPosition_Name()==15){  %>selected <%}%>>차장</option>
+							<option value="16"<%if(c.getPosition_Name()==16){  %>selected <%}%>>과장</option>
+							<option value="17"<%if(c.getPosition_Name()==17){  %>selected <%}%>>대리</option>
+							<option value="18"<%if(c.getPosition_Name()==18){  %>selected <%}%>>주임</option>
+							<option value="19"<%if(c.getPosition_Name()==19){  %>selected <%}%>>사원</option>
+							<option value="99"<%if(c.getPosition_Name()==99){  %>selected <%}%>>프리랜서</option>
+							<option value="0"<%if(c.getPosition_Name()==0){  %>selected <%}%>>가입대기</option>
 					</select></td>
-					<td width="200px"><%=c.getDi()%><select name="di"
+					<td width="200px"><select name="di"
 						class="form-control">
-							<option value="10">영업부</option>
-							<option value="11">마케팅팀</option>
-							<option value="12">경영지원부</option>
-							<option value="13">총무팀</option>
-							<option value="14">회계팀</option>
-							<option value="15">인사관리팀</option>
-							<option value="16">연구 개발팀</option>
-							<option value="17">개발팀</option>
+							<option value="10"<%if(c.getDi()==10){  %>selected <%}%>>영업부</option>
+							<option value="11"<%if(c.getDi()==11){  %>selected <%}%>>마케팅팀</option>
+							<option value="12"<%if(c.getDi()==12){  %>selected <%}%>>경영지원부</option>
+							<option value="13"<%if(c.getDi()==13){  %>selected <%}%>>총무팀</option>
+							<option value="14"<%if(c.getDi()==14){  %>selected <%}%>>회계팀</option>
+							<option value="15"<%if(c.getDi()==15){  %>selected <%}%>>인사관리팀</option>
+							<option value="17"<%if(c.getDi()==17){  %>selected <%}%>>개발팀</option>
+							<option value="99"<%if(c.getDi()==99){  %>selected <%}%>>외부인력팀</option>
+							<option value="0"<%if(c.getDi()==0){  %>selected <%}%>>가입대기팀</option>
 					</select></td>
-					<td width="200px"><%=c.getPermission()%><select name="pe"
+					<td width="200px"><select name="pe"
 						class="form-control">
-							<option value="10">경영진</option>
-							<option value="11">PM</option>
-							<option value="12">PL</option>
-							<option value="13">프로젝트 투입 직원</option>
+							<option value="11"<%if(c.getPermission()==11){  %>selected <%}%>>PM</option>
+							<option value="12"<%if(c.getPermission()==12){  %>selected <%}%>>PL</option>
+							<option value="13"<%if(c.getPermission()==13){  %>selected <%}%>>프로젝트 투입 직원</option>
+							<option value="14"<%if(c.getPermission()==14){  %>selected <%}%>>PM/PL</option>
 					</select></td>
 					<td> <%=c.getIsFreeLancer()==null?"일반":"개발자" %></td>
 					<td width="200px"><button class="btn btn-default"
@@ -174,37 +177,39 @@
 						href='${pageContext.request.contextPath}/LoginController/retrieveUser?id=<%=c.getId()%>'><%=c.getId()%></a><input type="hidden" name="uid"
 						value="<%=c.getId()%>"></td>
 					<td width="200px"><%=c.getName()%></td>
-					<td width="200px"><%=c.getPosition_Name()%><select name="po"
+					<td width="200px"><select name="po"
 						class="form-control">
-							<option value="10">사장</option>
-							<option value="11">부사장</option>
-							<option value="12">상무</option>
-							<option value="13">이사</option>
-							<option value="14">부장</option>
-							<option value="15">차장</option>
-							<option value="16">과장</option>
-							<option value="17">대리</option>
-							<option value="18">주임</option>
-							<option value="19">사원</option>
-							<option value="99">프리랜서</option>
+							<option value="10"<%if(c.getPosition_Name()==10){  %>selected <%}%>>사장</option>
+							<option value="11"<%if(c.getPosition_Name()==11){  %>selected <%}%>>부사장</option>
+							<option value="12"<%if(c.getPosition_Name()==12){  %>selected <%}%>>상무</option>
+							<option value="13"<%if(c.getPosition_Name()==13){  %>selected <%}%>>이사</option>
+							<option value="14"<%if(c.getPosition_Name()==14){  %>selected <%}%>>부장</option>
+							<option value="15"<%if(c.getPosition_Name()==15){  %>selected <%}%>>차장</option>
+							<option value="16"<%if(c.getPosition_Name()==16){  %>selected <%}%>>과장</option>
+							<option value="17"<%if(c.getPosition_Name()==17){  %>selected <%}%>>대리</option>
+							<option value="18"<%if(c.getPosition_Name()==18){  %>selected <%}%>>주임</option>
+							<option value="19"<%if(c.getPosition_Name()==19){  %>selected <%}%>>사원</option>
+							<option value="99"<%if(c.getPosition_Name()==99){  %>selected <%}%>>프리랜서</option>
+							<option value="0"<%if(c.getPosition_Name()==0){  %>selected <%}%>>가입대기</option>
 					</select></td>
-					<td width="200px"><%=c.getDi()%><select name="di"
+					<td width="200px"><select name="di"
 						class="form-control">
-							<option value="10">영업부</option>
-							<option value="11">마케팅팀</option>
-							<option value="12">경영지원부</option>
-							<option value="13">총무팀</option>
-							<option value="14">회계팀</option>
-							<option value="15">인사관리팀</option>
-							<option value="16">연구 개발팀</option>
-							<option value="17">개발팀</option>
+							<option value="10"<%if(c.getDi()==10){  %>selected <%}%>>영업부</option>
+							<option value="11"<%if(c.getDi()==11){  %>selected <%}%>>마케팅팀</option>
+							<option value="12"<%if(c.getDi()==12){  %>selected <%}%>>경영지원부</option>
+							<option value="13"<%if(c.getDi()==13){  %>selected <%}%>>총무팀</option>
+							<option value="14"<%if(c.getDi()==14){  %>selected <%}%>>회계팀</option>
+							<option value="15"<%if(c.getDi()==15){  %>selected <%}%>>인사관리팀</option>
+							<option value="17"<%if(c.getDi()==17){  %>selected <%}%>>개발팀</option>
+							<option value="99"<%if(c.getDi()==99){  %>selected <%}%>>외부인력팀</option>
+							<option value="0"<%if(c.getDi()==0){  %>selected <%}%>>가입대기팀</option>
 					</select></td>
-					<td width="200px"><%=c.getPermission()%><select name="pe"
+					<td width="200px"><select name="pe"
 						class="form-control">
-							<option value="10">경영진</option>
-							<option value="11">PM</option>
-							<option value="12">PL</option>
-							<option value="13">프로젝트 투입 직원</option>
+							<option value="11"<%if(c.getPermission()==11){  %>selected <%}%>>PM</option>
+							<option value="12"<%if(c.getPermission()==12){  %>selected <%}%>>PL</option>
+							<option value="13"<%if(c.getPermission()==13){  %>selected <%}%>>프로젝트 투입 직원</option>
+							<option value="14"<%if(c.getPermission()==14){  %>selected <%}%>>PM/PL</option>
 					</select></td>
 					<td> <%if(c.getIsFreeLancer().equals("common")){ %>개발자<% }else if(c.getIsFreeLancer().equals("FreeLancer")){%>프리랜서<%}else{ %>일반<%} %></td>
 					<td width="200px"><button class="btn btn-default"

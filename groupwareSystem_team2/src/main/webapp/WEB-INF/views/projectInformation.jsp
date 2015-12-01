@@ -57,7 +57,7 @@ ArrayList<PscheduleBean> allProjectSchedule = (ArrayList<PscheduleBean>) request
 					class="icon-bar"></span>
 			</button>
 			<a class="navbar-brand"
-				href="${pageContext.request.contextPath}/LoginController/main">GruopwareSystem</a>
+				href="${pageContext.request.contextPath}/LoginController/main">GroupwareSystem</a>
 		</div>
 
 		<div class="collapse navbar-collapse"
@@ -90,9 +90,12 @@ ArrayList<PscheduleBean> allProjectSchedule = (ArrayList<PscheduleBean>) request
 							value="<%=pBean.getProject_Identifier()%>"></td>
 					</tr>
 					<tr>
-						<th>프로젝트 일정</th>
-						<td>시작 날짜<%=pBean.getStart_Date()%></td>
-						<td>종료 날짜<input type="date" id="end_date" name="end_date"
+						<th>프로젝트 시작 날짜</th>
+						<td><%=pBean.getStart_Date()%></td>
+					</tr>
+					<tr>
+						<th>프로젝트 종료 날짜</th>
+						<td><input type="date" id="end_date" name="end_date"
 							min="${now}" max="2200-12-31" value="<%=pBean.getEnd_Date()%>"></td>
 					</tr>
 					<tr>
@@ -106,8 +109,18 @@ ArrayList<PscheduleBean> allProjectSchedule = (ArrayList<PscheduleBean>) request
 					</tr>
 					<tr>
 						<th>진행 상태</th>
-						<td><input type="text" name="status"
-							value="<%=pBean.getStatus()%>"></td>
+						<td><select name="status" style="width:'200px'">
+								<option value="10" <%if(pBean.getStatus()==10){  %> selected
+									<%}%>>착수</option>
+								<option value="11" <%if(pBean.getStatus()==11){  %> selected
+									<%}%>>기획</option>
+								<option value="12" <%if(pBean.getStatus()==12){  %> selected
+									<%}%>>이행</option>
+								<option value="13" <%if(pBean.getStatus()==13){  %> selected
+									<%}%>>통제</option>
+								<option value="14" <%if(pBean.getStatus()==14){  %> selected
+									<%}%>>종료</option>
+						</select></td>
 					</tr>
 					<tr>
 						<th>파견 지역</th>
@@ -132,23 +145,23 @@ ArrayList<PscheduleBean> allProjectSchedule = (ArrayList<PscheduleBean>) request
 			<table class="table table-striped table-hover" border="1"
 				width="920px">
 				<tr>
-						<th width="70px">schedule_ID</th>
-						<td width="200px">일정 이름</td>
-						<td width="200px">내용</td>
-						<td width="200px">시작일</td>
-						<td width="200px">종료일</td>
-						<td width="200px">상태</td>
-						<td width="200px">완료율</td>
-						<td width="200px">관리</td>
+					<th width="70px">schedule_ID</th>
+					<td width="200px">일정 이름</td>
+					<td width="200px">내용</td>
+					<td width="200px">시작일</td>
+					<td width="200px">종료일</td>
+					<td width="200px">상태</td>
+					<td width="200px">완료율</td>
+					<td width="200px">관리</td>
 				</tr>
-				
+
 				<%
 							if (allProjectSchedule.isEmpty()) {
 						%>
 
-						<h2>등록된 프로젝트가 없습니다.</h2>
+				<h2>등록된 프로젝트가 없습니다.</h2>
 
-						<%
+				<%
 							System.out.println("등록된 일정이 없습니다.");
 							} else {
 
@@ -156,19 +169,19 @@ ArrayList<PscheduleBean> allProjectSchedule = (ArrayList<PscheduleBean>) request
 						%>
 				<tr>
 					<td><%=c.getProject_Schedule_Identifier()%></td>
-						<td><%=c.getSchedule_Name()%></td>
-						<td><%=c.getContents()%></td>
-						<td><%=c.getStart_Date() %></td>
-						<td><%=c.getEnd_Date() %></td>
-						<td><%=c.getStatus_Process()%></td>
-						<td><%=c.getProgress_Percentage()%>%</td>
-						<td><button type="submit" class="btn btn-success"
-				onclick="location.href='${pageContext.request.contextPath}/ProjectController/ShowProjectSchedulePage?sid=<%=c.getProject_Schedule_Identifier()%>&pid=<%=pBean.getProject_Identifier()%>'">관리</button>
-							</td>
-							</tr>
-						<%}} %>
-						
-				
+					<td><%=c.getSchedule_Name()%></td>
+					<td><%=c.getContents()%></td>
+					<td><%=c.getStart_Date() %></td>
+					<td><%=c.getEnd_Date() %></td>
+					<td><%=Schedule_status_map.get(c.getStatus_Process())%></td>
+					<td><%=c.getProgress_Percentage()%>%</td>
+					<td><button type="submit" class="btn btn-success"
+							onclick="location.href='${pageContext.request.contextPath}/ProjectController/ShowProjectSchedulePage?sid=<%=c.getProject_Schedule_Identifier()%>&pid=<%=pBean.getProject_Identifier()%>'">관리</button>
+					</td>
+				</tr>
+				<%}} %>
+
+
 			</table>
 			<h3>개인 일정</h3>
 			<table class="table table-striped table-hover" border="1"
@@ -193,8 +206,9 @@ ArrayList<PscheduleBean> allProjectSchedule = (ArrayList<PscheduleBean>) request
 		</div>
 		<div class="project_user">
 			<h3>투입 인력</h3>
-			<button class="btn btn-primary" type="button" onclick="location.href='${pageContext.request.contextPath}/ProjectController/showProjectMember'">[PM 전용] 인원 추가
-				버튼</button>
+			<button class="btn btn-primary" type="button"
+				onclick="location.href='${pageContext.request.contextPath}/ProjectController/showProjectMember'">[PM
+				전용] 인원 추가 버튼</button>
 			<table class="table table-striped table-hover" border="1"
 				width="920px">
 				<tr>
@@ -238,20 +252,20 @@ ArrayList<PscheduleBean> allProjectSchedule = (ArrayList<PscheduleBean>) request
 				</tr>
 			</table>
 		</div>
-		  <div class="project_evaluation">
-         <h3>프로젝트 평가</h3>
-         <table class="table table-striped table-hover" border="1"
-            width="700px">
-            <tr align="center">
-               <th width="700px">프로젝트 평가(완료 상태 일때)</th>
-            </tr>
-            
+		<div class="project_evaluation">
+			<h3>프로젝트 평가</h3>
+			<table class="table table-striped table-hover" border="1"
+				width="700px">
+				<tr align="center">
+					<th width="700px">프로젝트 평가(완료 상태 일때)</th>
+				</tr>
 
-         </table>
-           <button class="btn btn-primary" type="button"
-            onclick="location.href='${pageContext.request.contextPath}/ProjectController/showProjectEvaluation'">[PM
-            전용] 프로젝트 평가 버튼</button>
-      </div>
+
+			</table>
+			<button class="btn btn-primary" type="button"
+				onclick="location.href='${pageContext.request.contextPath}/ProjectController/showProjectEvaluation'">[PM
+				전용] 프로젝트 평가 버튼</button>
+		</div>
 		<div class="project_code">
 			<h3>프로젝트 산출물</h3>
 			<table class="table table-striped table-hover" border="1"
@@ -369,8 +383,9 @@ ArrayList<PscheduleBean> allProjectSchedule = (ArrayList<PscheduleBean>) request
 					<td></td>
 				</tr>
 			</table>
-			<button class="btn btn-primary" type="button" onclick="location.href='${pageContext.request.contextPath}/ProjectController/showUserSchedule'">[PL 전용]개인 일정
-				추가</button>
+			<button class="btn btn-primary" type="button"
+				onclick="location.href='${pageContext.request.contextPath}/ProjectController/showUserSchedule'">[PL
+				전용]개인 일정 추가</button>
 		</div>
 		<div class="project_user">
 			<h3>투입 인력</h3>

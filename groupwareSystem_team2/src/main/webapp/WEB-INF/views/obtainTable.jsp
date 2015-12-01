@@ -3,7 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	<%@include file="session.jsp"%>
+<%@include file="mapper.jsp"%>
+<%@include file="session.jsp"%>
 <%@ page import="kr.ac.mju.prompt.model.UserInfo"%>
 <%@ page import="kr.ac.mju.prompt.model.UserBean"%>
 <%@page import="java.util.*"%>
@@ -33,7 +34,7 @@
         			<span class="icon-bar"></span>
         			<span class="icon-bar"></span>
       			</button>
-      			<a class="navbar-brand" href="${pageContext.request.contextPath}/LoginController/main">GruopwareSystem</a>
+      			<a class="navbar-brand" href="${pageContext.request.contextPath}/LoginController/main">GroupwareSystem</a>
     		</div>
 
     		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -80,7 +81,7 @@
 					<td><%=c.getOrder_Company()%></td>
 					<td><%=c.getLocation()%></td>
 					<td><a href='${pageContext.request.contextPath}/LoginController/retrieveUser?id=<%=c.getWriter_User()%>'><%=c.getWriter_User()%></a><br/><%=c.getWriter_name() %></td>
-					<td><%=c.getPresent_Status() %></td>
+					<td><%=Obtain_status_map.get(c.getPresent_Status())%></td>
 					<td> 
 					
 					<% 

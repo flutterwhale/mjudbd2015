@@ -115,7 +115,7 @@ public class ProjectController {
 	 */
 
 	// 제안서 삭제 후 프로젝트 추가하기 -> 제안서 리스트 화면으로 이동
-	@RequestMapping(value = "/ProjectController/newProject", method = RequestMethod.GET)
+	@RequestMapping(value = "/ProjectController/newProject", method = RequestMethod.POST)
 	public String InsertProject(HttpSession session, HttpServletRequest request) {
 		logger.info("InsertProject:프로젝트 추가하기 pid: " + request.getParameter("pid") + " oid : "
 				+ request.getParameter("oid"));

@@ -41,7 +41,27 @@
 		Position_map.put(19, "사원");
 		Position_map.put(99, "프리랜서");
 		Position_map.put(0, "가입 대기");
-		
+		HashMap<Integer ,String> Permission_map = new HashMap<Integer ,String>();
+		Permission_map.put(11, "PM");
+		Permission_map.put(12, "PL");
+		Permission_map.put(13, "프로젝트 투입 가능 직원");
+		Permission_map.put(14, "PM/PL");
+		HashMap<Integer ,String> Project_status_map = new HashMap<Integer ,String>();
+		Project_status_map.put(10, "착수");
+		Project_status_map.put(11, "기획");
+		Project_status_map.put(12, "이행");
+		Project_status_map.put(13, "통제");
+		Project_status_map.put(14, "종료");
+		HashMap<Integer ,String> Schedule_status_map = new HashMap<Integer ,String>();
+		Schedule_status_map.put(10, "시작 전");
+		Schedule_status_map.put(11, "진행");
+		Schedule_status_map.put(12, "완료");
+		Schedule_status_map.put(13, "보류");
+		Schedule_status_map.put(14, "딜레이");
+		HashMap<Integer ,String> Obtain_status_map = new HashMap<Integer ,String>();
+		Obtain_status_map.put(10, "제안");
+		Obtain_status_map.put(11, "취소");
+		Obtain_status_map.put(12, "수주");
 	%>
 
 </body>
