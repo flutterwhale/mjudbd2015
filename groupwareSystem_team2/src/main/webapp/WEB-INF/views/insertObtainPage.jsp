@@ -21,42 +21,58 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<link rel="stylesheet" href="http://bootswatch.com/flatly/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<link rel="stylesheet"
+	href="http://bootswatch.com/flatly/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script
+	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+	function dateChk() {
+		var startDate = $('#start_date').val();
+		var endDate = $('#end_date').val();
+		if (startDate > endDate) {
+			alert("종료일이 시작일보다 빠릅니다");
+		} else {
+			document.obtain_contents.submit();
+			return true;
+		}
+	}
+</script>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>obtain</title>
-<script
-	src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"
-	type="text/javascript"></script>
+
 </head>
 <body>
 	<nav class="navbar navbar-default">
-  		<div class="container-fluid">
-    		<div class="navbar-header">
-      			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-        			<span class="sr-only">Toggle navigation</span>
-        			<span class="icon-bar"></span>
-        			<span class="icon-bar"></span>
-        			<span class="icon-bar"></span>
-      			</button>
-      			<a class="navbar-brand" href="${pageContext.request.contextPath}/LoginController/main">GroupwareSystem</a>
-    		</div>
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed"
+				data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span> <span
+					class="icon-bar"></span> <span class="icon-bar"></span> <span
+					class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand"
+				href="${pageContext.request.contextPath}/LoginController/main">GroupwareSystem</a>
+		</div>
 
-    		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      			<ul class="nav navbar-nav navbar-right">
-        			<li><a href="https://tahiti.mju.ac.kr/moodle/">메뉴</a></li>
-      			</ul>
-    		</div>
-  		</div>
+		<div class="collapse navbar-collapse"
+			id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="https://tahiti.mju.ac.kr/moodle/">메뉴</a></li>
+			</ul>
+		</div>
+	</div>
 	</nav>
-	<div class="obtain_wrapper" style="margin:10px 40px;">
+	<div class="obtain_wrapper" style="margin: 10px 40px;">
 		<h1>제안서 정보</h1>
 		<form name="obtain_contents"
 			action="${pageContext.request.contextPath}/ProjectController/insertObtain"
 			method="post">
 			<div class="obtain_information">
-				<table class="table table-striped table-hover" border="1" width="600px">
+				<table class="table table-striped table-hover" border="1"
+					width="600px">
 					<tr align="center">
 						<td width="100px">제목</td>
 						<td width="100px">시작 날짜</td>
@@ -75,16 +91,16 @@
 						<td><input type="text" name="location"></td>
 					</tr>
 					<tr>
-						<td colspan="5"><textarea name="contents" style="width:100%; height:200px"> </textarea></td>
+						<td colspan="5"><textarea name="contents"
+								style="width: 100%; height: 200px"> </textarea></td>
 					</tr>
 				</table>
 			</div>
-
-
-			<button class="btn btn-primary" type="submit">등록</button>
+			<button type="submit" class="btn btn-success" style="margin: 5px"
+						onclick="dateChk();return false">등록</button>
 		</form>
 
-		<div class="obtain_Table_button" style="padding:10px 0px;">
+		<div class="obtain_Table_button" style="padding: 10px 0px;">
 			<button type="button" class="btn btn-primary"
 				onclick="location.href='${pageContext.request.contextPath}/ProjectController/showObtainTable'">수주
 				목록</button>

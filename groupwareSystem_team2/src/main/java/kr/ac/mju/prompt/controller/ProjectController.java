@@ -1,5 +1,6 @@
 package kr.ac.mju.prompt.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -23,6 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 import kr.ac.mju.prompt.model.PscheduleBean;
 import kr.ac.mju.prompt.model.UscheduleBean;
 import kr.ac.mju.prompt.model.UserBean;
+import kr.ac.mju.prompt.model.UserInfo;
 import kr.ac.mju.prompt.model.obtainBean;
 import kr.ac.mju.prompt.model.projectBean;
 import kr.ac.mju.prompt.model.signupBean;
@@ -45,19 +47,19 @@ public class ProjectController {
 
 			logger.info(session.getAttribute("session_name").toString() + " 해당 사용자가 로그인중입니다. ");
 		}
-		
+
 		HashMap d_list = projectService.getDepartInfo();
-		
+
 		System.out.println("부서 정보 "+d_list.get(1));
-		
-		
+
+
 		ModelAndView model = new ModelAndView();
 		model.addObject("depart_list", d_list);
 		model.setViewName("directory"); // jsp 이름 (view이름)
 		return model;
-		
+
 	}
-	      
+
 	// permission == pm 검색
 	@RequestMapping(value = "/ProjectController/showObtainAdd", method = RequestMethod.GET)
 	public ModelAndView showObtainAdd(HttpSession session, HttpServletRequest request) {
@@ -75,13 +77,13 @@ public class ProjectController {
 	@RequestMapping(value = "/ProjectController/moveDepart", method = RequestMethod.POST)
 	public String UpdatePosistion(HttpSession session, HttpServletRequest request) {
 		logger.info("moveDepart:인사이동 pid: " + request.getParameter("uid")+ " po "+request.getParameter("po")+" di "+ request.getParameter("di")+ " po "+request.getParameter("po") +" perm " + request.getParameter("pe"));
-	
+
 		projectService.moveDepartment(request.getParameter("uid"), request.getParameter("di"), request.getParameter("po"), request.getParameter("pe"));
-		
+
 		return "redirect:memberManagement";
 	}
-	
-	
+
+
 	// 부서 멤버 리스트 조회하고 부서 트리 화면으로 이동
 	@RequestMapping(value = "/ProjectController/getDepartMemberlist", method = RequestMethod.GET)
 	public ModelAndView getDepartmentMemberList(HttpServletRequest request) {
@@ -448,7 +450,7 @@ public class ProjectController {
 		psB.setSchedule_Name(request.getParameter("Schedule_Name"));
 		psB.setProgress_Percentage(Integer.parseInt(request.getParameter("Progress_Percentage")));
 		psB.setStatus_Process(Integer.parseInt(request.getParameter("Status_Process")));// 기본
-																						// 값
+		// 값
 		psB.setStart_Date((java.sql.Date) sqlStartDate);
 		psB.setEnd_Date((java.sql.Date) sqlEndDate);
 		psB.setContents(request.getParameter("contents"));
@@ -507,7 +509,7 @@ public class ProjectController {
 		psB.setSchedule_Name(request.getParameter("Schedule_Name"));
 		psB.setProgress_Percentage(Integer.parseInt(request.getParameter("Progress_Percentage")));
 		psB.setStatus_Process(Integer.parseInt(request.getParameter("Status_Process")));// 기본
-																						// 값
+		// 값
 		psB.setStart_Date((java.sql.Date) sqlStartDate);
 		psB.setEnd_Date((java.sql.Date) sqlEndDate);
 		psB.setContents(request.getParameter("contents"));
@@ -537,7 +539,7 @@ public class ProjectController {
 		model.addObject("PastProject", PastProjects);
 		model.setViewName("MyProjectTable"); // jsp 이름 (view이름)
 		return model;
-		
+
 	}
 
 	// 부서 트리 화면으로 이동
@@ -714,21 +716,22 @@ public class ProjectController {
 
 	}
 	//데이터 베이스 테스트
-			@RequestMapping(value = "/ProjectController/showDepart", method = RequestMethod.GET)
-			public String showDepart(HttpSession session, Locale locale, Model model) {
-				logger.info("Welcome home! The client locale is {}.", locale);
-				if (session.getAttribute("session_name") != null) {
+	@RequestMapping(value = "/ProjectController/showDepart", method = RequestMethod.GET)
+	public String showDepart(HttpSession session, Locale locale, Model model) {
+		logger.info("Welcome home! The client locale is {}.", locale);
+		if (session.getAttribute("session_name") != null) {
 
-					logger.info(session.getAttribute("session_name").toString() + " 해당 사용자가 로그인중입니다. ");
-				}
-				Date date = new Date();
-				DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+			logger.info(session.getAttribute("session_name").toString() + " 해당 사용자가 로그인중입니다. ");
+		}
+		Date date = new Date();
+		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
 
-				String formattedDate = dateFormat.format(date);
+		String formattedDate = dateFormat.format(date);
 
-				model.addAttribute("serverTime", formattedDate);
+		model.addAttribute("serverTime", formattedDate);
 
-				return "depart_query";// jsp 파일 이름.
-			}
+		return "depart_query";// jsp 파일 이름.
+	}
+	
 
 }

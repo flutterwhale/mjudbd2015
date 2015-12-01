@@ -32,10 +32,16 @@
 <title>obtain</title>
 <script type="text/javascript">
 	function move() {
-		if (confirm('수정하시겠습니까?')) {
+		var startDate = $('#start_date').val();
+		var endDate = $('#end_date').val();
+		if (startDate > endDate) {
+			alert("종료일이 시작일보다 빠릅니다");
+		} else if (confirm('수정하시겠습니까?')) {
 			document.frm.submit();
+			return true;
 		}
 	}
+
 	function del() {
 		if (confirm('삭제하시겠습니까?')) {
 			document.frm2.submit();
@@ -121,7 +127,7 @@
 				</table>
 				<div class="main_button" style="float: right">
 					<button type="submit" class="btn btn-success" style="margin: 5px"
-						onclick="move();">수정</button>
+						onclick="move();return false">수정</button>
 			</form>
 			<form name='frm2' class="col-sm-6"
 				action='${pageContext.request.contextPath}/ProjectController/deleteObtainPage'

@@ -37,11 +37,16 @@ ArrayList<PscheduleBean> allProjectSchedule = (ArrayList<PscheduleBean>) request
 	String now = sdf.format(new Date());
 %>
 <script type="text/javascript">
-	function move() {
-		if (confirm('수정하시겠습니까?')) {
-			document.frm1.submit();
-		}
+function move() {
+	var startDate = $('#start_date').val();
+	var endDate = $('#end_date').val();
+	if (startDate > endDate) {
+		alert("종료일이 시작일보다 빠릅니다");
+	} else if(confirm('수정하시겠습니까?')) {
+		document.frm1.submit();
+		return true;
 	}
+}
 </script>
 
 </head>
@@ -91,7 +96,8 @@ ArrayList<PscheduleBean> allProjectSchedule = (ArrayList<PscheduleBean>) request
 					</tr>
 					<tr>
 						<th>프로젝트 시작 날짜</th>
-						<td><%=pBean.getStart_Date()%></td>
+						<td><input type="hidden" id="start_date" name="start_date"
+							min="${now}" max="2200-12-31" value="<%=pBean.getStart_Date()%>"><%=pBean.getStart_Date()%></td>
 					</tr>
 					<tr>
 						<th>프로젝트 종료 날짜</th>
@@ -136,7 +142,7 @@ ArrayList<PscheduleBean> allProjectSchedule = (ArrayList<PscheduleBean>) request
 			</div>
 		</form>
 		<button type="submit" class="btn btn-success" style="margin: 5px"
-			onclick="move();">수정</button>
+			onclick="move();return false">수정</button>
 		<div class="project_schedule">
 			<h3>프로젝트 일정</h3>
 			<button class="btn btn-primary" type="button"
