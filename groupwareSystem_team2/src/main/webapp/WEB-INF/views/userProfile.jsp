@@ -7,7 +7,8 @@
 	pageEncoding="UTF-8"%>
 <%@include file="mapper.jsp"%>
 <%@include file="session.jsp"%>
-
+<%@ page import="kr.ac.mju.prompt.model.UserInfo"%>
+<%@ page import="kr.ac.mju.prompt.model.UserBean"%>
 <%@page import="java.util.*"%>
 <%
 	//ArrayList myLectures = (ArrayList) request.getAttribute("MyLectures");
@@ -36,28 +37,6 @@
 		System.out.println(showBean.getId());
 		System.out.println("session ID " + sID + " cat "+ sUinfo.getMyUser().getCat());
 	%>
-	
-	<nav class="navbar navbar-default">
-	        <div class="container-fluid">
-	          <div class="navbar-header">
-	               <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-	                 <span class="sr-only">Toggle navigation</span>
-	                 <span class="icon-bar"></span>
-	                 <span class="icon-bar"></span>
-	                 <span class="icon-bar"></span>
-	               </button>
-	               <a class="navbar-brand" href="${pageContext.request.contextPath}/LoginController/main">GroupwareSystem</a>
-	          </div>
-	
-	          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-	               <ul class="nav navbar-nav navbar-right">
-	                 <li><a href="https://tahiti.mju.ac.kr/moodle/"></a></li>
-	               </ul>
-	          </div>
-	        </div>
-	   </nav>
-	  
-			
 		<form class="form-horizontal" onSubmit="return check()" method="POST" name="myform">
 			<fieldset>
 		         <legend><label class="col-sm-3 control-label"><%=showBean.getId() %>/ <%=showBean.getName() %> <br>직원 정보 조회</label></legend>
@@ -225,7 +204,9 @@
 					<% }else{ %>
 						
 					<% } %>
-					<button type="submit" class="btn btn-primary">정보 수정하기</button>
+					<%if(showBean.getId()==Integer.parseInt(sID)||((UserBean)session.getAttribute("myUser")).getDi()==15){ %>
+						<button type="submit" class="btn btn-primary">정보 수정하기</button>
+					<%} %>
 				</form>
 				</div>
 				<div class="col-sm-1">

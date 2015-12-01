@@ -1,6 +1,7 @@
 package kr.ac.mju.prompt.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -211,7 +212,10 @@ public class ProjectService {
 		return projectDAO.moveDepart(id,di,po,pe);
 	}
 
-	
+	public HashMap getDepartInfo() {
+		// TODO Auto-generated method stub
+		return projectDAO.getDepartInfo();
+	}
 	
 
 }

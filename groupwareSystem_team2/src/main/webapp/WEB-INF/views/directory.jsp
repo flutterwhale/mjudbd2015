@@ -13,16 +13,20 @@
 <%@page import="org.apache.commons.beanutils.BeanUtils"%>
 <jsp:useBean id="loginbean" class="kr.ac.mju.prompt.model.UserBean"
 	scope="session" />
-
+<!-- http://localhost:8080/mju/LoginController/retrieveUser?id=60102339 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<link rel="stylesheet"
-	href="http://bootswatch.com/flatly/bootstrap.min.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script
-	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/jquery.treeview.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/screen.css" />
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/jquery.cookie.js"></script>
+<script src="${pageContext.request.contextPath}/resources/jquery.treeview.js" type="text/javascript"></script>
+<script src="${pageContext.request.contextPath}/resources/jquery.treeview.edit.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="http://bootswatch.com/flatly/bootstrap.min.css">
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
 <%
 	response.setHeader("pragma", "no-cache");
@@ -31,33 +35,49 @@
 %>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>회사 인명부</title>
-<script language="JavaScript">
-	var xmlHttp;
+<script>
+var request;
+function sendInfo()
+{
+var v=document.vinform.t1.value;
+var url="${pageContext.request.contextPath}/ProjectController/showDepart?val="+v;
 
-	function createXMLHttpRequest() {
-		if (window.ActiveXObject) {
-			xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
-		} else if (window.XMLHttpRequest) {
-			xmlHttp = new XMLHttpRequest();
-		}
-	}
+if(window.XMLHttpRequest){
+request=new XMLHttpRequest();
+}
+else if(window.ActiveXObject){
+request=new ActiveXObject("Microsoft.XMLHTTP");
+}
 
-	function show() {
-		createXMLHttpRequest();
-		var url = "directoryRightside.jsp";
-		xmlHttp.onreadystatechange = loader;
-		xmlHttp.open("GET", url, true);
-		xmlHttp.send(null);
-	}
+try
+{
+request.onreadystatechange=getInfo;
+request.open("GET",url,true);
+request.send();
+}
+catch(e)
+{
+alert("Unable to connect to server");
+}
+}
 
-	function loader() {
-		if (xmlHttp.readyState == 4) {
-			if (xmlHttp.status == 200) {
-				temp = xmlHttp.responseText;
-				document.getElementById("content").innerHTML = temp;
-			}
-		}
-	}
+function getInfo(){
+if(request.readyState==4){
+var val=request.responseText;
+
+
+}
+}
+function getUser(v){
+	$(document).ready(function(){
+	    $("#div1").load("${pageContext.request.contextPath}/LoginController/retrieveUser?id="+v);
+	});
+}
+</script>
+<script>
+
+
+
 </script>
 <script type="text/javascript">
 	$(
@@ -94,107 +114,149 @@
 
 
 
-
-<script
-	src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"
-	type="text/javascript"></script>
 <body>
 	<nav class="navbar navbar-default">
-	<div class="container-fluid">
-		<div class="navbar-header">
-			<button type="button" class="navbar-toggle collapsed"
-				data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-				<span class="sr-only">Toggle navigation</span> <span
-					class="icon-bar"></span> <span class="icon-bar"></span> <span
-					class="icon-bar"></span>
-			</button>
-			<a class="navbar-brand"
-				href="${pageContext.request.contextPath}/LoginController/main">GroupwareSystem</a>
-		</div>
+  		<div class="container-fluid">
+    		<div class="navbar-header">
+      			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        			<span class="sr-only">Toggle navigation</span>
+        			<span class="icon-bar"></span>
+        			<span class="icon-bar"></span>
+        			<span class="icon-bar"></span>
+      			</button>
+      			<a class="navbar-brand" href="${pageContext.request.contextPath}/LoginController/main">GroupwareSystem</a>
+    		</div>
 
-		<div class="collapse navbar-collapse"
-			id="bs-example-navbar-collapse-1">
-			<ul class="nav navbar-nav navbar-right">
-				<li><a href="https://tahiti.mju.ac.kr/moodle/">메뉴</a></li>
-			</ul>
-		</div>
-	</div>
+    		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      			<ul class="nav navbar-nav navbar-right">
+        			<li><a href="https://tahiti.mju.ac.kr/moodle/">메뉴</a></li>
+      			</ul>
+    		</div>
+  		</div>
 	</nav>
 	<%
 		System.out.println("directory.jsp  code : " + session.getAttribute("code") + " / "
 				+ session.getAttribute("code").getClass());
 		System.out.println("session_name : " + session.getAttribute("session_name"));
+		
 	%>
-	<div class="directory_wrapper" style="margin: 10px 40px;">
-		<h1>회사 인명부</h1>
+	
+	<div class="directory_wrapper" style="margin:10px 40px; width: 100%; float: left;">
+	<div id="div1"  style="margin:10px 40px; width: 70%; height: 60%; float: right; align: right;"></div>
+		
+		<h1>조직도</h1>
 		<ul id="browser" class="filetree">
-			<li class="closed"><span class="folder">회사</span>
-				<ul>
-					<li><span class="file"><a
-							href="${pageContext.request.contextPath}/ProjectController/getDepartMemberlist?did=10">임원진</a></span></li>
-
-					<ul id="folder21">
-						<li><span class="file">사장</span></li>
-
-						<li><span class="file">부사장</span></li>
-						<li><span class="file">상무</span></li>
-						<li><span class="file">이사</span></li>
-					</ul>
-					<li class="closed"><span class="folder"><a
-							href="${pageContext.request.contextPath}/ProjectController/getDepartMemberlist?did=12">영업부</a></span>
-						<ul id="folder21">
-							<li><span class="file">직원1</span></li>
-							<li><span class="file">직원2</span></li>
-						</ul></li>
-					<li class="closed"><span class="folder"><a
-							href="${pageContext.request.contextPath}/ProjectController/getDepartMemberlist?did=13">총무부</a></span>
-						<ul id="folder21">
-							<li><span class="file">직원1</span></li>
-							<li><span class="file">직원2</span></li>
-							<li class="closed"><span class="folder"><a
-									href="${pageContext.request.contextPath}/ProjectController/getDepartMemberlist?did=14">회계팀</a><span>
-										<ul id="folder21">
-											<li><span class="file">직원1</span></li>
-											<li><span class="file">직원2</span></li>
-										</ul></li>
-						</ul></li>
-					<li class="closed"><span class="folder"><a
-							href="${pageContext.request.contextPath}/ProjectController/getDepartMemberlist?did=15">인사관리부</a></span>
-						<ul id="folder21">
-							<li><span class="file">직원1</span></li>
-							<li><span class="file">직원2</span></li>
-							<li class="closed"><span class="folder"><a
-									href="${pageContext.request.contextPath}/ProjectController/getDepartMemberlist?did=0">등록
-										대기</a></span>
-								<ul id="folder21">
-									<li><span class="file">직원1</span></li>
-									<li><span class="file">직원2</span></li>
-								</ul></li>
-
-						</ul></li>
-					<li class="closed"><span class="folder"><a
-							href="${pageContext.request.contextPath}/ProjectController/getDepartMemberlist?did=11">마케팅부</a></span>
-						<ul id="folder21">
-							<li><span class="file">직원1</span></li>
-							<li><span class="file">직원2</span></li>
-						</ul></li>
-					<li class="closed"><span class="folder"><a
-							href="${pageContext.request.contextPath}/ProjectController/getDepartMemberlist?did=17">개발부</a></span>
-						<ul id="folder21">
-							<li><span class="file">직원1</span></li>
-							<li><span class="file">직원2</span></li>
-							<li class="closed"><span class="folder"><a
-									href="${pageContext.request.contextPath}/ProjectController/getDepartMemberlist?did=99">외부인력팀</a></span>
-								<ul id="folder21">
-									<li><span class="file">직원1</span></li>
-									<li><span class="file">직원2</span></li>
-								</ul></li>
-						</ul></li>
-				</ul></li>
-
+			<%
+			HashMap input = (HashMap) request.getAttribute("depart_list");
+			HashMap hashmap = (HashMap) input.get(0);
+			HashMap user = (HashMap) input.get(1);
+			int m =0;
+			int n =0;
+			int o =0;
+			//ArrayList temp = (ArrayList)hashmap.get(1);
+			//int depart_num = (Integer)temp.get(4);
+			//String depart_name = (String)temp.get(2);
+			
+			%>
+			<%
+						for(int i=1; i<= hashmap.size() ; i++){
+							ArrayList temp = (ArrayList)hashmap.get(i);
+							
+							if((Integer)temp.get(0)==0){
+								%> 
+									<li class="closed"><span class="folder"><%=temp.get(2)%></span>
+										<ul id="browser" class="filetree">
+											<% 
+												for(int j=1; j<= hashmap.size() ; j++){
+													m=0;
+													//System.out.println("parent value: "+(Integer)(((ArrayList)hashmap.get(j)).get(0)));
+													//System.out.println("parnet check value: "+(Integer)(((ArrayList)hashmap.get(i)).get(3)));
+													
+													
+													if((Integer)(((ArrayList)hashmap.get(j)).get(0))==(Integer)((ArrayList)hashmap.get(i)).get(3)){
+														
+											%> 
+															<li class="closed"><span class="folder"><%=(((ArrayList)hashmap.get(j)).get(2))%></span>
+																<ul id="browser" class="filetree">
+																	<% 
+																		for(int k=1; k<= hashmap.size() ; k++){
+																			//System.out.println("parent value: "+(Integer)(((ArrayList)hashmap.get(k)).get(0)));
+																			//System.out.println("parnet check value: "+(Integer)(((ArrayList)hashmap.get(j)).get(3)));
+																			n=0;
+																			if(m==0){
+																				for(m =0; m < user.size(); m++){
+																					//System.out.print("user depart: "+(Integer)(((ArrayList)(user.get(m))).get(2))+"/");
+																					//System.out.println("now  depart: "+(Integer)(((ArrayList)hashmap.get(k)).get(3)));
+																					
+																				if((Integer)(((ArrayList)(user.get(m))).get(2))==(Integer)(((ArrayList)hashmap.get(j)).get(3))){
+																				%> 
+																					<li><span class="file"><a href="javascript:getUser(<%=(((ArrayList)user.get(m)).get(0))%>);"><%=(((ArrayList)user.get(m)).get(1))%></a></span></li>
+																				<%	
+																				}
+																			}
+																		}
+																			if((Integer)(((ArrayList)hashmap.get(k)).get(0))==(Integer)((ArrayList)hashmap.get(j)).get(3)){
+																				
+																				
+																	%> 
+																					<li class="closed"><span class="folder"><%=(((ArrayList)hashmap.get(k)).get(2))%></span>
+																						<ul id="browser" class="filetree">
+																							<% 
+																								
+																								for(int l=1; l<= hashmap.size() ; l++){
+																									//System.out.println("parent value: "+(Integer)(((ArrayList)hashmap.get(k)).get(0)));
+																									//System.out.println("parnet check value: "+(Integer)(((ArrayList)hashmap.get(j)).get(3)));
+																										if(n==0){
+																											for(n =0; n < user.size(); n++){
+																												
+																												if((Integer)(((ArrayList)(user.get(n))).get(2))==(Integer)(((ArrayList)hashmap.get(k)).get(3))){
+																												%> 
+																													<li><span class="file"><a href="javascript:getUser(<%=(((ArrayList)user.get(n)).get(0))%>);"><%=(((ArrayList)user.get(n)).get(1))%></a></span></li>
+																												<%	
+																												}
+																											}
+																										}
+																										if((Integer)(((ArrayList)hashmap.get(l)).get(0))==(Integer)((ArrayList)hashmap.get(k)).get(3)){
+																											
+																							%> 			
+																											<li class="closed"><span class="folder"><%=(((ArrayList)hashmap.get(l)).get(2))%></span>
+																												<ul id="browser" class="filetree">
+																													
+																												</ul>
+																											</li>
+																							<% 
+																										
+																									}
+																								}
+																							
+																							%>
+																						</ul>
+																					</li>
+																	<% 
+																				
+																			}
+																		}
+																	
+																	%>
+																</ul>
+															</li>
+											<% 
+														
+													}
+												}
+											
+											%>
+										</ul>
+									</li>
+								<% 
+								
+								
+							}
+						}
+					
+			%> 			
 		</ul>
-
-
+		
 		<div class="main_button">
 
 
@@ -205,8 +267,8 @@
 		</div>
 
 	</div>
-
-
-
+	
+		
+	
 </body>
 </html>

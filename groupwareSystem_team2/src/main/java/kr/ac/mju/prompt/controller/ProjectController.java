@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -37,22 +38,25 @@ public class ProjectController {
 
 	// 조직도 보기
 	@RequestMapping(value = "/ProjectController/showDirectory", method = RequestMethod.GET)
-	public String showDirectory(HttpSession session, Locale locale, Model model) {
+	public ModelAndView showDirectory(HttpSession session, Locale locale,HttpServletRequest request) {
 		logger.info("Welcome home! The client locale is {}.", locale);
 		if (session.getAttribute("session_name") != null) {
 
 			logger.info(session.getAttribute("session_name").toString() + " 해당 사용자가 로그인중입니다. ");
 		}
-		Date date = new Date();
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-
-		String formattedDate = dateFormat.format(date);
-
-		model.addAttribute("serverTime", formattedDate);
-
-		return "directory";// jsp 파일 이름.
+		
+		HashMap d_list = projectService.getDepartInfo();
+		
+		System.out.println("부서 정보 "+d_list.get(1));
+		
+		
+		ModelAndView model = new ModelAndView();
+		model.addObject("depart_list", d_list);
+		model.setViewName("directory"); // jsp 이름 (view이름)
+		return model;
+		
 	}
-
+	      
 	// permission == pm 검색
 	@RequestMapping(value = "/ProjectController/showObtainAdd", method = RequestMethod.GET)
 	public ModelAndView showObtainAdd(HttpSession session, HttpServletRequest request) {
@@ -701,5 +705,22 @@ public class ProjectController {
 		return "projectEvaluation";
 
 	}
+	//데이터 베이스 테스트
+			@RequestMapping(value = "/ProjectController/showDepart", method = RequestMethod.GET)
+			public String showDepart(HttpSession session, Locale locale, Model model) {
+				logger.info("Welcome home! The client locale is {}.", locale);
+				if (session.getAttribute("session_name") != null) {
+
+					logger.info(session.getAttribute("session_name").toString() + " 해당 사용자가 로그인중입니다. ");
+				}
+				Date date = new Date();
+				DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+
+				String formattedDate = dateFormat.format(date);
+
+				model.addAttribute("serverTime", formattedDate);
+
+				return "depart_query";// jsp 파일 이름.
+			}
 
 }

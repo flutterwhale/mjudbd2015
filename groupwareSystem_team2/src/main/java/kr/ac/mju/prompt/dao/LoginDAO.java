@@ -371,29 +371,31 @@ public class LoginDAO {
 				member.setPermission(rs.getInt("Permission"));
 				member.setPosition_Name(rs.getInt("Position_Name"));
 				member.setDi(rs.getInt("Department_Identifier"));
+				if (rs.getInt("Permission") >= 11 && rs.getInt("Permission") <= 14) {
+					member.setTech_level(Integer.parseInt(rs.getString("Technic_Level")));
 
-				member.setTech_level(Integer.parseInt(rs.getString("Technic_Level")));
+					String query2 = "SELECT * FROM dbd2015.t_programming_technical_level WHERE User_Identifier = '" + id
+							+ "' ;";
 
-			}
-			String query2 = "SELECT * FROM dbd2015.t_programming_technical_level WHERE User_Identifier = '" + id
-					+ "' ;";
+					System.out.println("loginDAO.showMember : 쿼리 > " + query2);
+					rs2 = stmt.executeQuery(query2);
+					ArrayList<String> language_list = new ArrayList<String>();
+					ArrayList<Integer> language_level_list = new ArrayList<Integer>();
 
-			System.out.println("loginDAO.showMember : 쿼리 > " + query2);
-			rs2 = stmt.executeQuery(query2);
-			ArrayList<String> language_list = new ArrayList<String>();
-			ArrayList<Integer> language_level_list = new ArrayList<Integer>();
+					while (true) {
+						if (rs2.next()) {
+							language_list.add(rs2.getString("Language"));
+							language_level_list.add(rs2.getInt("Language_Level"));
+						} else {
+							break;
+						}
+					}
 
-			while (true) {
-				if (rs2.next()) {
-					language_list.add(rs2.getString("Language"));
-					language_level_list.add(rs2.getInt("Language_Level"));
-				} else {
-					break;
+					member.setLanguage_list(language_list);
+					member.setLanguage_level_list(language_level_list);
 				}
 			}
 
-			member.setLanguage_list(language_list);
-			member.setLanguage_level_list(language_level_list);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
