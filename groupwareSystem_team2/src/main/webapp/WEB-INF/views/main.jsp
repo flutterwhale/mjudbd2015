@@ -100,7 +100,7 @@
 		 	<td><%=Depart_map.get(loginbean.getDi()) %></td>
 		</tr>
 		<tr>
-		 	<td colspan=2 align=center><button type="button" 
+		 	<td colspan=2 align=center><button type="button"   class="btn btn-danger" style="margin: 5px"
 		 	onclick="location.href='${pageContext.request.contextPath}/LoginController/logout.do'">로그아웃</button></td>
 		</tr>
 		<tr>
