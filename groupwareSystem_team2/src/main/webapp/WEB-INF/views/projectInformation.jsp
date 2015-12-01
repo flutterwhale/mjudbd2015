@@ -37,11 +37,16 @@
 	String now = sdf.format(new Date());
 %>
 <script type="text/javascript">
-	function move() {
-		if (confirm('수정하시겠습니까?')) {
-			document.frm1.submit();
-		}
+function move() {
+	var startDate = $('#start_date').val();
+	var endDate = $('#end_date').val();
+	if (startDate > endDate) {
+		alert("종료일이 시작일보다 빠릅니다");
+	} else if(confirm('수정하시겠습니까?')) {
+		document.frm1.submit();
+		return true;
 	}
+}
 </script>
 
 </head>
@@ -93,7 +98,8 @@
 					</tr>
 					<tr>
 						<th>프로젝트 시작 날짜</th>
-						<td><%=pBean.getStart_Date()%></td>
+						<td><input type="hidden" id="start_date" name="start_date"
+							min="${now}" max="2200-12-31" value="<%=pBean.getStart_Date()%>"><%=pBean.getStart_Date()%></td>
 					</tr>
 					<tr>
 						<th>프로젝트 종료 날짜</th>
