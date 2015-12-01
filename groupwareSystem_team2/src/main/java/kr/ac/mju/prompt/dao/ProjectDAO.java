@@ -19,6 +19,7 @@ import kr.ac.mju.prompt.model.UserBean;
 import kr.ac.mju.prompt.model.obtainBean;
 import kr.ac.mju.prompt.model.projectBean;
 import kr.ac.mju.prompt.model.signupBean;
+import kr.ac.mju.prompt.model.userProjectBean;
 
 @Repository
 public class ProjectDAO {
@@ -1351,4 +1352,154 @@ public class ProjectDAO {
 			}
 			return hashmap;
 		}
+		
+		public ArrayList<userProjectBean> getAllMyProject(String id) {
+		      logger.info("=============getAllMyProject 처리 =============");
+		      ArrayList<userProjectBean> allProject = new ArrayList<userProjectBean>();
+		      PreparedStatement pstmt = null;
+		      Connection conn = null;
+		      Statement stmt = null;
+		      ResultSet rs = null;
+
+		      try {
+
+		         Class.forName("com.mysql.jdbc.Driver");
+		         conn = DriverManager.getConnection("jdbc:mysql://117.123.66.137:8089/dbd2015", "park", "pjw49064215");
+		         String query = "SELECT t_project.Project_Identifier, t_role.User_Identifier, Project_Name,Project_Role ,Projectmanager_Identifier, t_project.Start_Date as pStart_date ,t_project.End_Date as pEnd_date,t_role.Start_Date as rStart_date ,t_role.End_Date as rEnd_date,Project_Description , Status,Project_Price,t_project.Comment AS pComment,Project_Document, Product ,Project_Evaluation ,Dispatch_Location FROM dbd2015.t_role join dbd2015.t_project on t_role.Project_Identifier = t_project.Project_Identifier where t_project.End_Date >= now()  and t_role.User_Identifier = '"+id+"';";
+
+		         stmt = conn.createStatement();
+		         rs = stmt.executeQuery(query);
+
+		         while (rs.next()) {
+
+		            logger.info(rs.getString("Project_Name") + " " + rs.getInt("Projectmanager_Identifier"));
+
+		            userProjectBean usbean = new userProjectBean();
+		            
+		            
+		            usbean.setUser_Identifier(rs.getInt("User_Identifier"));
+		            usbean.setrStart_Date(rs.getDate("rStart_date"));
+		            usbean.setrEnd_Date(rs.getDate("rEnd_Date"));
+		            
+		            usbean.setProject_Role(rs.getInt("Project_Role"));
+		            
+		            usbean.setProject_name(rs.getString("Project_Name"));
+		            
+		            usbean.setProject_Identifier(rs.getInt("project_Identifier"));
+		            usbean.setProjectmanager_Identifier(rs.getInt("Projectmanager_Identifier"));        
+		            usbean.setStart_Date(rs.getDate("pStart_date"));
+		            usbean.setEnd_Date(rs.getDate("pEnd_date"));
+		            usbean.setPproject_Description(rs.getString("Project_Description"));
+		            usbean.setPstatus(rs.getInt("Status"));
+		            usbean.setPcomment(rs.getString("pComment"));
+		            usbean.setPdispatch_Location(rs.getString("Dispatch_Location"));
+
+		            allProject.add(usbean);
+
+		         }
+
+		      } catch (SQLException e) {
+		         // TODO Auto-generated catch block
+		         e.printStackTrace();
+		      } catch (ClassNotFoundException e) {
+		         // TODO Auto-generated catch block
+		         e.printStackTrace();
+		      } finally {
+		         try {
+		            if (rs != null) {
+		               rs.close();
+		            }
+
+		            if (pstmt != null) {
+		               pstmt.close();
+		            }
+
+		            if (conn != null) {
+		               conn.close();
+		            }
+		         } catch (SQLException e) {
+		            // TODO Auto-generated catch block
+		            e.printStackTrace();
+		         }
+
+		      }
+
+		      return allProject;
+
+		   }
+
+		   public ArrayList<userProjectBean> getPastMyProject(String id) {
+		      logger.info("=============getPastMyProject 처리 =============");
+		      ArrayList<userProjectBean> Past_Project = new ArrayList<userProjectBean>();
+		      PreparedStatement pstmt = null;
+		      Connection conn = null;
+		      Statement stmt = null;
+		      ResultSet rs = null;
+
+		      try {
+
+		         Class.forName("com.mysql.jdbc.Driver");
+		         conn = DriverManager.getConnection("jdbc:mysql://117.123.66.137:8089/dbd2015", "park", "pjw49064215");
+
+		         String query = "SELECT t_project.Project_Identifier, Project_Name, Projectmanager_Identifier, t_project.Start_Date as pStart_date ,t_project.End_Date as pEnd_date,t_role.Start_Date as rStart_date ,t_role.End_Date as rEnd_date,Project_Description , Status,Project_Price,t_project.Comment AS pComment,Project_Document, Product ,Project_Evaluation ,Dispatch_Location FROM dbd2015.t_role join dbd2015.t_project on t_role.Project_Identifier = t_project.Project_Identifier where t_project.End_Date < now()  and t_role.User_Identifier = '"+id+"';";
+		         stmt = conn.createStatement();
+		         rs = stmt.executeQuery(query);
+		         logger.info("과거 프로젝트 나열 (현재 날 이전)");
+
+		         while (rs.next()) {
+
+		            logger.info(rs.getString("Project_Name") + " " + rs.getInt("Projectmanager_Identifier"));
+
+		            userProjectBean usbean = new userProjectBean();
+		            
+		            
+		            usbean.setUser_Identifier(rs.getInt("User_Identifier"));
+		            usbean.setrStart_Date(rs.getDate("rStart_date"));
+		            usbean.setrEnd_Date(rs.getDate("rEnd_Date"));
+		            
+		            usbean.setProject_Role(rs.getInt("Project_Role"));
+		            
+		            usbean.setProject_name(rs.getString("Project_Name"));
+		            
+		            usbean.setProject_Identifier(rs.getInt("project_Identifier"));
+		            usbean.setProjectmanager_Identifier(rs.getInt("Projectmanager_Identifier"));
+		            usbean.setStart_Date(rs.getDate("pStart_date"));
+		            usbean.setEnd_Date(rs.getDate("pEnd_date"));
+		            usbean.setPproject_Description(rs.getString("Project_Description"));
+		            usbean.setPstatus(rs.getInt("Status"));
+		            usbean.setPcomment(rs.getString("pComment"));
+		            usbean.setPdispatch_Location(rs.getString("Dispatch_Location"));
+
+
+		         }
+
+		      } catch (SQLException e) {
+		         // TODO Auto-generated catch block
+		         e.printStackTrace();
+		      } catch (ClassNotFoundException e) {
+		         // TODO Auto-generated catch block
+		         e.printStackTrace();
+		      } finally {
+		         try {
+		            if (rs != null) {
+		               rs.close();
+		            }
+
+		            if (pstmt != null) {
+		               pstmt.close();
+		            }
+
+		            if (conn != null) {
+		               conn.close();
+		            }
+		         } catch (SQLException e) {
+		            // TODO Auto-generated catch block
+		            e.printStackTrace();
+		         }
+
+		      }
+
+		      return Past_Project;
+
+		   }
 }

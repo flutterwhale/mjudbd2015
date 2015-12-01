@@ -26,6 +26,7 @@ import kr.ac.mju.prompt.model.UserBean;
 import kr.ac.mju.prompt.model.obtainBean;
 import kr.ac.mju.prompt.model.projectBean;
 import kr.ac.mju.prompt.model.signupBean;
+import kr.ac.mju.prompt.model.userProjectBean;
 import kr.ac.mju.prompt.service.ProjectService;
 
 @Controller
@@ -521,15 +522,22 @@ public class ProjectController {
 	}
 
 	// 내 프로젝트 목록?
-	@RequestMapping(value = "/ProjectController/showPMProjectTable", method = RequestMethod.GET)
-	public String showPMProjectTable(HttpSession session, Model model) {
-		logger.info("내 프로젝트 리스트 ");
+	@RequestMapping(value = "/ProjectController/showMyProjectTable", method = RequestMethod.GET)
+	public ModelAndView showMyProjectTable(HttpSession session) {
+		logger.info("showProjectTable:내 프로젝트 리스트");
 		if (session.getAttribute("session_name") != null) {
 
 			logger.info(session.getAttribute("session_name").toString() + " 해당 사용자가 로그인중입니다. ");
 		}
 
-		return "PMProjectTable";
+		ModelAndView model = new ModelAndView();
+		ArrayList<userProjectBean> allProjects = projectService.getAllMyProjects(session.getAttribute("session_name").toString());
+		ArrayList<userProjectBean> PastProjects = projectService.getPastMyProjects(session.getAttribute("session_name").toString());
+		model.addObject("AllProject", allProjects);
+		model.addObject("PastProject", PastProjects);
+		model.setViewName("MyProjectTable"); // jsp 이름 (view이름)
+		return model;
+		
 	}
 
 	// 부서 트리 화면으로 이동

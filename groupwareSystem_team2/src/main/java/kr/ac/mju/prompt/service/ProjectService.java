@@ -15,6 +15,7 @@ import kr.ac.mju.prompt.model.UserBean;
 import kr.ac.mju.prompt.model.obtainBean;
 import kr.ac.mju.prompt.model.projectBean;
 import kr.ac.mju.prompt.model.signupBean;
+import kr.ac.mju.prompt.model.userProjectBean;
 
 @Service
 public class ProjectService {
@@ -217,5 +218,18 @@ public class ProjectService {
 		return projectDAO.getDepartInfo();
 	}
 	
+	public ArrayList<userProjectBean> getAllMyProjects(String id) {
+	      // TODO Auto-generated method stub
+	      logger.info("=============나의 현재 프로젝트 가져오기 Service=============");
+	      logger.info("getAllMyProjects :" + id);
+	      return projectDAO.getAllMyProject(id);
+	   }
+
+	   public ArrayList<userProjectBean> getPastMyProjects(String id) {
+	      // TODO Auto-generated method stub
+	      logger.info("=============나의  과거 프로젝트 가져오기 Service=============");
+	      logger.info("getPastMyProjects :" + id);
+	      return projectDAO.getPastMyProject(id);
+	   }
 
 }
