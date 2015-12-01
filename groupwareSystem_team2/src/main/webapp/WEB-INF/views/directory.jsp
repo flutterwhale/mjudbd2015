@@ -17,9 +17,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<link rel="stylesheet" href="http://bootswatch.com/flatly/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<link rel="stylesheet"
+	href="http://bootswatch.com/flatly/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script
+	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
 <%
 	response.setHeader("pragma", "no-cache");
@@ -29,33 +32,33 @@
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>회사 인명부</title>
 <script language="JavaScript">
-		var xmlHttp;
-	
-		function createXMLHttpRequest() {
-			if(window.ActiveXObject) {
-				xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
-			} else if(window.XMLHttpRequest) {
-				xmlHttp = new XMLHttpRequest();
+	var xmlHttp;
+
+	function createXMLHttpRequest() {
+		if (window.ActiveXObject) {
+			xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+		} else if (window.XMLHttpRequest) {
+			xmlHttp = new XMLHttpRequest();
+		}
+	}
+
+	function show() {
+		createXMLHttpRequest();
+		var url = "directoryRightside.jsp";
+		xmlHttp.onreadystatechange = loader;
+		xmlHttp.open("GET", url, true);
+		xmlHttp.send(null);
+	}
+
+	function loader() {
+		if (xmlHttp.readyState == 4) {
+			if (xmlHttp.status == 200) {
+				temp = xmlHttp.responseText;
+				document.getElementById("content").innerHTML = temp;
 			}
 		}
-	
-		function show() {
-			createXMLHttpRequest();
-			var url = "directoryRightside.jsp";
-			xmlHttp.onreadystatechange = loader;
-			xmlHttp.open("GET", url, true);
-			xmlHttp.send(null);
-		}
-	
-		function loader() {
-			if(xmlHttp.readyState == 4) {
-				if(xmlHttp.status == 200) {
-					temp = xmlHttp.responseText;
-					document.getElementById("content").innerHTML = temp;
-				}
-			}
-		}
-	</script>
+	}
+</script>
 <script type="text/javascript">
 	$(
 			function() {
@@ -97,30 +100,32 @@
 	type="text/javascript"></script>
 <body>
 	<nav class="navbar navbar-default">
-  		<div class="container-fluid">
-    		<div class="navbar-header">
-      			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-        			<span class="sr-only">Toggle navigation</span>
-        			<span class="icon-bar"></span>
-        			<span class="icon-bar"></span>
-        			<span class="icon-bar"></span>
-      			</button>
-      			<a class="navbar-brand" href="${pageContext.request.contextPath}/LoginController/main">GruopwareSystem</a>
-    		</div>
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed"
+				data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span> <span
+					class="icon-bar"></span> <span class="icon-bar"></span> <span
+					class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand"
+				href="${pageContext.request.contextPath}/LoginController/main">GruopwareSystem</a>
+		</div>
 
-    		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      			<ul class="nav navbar-nav navbar-right">
-        			<li><a href="https://tahiti.mju.ac.kr/moodle/">메뉴</a></li>
-      			</ul>
-    		</div>
-  		</div>
+		<div class="collapse navbar-collapse"
+			id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="https://tahiti.mju.ac.kr/moodle/">메뉴</a></li>
+			</ul>
+		</div>
+	</div>
 	</nav>
 	<%
 		System.out.println("directory.jsp  code : " + session.getAttribute("code") + " / "
 				+ session.getAttribute("code").getClass());
 		System.out.println("session_name : " + session.getAttribute("session_name"));
 	%>
-	<div class="directory_wrapper" style="margin:10px 40px;">
+	<div class="directory_wrapper" style="margin: 10px 40px;">
 		<h1>회사 인명부</h1>
 		<ul id="browser" class="filetree">
 			<li class="closed"><span class="folder">회사</span>
