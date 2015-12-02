@@ -92,7 +92,6 @@
 					width="1270px">
 					<tr align="center">
 						<td width="200px">일정 이름</td>
-						<td width="200px">내용</td>
 						<td width="200px">시작일</td>
 						<td width="200px">종료일</td>
 						<td width="200px">상태</td>
@@ -103,7 +102,6 @@
 						<input type="hidden" name="pid"
 							value="<%=request.getParameter("pid")%>">
 						<td><input type="text" name="Schedule_Name"></td>
-						<td><input type="text" name="contents"></td>
 						<td><input type="date" id="start_date" name="Start_date"
 							min="${now}" max="2200-12-31" value="${now}"></td>
 						<td><input type="date" id="end_date" name="End_date"
@@ -118,8 +116,10 @@
 						<td><input type="text" name="Progress_Percentage"></td>
 
 					</tr>
-
-
+					<tr>
+						<td colspan="5"><textarea name="contents"
+								style="width: 100%; height: 200px"> </textarea></td>
+					</tr>
 				</table>
 				<button type="submit" class="btn btn-success" >일정 추가</button>
 			</form>
@@ -167,11 +167,16 @@
 							min="${now}" max="2200-12-31" value="<%=c.getEnd_Date() %>"></td>
 						<td><%=c.getStatus_Process()%><select name="Status_Process"
 							class="form-control">
-								<option value="10">시작 전</option>
-								<option value="11">진행</option>
-								<option value="12">완료</option>
-								<option value="13">보류</option>
-								<option value="14">딜레이</option>
+								<option value="10"<%if (c.getStatus_Process() == 10) {%>
+									selected <%}%>>시작 전</option>
+								<option value="11"<%if (c.getStatus_Process() == 11) {%>
+									selected <%}%>>진행</option>
+								<option value="12"<%if (c.getStatus_Process() == 12) {%>
+									selected <%}%>>완료</option>
+								<option value="13"<%if (c.getStatus_Process() == 13) {%>
+									selected <%}%>>보류</option>
+								<option value="14"<%if (c.getStatus_Process() == 14) {%>
+									selected <%}%>>딜레이</option>
 						</select></td>
 						<td><input type="text" name="Progress_Percentage"
 							value="<%=c.getProgress_Percentage()%>">%</td>
@@ -180,12 +185,14 @@
 
 
 				</table>
-				<button type="submit" class="btn btn-success">일정 수정</button>
+				
 
-			</form>
+			
+			<button type="submit" class="btn btn-success">일정 수정</button>
 			<button type="submit" class="btn btn-danger"
 				onclick="location.href='${pageContext.request.contextPath}/ProjectController/deleteProjectschedule?sid=<%=request.getParameter("sid") %>&pid=<%=request.getParameter("pid")%>'">일정
 				삭제</button>
+				</form>
 			<%
 				}
 			%>
