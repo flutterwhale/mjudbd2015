@@ -423,6 +423,7 @@ public class ProjectController {
 		return model;
 	}
 
+	
 	// 프로젝트 일정 업데이트 후 -> 프로젝트 정보 화면으로 이동
 	@RequestMapping(value = "/ProjectController/UpdateProjectSchedule", method = RequestMethod.POST)
 	public String updateProjectSchedule(HttpSession session, HttpServletRequest request) {
@@ -699,30 +700,7 @@ public class ProjectController {
 
 	}
 
-	@RequestMapping(value = "/ProjectController/showUserSchedule", method = RequestMethod.GET)
-	public String showUserSchedule(HttpSession session, HttpServletRequest request) {
-
-		logger.info("유저 스케쥴 관리 화면 ");
-
-		// ArrayList<signupBean> d_list =
-		// projectService.DepartmentMemberList(request.getParameter("did"));
-
-		return "userSchedule";
-
-	}
-
-	@RequestMapping(value = "/ProjectController/showUserScheduleAdd", method = RequestMethod.GET)
-	public String showUserScheduleAdd(HttpSession session, HttpServletRequest request) {
-
-		logger.info("유저 스케쥴 추가 ");
-
-		// ArrayList<signupBean> d_list =
-		// projectService.DepartmentMemberList(request.getParameter("did"));
-
-		return "userScheduleAdd";
-
-	}
-
+	
 	@RequestMapping(value = "/ProjectController/showProjectUserEvaluation", method = RequestMethod.GET)
 	public String showProjectUserEvaluation(HttpSession session, HttpServletRequest request) {
 
@@ -775,4 +753,154 @@ public class ProjectController {
 
 	}
 
+	
+	@RequestMapping(value = "/ProjectController/showUserSchedule", method = RequestMethod.GET)
+	public String showUserSchedule(HttpSession session, HttpServletRequest request) {
+
+		logger.info("유저 스케쥴 관리 화면 ");
+
+		// ArrayList<signupBean> d_list =
+		// projectService.DepartmentMemberList(request.getParameter("did"));
+
+		return "userSchedule";
+
+	}
+
+	@RequestMapping(value = "/ProjectController/showUserScheduleAdd", method = RequestMethod.GET)
+	public String showUserScheduleAdd(HttpSession session, HttpServletRequest request) {
+
+		logger.info("유저 스케쥴 추가 ");
+
+		// ArrayList<signupBean> d_list =
+		// projectService.DepartmentMemberList(request.getParameter("did"));
+
+		return "userScheduleAdd";
+
+	}
+
+	/*// 프로젝트 일정 관리
+		@RequestMapping(value = "/ProjectController/ShowProjectSchedulePage", method = RequestMethod.GET)
+		public ModelAndView manageProjectSchedule(HttpSession session, HttpServletRequest request) {
+
+			logger.info("newProjectSchedulePage:프로젝트 관리 page" + request.getParameter("pid"));
+			if (session.getAttribute("session_name") != null) {
+
+				logger.info(session.getAttribute("session_name").toString() + " 해당 사용자가 로그인중입니다. ");
+			}
+
+			System.out.println(" sid? " + request.getParameter("sid"));
+
+			ModelAndView model = new ModelAndView();
+
+			model.setViewName("projectSchedule"); // jsp 이름 (view이름)
+			model.addObject("sid", request.getParameter("sid"));
+			model.addObject("projectSchedule", projectService.getProjectSchedule(request.getParameter("sid")));
+			return model;
+		}
+
+		
+		// 프로젝트 일정 업데이트 후 -> 프로젝트 정보 화면으로 이동
+		@RequestMapping(value = "/ProjectController/UpdateProjectSchedule", method = RequestMethod.POST)
+		public String updateProjectSchedule(HttpSession session, HttpServletRequest request) {
+			logger.info("updateProjectSchedule: 일정 수정 : " + request.getParameter("pid") + " sid "
+					+ request.getParameter("sid"));
+
+			String sdate = request.getParameter("Start_date");
+			String edate = request.getParameter("End_date");
+
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+			Date sdateparsed = null;
+			Date edateparsed = null;
+			try {
+				sdateparsed = format.parse(sdate);
+				edateparsed = format.parse(edate);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			java.sql.Date sqlStartDate = new java.sql.Date(sdateparsed.getTime());
+			java.sql.Date sqlEndDate = new java.sql.Date(edateparsed.getTime());
+
+			PscheduleBean psB = new PscheduleBean();
+			System.out.println(">> " + sqlStartDate + " / " + sqlEndDate + " " + session.getAttribute("session_name") + " "
+					+ request.getParameter("subject") + " " + request.getParameter("contents"));
+			psB.setProject_Identifier(Integer.parseInt(request.getParameter("pid")));
+			psB.setSchedule_Name(request.getParameter("Schedule_Name"));
+			psB.setProgress_Percentage(Integer.parseInt(request.getParameter("Progress_Percentage")));
+			psB.setStatus_Process(Integer.parseInt(request.getParameter("Status_Process")));// 기본
+																							// 값
+			psB.setStart_Date((java.sql.Date) sqlStartDate);
+			psB.setEnd_Date((java.sql.Date) sqlEndDate);
+			psB.setContents(request.getParameter("contents"));
+			psB.setProject_Schedule_Identifier(Integer.parseInt(request.getParameter("Project_Schedule_Identifier")));
+			System.out.println(" update service 실행 !!!!! 결과 :" + projectService.updateProjectSchedule(psB));
+
+			return "redirect:showProjectInformation?pid=" + request.getParameter("pid");
+		}
+
+		// 프로젝트 일정 삭제 (PM만 삭제)-> 프로젝트 정보 페이지 이동
+		@RequestMapping(value = "/ProjectController/deleteProjectschedule", method = RequestMethod.GET)
+		public ModelAndView DeleteProjectschedule(HttpSession session, HttpServletRequest request) {
+
+			logger.info("deleteProjectschedule:프로젝트 일정 제거하기  : 프로젝트 아이디" + request.getParameter("pid") + " 스케쥴 아이디"
+					+ request.getParameter("sid"));
+			if (session.getAttribute("session_name") != null) {
+
+				logger.info(session.getAttribute("session_name").toString() + " 해당 사용자가 로그인중입니다. ");
+			}
+
+			projectService.deleteProjectSchedule(request.getParameter("sid"));
+			ModelAndView model = new ModelAndView();
+
+			model.setViewName("redirect:showProjectInformation?pid=" + request.getParameter("pid"));
+
+			return model;
+		}
+
+		// 프로젝트 일정 추가 완료.
+		@RequestMapping(value = "/ProjectController/InsertProjectSchedule", method = RequestMethod.POST)
+		public ModelAndView InsertProjectSchedule(HttpSession session, HttpServletRequest request) {
+
+			logger.info("프로젝트 스케쥴 추가 ");
+
+			String sdate = request.getParameter("Start_date");
+			String edate = request.getParameter("End_date");
+
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+			Date sdateparsed = null;
+			Date edateparsed = null;
+			try {
+				sdateparsed = format.parse(sdate);
+				edateparsed = format.parse(edate);
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			java.sql.Date sqlStartDate = new java.sql.Date(sdateparsed.getTime());
+			java.sql.Date sqlEndDate = new java.sql.Date(edateparsed.getTime());
+
+			PscheduleBean psB = new PscheduleBean();
+			System.out.println(">> " + sqlStartDate + " / " + sqlEndDate + " " + session.getAttribute("session_name") + " "
+					+ request.getParameter("subject") + " " + request.getParameter("contents"));
+			psB.setProject_Identifier(Integer.parseInt(request.getParameter("pid")));
+			psB.setSchedule_Name(request.getParameter("Schedule_Name"));
+			psB.setProgress_Percentage(Integer.parseInt(request.getParameter("Progress_Percentage")));
+			psB.setStatus_Process(Integer.parseInt(request.getParameter("Status_Process")));// 기본
+																							// 값
+			psB.setStart_Date((java.sql.Date) sqlStartDate);
+			psB.setEnd_Date((java.sql.Date) sqlEndDate);
+			psB.setContents(request.getParameter("contents"));
+
+			System.out.println(" insert !!!!! 결과 :" + projectService.insertProjectSchedule(psB));
+			ModelAndView model = new ModelAndView();
+			model.setViewName("projectSchedule"); // jsp 이름 (view이름)
+			// model.addObject("projectScheduleList",
+			// projectService.getProjectScheduleList(request.getParameter("pid")));
+			return model;
+
+		}
+	*/
+	
 }

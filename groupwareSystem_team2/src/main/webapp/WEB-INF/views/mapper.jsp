@@ -51,6 +51,7 @@
 		Project_status_map.put(12, "이행");
 		Project_status_map.put(13, "통제");
 		Project_status_map.put(14, "종료");
+		Project_status_map.put(15, "평가");
 		HashMap<Integer ,String> Schedule_status_map = new HashMap<Integer ,String>();
 		Schedule_status_map.put(10, "시작 전");
 		Schedule_status_map.put(11, "진행");
@@ -62,6 +63,7 @@
 		Obtain_status_map.put(11, "취소");
 		Obtain_status_map.put(12, "수주");
 		HashMap<Integer ,String> Project_Part = new HashMap<Integer ,String>();
+		Project_Part.put(10, "PM");
 		Project_Part.put(11, "PL");
 		Project_Part.put(12, "분석자");
 		Project_Part.put(13, "설계자");

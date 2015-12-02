@@ -13,7 +13,6 @@
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.*"%>
 <%
-	
 	PscheduleBean c = (PscheduleBean) request.getAttribute("projectSchedule");
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	String now = sdf.format(new Date());
@@ -39,7 +38,7 @@
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"
 	type="text/javascript">
 	function move() {
-		if (confirm('선택한 PM으로 프로젝트를 추가합니다.')) {
+		if (confirm('수정 합니다.')) {
 			document.frm.submit();
 		}
 	}
@@ -82,17 +81,70 @@
 
 			<%
 				System.out.println("sid " + request.getParameter("sid") + now);
-				if (request.getParameter("sid") == null) {
+				if (request.getParameter("pid") == null) {
 			%>
 
-			<h1>프로젝트 일정 추가</h1>
-			<form action='${pageContext.request.contextPath}/ProjectController/InsertProjectSchedule'
-			method="POST">
+
+
+
+
+			<h1>
+				프로젝트 일정 조회
+				<%=request.getParameter("sid")%>
+			</h1>
+			<form name="frm"
+				action='${pageContext.request.contextPath}/ProjectController/UpdateProjectSchedule'
+				method="POST">
 				<table class="table table-striped table-hover" border="1"
 					width="1270px">
 					<tr align="center">
 						<td width="200px">일정 이름</td>
-						<td width="200px">내용</td>
+						<td width="200px">시작일</td>
+						<td width="200px">종료일</td>
+						<td width="200px">상태</td>
+						<td width="200px">완료율</td>
+					</tr>
+					<tr align="center">
+
+
+						<input type="hidden" name="pid"
+							value="<%=request.getParameter("pid")%>">
+
+
+						<input type="hidden" name="Project_Schedule_Identifier"
+							value="<%=c.getProject_Schedule_Identifier()%>">
+
+						<td><%=c.getSchedule_Name()%></td>
+
+						<td><%=c.getStart_Date()%></td>
+						<td><%=c.getEnd_Date() %></td>
+						<td><%=c.getStatus_Process() %></td>
+						<td><%=c.getProgress_Percentage()%>%</td>
+
+					</tr>
+					<tr>
+
+						<td colspan="5"><textarea name="contents"
+								style="width: 100%; height: 200px" readonly="readonly"> <%=c.getContents()%></textarea></td>
+					</tr>
+
+				</table>
+
+
+			</form>
+			
+			<%
+				} else 	if (request.getParameter("sid") == null) {
+			%>
+
+			<h1>프로젝트 일정 추가</h1>
+			<form
+				action='${pageContext.request.contextPath}/ProjectController/InsertProjectSchedule'
+				method="POST">
+				<table class="table table-striped table-hover" border="1"
+					width="1270px">
+					<tr align="center">
+						<td width="200px">일정 이름</td>
 						<td width="200px">시작일</td>
 						<td width="200px">종료일</td>
 						<td width="200px">상태</td>
@@ -102,8 +154,14 @@
 
 						<input type="hidden" name="pid"
 							value="<%=request.getParameter("pid")%>">
+
+
+						<input type="hidden" name="Project_Schedule_Identifier"
+							value="<%=c.getProject_Schedule_Identifier()%>">
+
+						<input type="hidden" name="pid"
+							value="<%=request.getParameter("pid")%>">
 						<td><input type="text" name="Schedule_Name"></td>
-						<td><input type="text" name="contents"></td>
 						<td><input type="date" id="start_date" name="Start_date"
 							min="${now}" max="2200-12-31" value="${now}"></td>
 						<td><input type="date" id="end_date" name="End_date"
@@ -118,15 +176,15 @@
 						<td><input type="text" name="Progress_Percentage"></td>
 
 					</tr>
+					<tr>
+						<td colspan="5"><textarea name="contents"
+								style="width: 100%; height: 200px"> </textarea></td>
+					</tr>
 
 
 				</table>
-				<button type="submit" class="btn btn-success" >일정 추가</button>
+				<button type="submit" class="btn btn-success">일정 추가</button>
 			</form>
-
-
-
-
 			<%
 				} else {
 			%>
@@ -136,13 +194,13 @@
 				프로젝트 일정 관리 /
 				<%=request.getParameter("sid")%>/<%=request.getParameter("pid")%>
 			</h1>
-			<form action='${pageContext.request.contextPath}/ProjectController/UpdateProjectSchedule'
-			method="POST">
+			<form name="frm"
+				action='${pageContext.request.contextPath}/ProjectController/UpdateProjectSchedule'
+				method="POST">
 				<table class="table table-striped table-hover" border="1"
 					width="1270px">
 					<tr align="center">
 						<td width="200px">일정 이름</td>
-						<td width="200px">내용</td>
 						<td width="200px">시작일</td>
 						<td width="200px">종료일</td>
 						<td width="200px">상태</td>
@@ -155,35 +213,45 @@
 							value="<%=request.getParameter("pid")%>">
 
 
-<input type="hidden" name ="Project_Schedule_Identifier" value="<%=c.getProject_Schedule_Identifier()%>">
+						<input type="hidden" name="Project_Schedule_Identifier"
+							value="<%=c.getProject_Schedule_Identifier()%>">
 
 						<td><input type="text" name="Schedule_Name"
 							value="<%=c.getSchedule_Name()%>"></td>
-						<td><input type="text" name="contents"
-							value="<%=c.getContents()%>"></td>
+
 						<td><input type="date" id="start_date" name="Start_date"
 							min="1990-12-31" max="2200-12-31" value="<%=c.getStart_Date()%>"></td>
 						<td><input type="date" id="end_date" name="End_date"
 							min="${now}" max="2200-12-31" value="<%=c.getEnd_Date() %>"></td>
-						<td><%=c.getStatus_Process()%><select name="Status_Process"
-							class="form-control">
-								<option value="10">시작 전</option>
-								<option value="11">진행</option>
-								<option value="12">완료</option>
-								<option value="13">보류</option>
-								<option value="14">딜레이</option>
+						<td><select name="Status_Process" class="form-control">
+								<option value="10" <%if (c.getStatus_Process() == 10) {%>
+									selected <%}%>>시작 전</option>
+								<option value="11" <%if (c.getStatus_Process() == 11) {%>
+									selected <%}%>>진행</option>
+								<option value="12" <%if (c.getStatus_Process() == 12) {%>
+									selected <%}%>>완료</option>
+								<option value="13" <%if (c.getStatus_Process() == 13) {%>
+									selected <%}%>>보류</option>
+								<option value="14" <%if (c.getStatus_Process() == 14) {%>
+									selected <%}%>>딜레이</option>
 						</select></td>
 						<td><input type="text" name="Progress_Percentage"
 							value="<%=c.getProgress_Percentage()%>">%</td>
 
 					</tr>
+					<tr>
 
+						<td colspan="5"><textarea name="contents"
+								style="width: 100%; height: 200px"> <%=c.getContents()%></textarea></td>
+					</tr>
 
 				</table>
-				<button type="submit" class="btn btn-success">일정 수정</button>
+
 
 			</form>
-			<button type="submit" class="btn btn-danger"
+			<button type="submit" class="btn btn-success" onclick="move();">일정
+				수정</button>
+			<button type="button" class="btn btn-danger"
 				onclick="location.href='${pageContext.request.contextPath}/ProjectController/deleteProjectschedule?sid=<%=request.getParameter("sid") %>&pid=<%=request.getParameter("pid")%>'">일정
 				삭제</button>
 			<%
@@ -191,12 +259,13 @@
 			%>
 		</div>
 		<div class="main_button" style="padding: 10px 0px;">
-
+<button class="btn btn-default" type="button"
+				onclick="javascript:history.back();">프로젝트
+				정보</button>
 
 			<button class="btn btn-default" type="button"
 				onclick="location.replace('${pageContext.request.contextPath}/LoginController/main')">메인화면</button>
-			<button class="btn btn-default" type="button"
-				onclick="location.replace('${pageContext.request.contextPath}/ProjectController/showProjectInformation?pid=<%=request.getParameter("pid")%>')">프로젝트 정보</button>
+			
 		</div>
 	</div>
 	<div class="well well-sm">

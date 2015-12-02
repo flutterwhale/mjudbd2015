@@ -132,9 +132,7 @@
 		현황</button>
 		
 		
-		<button class="btn btn-primary" style="width:200px; margin:10px;" type="button"
-      onclick="location.href='${pageContext.request.contextPath}/ProjectController/showBusinessLog'">업무 일지
-   </button>
+		
 		<button class="btn btn-primary" style="width:200px; margin:10px;" type="button"
 		onclick="location.href='${pageContext.request.contextPath}/ProjectController/showMyProjectTable'">프로젝트
 		관리</button><!-- 임시 권한 부여임. -->

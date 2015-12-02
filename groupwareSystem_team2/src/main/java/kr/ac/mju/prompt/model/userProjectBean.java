@@ -21,6 +21,8 @@ public class userProjectBean {
 	private String Pproject_Description;
 	private int Pstatus;
 	private String Pcomment;
+	private String Project_Evaluation;
+	private int Evaluation_Score;
 	private String Pdispatch_Location;
 
 	public int getUser_Schedule_Identifier() {
@@ -149,6 +151,22 @@ public class userProjectBean {
 
 	public void setProject_name(String project_name) {
 		this.project_name = project_name;
+	}
+
+	public String getProject_Evaluation() {
+		return Project_Evaluation;
+	}
+
+	public void setProject_Evaluation(String project_Evaluation) {
+		Project_Evaluation = project_Evaluation;
+	}
+
+	public int getEvaluation_Score() {
+		return Evaluation_Score;
+	}
+
+	public void setEvaluation_Score(int evaluation_Score) {
+		Evaluation_Score = evaluation_Score;
 	}
 
 }

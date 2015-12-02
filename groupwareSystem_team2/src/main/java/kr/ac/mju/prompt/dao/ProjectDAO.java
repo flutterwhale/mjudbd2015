@@ -644,7 +644,9 @@ public class ProjectDAO {
 				pbean.setUser_Identifier(rs.getInt("User_Identifier"));
 				pbean.setProject_Identifier(rs.getInt("project_Identifier"));
 				pbean.setProject_Role(rs.getInt("Project_Role"));
+				pbean.setProgress_Percentage(rs.getInt("progress_Percentage"));
 				pbean.setWork_Name(rs.getString("Work_Name"));
+				pbean.setWork_descriptions(rs.getString("Work_descriptions"));
 				pbean.setProduct(rs.getString("Product"));
 				pbean.setStart_Date(rs.getDate("Start_Date"));
 				pbean.setEnd_Date(rs.getDate("End_Date"));
@@ -1271,7 +1273,7 @@ public class ProjectDAO {
 			}
 			
 			String query2 = "INSERT INTO `dbd2015`.`t_role` (`User_Identifier`, `Project_Role`, `Start_Date`, `End_Date`, `Project_Identifier`) VALUES"
-					+ " ('" + pid + "', '11', '" + oBean.getStart_Date() + "','" + oBean.getEnd_Date()
+					+ " ('" + pid + "', '10', '" + oBean.getStart_Date() + "','" + oBean.getEnd_Date()
 					+ "', '"+last+"');";
 
 			System.out.println("query2 " + query2);
@@ -1744,18 +1746,20 @@ public class ProjectDAO {
 
 		         Class.forName("com.mysql.jdbc.Driver");
 		         conn = DriverManager.getConnection("jdbc:mysql://117.123.66.137:8089/dbd2015", "park", "pjw49064215");
-		         String query = "SELECT t_project.Project_Identifier, t_role.User_Identifier, Project_Name,Project_Role ,Projectmanager_Identifier, t_project.Start_Date as pStart_date ,t_project.End_Date as pEnd_date,t_role.Start_Date as rStart_date ,t_role.End_Date as rEnd_date,Project_Description , Status,Project_Price,t_project.Comment AS pComment,Project_Document, Product ,Project_Evaluation ,Dispatch_Location FROM dbd2015.t_role join dbd2015.t_project on t_role.Project_Identifier = t_project.Project_Identifier where dbd2015.t_project.Status <14  and t_role.User_Identifier = '"+id+"';";
+		         String query = "SELECT Evaluation_Score,Project_Evaluation,t_project.Project_Identifier, t_role.User_Identifier, Project_Name,Project_Role ,Projectmanager_Identifier, t_project.Start_Date as pStart_date ,t_project.End_Date as pEnd_date,t_role.Start_Date as rStart_date ,t_role.End_Date as rEnd_date,Project_Description , Status,Project_Price,t_project.Comment AS pComment,Project_Document, Product ,Project_Evaluation ,Dispatch_Location FROM dbd2015.t_role join dbd2015.t_project on t_role.Project_Identifier = t_project.Project_Identifier where dbd2015.t_project.Status <'14'  and t_role.User_Identifier = '"+id+"';";
 
 		         stmt = conn.createStatement();
 		         rs = stmt.executeQuery(query);
-
+System.out.println("내 프로젝트 목록 "+query);
 		         while (rs.next()) {
 
 		            logger.info(rs.getString("Project_Name") + " " + rs.getInt("Projectmanager_Identifier"));
 
 		            userProjectBean usbean = new userProjectBean();
 		            
+		            usbean.setEvaluation_Score(rs.getInt("Evaluation_Score"));
 		            
+		            usbean.setProject_Evaluation(rs.getString("Project_Evaluation"));
 		            usbean.setUser_Identifier(rs.getInt("User_Identifier"));
 		            usbean.setrStart_Date(rs.getDate("rStart_date"));
 		            usbean.setrEnd_Date(rs.getDate("rEnd_Date"));
@@ -1820,10 +1824,10 @@ public class ProjectDAO {
 		         Class.forName("com.mysql.jdbc.Driver");
 		         conn = DriverManager.getConnection("jdbc:mysql://117.123.66.137:8089/dbd2015", "park", "pjw49064215");
 
-		         String query = "SELECT t_project.Project_Identifier, Project_Name, Projectmanager_Identifier, t_project.Start_Date as pStart_date ,t_project.End_Date as pEnd_date,t_role.Start_Date as rStart_date ,t_role.End_Date as rEnd_date,Project_Description , Status,Project_Price,t_project.Comment AS pComment,Project_Document, Product ,Project_Evaluation ,Dispatch_Location FROM dbd2015.t_role join dbd2015.t_project on t_role.Project_Identifier = t_project.Project_Identifier where dbd2015.t_project.Status >=14  and t_role.User_Identifier = '"+id+"';";
+		         String query = "SELECT   Evaluation_Score, Project_Evaluation, t_role.User_Identifier,t_project.Project_Identifier, Project_Name,Project_Role, Projectmanager_Identifier, t_project.Start_Date as pStart_date ,t_project.End_Date as pEnd_date,t_role.Start_Date as rStart_date ,t_role.End_Date as rEnd_date,Project_Description , Status,Project_Price,t_project.Comment AS pComment,Project_Document, Product ,Project_Evaluation ,Dispatch_Location FROM dbd2015.t_role join dbd2015.t_project on t_role.Project_Identifier = t_project.Project_Identifier where dbd2015.t_project.Status >='14'  and t_role.User_Identifier = '"+id+"';";
 		         stmt = conn.createStatement();
 		         rs = stmt.executeQuery(query);
-		         logger.info("과거 프로젝트 나열 (현재 날 이전)");
+		         logger.info("과거 프로젝트 나열 ");
 
 		         while (rs.next()) {
 
@@ -1831,7 +1835,9 @@ public class ProjectDAO {
 
 		            userProjectBean usbean = new userProjectBean();
 		            
+ usbean.setEvaluation_Score(rs.getInt("Evaluation_Score"));
 		            
+		            usbean.setProject_Evaluation(rs.getString("Project_Evaluation"));
 		            usbean.setUser_Identifier(rs.getInt("User_Identifier"));
 		            usbean.setrStart_Date(rs.getDate("rStart_date"));
 		            usbean.setrEnd_Date(rs.getDate("rEnd_Date"));
@@ -1848,8 +1854,7 @@ public class ProjectDAO {
 		            usbean.setPstatus(rs.getInt("Status"));
 		            usbean.setPcomment(rs.getString("pComment"));
 		            usbean.setPdispatch_Location(rs.getString("Dispatch_Location"));
-
-
+		            Past_Project.add(usbean);
 		         }
 
 		      } catch (SQLException e) {

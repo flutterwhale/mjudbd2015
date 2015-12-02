@@ -8,7 +8,8 @@ public class UscheduleBean {
 	private int Project_Identifier;
 	private int Project_Role;
 	private String Work_Name;
-
+	private String Work_descriptions;
+	private int Progress_Percentage;
 	private Date Start_Date;
 	private Date End_Date;
 
@@ -76,6 +77,22 @@ public class UscheduleBean {
 
 	public void setProduct(String product) {
 		Product = product;
+	}
+
+	public String getWork_descriptions() {
+		return Work_descriptions;
+	}
+
+	public void setWork_descriptions(String work_descriptions) {
+		Work_descriptions = work_descriptions;
+	}
+
+	public int getProgress_Percentage() {
+		return Progress_Percentage;
+	}
+
+	public void setProgress_Percentage(int progress_Percentage) {
+		Progress_Percentage = progress_Percentage;
 	}
 
 }
