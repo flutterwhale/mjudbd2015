@@ -355,14 +355,12 @@ function move() {
 					<td><%=Project_Part
 						.get(Integer.parseInt((String) ((Hashtable) (pBean.getRole().get(i))).get("Project_Role")))%></td>
 					<%
-						if (session.getAttribute("session_name").equals(pBean.getProjectmanager_Identifier())) {
+					if (session.getAttribute("session_name").equals(pBean.getProjectmanager_Identifier()) && !(pBean.getStatus() == 14 || pBean.getStatus() == 15) || (sUinfo.getMyUser().getDi() == 10)){
 					%>
-					<td><button class="btn btn-primary" type="button"
-							id="button<%=i%>"
-							onclick="location.href='${pageContext.request.contextPath}/ProjectController/projectUserDel?uid=<%=((Hashtable)(pBean.getRole().get(i))).get("User_Identifier")%>&pid=<%=pBean.getProject_Identifier()%>'">삭제</button></td>
-					<%
-						}
-					%>
+					<td><button class="btn btn-primary" type="button" id="button<%=i%>" onclick="location.href='${pageContext.request.contextPath}/ProjectController/projectUserDel?uid=<%=((Hashtable)(pBean.getRole().get(i))).get("User_Identifier")%>&pid=<%=pBean.getProject_Identifier()%>'">삭제</button></td>
+					<%} else {%>
+					<td>-</td>
+					<%} %>
 				</tr>
 				<%
 					}
@@ -391,9 +389,7 @@ function move() {
 					<td></td>
 					<td></td>
 				</tr>
-				<%
-					if (project_role_user) {
-				%>
+				<%if (session.getAttribute("session_name").equals(pBean.getProjectmanager_Identifier()) && !(pBean.getStatus() == 14 || pBean.getStatus() == 15) || (sUinfo.getMyUser().getDi() == 10)){%>
 				<tr>
 					<th width="150px">문서 등록</th>
 					<td colspan="3"><input type="file" id="portfolio"
@@ -441,10 +437,7 @@ function move() {
 					<td></td>
 					<td></td>
 				</tr>
-				<%
-					if (project_role_user) {
-				%>
-
+		<%if (session.getAttribute("session_name").equals(pBean.getProjectmanager_Identifier()) && !(pBean.getStatus() == 14 || pBean.getStatus() == 15) || (sUinfo.getMyUser().getDi() == 10)){%>
 				<tr>
 					<th width="150px">파일 등록</th>
 					<td colspan="3"><input type="file" id="product" name="product"></td>
