@@ -35,7 +35,7 @@
 		
 		
 		System.out.println(showBean.getId());
-		System.out.println("session ID " + sID + " cat "+ sUinfo.getMyUser().getCat());
+		//System.out.println("session ID " + sID + " cat "+ sUinfo.getMyUser().getCat());
 	%>
 		<form class="form-horizontal" onSubmit="return check()" method="POST" name="myform">
 			<fieldset>

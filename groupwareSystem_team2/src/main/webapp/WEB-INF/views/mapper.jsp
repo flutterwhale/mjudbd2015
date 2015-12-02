@@ -62,6 +62,17 @@
 		Obtain_status_map.put(10, "제안");
 		Obtain_status_map.put(11, "취소");
 		Obtain_status_map.put(12, "수주");
+		HashMap<Integer ,String> Project_Part = new HashMap<Integer ,String>();
+		Project_Part.put(11, "PL");
+		Project_Part.put(12, "분석자");
+		Project_Part.put(13, "설계자");
+		Project_Part.put(14, "개발자");
+		Project_Part.put(15, "디자이너");
+		Project_Part.put(16, "테스터");
+		HashMap<Integer ,String> Gender = new HashMap<Integer ,String>();
+		Gender.put(1, "남성");
+		Gender.put(0, "여성");
+		
 	%>
 
 </body>

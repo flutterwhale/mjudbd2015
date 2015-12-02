@@ -22,11 +22,17 @@ public class projectBean {
 	private String product;
 	private String project_Evaluation;
 	private String dispatch_Location;
+	private ArrayList Role;
 
 	public projectBean() {
 		// TODO Auto-generated constructor stub
 	}
-
+	public ArrayList getRole() {
+		return Role;
+	}
+	public void setRole(ArrayList list) {
+		this.Role = list;
+	}
 	public String getMsg() {
 		return msg;
 	}

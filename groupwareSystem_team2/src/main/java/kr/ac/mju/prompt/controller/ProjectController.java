@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -337,6 +338,7 @@ public class ProjectController {
 		String pid = request.getParameter("pid");
 		String formattedDate = dateFormat.format(date);
 		logger.info("project ID " + pid);
+		
 		projectBean pb = projectService.getProjectInfo(pid);
 		ArrayList<PscheduleBean> pschedule = projectService.getProjectScheduleList(pid);
 		ArrayList<UscheduleBean> uschedule = projectService.getUserScheduleList(pid);
@@ -543,24 +545,67 @@ public class ProjectController {
 	// 부서 트리 화면으로 이동
 
 	/*
-	 * 프로젝트 인원 추가
+	 * 프로젝트 인원 추가 수정들어감. 1202_0040(김용민)
 	 */
 
 	@RequestMapping(value = "/ProjectController/showProjectMember", method = RequestMethod.GET)
 	public ModelAndView showProjectUserAdd(HttpSession session, HttpServletRequest request) {
 
 		logger.info("프로젝트 인원 추가 페이지 ");
-		logger.info("showProjectMember: 개발자들 추가 페이지  , 프로젝트 id " + request.getParameter("pid"));
+		logger.info("showProjectMember: 개발자들 추가 페이지  , 프로젝트 id " + request.getParameter("pm_id"));
 
 		ModelAndView model = new ModelAndView();
-		ArrayList<signupBean> developerlist = projectService.getMember_developer();
+		ArrayList<signupBean> developerlist = projectService.getMember_developer(request.getParameter("pm_id"),request.getParameter("pid"));
 		model.addObject("developerlist", developerlist);
 		model.setViewName("projectUserAdd"); // jsp 이름 (view이름)
 
 		return model;
 
 	}
+	//김용민
+	@RequestMapping(value = "/ProjectController/projectUserAdd", method = RequestMethod.GET)
+	public String projectUserAdd(HttpSession session, HttpServletRequest request) {
 
+		logger.info("프로젝트 인원 추가 시도");
+		//서비스 등록하는 장소
+		projectService.setProjectRole(request.getParameter("uid"),request.getParameter("start"),request.getParameter("end"),request.getParameter("role"),request.getParameter("pid"));
+		return "redirect:showProjectInformation?pid="+request.getParameter("pid");
+
+	}
+	//김용민(프로젝트 인원삭제)
+		@RequestMapping(value = "/ProjectController/projectUserDel", method = RequestMethod.GET)
+		public String projectUserDel(HttpSession session, HttpServletRequest request) {
+
+			logger.info("프로젝트 인원 삭제 시도");
+			//서비스 등록하는 장소
+			projectService.delProjectRole(request.getParameter("uid"),request.getParameter("pid"));
+			return "redirect:showProjectInformation?pid="+request.getParameter("pid");
+
+		}
+	//김용민(프로젝트 개인평가 리스트 만들기)
+		@RequestMapping(value = "/ProjectController/projectUserEvalList", method = RequestMethod.GET)
+		public ModelAndView projectUserEvalList(HttpSession session, HttpServletRequest request) {
+			logger.info("프로젝트 개인 리스트 호출 시도");
+			//서비스 등록하는 장소 Appraiser,wg,cg,tg,contents,is_pm,uid,pid,role
+			
+			ModelAndView model = new ModelAndView();
+			ArrayList<Hashtable> list = projectService.setProjectEvalList(request.getParameter("Appraiser"),request.getParameter("pid"));
+			model.addObject("developerlist", list);
+			model.setViewName("roleEvaluation"); // jsp 이름 (view이름)
+			
+			return model;
+		}
+		
+		
+	//김용민(프로젝트 개인평가 추가)
+		@RequestMapping(value = "/ProjectController/projectUserEval", method = RequestMethod.GET)
+		public String projectUserEval(HttpSession session, HttpServletRequest request) {
+			logger.info("프로젝트 개인 평가 추가 시도");
+			//서비스 등록하는 장소 Appraiser,wg,cg,tg,contents,is_pm,uid,pid,role
+			projectService.setProjectEval(request.getParameter("Appraiser"),request.getParameter("wg"),request.getParameter("cg"),request.getParameter("tg"),request.getParameter("contents"),request.getParameter("is_pm"),request.getParameter("uid"),request.getParameter("pid"),request.getParameter("role"));
+			return "redirect:showProjectInformation?pid="+request.getParameter("pid")+"&Appraiser="+request.getParameter("Appraiser");
+		}
+		
 	/*
 	 * 업무일지 관련
 	 */
@@ -642,8 +687,7 @@ public class ProjectController {
 
 		logger.info("멤버 인사 관리 화면 ");
 
-		// ArrayList<signupBean> d_list =
-		// projectService.DepartmentMemberList(request.getParameter("did"));
+		// ArrayList<signupBean> d_list =projectService.DepartmentMemberList(request.getParameter("did"));
 
 		return "memberManagement";
 

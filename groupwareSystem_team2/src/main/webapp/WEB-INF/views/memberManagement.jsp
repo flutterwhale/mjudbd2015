@@ -165,10 +165,10 @@
 					if (unapproved_list.isEmpty()) {
 				%>
 
-				<h2>등록된 프로젝트가 없습니다.</h2>
+				<h2>승인대기 사용자가 없습니다.</h2>
 
 				<%
-					System.out.println("등록된 과거 프로젝트가 없습니다.");
+					System.out.println("승인대기 사용자가 없습니다.");
 					} else {
 
 						for (signupBean c : unapproved_list) {
