@@ -63,7 +63,7 @@ response.setHeader("Expires", "0");
 			<div class="form-group"></div>
 			<div class="form-group">
 				<label for="inputid" class="col-sm-4 control-label">ID</label>
-				<input type="text" class="col-sm-5 form-control" maxlength="8" max="8" style="width:200px;" name="user_id" placeholder="user_id">
+				<input type="text" class="col-sm-5 form-control" autofocus="autofocus" maxlength="8" max="8" style="width:200px;" name="user_id" placeholder="user_id">
 			</div>			
 			<div class="form-group">
       			<label for="inputPassword" class="col-sm-4 control-label">PW</label>
