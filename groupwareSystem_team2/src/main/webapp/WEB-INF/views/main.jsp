@@ -118,12 +118,13 @@
 		onclick="location.href='${pageContext.request.contextPath}/LoginController/showMemberPage'">개인
 		정보</button>
 		
-		<button class="btn btn-primary" style="width:200px; margin:10px;" type="button"
-		onclick="location.href='${pageContext.request.contextPath}/ProjectController/memberManagement'">인사관리</button>
+		
 		
 	<button class="btn btn-primary" style="width:200px; margin:10px;" type="button"
 		onclick="location.href='${pageContext.request.contextPath}/ProjectController/showDirectory'">인명부
 	</button>
+	<%-- <button class="btn btn-primary" style="width:200px; margin:10px;" type="button"
+		onclick="location.href='${pageContext.request.contextPath}/ProjectController/memberManagement'">인사관리</button>
 	<button class="btn btn-primary" style="width:200px; margin:10px;" type="button"
 		onclick="location.href='${pageContext.request.contextPath}/ProjectController/showProjectTable'">프로젝트
 	</button>
@@ -135,7 +136,7 @@
 		
 		<button class="btn btn-primary" style="width:200px; margin:10px;" type="button"
 		onclick="location.href='${pageContext.request.contextPath}/ProjectController/showMyProjectTable'">프로젝트
-		관리</button><!-- 임시 권한 부여임. -->
+		관리</button><!-- 임시 권한 부여임. --> --%>
 	<%
 		if (loginbean.getPermission() == 11) { // PM 권한
 				System.out.println(loginbean.getPermission() + ": PM 권한 로그인");
@@ -175,17 +176,32 @@
 	<button class="btn btn-primary" style="width:200px; margin:10px;" type="button"
 		onclick="location.href='${pageContext.request.contextPath}/ProjectController/showObtainTable'">수주
 		현황</button>
+		<button class="btn btn-primary" style="width:200px; margin:10px;" type="button"
+		onclick="location.href='${pageContext.request.contextPath}/ProjectController/memberManagement'">인사관리</button>
+	<button class="btn btn-primary" style="width:200px; margin:10px;" type="button"
+		onclick="location.href='${pageContext.request.contextPath}/ProjectController/showProjectTable'">프로젝트
+	</button>
+		
+		
+		
+		<button class="btn btn-primary" style="width:200px; margin:10px;" type="button"
+		onclick="location.href='${pageContext.request.contextPath}/ProjectController/showMyProjectTable'">프로젝트
+		관리</button>
 	
 	<%
 		} else if (loginbean.getDi() == 12) { //영업부 메뉴
-
-				//수주 현황
+%>
+	<button class="btn btn-primary" style="width:200px; margin:10px;" type="button"
+		onclick="location.href='${pageContext.request.contextPath}/ProjectController/showObtainTable'">수주
+		현황</button>
+	<% 		
 	%>
 	
 	<%
 		} else if (loginbean.getDi() == 15) { // 인사관리팀 메뉴
 	%>
-	<button class="btn btn-primary" style="width:200px;">인사 관리</button>
+	<button class="btn btn-primary" style="width:200px; margin:10px;" type="button"
+		onclick="location.href='${pageContext.request.contextPath}/ProjectController/memberManagement'">인사관리</button>
 	<%
 		//인사 관리
 			} else if (loginbean.getDi() == 13) {//총무팀 메뉴
@@ -194,13 +210,12 @@
 
 	<%
 		} else if (loginbean.getDi() == 17) { //개발팀
-				//업무 일지
 				//프로젝트
 	%>
 	<button class="btn btn-primary" style="width:200px; margin:10px;" type="button"
 		onclick="location.href='${pageContext.request.contextPath}/ProjectController/showMyProjectTable'">프로젝트
 		관리</button>
-	<button class="btn btn-primary" style="width:200px; margin:10px;">업무 일지</button>
+	
 	<%
 		}
 			if (loginbean.getPosition_Name() == 0 || loginbean.getDi() == 0) { //가입 대기 상태 
@@ -224,9 +239,9 @@
 
 	<!-- 공통 메뉴 -->
 
-	<button class="btn btn-primary" style="width:200px; margin:10px;">전자결재</button>
+<!-- 	<button class="btn btn-primary" style="width:200px; margin:10px;">전자결재</button>
 	<button class="btn btn-primary" style="width:200px; margin:10px;">메신저</button>
-	<button class="btn btn-primary" style="width:200px; margin:10px;">게시판</button>
+	<button class="btn btn-primary" style="width:200px; margin:10px;">게시판</button> -->
 	<%
 		} // 외부 인력 아닌 기본 공통 메뉴
 
