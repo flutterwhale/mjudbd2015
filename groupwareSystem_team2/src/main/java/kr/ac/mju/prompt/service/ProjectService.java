@@ -27,13 +27,13 @@ public class ProjectService {
 	/*
 	 * 프로젝트 관련 서비스
 	 */
-	public int deleteProject(String pid){
+	public int deleteProject(String pid) {
 		logger.info("============= 프로젝트 삭제하기 Service=============");
-		logger.info("삭제할 project id"+pid);
-		
+		logger.info("삭제할 project id" + pid);
+
 		return projectDAO.deleteProject(pid);
 	}
-	
+
 	public ArrayList<projectBean> getAllProjects() {
 		// TODO Auto-generated method stub
 		logger.info("=============모든 현재 프로젝트 가져오기 Service=============");
@@ -56,7 +56,7 @@ public class ProjectService {
 		return projectDAO.intsertProject(pid, obtainBean);
 	}
 
-	public projectBean getProjectInfo(String projectid){
+	public projectBean getProjectInfo(String projectid) {
 		logger.info("=============getProjectInfo Service=============");
 		logger.info("Show Project info  projectid : " + projectid);
 		return projectDAO.getProject(projectid);
@@ -69,9 +69,8 @@ public class ProjectService {
 
 		return projectDAO.getProjectSchedule(pid);
 	}
-	
-	
-	//프로젝트 일정.
+
+	// 프로젝트 일정.
 	public PscheduleBean getProjectSchedule(String sid) {
 		// TODO Auto-generated method stub
 		logger.info("select ProjectSchedule  sid : " + sid);
@@ -84,7 +83,7 @@ public class ProjectService {
 		logger.info("deleteProjectSchedule  sid : " + sid);
 		return projectDAO.deleteProjectSchedule(sid);
 	}
-	
+
 	public int insertProjectSchedule(PscheduleBean psb) {
 		// TODO Auto-generated method stub
 
@@ -96,81 +95,60 @@ public class ProjectService {
 
 		return projectDAO.updateProjectSchedule(psb);
 	}
-	
-/*	// 개인 일정 추가
-	public UscheduleBean getProjectSchedule(String uid) {
-		// TODO Auto-generated method stub
-		logger.info("select ProjectSchedule  sid : " + uid);
 
-		return projectDAO.showProjectSchedule(sid);
-	}
-
-	public int deleteProjectSchedule(String sid) {
-		// TODO Auto-generated method stub
-		logger.info("deleteProjectSchedule  sid : " + sid);
-		return projectDAO.deleteProjectSchedule(sid);
-	}
-
-	public int updateProjectSchedule(PscheduleBean psb) {
-		// TODO Auto-generated method stub
-
-		return projectDAO.updateProjectSchedule(psb);
-	}*/
-	
-	
 	public ArrayList<UscheduleBean> getUserScheduleList(String pid) {
 		// TODO Auto-generated method stub
 		logger.info("=============UserScheduleList Service=============");
 		logger.info("프로젝트 개인 일정 목록");
 
-		return projectDAO.getUserSchedule(pid);
+		return projectDAO.getUserScheduleList(pid);
 	}
-	
-	
+
 	/*
 	 * 유저 정보 가져 오기 서비스(김용민)
 	 */
 
-	
 	public ArrayList<signupBean> getMember_developer(String pmid, String pid) {
 		// TODO Auto-generated method stub
 		logger.info("=============개발자 리스트가져오기 Service=============");
 		logger.info("list에서 PM 제거 ");
 		return projectDAO.getRoleDepartUser(pmid, pid);
 	}
-	
-	//김용민
-	public void setProjectRole(String uid,String start, String end,String role, String pid) {
+
+	// 김용민
+	public void setProjectRole(String uid, String start, String end, String role, String pid) {
 		// TODO Auto-generated method stub
 		logger.info("=============개발자 프로젝트에 등록하기 Service=============");
 
-		projectDAO.setProjectRole(uid,start,end, role,pid);
+		projectDAO.setProjectRole(uid, start, end, role, pid);
 	}
-	//김용민
-		public void delProjectRole(String uid, String pid) {
-			// TODO Auto-generated method stub
-			logger.info("=============개발자 프로젝트에 등록하기 Service=============");
 
-			projectDAO.delProjectRole(uid,pid);
-		}
-	//김용민 평가할 대상 리스트 불러오기	
-		public ArrayList setProjectEvalList(String Appraiser, String pid) {
-			// TODO Auto-generated method stub
-			logger.info("=============평가 리스트 불러오기 Service=============");
-			
-			return projectDAO.setProjectEvalList(Appraiser,pid);
-			
+	// 김용민
+	public void delProjectRole(String uid, String pid) {
+		// TODO Auto-generated method stub
+		logger.info("=============개발자 프로젝트에 등록하기 Service=============");
+
+		projectDAO.delProjectRole(uid, pid);
 	}
-		
-	//김용민
-		public void setProjectEval(String Appraiser, String wg, String cg, String tg, String contents, String is_pm, String uid, String pid, String role) {
-			// TODO Auto-generated method stub
-			logger.info("=============평가 테이블 등록하기Service=============");
-			
-			projectDAO.setProjectEval(Appraiser,wg,cg,tg,contents,is_pm,uid,pid,role);
-	}	
-		
-			
+
+	// 김용민 평가할 대상 리스트 불러오기
+	public ArrayList setProjectEvalList(String Appraiser, String pid) {
+		// TODO Auto-generated method stub
+		logger.info("=============평가 리스트 불러오기 Service=============");
+
+		return projectDAO.setProjectEvalList(Appraiser, pid);
+
+	}
+
+	// 김용민
+	public void setProjectEval(String Appraiser, String wg, String cg, String tg, String contents, String is_pm,
+			String uid, String pid, String role) {
+		// TODO Auto-generated method stub
+		logger.info("=============평가 테이블 등록하기Service=============");
+
+		projectDAO.setProjectEval(Appraiser, wg, cg, tg, contents, is_pm, uid, pid, role);
+	}
+
 	public ArrayList<UserBean> getMember_permission(int p) {
 		// TODO Auto-generated method stub
 		logger.info("=============PM List 가져오기 Service=============");
@@ -237,41 +215,67 @@ public class ProjectService {
 		return projectDAO.updateProjectInfo(pBean);
 	}
 
-	//모든 멤버 출력 
+	// 모든 멤버 출력
 	public ArrayList<signupBean> allMemberList() {
 		// TODO Auto-generated method stub
 		logger.info("=============allMemberList Service=============");
-		
+
 		return projectDAO.getAllMembers();
 	}
+
 	public int moveDepartment(String id, String di, String po, String pe) {
 		// TODO Auto-generated method stub
 		logger.info("=============allMemberList Service=============");
-		
-		return projectDAO.moveDepart(id,di,po,pe);
+
+		return projectDAO.moveDepart(id, di, po, pe);
 	}
 
 	public HashMap getDepartInfo() {
 		// TODO Auto-generated method stub
 		return projectDAO.getDepartInfo();
 	}
-	
-	public ArrayList<userProjectBean> getAllMyProjects(String id) {
-	      // TODO Auto-generated method stub
-	      logger.info("=============나의 현재 프로젝트 가져오기 Service=============");
-	      logger.info("getAllMyProjects :" + id);
-	      return projectDAO.getAllMyProject(id);
-	   }
 
-	   public ArrayList<userProjectBean> getPastMyProjects(String id) {
-	      // TODO Auto-generated method stub
-	      logger.info("=============나의  과거 프로젝트 가져오기 Service=============");
-	      logger.info("getPastMyProjects :" + id);
-	      return projectDAO.getPastMyProject(id);
-	   }
-	   
-	   //김용민 (프로젝트 평가) 
-	   public void setProjectOrderEval(String pid, String Project_Comment,String Score){
-		   projectDAO.setProjectOrderEval(pid,Project_Comment,Score);
-	   }
+	public ArrayList<userProjectBean> getAllMyProjects(String id) {
+		// TODO Auto-generated method stub
+		logger.info("=============나의 현재 프로젝트 가져오기 Service=============");
+		logger.info("getAllMyProjects :" + id);
+		return projectDAO.getAllMyProject(id);
+	}
+
+	public ArrayList<userProjectBean> getPastMyProjects(String id) {
+		// TODO Auto-generated method stub
+		logger.info("=============나의  과거 프로젝트 가져오기 Service=============");
+		logger.info("getPastMyProjects :" + id);
+		return projectDAO.getPastMyProject(id);
+	}
+
+	// 김용민 (프로젝트 평가)
+	public void setProjectOrderEval(String pid, String Project_Comment, String Score) {
+		projectDAO.setProjectOrderEval(pid, Project_Comment, Score);
+	}
+
+	// 유저 스케쥴 등록
+	public int insertUserSchedule(UscheduleBean usB) {
+		// TODO Auto-generated method stub
+		return projectDAO.insertUserSchedule(usB);
+	}
+
+	public UscheduleBean getUserSchedule(String uid, String pid) {
+		// TODO Auto-generated method stub
+		logger.info("select ProjectSchedule  uid : " + uid + " pid " + pid);
+
+		return projectDAO.showUserSchedule(uid, pid);
+	}
+
+	public int deleteUserSchedule(String sid) {
+		// TODO Auto-generated method stub
+		logger.info("deleteProjectSchedule  sid : " + sid);
+		return projectDAO.deleteUserSchedule(sid);
+	}
+
+	public int updateProjectSchedule(UscheduleBean usb) {
+		// TODO Auto-generated method stub
+
+		return projectDAO.updateProjectSchedule(usb);
+	}
 }

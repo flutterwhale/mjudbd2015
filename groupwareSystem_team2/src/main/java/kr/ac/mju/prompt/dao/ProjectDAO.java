@@ -610,7 +610,7 @@ public class ProjectDAO {
 	}
 
 	// 현재 프로젝트의 개인 일정 조회
-	public ArrayList<UscheduleBean> getUserSchedule(String pid) {
+	public ArrayList<UscheduleBean> getUserScheduleList(String pid) {
 		// TODO Auto-generated method stub
 		logger.info("=============현재 프로젝트의 개인 일정 조회 =============");
 		ArrayList<UscheduleBean> UserScheduleList = new ArrayList<UscheduleBean>();
@@ -1025,16 +1025,17 @@ public class ProjectDAO {
 		ResultSet rs = null, rs2 = null;
 		String query1 = null;
 		try {
-			
+
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection("jdbc:mysql://117.123.66.137:8089/dbd2015", "park", "pjw49064215");
 			stmt = conn.createStatement();
-			
-			query1 = "SELECT t_role.User_Identifier,t_user.NAME,t_role.Project_Role,t_role.Project_Identifier,t_role.Eval_Check,t_project.Project_Name,t_project.Projectmanager_Identifier FROM dbd2015.t_role Join dbd2015.t_user on t_role.User_Identifier=t_user.User_Identifier Join dbd2015.t_project on t_role.Project_Identifier=t_project.Project_Identifier WHERE t_role.Project_Identifier = "+pid+" and t_role.User_Identifier != "+Appraiser+";";
-			
+
+			query1 = "SELECT t_role.User_Identifier,t_user.NAME,t_role.Project_Role,t_role.Project_Identifier,t_role.Eval_Check,t_project.Project_Name,t_project.Projectmanager_Identifier FROM dbd2015.t_role Join dbd2015.t_user on t_role.User_Identifier=t_user.User_Identifier Join dbd2015.t_project on t_role.Project_Identifier=t_project.Project_Identifier WHERE t_role.Project_Identifier = "
+					+ pid + " and t_role.User_Identifier != " + Appraiser + ";";
+
 			System.out.println("평가테이블에 넣을 기본정보 수신 : 쿼리1 > " + query1);
 			rs2 = stmt.executeQuery(query1);
-			
+
 			while (rs2.next()) {
 				Hashtable evalUser = new Hashtable();
 				evalUser.put("User_Identifier", rs2.getInt("User_Identifier"));
@@ -1046,7 +1047,7 @@ public class ProjectDAO {
 				evalUser.put("Eval_Check", rs2.getString("Eval_Check"));
 				evalRoleData.add(evalUser);
 			}
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1079,50 +1080,55 @@ public class ProjectDAO {
 	}
 
 	// 김용민(평가 등록하기)
-	public void setProjectEval(String Appraiser, String wg, String cg, String tg, String contents, String is_pm, String uid, String pid, String role) {
+	public void setProjectEval(String Appraiser, String wg, String cg, String tg, String contents, String is_pm,
+			String uid, String pid, String role) {
 		// TODO Auto-generated method stub
 		logger.info("=============프로젝트 평가 추가 하는 곳=============");
-		System.out.println("파라메터 전달" +Appraiser+" "+wg+" "+cg+" "+tg+" "+contents+" "+is_pm+" "+uid+" "+pid+" "+role);
-		
+		System.out.println("파라메터 전달" + Appraiser + " " + wg + " " + cg + " " + tg + " " + contents + " " + is_pm + " "
+				+ uid + " " + pid + " " + role);
+
 		Statement stmt = null;
 		Connection conn = null;
-		ResultSet rs=null,rs2 = null;
-		String query1 =null;
+		ResultSet rs = null, rs2 = null;
+		String query1 = null;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection("jdbc:mysql://117.123.66.137:8089/dbd2015", "park", "pjw49064215");
 			stmt = conn.createStatement();
-			
+
 			query1 = "INSERT INTO `dbd2015`.`t_evaluation` (`Appraiser`, `Work_Performance_Grade`, `Communication_Capacity`, `Technic_Grade`, `Evaluation_Contents`, `ISProjectmanager`, `User_Identifier`, `Project_Identifier`, `Project_Role`) "
-					+ "VALUES ('"+Appraiser+"', '"+wg+"', '"+cg+"', '"+tg+"', '"+contents+"', '"+is_pm+"','"+uid+"', '"+pid+"', '"+role+"');";
+					+ "VALUES ('" + Appraiser + "', '" + wg + "', '" + cg + "', '" + tg + "', '" + contents + "', '"
+					+ is_pm + "','" + uid + "', '" + pid + "', '" + role + "');";
 			System.out.println("Insert to role : 쿼리1 > " + query1);
-			if(stmt.executeUpdate(query1)==0){
+			if (stmt.executeUpdate(query1) == 0) {
 				System.out.println("평가테이블에 등록 실패");
 			}
-			
-			query1 = "UPDATE `dbd2015`.`t_role` SET `Eval_Check`='Y' WHERE `User_Identifier`='"+uid+"' and`Project_Identifier`='"+pid+"';";
+
+			query1 = "UPDATE `dbd2015`.`t_role` SET `Eval_Check`='Y' WHERE `User_Identifier`='" + uid
+					+ "' and`Project_Identifier`='" + pid + "';";
 			System.out.println("Insert to role : 쿼리1 > " + query1);
-			if(stmt.executeUpdate(query1)==0){
+			if (stmt.executeUpdate(query1) == 0) {
 				System.out.println("평가확인에 등록 실패");
 			}
-			
-			query1 = "SELECT count(Eval_Check) count FROM dbd2015.t_role WHERE Eval_Check='N' and Project_Identifier='"+pid+"';";
+
+			query1 = "SELECT count(Eval_Check) count FROM dbd2015.t_role WHERE Eval_Check='N' and Project_Identifier='"
+					+ pid + "';";
 			System.out.println("쿼리1 > " + query1);
 			rs = stmt.executeQuery(query1);
-			
-			query1 = "SELECT count(Evaluation_Score) count FROM dbd2015.t_project where Evaluation_Score >0 and Project_Identifier = '"+pid+"';";
+
+			query1 = "SELECT count(Evaluation_Score) count FROM dbd2015.t_project where Evaluation_Score >0 and Project_Identifier = '"
+					+ pid + "';";
 			System.out.println("쿼리1 > " + query1);
 			rs2 = stmt.executeQuery(query1);
-			
-			if(rs.first()&&rs2.first()){
-				if(rs.getInt("count")==0&&rs2.getInt("count")>0){
-					query1 = "UPDATE `dbd2015`.`t_project` SET `Status`='"+15+"' WHERE `Project_Identifier`='"+pid+"';";
+
+			if (rs.first() && rs2.first()) {
+				if (rs.getInt("count") == 0 && rs2.getInt("count") > 0) {
+					query1 = "UPDATE `dbd2015`.`t_project` SET `Status`='" + 15 + "' WHERE `Project_Identifier`='" + pid
+							+ "';";
 					System.out.println("평가가 모두 종료되어 프로젝트 역시 종료로 처리하였습니다.");
 				}
 			}
-	        
-			
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1150,7 +1156,7 @@ public class ProjectDAO {
 			}
 
 		}
-	
+
 	}
 	// permission 으로 유저 리스트 조회 처리
 
@@ -1523,8 +1529,6 @@ public class ProjectDAO {
 		return result;
 	}
 
-	// 제안서 수정
-
 	// 제안서 정보 변경 처리
 	public int updateObtain(obtainBean ob) {
 		logger.info("=============제안서 정보 변경 처리 =============");
@@ -1546,8 +1550,7 @@ public class ProjectDAO {
 					+ "', `Comment`='" + ob.getComment() + "', `Present_Status`='" + ob.getPresent_Status()
 					+ "', `location`='" + ob.getLocation() + "', `End_Date`='" + ob.getEnd_Date() + "', `Start_Date`='"
 					+ ob.getStart_Date() + "' ,`Order_Company`= '" + ob.getOrder_Company()
-					+ "' WHERE `Obtain_Order_Identifier`='" + ob.getObtain_Order_Identifier()
-					+ "';";
+					+ "' WHERE `Obtain_Order_Identifier`='" + ob.getObtain_Order_Identifier() + "';";
 
 			System.out.println("update query? : " + query);
 			result = stmt.executeUpdate(query);
@@ -1657,9 +1660,9 @@ public class ProjectDAO {
 			conn = DriverManager.getConnection("jdbc:mysql://117.123.66.137:8089/dbd2015", "park", "pjw49064215");
 			stmt = conn.createStatement();
 			String query = null;
-			if (pe==null) {
-				
-				System.out.println(" permission 없음 " );
+			if (pe == null) {
+
+				System.out.println(" permission 없음 ");
 				query = "UPDATE `dbd2015`.`t_position` SET `Department_Identifier`='" + di + "', `Position_Name`='" + po
 						+ "' WHERE `User_Identifier`='" + id + "';";
 			} else {
@@ -1943,72 +1946,119 @@ public class ProjectDAO {
 		return result;
 	}
 
-		 //김용민 고객평가 추가
-		   public void setProjectOrderEval(String pid, String Project_Comment,String Score) {
-				// TODO Auto-generated method stub
-				logger.info("=============프로젝트 고객 평가 추가 하는 곳=============");
-				System.out.println("파라메터 전달" +pid);
-				
-				Statement stmt = null;
-				Connection conn = null;
-				ResultSet rs=null,rs2 = null;
-				String query1 =null;
-				try {
-					Class.forName("com.mysql.jdbc.Driver");
-					conn = DriverManager.getConnection("jdbc:mysql://117.123.66.137:8089/dbd2015", "park", "pjw49064215");
-					stmt = conn.createStatement();
-					
-					query1 = "UPDATE `dbd2015`.`t_project` SET `Project_Evaluation`='"+Project_Comment+"', `Evaluation_Score`='"+Score+"' WHERE `Project_Identifier`='"+pid+"';";
-					System.out.println("UPDATE to role : 쿼리1 > " + query1);
-					if(stmt.executeUpdate(query1)==0){
-						System.out.println("고객평가 실패");
-					}
-					
-					query1 = "SELECT count(Eval_Check) count FROM dbd2015.t_role WHERE Eval_Check='N' and Project_Identifier='"+pid+"';";
-					System.out.println("쿼리1 > " + query1);
-					rs = stmt.executeQuery(query1);
-					
-					if(rs.first()){
-						if(rs.getInt("count")==0){
-							query1 = "UPDATE `dbd2015`.`t_project` SET `Status`='"+15+"' WHERE `Project_Identifier`='"+pid+"';";
-							System.out.println("평가가 모두 종료되어 프로젝트 역시 종료로 처리하였습니다.");
-						}
-						if(stmt.executeUpdate(query1)==0){
-							System.out.println("프로젝트 종료 실패");
-						}
-					}
-			         
-							
-					
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (ClassNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} finally {
-					try {
-						if (rs != null) {
-							rs.close();
-						}
-						if (rs2 != null) {
-							rs2.close();
-						}
-						if (stmt != null) {
-							stmt.close();
-						}
+	// 김용민 고객평가 추가
+	public void setProjectOrderEval(String pid, String Project_Comment, String Score) {
+		// TODO Auto-generated method stub
+		logger.info("=============프로젝트 고객 평가 추가 하는 곳=============");
+		System.out.println("파라메터 전달" + pid);
 
-						if (conn != null) {
-							conn.close();
-						}
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+		Statement stmt = null;
+		Connection conn = null;
+		ResultSet rs = null, rs2 = null;
+		String query1 = null;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = DriverManager.getConnection("jdbc:mysql://117.123.66.137:8089/dbd2015", "park", "pjw49064215");
+			stmt = conn.createStatement();
 
-				}
-			
+			query1 = "UPDATE `dbd2015`.`t_project` SET `Project_Evaluation`='" + Project_Comment
+					+ "', `Evaluation_Score`='" + Score + "' WHERE `Project_Identifier`='" + pid + "';";
+			System.out.println("UPDATE to role : 쿼리1 > " + query1);
+			if (stmt.executeUpdate(query1) == 0) {
+				System.out.println("고객평가 실패");
 			}
-		   
-		   
+
+			query1 = "SELECT count(Eval_Check) count FROM dbd2015.t_role WHERE Eval_Check='N' and Project_Identifier='"
+					+ pid + "';";
+			System.out.println("쿼리1 > " + query1);
+			rs = stmt.executeQuery(query1);
+
+			if (rs.first()) {
+				if (rs.getInt("count") == 0) {
+					query1 = "UPDATE `dbd2015`.`t_project` SET `Status`='" + 15 + "' WHERE `Project_Identifier`='" + pid
+							+ "';";
+					System.out.println("평가가 모두 종료되어 프로젝트 역시 종료로 처리하였습니다.");
+				}
+				if (stmt.executeUpdate(query1) == 0) {
+					System.out.println("프로젝트 종료 실패");
+				}
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (rs2 != null) {
+					rs2.close();
+				}
+				if (stmt != null) {
+					stmt.close();
+				}
+
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+
+	}
+
+	public int insertUserSchedule(UscheduleBean usB) {
+		logger.info("=============프로젝트 일정 등록 =============");
+		logger.info("insertProjectSchedule name : " + usB.getWork_Name());
+		// TODO Auto-generated method stub
+		Statement stmt = null;
+		Connection conn = null;
+		int result = 0;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = DriverManager.getConnection("jdbc:mysql://117.123.66.137:8089/dbd2015", "park", "pjw49064215");
+			stmt = conn.createStatement();
+
+			String query = "INSERT INTO `dbd2015`.`t_user_schedule` (`End_Date`, `Work_Name`, `Start_Date`, `User_Identifier`, `Project_Identifier`, `Project_Role`, `Work_descriptions`, `Progress_Percentage`) VALUES ('"
+					+ usB.getEnd_Date() + "', '" + usB.getWork_Name() + "', '" + usB.getStart_Date() + "', '"
+					+ usB.getUser_Identifier() + "', '" + usB.getProject_Identifier() + "', '" + usB.getProject_Role()
+					+ "', '" + usB.getWork_descriptions() + " ', '" + usB.getProgress_Percentage() + "';)";
+
+			System.out.println("insert query? : " + query);
+			result = stmt.executeUpdate(query);
+			System.out.println("insert result? " + result);
+
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+
+	public UscheduleBean showUserSchedule(String uid, String pid) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public int deleteUserSchedule(String sid) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public int updateProjectSchedule(UscheduleBean usb) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

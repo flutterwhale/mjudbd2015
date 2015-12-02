@@ -63,6 +63,7 @@
 					<td width="200px">이름</td>
 					<td width="200px">직급</td>
 					<td width="200px">역할</td>
+					<td width="200px">업무 제목</td>
 					<td width="200px">시작일</td>
 					<td width="200px">종료일</td>
 					<td width="200px">관리</td>
@@ -72,6 +73,7 @@
 					<td>박동현</td>
 					<td>회장</td>
 					<td>PM</td>
+					<td><input type="text" name="workname"></td>
 					<td><input type="date" id="start_date" name="start_date"
 						max="2200-12-31" value="<%=now%>"></td>
 					<td><input type="date" id="end_date" name="end_date"

@@ -797,16 +797,17 @@ public class ProjectController {
 	// 유저 일정 관리 하기
 	@RequestMapping(value = "/ProjectController/showUserSchedule", method = RequestMethod.GET)
 	public ModelAndView showUserSchedule(HttpSession session, HttpServletRequest request) {
-		logger.info("newUserSchedulePage:유저 스케쥴 page" + request.getParameter("pid"));
+		logger.info("newUserSchedulePage:유저 스케쥴  " + request.getParameter("pid"));
 		logger.info("유저 스케쥴 관리 화면 ");
 
-		System.out.println(" sid? " + request.getParameter("sid"));
+		System.out.println("uid? " + request.getParameter("uid"));
 
 		ModelAndView model = new ModelAndView();
 
 		model.setViewName("userSchedule"); // jsp 이름 (view이름)
-		model.addObject("sid", request.getParameter("sid"));
-		model.addObject("projectSchedule", projectService.getProjectSchedule(request.getParameter("sid")));
+		model.addObject("pid", request.getParameter("pid"));
+		model.addObject("uid", request.getParameter("uid"));
+		model.addObject("projectSchedule", projectService.getProjectSchedule(request.getParameter("pid")));
 		return model;
 
 	}
@@ -847,19 +848,20 @@ public class ProjectController {
 		java.sql.Date sqlStartDate = new java.sql.Date(sdateparsed.getTime());
 		java.sql.Date sqlEndDate = new java.sql.Date(edateparsed.getTime());
 
-		PscheduleBean psB = new PscheduleBean();
+		UscheduleBean usB = new UscheduleBean();
 		System.out.println(">> " + sqlStartDate + " / " + sqlEndDate + " " + session.getAttribute("session_name") + " "
 				+ request.getParameter("subject") + " " + request.getParameter("contents"));
-		psB.setProject_Identifier(Integer.parseInt(request.getParameter("pid")));
-		psB.setSchedule_Name(request.getParameter("Schedule_Name"));
-		psB.setProgress_Percentage(Integer.parseInt(request.getParameter("Progress_Percentage")));
-		psB.setStatus_Process(Integer.parseInt(request.getParameter("Status_Process")));// 기본
+		
+		
+		usB.setProject_Identifier(Integer.parseInt(request.getParameter("pid")));
+		usB.setWork_Name(request.getParameter("Work_Name"));
+		usB.setProgress_Percentage(Integer.parseInt(request.getParameter("Progress_Percentage")));
 																						// 값
-		psB.setStart_Date((java.sql.Date) sqlStartDate);
-		psB.setEnd_Date((java.sql.Date) sqlEndDate);
-		psB.setContents(request.getParameter("contents"));
+		usB.setStart_Date((java.sql.Date) sqlStartDate);
+		usB.setEnd_Date((java.sql.Date) sqlEndDate);
+		usB.setWork_descriptions(request.getParameter("Work_descriptions"));
 
-		System.out.println(" insert !!!!! 결과 :" + projectService.insertProjectSchedule(psB));
+		System.out.println(" insert !!!!! 결과 :" + projectService.insertUserSchedule(usB));
 		ModelAndView model = new ModelAndView();
 		model.setViewName("projectSchedule"); // jsp 이름 (view이름)
 		// model.addObject("projectScheduleList",

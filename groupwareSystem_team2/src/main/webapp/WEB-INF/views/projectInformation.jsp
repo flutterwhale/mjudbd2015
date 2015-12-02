@@ -202,7 +202,7 @@ function move() {
 		<div class="project_schedule">
 			<h3>프로젝트 일정</h3>
 			<%
-				if (session.getAttribute("session_name").equals(pBean.getProjectmanager_Identifier()) && !(pBean.getStatus() == 14 || pBean.getStatus() == 15) || (sUinfo.getMyUser().getDi() == 10)) {
+				if (session.getAttribute("session_name").equals(pBean.getProjectmanager_Identifier()) && !(pBean.getStatus() == 14 || pBean.getStatus() == 15) ) {
 			%>
 			<button class="btn btn-primary" type="button"
 				onclick="location.href='${pageContext.request.contextPath}/ProjectController/addProjectSchedulePage?pid=<%=pBean.getProject_Identifier()%>'">일정
@@ -269,14 +269,7 @@ function move() {
 			<h3>개인 일정</h3>
 			<table class="table table-striped table-hover" border="1"
 				width="920px">
-				<%
-				if (session.getAttribute("session_name").equals(pBean.getProjectmanager_Identifier()) && !(pBean.getStatus() == 14 || pBean.getStatus() == 15) || (sUinfo.getMyUser().getDi() == 11)) {
-			%>
-			<button class="btn btn-primary" type="button"
-				onclick="location.href='${pageContext.request.contextPath}//ProjectController/showUserScheduleAdd'">개인 일정 추가</button>
-			<%
-				}
-			%>
+			
 				
 				<tr>
 					<th width="70px">schedule_ID</th>
@@ -285,6 +278,7 @@ function move() {
 					<td width="170px">시작 날짜</td>
 					<td width="150px">종료 날짜</td>
 					<td width="250px">현재 상태</td>
+					<td width="250px">관리</td>
 				</tr>
 				<%
 					if (allProjectSchedule.isEmpty()) {
@@ -300,16 +294,15 @@ function move() {
 				%>
 				<tr>
 					
-					
 					<td><%=c.getUser_Schedule_Identifier()%></td>
-						<td><%=c.getUser_Identifier()%></td>
+						<td><%=c.getUser_Identifier()%><input type="hidden" name="uis" value="<%=c.getUser_Identifier()%>" ></td>
 					<td><%=c.getWork_Name()%></td>
 					
 					<td><%=c.getStart_Date()%></td>
 					<td><%=c.getEnd_Date()%></td>
 					<td><%=c.getProgress_Percentage()%>%</td>
 					<%
-						if (session.getAttribute("session_name").equals(pBean.getProjectmanager_Identifier())) {
+					if (session.getAttribute("session_name").equals(pBean.getProjectmanager_Identifier()) && !(pBean.getStatus() == 14 || pBean.getStatus() == 15)) {
 					%>
 					
 					<td><button type="submit" class="btn btn-success"
@@ -328,7 +321,7 @@ function move() {
 		<div class="project_user">
 			<h3>투입 인력</h3>
 			<%
-				if (session.getAttribute("session_name").equals(pBean.getProjectmanager_Identifier()) && !(pBean.getStatus() == 14 || pBean.getStatus() == 15) || (sUinfo.getMyUser().getDi() == 10)) {
+				if (session.getAttribute("session_name").equals(pBean.getProjectmanager_Identifier()) && !(pBean.getStatus() == 14 || pBean.getStatus() == 15) ) {
 			%>
 			<button class="btn btn-primary" type="button"
 				onclick="location.href='${pageContext.request.contextPath}/ProjectController/showProjectMember?pm_id=<%=pBean.getProjectmanager_Identifier()%>&pid=<%=pBean.getProject_Identifier()%>'">인원
@@ -349,7 +342,7 @@ function move() {
 					<th width="150px">개인 일정 등록</th>
 					
 					<%
-						if (session.getAttribute("session_name").equals(pBean.getProjectmanager_Identifier())) {
+					if (session.getAttribute("session_name").equals(pBean.getProjectmanager_Identifier()) && !(pBean.getStatus() == 14 || pBean.getStatus() == 15) ){
 					%>
 					<th width="150px">회수</th>
 					<%
@@ -378,15 +371,13 @@ function move() {
 					<button class="btn btn-primary" type="button" id="button<%=i%>" onclick="location.href='${pageContext.request.contextPath}/ProjectController/showUserSchedule?uid=<%=((Hashtable)(pBean.getRole().get(i))).get("User_Identifier")%>&pid=<%=pBean.getProject_Identifier()%>'">일정 추가</button></td>
 						</td>
 					<%
-					if (session.getAttribute("session_name").equals(pBean.getProjectmanager_Identifier()) && !(pBean.getStatus() == 14 || pBean.getStatus() == 15) || (sUinfo.getMyUser().getDi() == 10)){
+					if (session.getAttribute("session_name").equals(pBean.getProjectmanager_Identifier()) && !(pBean.getStatus() == 14 || pBean.getStatus() == 15) ){
 					%>
 					<td><button class="btn btn-primary" type="button" id="button<%=i%>" onclick="location.href='${pageContext.request.contextPath}/ProjectController/projectUserDel?uid=<%=((Hashtable)(pBean.getRole().get(i))).get("User_Identifier")%>&pid=<%=pBean.getProject_Identifier()%>'">삭제</button></td>
-					<%} else {%>
-					<td>-</td>
-					<%} %>
+					
 				</tr>
 				<%
-					}
+					}}
 				%>
 
 
