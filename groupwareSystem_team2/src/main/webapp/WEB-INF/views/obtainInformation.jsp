@@ -5,8 +5,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@include file="mapper.jsp"%>
 <%@include file="session.jsp"%>
+<%@include file="mapper.jsp"%>
 <%@ page import="kr.ac.mju.prompt.model.UserInfo"%>
 <%@ page import="kr.ac.mju.prompt.model.UserBean"%>
 <%@page import="org.apache.commons.beanutils.BeanUtils"%>
@@ -14,8 +14,6 @@
 <%@page import="java.util.*"%>
 <%
 	obtainBean oBean = (obtainBean) request.getAttribute("obtainBean");
-	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-	String now = sdf.format(new Date());
 %>
 
 
@@ -102,9 +100,9 @@
 						<td><input type="text" name="subject"
 							value="<%=oBean.getObtain_Name()%>"></td>
 						<td><input type="date" id="start_date" name="start_date"
-							min="${now}" max="2200-12-31" value="<%=oBean.getStart_Date()%>"></td>
+							 max="2200-12-31" value="<%=oBean.getStart_Date()%>"></td>
 						<td><input type="date" id="end_date" name="end_date"
-							min="${now}" max="2200-12-31" value="<%=oBean.getEnd_Date()%>"></td>
+							 max="2200-12-31" value="<%=oBean.getEnd_Date()%>"></td>
 						<td><input type="text" name="order_company"
 							value="<%=oBean.getOrder_Company()%>"></td>
 						<td><input type="text" name="location"

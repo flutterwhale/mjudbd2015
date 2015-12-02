@@ -10,12 +10,10 @@
 <%@ page import="kr.ac.mju.prompt.model.UserInfo"%>
 <%@ page import="kr.ac.mju.prompt.model.UserBean"%>
 <%@page import="org.apache.commons.beanutils.BeanUtils"%>
-
+<%@include file="mapper.jsp"%>
 <%
 	obtainBean oBean = (obtainBean) request.getAttribute("obtainBean");
 
-	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-	String now = sdf.format(new Date());
 %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -84,9 +82,9 @@
 						</td>
 						<td><input type="text" name="subject" style="width: 70%"></td>
 						<td><input type="date" id="start_date" name="start_date"
-							min="${now}" max="2200-12-31" value="<%=now%>"></td>
+							max="2200-12-31" value="<%=now%>"></td>
 						<td><input type="date" id="end_date" name="end_date"
-							min="${now}" max="2200-12-31" value="<%=now%>"></td>
+							max="2200-12-31" value="<%=now%>"></td>
 						<td><input type="text" name="order_company"></td>
 						<td><input type="text" name="location"></td>
 					</tr>

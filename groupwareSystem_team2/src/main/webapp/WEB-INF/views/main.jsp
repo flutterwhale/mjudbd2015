@@ -10,9 +10,6 @@
 <%@ page import="kr.ac.mju.prompt.model.UserBean"%>
 <%@page import="org.apache.commons.beanutils.BeanUtils"%>
 <%@ page import="java.util.Date" %>
-<%
- Date now = new Date();
-%>
 <jsp:useBean id="loginbean" class="kr.ac.mju.prompt.model.UserBean"
 		scope="session" />
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">

@@ -19,7 +19,6 @@
 			System.out.println("===============세션정보 없음===============");
 			System.out.println("===============home 으로================");
 
-			//	response.sendRedirect("home");
 	%>
 
 	<jsp:forward page="/" />

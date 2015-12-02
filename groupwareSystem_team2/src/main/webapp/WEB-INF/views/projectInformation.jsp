@@ -40,8 +40,6 @@
 			.getAttribute("projectScheduleList");
 	ArrayList<UscheduleBean> alluschedule = (ArrayList<UscheduleBean>) request.getAttribute("userScheduleList");
 	projectBean pBean = (projectBean) request.getAttribute("projectInfo");
-	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-	String now = sdf.format(new Date());
 
 	//프로젝트 투입인원인지 파악하기 위하여 사용함.
 	boolean project_role_user = false;
@@ -134,12 +132,12 @@ function move() {
 					<tr>
 						<th>프로젝트 시작 날짜</th>
 						<td><input type="hidden" id="start_date" name="start_date"
-							min="${now}" max="2200-12-31" value="<%=pBean.getStart_Date()%>"><%=pBean.getStart_Date()%></td>
+							max="2200-12-31" value="<%=pBean.getStart_Date()%>"><%=pBean.getStart_Date()%></td>
 					</tr>
 					<tr>
 						<th>프로젝트 종료 날짜</th>
 						<td><input type="date" id="end_date" name="end_date"
-							min="${now}" max="2200-12-31" value="<%=pBean.getEnd_Date()%>"></td>
+							 max="2200-12-31" value="<%=pBean.getEnd_Date()%>"></td>
 					</tr>
 					<tr>
 						<th>부가 설명</th>

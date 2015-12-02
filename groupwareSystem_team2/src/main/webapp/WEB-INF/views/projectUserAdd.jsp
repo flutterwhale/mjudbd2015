@@ -32,8 +32,6 @@
 	signupBean showBean = (signupBean)request.getAttribute("showBean");	
 	session.setAttribute("showBean", showBean);	
 	ArrayList<signupBean> developerlist = (ArrayList<signupBean>)request.getAttribute("developerlist");
-	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-	String now = sdf.format(new Date());
 	//ArrayList<UserBean> developerlist = (ArrayList<UserBean>)request.getAttribute("developerlist");
 //	System.out.println("개발자 리스트는: "+developerlist.get(0).getDi());
 	%>
@@ -115,8 +113,8 @@
 								<option value="15">디자이너</option>
 								<option value="16">테스터</option>
 						</select></td>
-						<td><input type="date" id="start_date<%=i%>" name="start_date<%=i%>" min="${now}" max="2200-12-31" value="<%=now%>"></td>
-						<td><input type="date" id="end_date<%=i%>" name="end_date<%=i%>" min="${now}" max="2200-12-31" value="<%=now%>"></td>
+						<td><input type="date" id="start_date<%=i%>" name="start_date<%=i%>"  max="2200-12-31" value="<%=now%>"></td>
+						<td><input type="date" id="end_date<%=i%>" name="end_date<%=i%>" max="2200-12-31" value="<%=now%>"></td>
 					</tr>
 					<%
 					}

@@ -3,16 +3,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@page import="java.util.*"%>
 <%@include file="session.jsp"%>
 <%@include file="mapper.jsp"%>
 <%@ page import="kr.ac.mju.prompt.model.UserInfo"%>
 <%@ page import="kr.ac.mju.prompt.model.projectBean"%>
 <%@page import="org.apache.commons.beanutils.BeanUtils"%>
-
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.*"%>
 <%
-	ArrayList<projectBean> allProject = (ArrayList<projectBean>) request.getAttribute("AllProject");
-	ArrayList<projectBean> pastProject = (ArrayList<projectBean>) request.getAttribute("PastProject");
+	
 %>
 
 
@@ -64,39 +63,44 @@
 					<td width="200px">이름</td>
 					<td width="200px">직급</td>
 					<td width="200px">역할</td>
-					<td width="200px">업무 내용</td>
 					<td width="200px">시작일</td>
 					<td width="200px">종료일</td>
-					<td width="200px">편집</td>
+					<td width="200px">관리</td>
 				</tr>
 				<tr align="center">
 					<td>2</td>
 					<td>박동현</td>
 					<td>회장</td>
 					<td>PM</td>
-					<td>먹고놀기</td>
 					<td><input type="date" id="start_date" name="start_date"
-						min="${now}" max="2200-12-31" value=""></td>
+						max="2200-12-31" value="<%=now%>"></td>
 					<td><input type="date" id="end_date" name="end_date"
-						min="${now}" max="2200-12-31" value=""></td>
+						max="2200-12-31" value="<%=now1%>"></td>
 					<td><button type="submit" class="btn btn-success"
 							style="margin: 5px" onclick="move();">수정</button>
 						<button type="submit" class="btn btn-danger" style="margin: 5px"
 							class="col-sm-6" onclick="del();">삭제</button></td>
 				</tr>
+				<tr>
+					<td colspan="7" align="center">내용 입력</td>
+				</tr>
+				<tr>
+					<td colspan="7"><textarea name="contents"
+							style="width: 100%; height: 200px"> </textarea></td>
+				</tr>
 				<tr align="center">
-					<td colspan="8"><button type="button" class="btn btn-success" onclick="location.href='${pageContext.request.contextPath}/ProjectController/showUserScheduleAdd'">추가
-					</button></td>
+					<td colspan="8"><button type="button" class="btn btn-success"
+							onclick="location.href='${pageContext.request.contextPath}/ProjectController/showUserScheduleAdd'">추가
+						</button></td>
 				</tr>
 			</table>
 		</div>
 		<div class="main_button" style="padding: 10px 0px;">
-		<button class="btn btn-default" type="button"
-				onclick="history.back(-1)">프로젝트
-				정보</button>
+			<button class="btn btn-default" type="button"
+				onclick="history.back(-1)">프로젝트 정보</button>
 			<button class="btn btn-default" type="button"
 				onclick="location.replace('${pageContext.request.contextPath}/LoginController/main')">메인화면</button>
-			
+
 		</div>
 	</div>
 	<div class="well well-sm">

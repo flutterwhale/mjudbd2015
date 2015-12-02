@@ -228,10 +228,9 @@ public class ProjectController {
 		obtainBean oBean = new obtainBean();
 		System.out.println(">>sqlStartDate " + sqlStartDate + " / sqlEndDate" + sqlEndDate + " setWriter_User "
 				+ session.getAttribute("session_name") + " setObtain_Name " + request.getParameter("subject")
-				+ " contents " + request.getParameter("contents") + " status " + request.getParameter("status"));
+				+ " contents " + request.getParameter("contents") + " status " + request.getParameter("status") + " company"+ request.getParameter("order_company"));
 		oBean.setWriter_User((Integer) session.getAttribute("session_name"));
 		oBean.setObtain_Name(request.getParameter("subject"));
-		;
 		oBean.setOrder_Company(request.getParameter("order_company"));
 		oBean.setPresent_Status(Integer.parseInt(request.getParameter("status")));
 		oBean.setStart_Date((java.sql.Date) sqlStartDate);
@@ -654,10 +653,10 @@ public class ProjectController {
 				return model;
 				
 			}
-
-	/*
+/*
+	
 	 * 업무일지 관련
-	 */
+	 
 
 	// 업무일지 화면 이동
 	@RequestMapping(value = "/ProjectController/showBusinessLog", method = RequestMethod.GET)
@@ -729,7 +728,7 @@ public class ProjectController {
 
 		return "businessChange";// jsp 파일 이름.
 	}
-
+*/
 	// 멤버 인사 관리 화면
 	@RequestMapping(value = "/ProjectController/showMemberManagement", method = RequestMethod.GET)
 	public String showMemberManagement(HttpSession session, HttpServletRequest request) {

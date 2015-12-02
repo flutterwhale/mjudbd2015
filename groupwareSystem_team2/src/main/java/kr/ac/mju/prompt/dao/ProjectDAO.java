@@ -1545,7 +1545,8 @@ public class ProjectDAO {
 			String query = "UPDATE `dbd2015`.`t_obtain_order` SET `Obtain_Name`='" + ob.getObtain_Name()
 					+ "', `Comment`='" + ob.getComment() + "', `Present_Status`='" + ob.getPresent_Status()
 					+ "', `location`='" + ob.getLocation() + "', `End_Date`='" + ob.getEnd_Date() + "', `Start_Date`='"
-					+ ob.getStart_Date() + "' WHERE `Obtain_Order_Identifier`='" + ob.getObtain_Order_Identifier()
+					+ ob.getStart_Date() + "' ,`Order_Company`= '" + ob.getOrder_Company()
+					+ "' WHERE `Obtain_Order_Identifier`='" + ob.getObtain_Order_Identifier()
 					+ "';";
 
 			System.out.println("update query? : " + query);

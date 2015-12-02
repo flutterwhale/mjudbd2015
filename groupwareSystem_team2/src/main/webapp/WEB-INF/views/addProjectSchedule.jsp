@@ -10,13 +10,8 @@
 <%@ page import="kr.ac.mju.prompt.model.UserInfo"%>
 <%@ page import="kr.ac.mju.prompt.model.projectBean"%>
 <%@page import="org.apache.commons.beanutils.BeanUtils"%>
-<%@page import="java.text.SimpleDateFormat"%>
-<%@page import="java.util.*"%>
-<%
-	PscheduleBean c = (PscheduleBean) request.getAttribute("projectSchedule");
-	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-	String now = sdf.format(new Date());
-%>
+
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -95,9 +90,9 @@
 					
 						<td><input type="text" name="Schedule_Name"></td>
 						<td><input type="date" id="start_date" name="Start_date"
-							min="${now}" max="2200-12-31" value="${now}"></td>
+							min="<%=now%>" max="2200-12-31" value="<%=now%>"></td>
 						<td><input type="date" id="end_date" name="End_date"
-							min="${now}" max="2200-12-31" value="${now}"></td>
+							min="<%=now%>" max="2200-12-31" value="<%=now1%>"></td>
 						<td><select name="Status_Process" class="form-control">
 								<option value="10">시작 전</option>
 								<option value="11">진행</option>

@@ -31,9 +31,6 @@
 	UserInfo sUinfo = (UserInfo)session.getAttribute("userinfo");
 	signupBean showBean = (signupBean)request.getAttribute("showBean");	
 	session.setAttribute("showBean", showBean);	
-	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-	String now = sdf.format(new Date());
-	
 	ArrayList<Hashtable> list = (ArrayList<Hashtable>)request.getAttribute("list");
 	System.out.println("평가리스트 사이즈:"+list.size());
 	
