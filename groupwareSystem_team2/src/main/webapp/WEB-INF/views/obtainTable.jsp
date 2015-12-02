@@ -22,7 +22,11 @@
 <title>obtainTable</title>
 <script
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"
-	type="text/javascript"></script>
+	type="text/javascript">
+<%
+	UserInfo sUinfo = (UserInfo) session.getAttribute("userinfo");
+%>
+	</script>
 </head>
 <body>
 	<nav class="navbar navbar-default">
@@ -58,7 +62,9 @@
 					<td width="120px">위치</td>
 					<td width="60px">작성자</td>
 					<td width="80px">현재 상태</td>
+					<%if(sUinfo.getMyUser().getDi() == 10){%>
 					<td width="100px">PM 배정</td>
+					<%}%>
 				</tr>
 				<%
 					if (allObatain.isEmpty()) {
@@ -82,9 +88,9 @@
 					<td><%=c.getLocation()%></td>
 					<td><a href='${pageContext.request.contextPath}/LoginController/retrieveUser?id=<%=c.getWriter_User()%>'><%=c.getWriter_User()%></a><br/><%=c.getWriter_name() %></td>
 					<td><%=Obtain_status_map.get(c.getPresent_Status())%></td>
-					<td> 
-					
-					<% 
+					<%if(sUinfo.getMyUser().getDi() == 10){%>
+					<td>
+						<%
 					
 					if(c.getPM()==null){
 					%>
@@ -96,6 +102,7 @@
 							<a href='${pageContext.request.contextPath}/LoginController/retrieveUser?id=<%= c.getPM() %>'><%= c.getPM() %></a>
 						<% } %>
 					</td>
+					<%}%>
 				</tr>
 					<%
 						}

@@ -74,56 +74,63 @@
   		</div>
 	</nav>
 
-<div class="container">
-	<div style="float:left; margin:10px 40px;">
-	<table class="table table-striped table-hover" style="width:300px;">
-		<tr>
-			<td>ID</td>
-			<td><jsp:getProperty property="id" name="loginbean" /></td>
-		</tr>
-		<tr>
-		 	<td>이름</td>
-		 	<td><jsp:getProperty property="name" name="loginbean" /></td>
-		</tr>
-		<tr>
-		 	<td>직급</td>
-		 	<td><%=Position_map.get(loginbean.getPosition_Name()) %>
-		 	</td>
-		 	
-		</tr>
-		
-		
-		<%if(myuser.getDi()==17||myuser.getDi()==99){ %>
-		<tr>
-		 	<td>권한</td>
-		 	<td><%=Permission_map.get(loginbean.getPermission()) %></td>
-		</tr>
-		<% } %>
-	
-		<tr>
-		 	<td>부서</td>
-		 	<td><%=Depart_map.get(loginbean.getDi()) %></td>
-		</tr>
-		<tr>
-		 <td colspan=2 align=center><button type="button"   class="btn btn-danger" style="margin: 5px"
-          onclick="location.href='${pageContext.request.contextPath}/LoginController/logout.do'">로그아웃</button></td>	
-		</tr>
-		<tr>
-			<td colspan=2 align=center><%= now %>.</td>
-		</tr>
-	</table>
-	</div>
-	<div style="float:letf">
-	<button class="btn btn-primary" style="width:200px; margin:10px;" type="button"
-		onclick="location.href='${pageContext.request.contextPath}/LoginController/showMemberPage'">개인
-		정보</button>
-		
-		<button class="btn btn-primary" style="width:200px; margin:10px;" type="button"
+	<div class="container">
+		<div style="float: left; margin: 10px 40px;">
+			<table class="table table-striped table-hover" style="width: 300px;">
+				<tr>
+					<td>ID</td>
+					<td><jsp:getProperty property="id" name="loginbean" /></td>
+				</tr>
+				<tr>
+					<td>이름</td>
+					<td><jsp:getProperty property="name" name="loginbean" /></td>
+				</tr>
+				<tr>
+					<td>직급</td>
+					<td><%=Position_map.get(loginbean.getPosition_Name())%></td>
+
+				</tr>
+
+
+				<%
+					if (myuser.getDi() == 17 || myuser.getDi() == 99) {
+				%>
+				<tr>
+					<td>권한</td>
+					<td><%=Permission_map.get(loginbean.getPermission())%></td>
+				</tr>
+				<%
+					}
+				%>
+
+				<tr>
+					<td>부서</td>
+					<td><%=Depart_map.get(loginbean.getDi())%></td>
+				</tr>
+				<tr>
+					<td colspan=2 align=center><button type="button"
+							class="btn btn-danger" style="margin: 5px"
+							onclick="location.href='${pageContext.request.contextPath}/LoginController/logout.do'">로그아웃</button></td>
+				</tr>
+				<tr>
+					<td colspan=2 align=center><%=now%>.</td>
+				</tr>
+			</table>
+		</div>
+		<div style="float: letf">
+			<button class="btn btn-primary" style="width: 200px; margin: 10px;"
+				type="button"
+				onclick="location.href='${pageContext.request.contextPath}/LoginController/showMemberPage'">개인
+				정보</button>
+
+
+
+			<button class="btn btn-primary" style="width: 200px; margin: 10px;"
+				type="button"
+				onclick="location.href='${pageContext.request.contextPath}/ProjectController/showDirectory'">인명부
+			</button>
+			<%-- <button class="btn btn-primary" style="width:200px; margin:10px;" type="button"
 		onclick="location.href='${pageContext.request.contextPath}/ProjectController/memberManagement'">인사관리</button>
-		
-	<button class="btn btn-primary" style="width:200px; margin:10px;" type="button"
-		onclick="location.href='${pageContext.request.contextPath}/ProjectController/showDirectory'">인명부
-	</button>
 	<button class="btn btn-primary" style="width:200px; margin:10px;" type="button"
 		onclick="location.href='${pageContext.request.contextPath}/ProjectController/showProjectTable'">프로젝트
 	</button>
@@ -135,75 +142,91 @@
 		
 		<button class="btn btn-primary" style="width:200px; margin:10px;" type="button"
 		onclick="location.href='${pageContext.request.contextPath}/ProjectController/showMyProjectTable'">프로젝트
-		관리</button><!-- 임시 권한 부여임. -->
-	<%
-		if (loginbean.getPermission() == 11) { // PM 권한
-				System.out.println(loginbean.getPermission() + ": PM 권한 로그인");
-	%>
+		관리</button><!-- 임시 권한 부여임. --> --%>
+			<%
+				if (loginbean.getPermission() == 11) { // PM 권한
+							System.out.println(loginbean.getPermission() + ": PM 권한 로그인");
+			%>
 
 
-	<!--  button class="btn btn-primary" style="width:200px; margin:10px;" type="button"
-		onclick="location.href='${pageContext.request.contextPath}/ProjectController/showMyProjectTable'">프로젝트
-		관리</button-->
-
-	<%
-		} else if (loginbean.getPermission() == 12) {//PL 권한
-				System.out.println(loginbean.getPermission() + ": PL 권한 로그인");
-	%>
-
-
-	<!-- button class="btn btn-primary" style="width:200px; margin:10px;" type="button"
-		onclick="location.href='${pageContext.request.contextPath}/ProjectController/showMyProjectTable'">프로젝트
-		관리</button-->
-
-
-
-	<%
-		} else if (loginbean.getPermission() == 13) { //개발자
-				System.out.println(loginbean.getPermission() + ": 개발자 상태 로그인(프로젝트 투입 직원 권한 )");
-	%>
 			<!--  button class="btn btn-primary" style="width:200px; margin:10px;" type="button"
 		onclick="location.href='${pageContext.request.contextPath}/ProjectController/showMyProjectTable'">프로젝트
 		관리</button-->
-	<%
-		}
-			if (loginbean.getDi() == 10) { // 경영진 메뉴
-				System.out.println(loginbean.getPermission() + ": 경영진 메뉴");
-				//수주현황
-				//모든 프로젝트
-	%>
-	<button class="btn btn-primary" style="width:200px; margin:10px;" type="button"
-		onclick="location.href='${pageContext.request.contextPath}/ProjectController/showObtainTable'">수주
-		현황</button>
-	
-	<%
-		} else if (loginbean.getDi() == 12) { //영업부 메뉴
 
-				//수주 현황
-	%>
-	
-	<%
-		} else if (loginbean.getDi() == 15) { // 인사관리팀 메뉴
-	%>
-	<button class="btn btn-primary" style="width:200px;">인사 관리</button>
-	<%
-		//인사 관리
-			} else if (loginbean.getDi() == 13) {//총무팀 메뉴
-				//프로젝트 관리?
-	%>
+			<%
+				} else if (loginbean.getPermission() == 12) {//PL 권한
+							System.out.println(loginbean.getPermission() + ": PL 권한 로그인");
+			%>
 
-	<%
-		} else if (loginbean.getDi() == 17) { //개발팀
-				//업무 일지
-				//프로젝트
-	%>
-	<button class="btn btn-primary" style="width:200px; margin:10px;" type="button"
+
+			<!-- button class="btn btn-primary" style="width:200px; margin:10px;" type="button"
 		onclick="location.href='${pageContext.request.contextPath}/ProjectController/showMyProjectTable'">프로젝트
-		관리</button>
-	<button class="btn btn-primary" style="width:200px; margin:10px;">업무 일지</button>
-	<%
-		}
-			if (loginbean.getPosition_Name() == 0 || loginbean.getDi() == 0) { //가입 대기 상태 
+		관리</button-->
+
+
+
+			<%
+				} else if (loginbean.getPermission() == 13) { //개발자
+							System.out.println(loginbean.getPermission() + ": 개발자 상태 로그인(프로젝트 투입 직원 권한 )");
+			%>
+			<!--  button class="btn btn-primary" style="width:200px; margin:10px;" type="button"
+		onclick="location.href='${pageContext.request.contextPath}/ProjectController/showMyProjectTable'">프로젝트
+		관리</button-->
+			<%
+				}
+						if (loginbean.getDi() == 10) { // 경영진 메뉴
+							System.out.println(loginbean.getPermission() + ": 경영진 메뉴");
+							//수주현황
+							//모든 프로젝트
+			%>
+			<button class="btn btn-primary" style="width: 200px; margin: 10px;"
+				type="button"
+				onclick="location.href='${pageContext.request.contextPath}/ProjectController/showObtainTable'">수주
+				현황</button>
+
+			<button class="btn btn-primary" style="width: 200px; margin: 10px;"
+				type="button"
+				onclick="location.href='${pageContext.request.contextPath}/ProjectController/showProjectTable'">프로젝트
+			</button>
+
+
+			<%
+				} else if (loginbean.getDi() == 12) { //영업부 메뉴
+			%>
+			<button class="btn btn-primary" style="width: 200px; margin: 10px;"
+				type="button"
+				onclick="location.href='${pageContext.request.contextPath}/ProjectController/showObtainTable'">수주
+				현황</button>
+			<%
+				
+			%>
+
+			<%
+				} else if (loginbean.getDi() == 15) { // 인사관리팀 메뉴
+			%>
+			<button class="btn btn-primary" style="width: 200px; margin: 10px;"
+				type="button"
+				onclick="location.href='${pageContext.request.contextPath}/ProjectController/memberManagement'">인사관리</button>
+			<%
+				//인사 관리
+						} else if (loginbean.getDi() == 13) {//총무팀 메뉴
+							//프로젝트 관리?
+			%>
+
+
+	
+			<%
+				} else if (loginbean.getDi() == 17) { //개발팀
+							//프로젝트
+			%>
+			<button class="btn btn-primary" style="width: 200px; margin: 10px;"
+				type="button"
+				onclick="location.href='${pageContext.request.contextPath}/ProjectController/showMyProjectTable'">프로젝트
+				관리</button>
+
+			<%
+				}
+						if (loginbean.getPosition_Name() == 0 || loginbean.getDi() == 0) { //가입 대기 상태 
 
 				System.out.println(loginbean.getPermission() + ": 가입 대기 상태 로그인");
 	%>
@@ -215,25 +238,26 @@
 
 				if (loginbean.getPosition_Name() == 99) { // 외부인력팀
 
-					System.out.println(loginbean.getPermission() + ": 프리랜서(외부인력팀) 로그인");
-	%>
+								System.out.println(loginbean.getPermission() + ": 프리랜서(외부인력팀) 로그인");
+			%>
+<!-- 			<button class="btn btn-primary" style="width: 200px; margin: 10px;">메신저</button> -->
+			<%
+				} else {
+			%>
+
+			<!-- 공통 메뉴 -->
+
+			<!-- 	<button class="btn btn-primary" style="width:200px; margin:10px;">전자결재</button>
 	<button class="btn btn-primary" style="width:200px; margin:10px;">메신저</button>
-	<%
-		} else {
-	%>
+	<button class="btn btn-primary" style="width:200px; margin:10px;">게시판</button> -->
+			<%
+				} // 외부 인력 아닌 기본 공통 메뉴
 
-	<!-- 공통 메뉴 -->
-
-	<button class="btn btn-primary" style="width:200px; margin:10px;">전자결재</button>
-	<button class="btn btn-primary" style="width:200px; margin:10px;">메신저</button>
-	<button class="btn btn-primary" style="width:200px; margin:10px;">게시판</button>
-	<%
-		} // 외부 인력 아닌 기본 공통 메뉴
-
-				} //가입 대기 아닌 경우 끝
-			}
-		} // session 유효한가?
-	%>
+						} //가입 대기 아닌 경우 끝
+					}
+				} // session 유효한가?
+			%>
+		</div>
 	</div>
 </div>
 	<div class = "well well-sm">
