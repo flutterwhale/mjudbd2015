@@ -81,6 +81,11 @@ function move() {
 	
 	
 }
+	function mail(){
+		var addr = document.getElementById("email").value;
+		location.replace('${pageContext.request.contextPath}/ProjectController/testMail?pid=<%=pBean.getProject_Identifier()%>&mail='+addr);
+	}
+	
 </script>
 
 </head>
@@ -189,9 +194,13 @@ function move() {
 		<%
 			}
 		%>
-
-
-
+		<%
+		if (pBean.getStatus()==14&&session.getAttribute("session_name").equals(pBean.getProjectmanager_Identifier())) {
+		%>
+		<input type="text" id="email" name="email"></input>
+		<button type="button" class="btn btn-success" style="margin: 5px"
+			onclick="mail()">고객 평가 이메일 발송</button>
+		<%} %>
 		<div class="project_schedule">
 			<h3>프로젝트 일정</h3>
 			<%

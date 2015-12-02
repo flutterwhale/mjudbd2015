@@ -269,5 +269,9 @@ public class ProjectService {
 	      logger.info("getPastMyProjects :" + id);
 	      return projectDAO.getPastMyProject(id);
 	   }
-
+	   
+	   //김용민 (프로젝트 평가) 
+	   public void setProjectOrderEval(String pid, String Project_Comment,String Score){
+		   projectDAO.setProjectOrderEval(pid,Project_Comment,Score);
+	   }
 }
