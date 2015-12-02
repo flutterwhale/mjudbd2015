@@ -7,12 +7,14 @@
 	pageEncoding="UTF-8"%>
 <%@include file="mapper.jsp"%>
 <%@include file="session.jsp"%>
+<%@page import="kr.ac.mju.prompt.model.signupBean"%>
 <%@ page import="kr.ac.mju.prompt.model.UserInfo"%>
 <%@ page import="kr.ac.mju.prompt.model.UserBean"%>
 <%@ page import="kr.ac.mju.prompt.model.projectBean"%>
 <%@page import="org.apache.commons.beanutils.BeanUtils"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.*"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -29,12 +31,38 @@
 	type="text/javascript"></script>
 
 <%
+signupBean showBean = (signupBean)request.getAttribute("showBean");
+String sID = session.getAttribute("session_name").toString();
+UserInfo sUinfo = (UserInfo)session.getAttribute("userinfo");
+session.setAttribute("showBean", showBean);	
+
 	ArrayList<PscheduleBean> allProjectSchedule = (ArrayList<PscheduleBean>) request
 			.getAttribute("projectScheduleList");
 	UscheduleBean uscheduleBean = (UscheduleBean) request.getAttribute("usBean");
 	projectBean pBean = (projectBean) request.getAttribute("projectInfo");
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	String now = sdf.format(new Date());
+	
+	
+	//프로젝트 투입인원인지 파악하기 위하여 사용함.
+	boolean project_role_user = false;
+	boolean ceo = false;
+	
+	for(int i=0; i< pBean.getRole().size(); i++){
+		if(sUinfo.equals((String)((Hashtable)(pBean.getRole().get(i))).get("User_Identifier"))){
+			project_role_user = true;
+			break;
+		}
+	}
+	if (session.getAttribute("session_name").equals(pBean.getProjectmanager_Identifier())){
+		project_role_user = true;
+	}
+	
+	if (((UserBean)session.getAttribute("myUser")).getDi()==10){
+		ceo = true;
+	}
+	
+	
 %>
 <script type="text/javascript">
 function move() {
@@ -46,6 +74,15 @@ function move() {
 		document.frm1.submit();
 		return true;
 	}
+		function move(pm_id, pid) {
+		if (confirm('수정하시겠습니까?')) {
+
+			document.frm1.submit();
+		}
+	}
+	
+	
+	
 }
 </script>
 
@@ -75,10 +112,6 @@ function move() {
 	</nav>
 
 
-	<%
-		if (session.getAttribute("session_name").equals(pBean.getProjectmanager_Identifier())) {
-	%>
-	<!-- PM 화면 -->
 	<div class="project_wrapper" style="margin: 10px 40px;">
 		<h1><%=pBean.getProject_Identifier()%>
 			/
@@ -117,8 +150,8 @@ function move() {
 					</tr>
 					<tr>
 						<th>진행 상태</th>
-						<td><select name="status" style="width: '200px'">
-								<option value="10" <%if (pBean.getStatus() == 10) {%> selected
+							<td><select id="status" name="status" style="width:'200px'" <%if (!session.getAttribute("session_name").equals(pBean.getProjectmanager_Identifier())) { %> disabled="disabled" <%} %>>
+								<option value="10" <%if(pBean.getStatus()==10){  %> selected 
 									<%}%>>착수</option>
 								<option value="11" <%if (pBean.getStatus() == 11) {%> selected
 									<%}%>>기획</option>
@@ -137,22 +170,29 @@ function move() {
 					</tr>
 					<tr>
 						<th>PM</th>
-						<td><%=pBean.getProjectmanager_Identifier()%>/<%=pBean.getPM_name()%></td>
+						<td><a href="${pageContext.request.contextPath}/LoginController/retrieveUser?id=<%=pBean.getProjectmanager_Identifier()%>"><%=pBean.getProjectmanager_Identifier()%></a>/<%=pBean.getPM_name()%></td>
 					</tr>
 				</table>
 
 			</div>
 		</form>
+		<%
+				if (session.getAttribute("session_name").equals(pBean.getProjectmanager_Identifier())) {
+		%>
 		<button type="submit" class="btn btn-success" style="margin: 5px"
-			onclick="move();">수정</button>
+			onclick="move(<%=pBean.getProjectmanager_Identifier()%>,<%=pBean.getProject_Identifier()%>);">수정</button>
+		<%} %>
 
 
 
 		<div class="project_schedule">
 			<h3>프로젝트 일정</h3>
+			<%
+				if (session.getAttribute("session_name").equals(pBean.getProjectmanager_Identifier())) {
+			%>
 			<button class="btn btn-primary" type="button"
-				onclick="location.href='${pageContext.request.contextPath}/ProjectController/ShowProjectSchedulePage?pid=<%=pBean.getProject_Identifier()%>'">[PM
-				전용]일정 추가</button>
+				onclick="location.href='${pageContext.request.contextPath}/ProjectController/ShowProjectSchedulePage?pid=<%=pBean.getProject_Identifier()%>'">일정 추가</button>
+			<%} %>
 			<table class="table table-striped table-hover" border="1"
 				width="920px">
 				<tr>
@@ -163,7 +203,11 @@ function move() {
 					<td width="200px">종료일</td>
 					<td width="200px">상태</td>
 					<td width="200px">완료율</td>
+					<%
+						if (session.getAttribute("session_name").equals(pBean.getProjectmanager_Identifier())) {
+					%>
 					<td width="200px">관리</td>
+					<%} %>
 				</tr>
 
 				<%
@@ -186,9 +230,13 @@ function move() {
 					<td><%=c.getEnd_Date()%></td>
 					<td><%=Schedule_status_map.get(c.getStatus_Process())%></td>
 					<td><%=c.getProgress_Percentage()%>%</td>
+					<%
+						if (session.getAttribute("session_name").equals(pBean.getProjectmanager_Identifier())) {
+					%>
 					<td><button type="submit" class="btn btn-success"
 							onclick="location.href='${pageContext.request.contextPath}/ProjectController/ShowProjectSchedulePage?sid=<%=c.getProject_Schedule_Identifier()%>&pid=<%=pBean.getProject_Identifier()%>'">관리</button>
 					</td>
+					<%} %>
 				</tr>
 				<%
 					}
@@ -220,29 +268,61 @@ function move() {
 		</div>
 		<div class="project_user">
 			<h3>투입 인력</h3>
+			<%
+				if (session.getAttribute("session_name").equals(pBean.getProjectmanager_Identifier())) {
+			%>
 			<button class="btn btn-primary" type="button"
-				onclick="location.href='${pageContext.request.contextPath}/ProjectController/showProjectMember'">[PM
-				전용] 인원 추가 버튼</button>
+				onclick="location.href='${pageContext.request.contextPath}/ProjectController/showProjectMember?pm_id=<%=pBean.getProjectmanager_Identifier()%>&pid=<%=pBean.getProject_Identifier()%>'">인원 추가</button>
+			<%} %>
 			<table class="table table-striped table-hover" border="1"
 				width="920px">
 				<tr>
 					<th width="70px">UID</th>
 					<th width="130px">이름</th>
-					<th width="150px">업무</th>
-					<th width="170px">부서</th>
+					<th width="100px">성별</th>
+					<th width="150px">전화번호</th>
+					<th width="150px">투입일자</th>
+					<th width="150px">투입종료일자</th>
 					<th width="150px">역할</th>
-					<th width="250px">일정</th>
+					<%
+						if (session.getAttribute("session_name").equals(pBean.getProjectmanager_Identifier())) {
+					%>
+					<th width="150px">회수</th>
+					<%} %>
 				</tr>
+				
+				<%
+					for(int i=0; i<pBean.getRole().size();i++){
+						if(Integer.parseInt((String)((Hashtable)(pBean.getRole().get(i))).get("User_Identifier"))==pBean.getProjectmanager_Identifier()){
+							continue;
+						}
+				%>
 				<tr>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
+					<td><a href="http://localhost:8080/mju/LoginController/retrieveUser?id=<%=((Hashtable)(pBean.getRole().get(i))).get("User_Identifier")%>"><%=((Hashtable)(pBean.getRole().get(i))).get("User_Identifier")%></a></td>
+					<td><%=((Hashtable)(pBean.getRole().get(i))).get("Name")%></td>
+					<td><%=Gender.get(Integer.parseInt((String)((Hashtable)(pBean.getRole().get(i))).get("Gender")))%></td>
+					<td><%=((Hashtable)(pBean.getRole().get(i))).get("Phone_Number")%></td>
+					<td><%=((Hashtable)(pBean.getRole().get(i))).get("Start_Date")%></td>
+					<td><%=((Hashtable)(pBean.getRole().get(i))).get("End_Date")%></td>
+					<td><%=Project_Part.get(Integer.parseInt((String)((Hashtable)(pBean.getRole().get(i))).get("Project_Role")))%></td>
+					<%
+						if (session.getAttribute("session_name").equals(pBean.getProjectmanager_Identifier())) {
+					%>
+					<td><button class="btn btn-primary" type="button" id="button<%=i%>" onclick="location.href='${pageContext.request.contextPath}/ProjectController/projectUserDel?uid=<%=((Hashtable)(pBean.getRole().get(i))).get("User_Identifier")%>&pid=<%=pBean.getProject_Identifier()%>'">삭제</button></td>
+					<%} %>
 				</tr>
+				<% 
+					}
+				
+				%>
+				
+			
+					
 			</table>
 		</div>
+		<%
+			if (project_role_user||ceo) {
+		%>
 		<div class="project_product">
 			<h3>프로젝트 문서</h3>
 			<table class="table table-striped table-hover" border="1"
@@ -259,11 +339,13 @@ function move() {
 					<td></td>
 					<td></td>
 				</tr>
+				<%if (project_role_user){ %>
 				<tr>
 					<th width="150px">문서 등록</th>
 					<td colspan="3"><input type="file" id="portfolio"
 						name="portfolio"></td>
 				</tr>
+				<%} %>
 			</table>
 		</div>
 		<div class="project_evaluation">
@@ -276,10 +358,15 @@ function move() {
 
 
 			</table>
+			<%
+				if (session.getAttribute("session_name").equals(pBean.getProjectmanager_Identifier())) {
+			%>
 			<button class="btn btn-primary" type="button"
 				onclick="location.href='${pageContext.request.contextPath}/ProjectController/showProjectEvaluation'">[PM
 				전용] 프로젝트 평가 버튼</button>
+			<%} %>
 		</div>
+		
 		<div class="project_code">
 			<h3>프로젝트 산출물</h3>
 			<table class="table table-striped table-hover" border="1"
@@ -296,10 +383,13 @@ function move() {
 					<td></td>
 					<td></td>
 				</tr>
+		<%if (project_role_user){ %>
+
 				<tr>
 					<th width="150px">파일 등록</th>
 					<td colspan="3"><input type="file" id="product" name="product"></td>
 				</tr>
+				<%} %>
 			</table>
 		</div>
 
@@ -308,345 +398,19 @@ function move() {
 			<button class="btn btn-primary" type="button"
 				onclick="location.href='${pageContext.request.contextPath}/ProjectController/showProjectTable'">프로젝트
 				목록</button>
-			<button class="btn btn-primary" type="button">[PM 전용] 내 프로젝트
-				목록</button>
-
+			<%
+				if (session.getAttribute("session_name").equals(pBean.getProjectmanager_Identifier())) {
+			%>
+			<button class="btn btn-primary" type="button">내 프로젝트 목록</button>
+			<%} %>
+			
 			<button class="btn btn-primary" type="button"
 				onclick="location.replace('${pageContext.request.contextPath}/LoginController/main')">메인화면</button>
 		</div>
 	</div>
-	<%
-		} else if (true) {
-	%>
-	<!--  PL 일 때  -->
-	<div class="project_wrapper" style="margin: 10px 40px;">
-		<h1><%=pBean.getProject_Identifier()%>
-			/
-			<%=pBean.getProject_Name()%></h1>
-		<div class="project_information">
-			<table class="table table-striped table-hover" width="920px">
-				<tr>
-					<th width="170px">프로젝트 개요</th>
-					<td width="750px"><textarea name="Project_Description"><%=pBean.getProject_Description()%></textarea>
-					</td>
-				</tr>
-				<tr>
-					<th>프로젝트 일정</th>
-					<td>시작 날짜 <%=pBean.getStart_Date()%> ~ 종료 날짜<%=pBean.getEnd_Date()%></td>
-				</tr>
-				<tr>
-					<th>부가 설명</th>
-					<td><textarea name="Project_Comment"><%=pBean.getComment()%></textarea></td>
-				</tr>
-				<tr>
-					<th>예산</th>
-					<td><%=pBean.getProject_Price()%></td>
-				</tr>
-				<tr>
-					<th>파견 지역</th>
-					<td><%=pBean.getDispatch_Location()%></td>
-				</tr>
-				<tr>
-					<th>PM</th>
-					<td><%=pBean.getProjectmanager_Identifier()%> / <%=pBean.getPM_name()%></td>
-				</tr>
-				<tr>
-					<th>진행 상태</th>
-					<td><%=pBean.getStatus()%></td>
-				</tr>
-			</table>
-		</div>
-		<div class="project_schedule">
-			<h3>프로젝트 일정</h3>
-			<table class="table table-striped table-hover" border="1"
-				width="920px">
-				<tr>
-					<th width="70px">schedule_ID</th>
-					<td width="130px">일정 이름</td>
-					<tD width="150px">업무 내용</td>
-					<td width="170px">시작 날짜</td>
-					<td width="150px">종료 날짜</td>
-					<td width="250px">현재 상태</td>
-				</tr>
-				<tr>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-				</tr>
-			</table>
-			<h3>개인 일정</h3>
-			<table class="table table-striped table-hover" border="1"
-				width="920px">
-				<tr>
-					<th width="70px">schedule_ID</th>
-					<td width="130px">일정 이름</td>
-					<tD width="150px">업무 내용</td>
-					<td width="170px">시작 날짜</td>
-					<td width="150px">종료 날짜</td>
-					<td width="250px">현재 상태</td>
-				</tr>
-				<tr>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-				</tr>
-			</table>
-			<button class="btn btn-primary" type="button"
-				onclick="location.href='${pageContext.request.contextPath}/ProjectController/showUserSchedule'">[PL
-				전용]개인 일정 추가</button>
-		</div>
-		<div class="project_user">
-			<h3>투입 인력</h3>
-
-			<table class="table table-striped table-hover" border="1"
-				width="920px">
-				<tr>
-					<th width="70px">UID</th>
-					<th width="130px">이름</th>
-					<th width="150px">업무</th>
-					<th width="170px">부서</th>
-					<th width="150px">역할</th>
-					<th width="250px">일정</th>
-				</tr>
-				<tr>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-				</tr>
-			</table>
-		</div>
-		<div class="project_product">
-			<h3>프로젝트 문서</h3>
-			<table class="table table-striped table-hover" border="1"
-				width="920px">
-				<tr>
-					<th width="150px">번호</th>
-					<th width="320px">문서 이름</th>
-					<th width="250px">업로드 날짜</th>
-					<th width="200px">작성자</th>
-				</tr>
-				<tr>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-				</tr>
-				<tr>
-					<th width="150px">문서 등록</th>
-					<td colspan="3"><input type="file" id="document"
-						name="document"></td>
-				</tr>
-			</table>
-		</div>
-
-		<div class="project_code">
-			<h3>프로젝트 산출물</h3>
-			<table class="table table-striped table-hover" border="1"
-				width="920px">
-				<tr>
-					<th width="150px">번호</th>
-					<th width="320px">산출물 이름</th>
-					<th width="250px">업로드 날짜</th>
-					<th width="200px">작성자</th>
-				</tr>
-				<tr>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-				</tr>
-				<tr>
-					<th width="150px">파일 등록</th>
-					<td colspan="3"><input type="file" id="product" name="product"></td>
-				</tr>
-			</table>
-		</div>
-
-
-		<div class="projectTable_button">
-			<button class="btn btn-primary" type="button"
-				onclick="location.href='${pageContext.request.contextPath}/ProjectController/showProjectTable'">프로젝트
-				목록</button>
-			<button class="btn btn-primary" type="button">[PL 전용] 내 프로젝트
-				목록</button>
-
-			<button class="btn btn-primary" type="button"
-				onclick="location.replace('${pageContext.request.contextPath}/LoginController/main')">메인화면</button>
-		</div>
-	</div>
-	<!--  일반 권한  -->
-	<%
-		} else {
-	%>
-	<div class="project_wrapper" style="margin: 10px 40px;">
-		<h1><%=pBean.getProject_Identifier()%>
-			/
-			<%=pBean.getProject_Name()%></h1>
-		<div class="project_information">
-			<table class="table table-striped table-hover" width="920px">
-				<tr>
-					<th width="170px">프로젝트 개요</th>
-					<td width="750px"><textarea name="Project_Description"><%=pBean.getProject_Description()%></textarea>
-					</td>
-				</tr>
-				<tr>
-					<th>프로젝트 일정</th>
-					<td>시작 날짜 <%=pBean.getStart_Date()%> ~ 종료 날짜<%=pBean.getEnd_Date()%></td>
-				</tr>
-				<tr>
-					<th>부가 설명</th>
-					<td><textarea name="Project_Comment"><%=pBean.getComment()%></textarea></td>
-				</tr>
-				<tr>
-					<th>예산</th>
-					<td><%=pBean.getProject_Price()%></td>
-				</tr>
-				<tr>
-					<th>파견 지역</th>
-					<td><%=pBean.getDispatch_Location()%></td>
-				</tr>
-				<tr>
-					<th>PM</th>
-					<td><%=pBean.getProjectmanager_Identifier()%> / <%=pBean.getPM_name()%></td>
-				</tr>
-				<tr>
-					<th>진행 상태</th>
-					<td><%=pBean.getStatus()%></td>
-				</tr>
-			</table>
-		</div>
-		<div class="project_schedule">
-			<h3>프로젝트 일정</h3>
-			<table class="table table-striped table-hover" border="1"
-				width="920px">
-				<tr>
-					<th width="70px">schedule_ID</th>
-					<td width="130px">일정 이름</td>
-					<td width="150px">업무 내용</td>
-					<td width="170px">시작 날짜</td>
-					<td width="150px">종료 날짜</td>
-					<td width="250px">현재 상태</td>
-				</tr>
-				<tr>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-				</tr>
-			</table>
-			<h3>프로젝트 세부 일정</h3>
-			<table class="table table-striped table-hover" border="1"
-				width="920px">
-				<tr>
-					<th width="70px">schedule_ID</th>
-					<td width="130px">일정 이름</td>
-					<td width="150px">업무 내용</td>
-					<td width="170px">시작 날짜</td>
-					<td width="150px">종료 날짜</td>
-					<td width="250px">현재 상태</td>
-				</tr>
-				<tr>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-				</tr>
-			</table>
-		</div>
-		<div class="project_user">
-			<h3>투입 인력</h3>
-			<table class="table table-striped table-hover" border="1"
-				width="920px">
-				<tr>
-					<th width="70px">UID</th>
-					<th width="130px">이름</th>
-					<th width="150px">업무</th>
-					<th width="170px">부서</th>
-					<th width="150px">역할</th>
-					<th width="250px">일정</th>
-				</tr>
-				<tr>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-				</tr>
-			</table>
-		</div>
-		<div class="project_product">
-			<h3>프로젝트 문서</h3>
-			<table class="table table-striped table-hover" border="1"
-				width="920px">
-				<tr>
-					<th width="150px">번호</th>
-					<th width="320px">문서 이름</th>
-					<th width="250px">업로드 날짜</th>
-					<th width="200px">작성자</th>
-				</tr>
-				<tr>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-				</tr>
-				<tr>
-					<th width="150px">문서 등록</th>
-					<td colspan="3"><input type="file" id="portfolio"
-						name="portfolio"></td>
-				</tr>
-			</table>
-		</div>
-
-		<div class="project_code">
-			<h3>프로젝트 산출물</h3>
-			<table class="table table-striped table-hover" border="1"
-				width="920px">
-				<tr>
-					<th width="150px">번호</th>
-					<th width="320px">산출물 이름</th>
-					<th width="250px">업로드 날짜</th>
-					<th width="200px">작성자</th>
-				</tr>
-				<tr>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-				</tr>
-				<tr>
-					<th width="150px">파일 등록</th>
-					<td colspan="3"><input type="file" id="product" name="product"></td>
-				</tr>
-			</table>
-		</div>
-
-
-		<div class="projectTable_button">
-			<button class="btn btn-primary" type="button"
-				onclick="location.href='${pageContext.request.contextPath}/ProjectController/showProjectTable'">프로젝트
-				목록</button>
-
-			<button class="btn btn-primary" type="button"
-				onclick="location.replace('${pageContext.request.contextPath}/LoginController/main')">메인화면</button>
-
-
-		</div>
-	</div>
+	
+	
+	
 
 	<%
 		}

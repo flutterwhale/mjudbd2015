@@ -128,18 +128,49 @@ public class ProjectService {
 	
 	
 	/*
-	 * 유저 정보 가져 오기 서비스
+	 * 유저 정보 가져 오기 서비스(김용민)
 	 */
 
 	
-	public ArrayList<signupBean> getMember_developer() {
+	public ArrayList<signupBean> getMember_developer(String id, String pid) {
 		// TODO Auto-generated method stub
 		logger.info("=============개발자 리스트가져오기 Service=============");
 
-		return projectDAO.getDepartUser("17");
+		return projectDAO.getRoleDepartUser(id, pid);
 	}
-
 	
+	//김용민
+	public void setProjectRole(String uid,String start, String end,String role, String pid) {
+		// TODO Auto-generated method stub
+		logger.info("=============개발자 프로젝트에 등록하기 Service=============");
+
+		projectDAO.setProjectRole(uid,start,end, role,pid);
+	}
+	//김용민
+		public void delProjectRole(String uid, String pid) {
+			// TODO Auto-generated method stub
+			logger.info("=============개발자 프로젝트에 등록하기 Service=============");
+
+			projectDAO.delProjectRole(uid,pid);
+		}
+	//김용민 평가할 대상 리스트 불러오기	
+		public ArrayList setProjectEvalList(String Appraiser, String pid) {
+			// TODO Auto-generated method stub
+			logger.info("=============평가 리스트 불러오기 Service=============");
+			
+			return projectDAO.setProjectEvalList(Appraiser,pid);
+			
+	}
+		
+	//김용민
+		public void setProjectEval(String Appraiser, String wg, String cg, String tg, String contents, String is_pm, String uid, String pid, String role) {
+			// TODO Auto-generated method stub
+			logger.info("=============평가 테이블 등록하기Service=============");
+			
+			projectDAO.setProjectEval(Appraiser,wg,cg,tg,contents,is_pm,uid,pid,role);
+	}	
+		
+			
 	public ArrayList<UserBean> getMember_permission(int p) {
 		// TODO Auto-generated method stub
 		logger.info("=============PM List 가져오기 Service=============");

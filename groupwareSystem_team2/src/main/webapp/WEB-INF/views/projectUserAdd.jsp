@@ -1,4 +1,3 @@
-<%@page import="kr.ac.mju.prompt.model.UserBean"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -7,7 +6,13 @@
 <%@include file="session.jsp"%>
 <%@page import="java.util.*"%>
 <%@ page import="kr.ac.mju.prompt.model.UserBean"%>
+<%@ page import="kr.ac.mju.prompt.model.signupBean"%>
 <%@ page import="kr.ac.mju.prompt.model.projectBean"%>
+<%@page import="kr.ac.mju.prompt.model.UserInfo"%>
+<%@include file="mapper.jsp"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="kr.ac.mju.prompt.model.signupBean"%>
+
 <%@page import="org.apache.commons.beanutils.BeanUtils"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -21,6 +26,17 @@
 <script
 	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <title>Project user add</title>
+<%
+	String sID = session.getAttribute("session_name").toString();
+	UserInfo sUinfo = (UserInfo)session.getAttribute("userinfo");
+	signupBean showBean = (signupBean)request.getAttribute("showBean");	
+	session.setAttribute("showBean", showBean);	
+	ArrayList<signupBean> developerlist = (ArrayList<signupBean>)request.getAttribute("developerlist");
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	String now = sdf.format(new Date());
+	//ArrayList<UserBean> developerlist = (ArrayList<UserBean>)request.getAttribute("developerlist");
+//	System.out.println("개발자 리스트는: "+developerlist.get(0).getDi());
+	%>
 <script
 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"
 	type="text/javascript">
@@ -33,12 +49,16 @@
 			document.frm.submit();
 		}
 	}
+	
+	function addRole(uid,pid,i){
+		var role = document.getElementById("Project_role"+i).value;
+		var start = document.getElementById("start_date"+i).value;
+		var end = document.getElementById("end_date"+i).value;
+		
+		location.replace('${pageContext.request.contextPath}/ProjectController/projectUserAdd?uid='+uid+'&role='+role+'&start='+start+'&end='+end+'&pid='+pid);
+	}
+	
 </script>
-	<%
-	ArrayList<UserBean> developerlist = (ArrayList<UserBean>)request.getAttribute("developerlist");
-	
-	
-	%>
 </head>
 <body>
 	<nav class="navbar navbar-default">
@@ -62,7 +82,7 @@
 		</div>
 	</div>
 	</nav>
-	<div class="container">
+<div class="container">
 		<div class="project_user_add_wrapper">
 			<div class="project_user_add">
 				<table class="table table-bordered" border="1" width="600px">
@@ -71,26 +91,38 @@
 						<th width="150px">ID/이름</th>
 						<th width="150px">직급</th>
 						<th width="100px">부서</th>
-						<th width="150px">역할</th>
+						<th width="150px">주역할</th>
+						<th width="150px">투입역할</th>
+						<th width="150px">투입일자</th>
+						<th width="150px">투입종료일자</th>
 					</tr>
-				
+					<% 
+					for(int i=0; i<developerlist.size();i++){
+					%> 
+					
 					<tr>
-						<td><button type="submit" class="btn btn-primary"
-								onclick="">확인</button></td>
-						<td>박동현</td>
-						<td>부서</td>
-						<td>직급</td>
-						<td>직급</td>
-						<td><select name="Project_role" class="form-control">
-								<option value="10">PM</option>
+						<td><button type="button" class="btn btn-primary"
+								onclick="addRole(<%=developerlist.get(i).getId()%>,<%=developerlist.get(i).getComment()%>,<%=i%>)">확인</button></td>
+						<td><a href="http://localhost:8080/mju/LoginController/retrieveUser?id=<%=developerlist.get(i).getId()%>"><%=developerlist.get(i).getId()%></a>/<%=developerlist.get(i).getName()%></td>
+						<td><%=Position_map.get(developerlist.get(i).getPosition_Name())%></td>
+						<td><%=Depart_map.get(developerlist.get(i).getDi())%></td>
+						<td><%=Permission_map.get(developerlist.get(i).getPermission())%></td>
+						<td><select name="Project_role<%=i%>" id="Project_role<%=i%>" class="form-control">
 								<option value="11">PL</option>
 								<option value="12">분석자</option>
 								<option value="13">설계자</option>
-								<option value="14">개발자</option>
+								<option value="14" selected>개발자</option>
 								<option value="15">디자이너</option>
 								<option value="16">테스터</option>
 						</select></td>
+						<td><input type="date" id="start_date<%=i%>" name="start_date<%=i%>" min="${now}" max="2200-12-31" value="<%=now%>"></td>
+						<td><input type="date" id="end_date<%=i%>" name="end_date<%=i%>" min="${now}" max="2200-12-31" value="<%=now%>"></td>
 					</tr>
+					<%
+					}
+					
+					%>
+					
 					
 				</table>
 			</div>

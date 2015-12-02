@@ -9,6 +9,8 @@
 <%@ page import="kr.ac.mju.prompt.model.UserInfo"%>
 <%@ page import="kr.ac.mju.prompt.model.projectBean"%>
 <%@page import="org.apache.commons.beanutils.BeanUtils"%>
+<%@ page import="kr.ac.mju.prompt.model.signupBean"%>
+
 
 <%
 	ArrayList<projectBean> allProject = (ArrayList<projectBean>) request.getAttribute("AllProject");
@@ -23,6 +25,11 @@
 	response.setHeader("pragma", "no-cache");
 	response.setHeader("Cache-control", "no-cache, no-store, must-revalidate");
 	response.setHeader("Expires", "0");
+	String sID = session.getAttribute("session_name").toString();
+	UserInfo sUinfo = (UserInfo)session.getAttribute("userinfo");
+	signupBean showBean = (signupBean)request.getAttribute("showBean");	
+	session.setAttribute("showBean", showBean);	
+	
 %>
 <link rel="stylesheet"
 	href="http://bootswatch.com/flatly/bootstrap.min.css">
