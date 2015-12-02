@@ -590,7 +590,7 @@ public class ProjectController {
 			
 			ModelAndView model = new ModelAndView();
 			ArrayList<Hashtable> list = projectService.setProjectEvalList(request.getParameter("Appraiser"),request.getParameter("pid"));
-			model.addObject("developerlist", list);
+			model.addObject("list", list);
 			model.setViewName("roleEvaluation"); // jsp 이름 (view이름)
 			
 			return model;
@@ -598,14 +598,36 @@ public class ProjectController {
 		
 		
 	//김용민(프로젝트 개인평가 추가)
-		@RequestMapping(value = "/ProjectController/projectUserEval", method = RequestMethod.GET)
+		@RequestMapping(value = "/ProjectController/projectUserEval", method = RequestMethod.POST)
 		public String projectUserEval(HttpSession session, HttpServletRequest request) {
 			logger.info("프로젝트 개인 평가 추가 시도");
 			//서비스 등록하는 장소 Appraiser,wg,cg,tg,contents,is_pm,uid,pid,role
+			System.out.println(request.getParameter("contents"));
 			projectService.setProjectEval(request.getParameter("Appraiser"),request.getParameter("wg"),request.getParameter("cg"),request.getParameter("tg"),request.getParameter("contents"),request.getParameter("is_pm"),request.getParameter("uid"),request.getParameter("pid"),request.getParameter("role"));
-			return "redirect:showProjectInformation?pid="+request.getParameter("pid")+"&Appraiser="+request.getParameter("Appraiser");
+			return "redirect:projectUserEvalList?Appraiser="+request.getParameter("Appraiser")+"&pid="+request.getParameter("pid");
 		}
 		
+		@RequestMapping(value = "/ProjectController/setProjectOrderEval", method = RequestMethod.POST)
+		public String setProjectOrderEval(HttpSession session, HttpServletRequest request) {
+
+			logger.info("고객평가 추가 시도");
+			//서비스 등록하는 장소
+			projectService.setProjectOrderEval(request.getParameter("pid"),request.getParameter("comment"),request.getParameter("score"));
+			return "thanks";
+		}
+		@RequestMapping(value = "/ProjectController/testMail", method = RequestMethod.GET)
+		public ModelAndView testMail(HttpSession session, HttpServletRequest request) {
+			ModelAndView model = new ModelAndView();
+			String pid = request.getParameter("pid");
+			String mail = request.getParameter("mail");
+	
+			model.addObject("pid", pid);
+			model.addObject("mail", mail);
+			
+			model.setViewName("mail"); // jsp 이름 (view이름)
+			return model;
+			
+		}
 	/*
 	 * 업무일지 관련
 	 */

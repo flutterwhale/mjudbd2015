@@ -18,7 +18,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet"
 	href="http://bootswatch.com/flatly/bootstrap.min.css">
 <script
@@ -35,6 +35,7 @@
 	String now = sdf.format(new Date());
 	
 	ArrayList<Hashtable> list = (ArrayList<Hashtable>)request.getAttribute("list");
+	System.out.println("평가리스트 사이즈:"+list.size());
 	
 	%>
 <script
@@ -66,27 +67,75 @@
 	<div class="container">
 		<div class="project_evaluation_wrapper">
 			<div class="project_evaluation">
-				<h3>프로젝트 평가</h3>
+				<h3>프로젝트 개인 평가</h3>
 				<table class="table table-striped table-hover" border="1"
 					width="700px">
+					<!-- Appraiser,wg,cg,tg,contents,is_pm,uid,pid,role -->
+					<!-- User_Identifier,t_user.NAME,t_role.Project_Role,t_role.Project_Identifier,t_project.Project_Name -->
 					<tr align="center">
-						<th width="700px">프로젝트 평가(완료 상태 일때)</th>
+						<th width="200px">피평가자</th>
+						<th width="90px">작업<br>능력</th>
+						<th width="90px">소통<br>능력</th>
+						<th width="90px">기술<br>능력</th>
+						<th width="200px">부연설명</th>
+						<th width="300px">진행 프로젝트명</th>
+						<th width="200px">프로젝트<br>담당업무</th>
+						<th width="200px">평가하기</th>
 					</tr>
+					<% 
+					for(int i=0; i< list.size(); i++){
+						if(list.get(i).get("Eval_Check").equals("Y")){
+							continue;
+						}
+					%> 
 					<tr>
-						<td><textarea form="frm" name="contents"
-								style="width: 100%; height: 200px"></textarea></td>
+					<form action="${pageContext.request.contextPath}/ProjectController/projectUserEval" method="post">
+					
+						<td width="200px"><input id="Appraiser" Name="Appraiser" type="hidden" value="<%=sID%>"  ></input><input id="uid" Name="uid" type="hidden" value="<%=list.get(i).get("User_Identifier") %>"  ></input><%=list.get(i).get("User_Identifier")%>|<%=list.get(i).get("NAME") %></td>
+						<td>
+						<select name="wg" id="wg" class="form-control">
+								<option value="1">1점</option>
+								<option value="2">2점</option>
+								<option value="3">3점</option>
+								<option value="4">4점</option>
+								<option value="5"selected>5점</option>
+						</select>
+						</td>
+						<td>
+						<select name="cg" id="cg" class="form-control">
+								<option value="1">1점</option>
+								<option value="2">2점</option>
+								<option value="3">3점</option>
+								<option value="4">4점</option>
+								<option value="5"selected>5점</option>
+						</select>
+						</td>
+						<td>
+						<select name="tg" id="tg" class="form-control">
+								<option value="1">1점</option>
+								<option value="2">2점</option>
+								<option value="3">3점</option>
+								<option value="4">4점</option>
+								<option value="5"selected>5점</option>
+						</select>
+						</td>
+						<td width="200px"><input id="contents" Name="contents" type="text" placeholder="PM평가란" <%if(!list.get(i).get("Projectmanager_Identifier").equals(sID)){ %>disabled="disabled"<%}%>/></td>
+						<td width="200px"><input id="pid" Name="pid" type="hidden" value="<%=list.get(i).get("Project_Identifier") %>"  /><%=list.get(i).get("Project_Identifier") %>/<%=list.get(i).get("Project_Name") %></td>
+						<td width="200px"><input id="is_pm" Name="is_pm" type="hidden" value="<%if(list.get(i).get("Projectmanager_Identifier").equals(sID)){ %>1<%} else {%>0<%} %>" /><input id="role" Name="role" type="hidden" value="<%=list.get(i).get("Project_Role") %>" /><%=Project_Part.get(list.get(i).get("Project_Role")) %></td>
+						<td width="200px"><input type="submit" value="평가하기"/></td>
+					</form>
 					</tr>
+					
+					<%
+					}
+					
+					%>
 
 				</table>
-				<button type="submit" class="btn btn-success" onclick="move();">프로젝트
-					평가 등록</button>
 			</div>
 		</div>
 
 		<div class="main_button">
-			<button type="button" class="btn btn-default"
-				onclick="location.href='${pageContext.request.contextPath}/ProjectController/showProjectInformation">프로젝트
-				정보</button>
 			<button type="button" class="btn btn-default"
 				onclick="location.replace('${pageContext.request.contextPath}/LoginController/main')">메인화면</button>
 		</div>

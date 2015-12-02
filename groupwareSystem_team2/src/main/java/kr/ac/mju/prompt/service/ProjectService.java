@@ -159,7 +159,7 @@ public class ProjectService {
 		public void setProjectEval(String Appraiser, String wg, String cg, String tg, String contents, String is_pm, String uid, String pid, String role) {
 			// TODO Auto-generated method stub
 			logger.info("=============평가 테이블 등록하기Service=============");
-			
+			System.out.println("contents"+contents);
 			projectDAO.setProjectEval(Appraiser,wg,cg,tg,contents,is_pm,uid,pid,role);
 	}	
 		
@@ -262,5 +262,9 @@ public class ProjectService {
 	      logger.info("getPastMyProjects :" + id);
 	      return projectDAO.getPastMyProject(id);
 	   }
-
+	   
+	   //김용민 (프로젝트 평가) 
+	   public void setProjectOrderEval(String pid, String Project_Comment,String Score){
+		   projectDAO.setProjectOrderEval(pid,Project_Comment,Score);
+	   }
 }

@@ -4,11 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@include file="session.jsp"%>
-<%@page import="java.util.*"%>
-<%@ page import="kr.ac.mju.prompt.model.UserInfo"%>
-<%@ page import="kr.ac.mju.prompt.model.projectBean"%>
-<%@page import="org.apache.commons.beanutils.BeanUtils"%>
+<%@page import="java.util.*"%>>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>

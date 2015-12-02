@@ -233,6 +233,11 @@
 					<button type="button" class="btn btn-default" onclick="location.replace('${pageContext.request.contextPath}/LoginController/main')">뒤로가기</button>
 				</div>
 		    </div>
+		    
+		    
+		    
+		    
+		    
 	
 </body>
 </html>
