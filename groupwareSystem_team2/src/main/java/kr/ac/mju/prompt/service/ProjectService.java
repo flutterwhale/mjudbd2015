@@ -132,11 +132,11 @@ public class ProjectService {
 	 */
 
 	
-	public ArrayList<signupBean> getMember_developer(String id, String pid) {
+	public ArrayList<signupBean> getMember_developer(String pmid, String pid) {
 		// TODO Auto-generated method stub
 		logger.info("=============개발자 리스트가져오기 Service=============");
-
-		return projectDAO.getRoleDepartUser(id, pid);
+		logger.info("list에서 PM 제거 ");
+		return projectDAO.getRoleDepartUser(pmid, pid);
 	}
 	
 	//김용민

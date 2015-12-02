@@ -29,9 +29,6 @@ public class ProjectDAO {
 	@Autowired
 	private static final Logger logger = LoggerFactory.getLogger(ProjectDAO.class);
 
-
-
-
 	// 해당 유저 정보 조회 처리
 	public signupBean getUserInfo(String id) {
 		logger.info("=============해당 유저 정보 조회 처리 =============");
@@ -349,8 +346,7 @@ public class ProjectDAO {
 
 	}
 
-
-	//(김용민 수정)
+	// (김용민 수정)
 	// 프로젝트 정보 가져오기
 	public projectBean getProject(String projectid) {
 		// TODO Auto-generated method stub
@@ -368,15 +364,16 @@ public class ProjectDAO {
 
 		try {
 			ArrayList role = new ArrayList();
-			
+
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection("jdbc:mysql://117.123.66.137:8089/dbd2015", "park", "pjw49064215");
 			stmt = conn.createStatement();
 
-			String query = "SELECT t_role.User_Identifier,t_role.Start_Date,t_role.End_Date,t_user.Name,t_user.Gender,t_user.Phone_Number, t_role.Project_Role FROM dbd2015.t_role join dbd2015.t_user on t_role.User_Identifier = t_user.User_Identifier WHERE Project_Identifier = "+projectid+";";
+			String query = "SELECT t_role.User_Identifier,t_role.Start_Date,t_role.End_Date,t_user.Name,t_user.Gender,t_user.Phone_Number, t_role.Project_Role FROM dbd2015.t_role join dbd2015.t_user on t_role.User_Identifier = t_user.User_Identifier WHERE Project_Identifier = "
+					+ projectid + ";";
 			rs2 = stmt.executeQuery(query);
-			
-			while(rs2.next()){
+
+			while (rs2.next()) {
 				Hashtable user = new Hashtable();
 				user.put("User_Identifier", rs2.getString("User_Identifier"));
 				user.put("Name", rs2.getString("Name"));
@@ -387,8 +384,7 @@ public class ProjectDAO {
 				user.put("Project_Role", rs2.getString("Project_Role"));
 				role.add(user);
 			}
-			
-			
+
 			query = "SELECT Project_Identifier, Project_Name, Projectmanager_Identifier,Start_Date,End_Date,Project_Description ,Status,Project_Price,t_project.Comment AS pComment,Project_Document, Product ,Project_Evaluation ,Dispatch_Location, t_user.Name AS PMname FROM dbd2015.t_project join dbd2015.t_user on t_user.User_Identifier = t_project.Projectmanager_Identifier where Project_Identifier = '"
 					+ projectid + "' ;";
 
@@ -446,7 +442,6 @@ public class ProjectDAO {
 		return pbean;
 
 	}
-
 
 	// 프로젝트 일정 등록
 	public int insertProjectSchedule(PscheduleBean psb) {
@@ -594,10 +589,10 @@ public class ProjectDAO {
 			 * " stdat" + ob.getStart_Date() + " ed" + ob.getEnd_Date());
 			 */
 			String query = "UPDATE `dbd2015`.`t_project_schedule` SET `Schedule_Name`='" + psbean.getSchedule_Name()
-			+ "', `contents`='" + psbean.getContents() + "', `Status_Process`='" + psbean.getStatus_Process()
-			+ "', `End_Date`='" + psbean.getEnd_Date() + "', `Start_Date`='" + psbean.getStart_Date()
-			+ "', `Progress_Percentage`='" + psbean.getProgress_Percentage()
-			+ "' WHERE `Project_Schedule_Identifier`='" + psbean.getProject_Schedule_Identifier() + "';";
+					+ "', `contents`='" + psbean.getContents() + "', `Status_Process`='" + psbean.getStatus_Process()
+					+ "', `End_Date`='" + psbean.getEnd_Date() + "', `Start_Date`='" + psbean.getStart_Date()
+					+ "', `Progress_Percentage`='" + psbean.getProgress_Percentage()
+					+ "' WHERE `Project_Schedule_Identifier`='" + psbean.getProject_Schedule_Identifier() + "';";
 
 			System.out.println("update query? : " + query);
 			result = stmt.executeUpdate(query);
@@ -685,10 +680,8 @@ public class ProjectDAO {
 	}
 
 	// 부서 에 따른 멤버 리스트 확인
-	
-	
-	
-	// 해당 부서 직원 리스트 조회 처리 ArrayList<signupBean> 
+
+	// 해당 부서 직원 리스트 조회 처리 ArrayList<signupBean>
 	public ArrayList<signupBean> getDepartUser(String d) {
 		// TODO Auto-generated method stub
 		logger.info("=============해당 부서 직원 리스트 조회 처리=============");
@@ -698,7 +691,7 @@ public class ProjectDAO {
 		Connection conn = null;
 		ResultSet rs = null, rs2 = null;
 		ArrayList<signupBean> member_List = new ArrayList<signupBean>();
-		String query1 =null;
+		String query1 = null;
 		try {
 
 			Class.forName("com.mysql.jdbc.Driver");
@@ -796,7 +789,6 @@ public class ProjectDAO {
 		}
 		return member_List;
 	}
-	
 
 	// 프로젝트 인력을 추가하기위한 DAO (김용민)
 	public ArrayList<signupBean> getRoleDepartUser(String d, String pid) {
@@ -808,26 +800,27 @@ public class ProjectDAO {
 		Connection conn = null;
 		ResultSet rs = null, rs2 = null;
 		ArrayList<signupBean> member_List = new ArrayList<signupBean>();
-		String query1 =null;
+		String query1 = null;
 		try {
 
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection("jdbc:mysql://117.123.66.137:8089/dbd2015", "park", "pjw49064215");
 			stmt = conn.createStatement();
 
-			query1 = "SELECT User_Identifier FROM dbd2015.t_role WHERE Project_Identifier = "+pid+";";
+			query1 = "SELECT User_Identifier FROM dbd2015.t_role WHERE Project_Identifier = " + pid + ";";
 			System.out.println("ProjectDAO.getUserInfo : 쿼리1 > " + query1);
 			rs2 = stmt.executeQuery(query1);
-			String q="";
+			String q = "";
 			while (rs2.next()) {
-				q = q+ " and t_user.User_Identifier !=" + rs2.getInt("User_Identifier");
+				q = q + " and t_user.User_Identifier !=" + rs2.getInt("User_Identifier");
 			}
-			
-			query1 = "SELECT * FROM dbd2015.t_user join dbd2015.t_position on t_user.User_Identifier = t_position.User_Identifier where (t_position.Department_Identifier =17 or t_position.Department_Identifier =99) and t_user.User_Identifier !="+d+" "+q+"  order by Position_Name ;";
+
+			query1 = "SELECT * FROM dbd2015.t_user join dbd2015.t_position on t_user.User_Identifier = t_position.User_Identifier where (t_position.Department_Identifier =17 or t_position.Department_Identifier =99) and t_user.User_Identifier !="
+					+ d + " " + q + "  order by Position_Name ;";
 			System.out.println("ProjectDAO.getUserInfo : 쿼리1 > " + query1);
 			rs = stmt.executeQuery(query1);
 
-			//System.out.println(" 몇명이냐 ? "+rs.getRow());
+			// System.out.println(" 몇명이냐 ? "+rs.getRow());
 			while (rs.next()) {
 				signupBean member = new signupBean();
 				System.out.println(" id : " + rs.getInt("User_Identifier") + " " + rs.getString("Name"));
@@ -877,8 +870,6 @@ public class ProjectDAO {
 
 				member_List.add(member);
 			}
-			
-			
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -911,32 +902,32 @@ public class ProjectDAO {
 		}
 		return member_List;
 	}
-	//김용민
-	public void setProjectRole(String uid,String start, String end,String role, String pid) {
+
+	// 김용민
+	public void setProjectRole(String uid, String start, String end, String role, String pid) {
 		// TODO Auto-generated method stub
 		logger.info("=============프로젝트 롤에 추가 하는 곳=============");
-		System.out.println("파라메터 전달" + uid+" "+ role+" "+ pid+" ");
-		
+		System.out.println("파라메터 전달" + uid + " " + role + " " + pid + " ");
+
 		Statement stmt = null;
 		Connection conn = null;
-		ResultSet rs=null,rs2 = null;
-		String query1 =null;
+		ResultSet rs = null, rs2 = null;
+		String query1 = null;
 		try {
 
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection("jdbc:mysql://117.123.66.137:8089/dbd2015", "park", "pjw49064215");
 			stmt = conn.createStatement();
-			
+
 			query1 = "INSERT INTO `dbd2015`.`t_role` (`User_Identifier`, `Project_Role`, `Start_Date`, `End_Date`, `Project_Identifier`) "
-					+ "VALUES ('"+uid+"', '"+role+"', '"+start+"', '"+end+"', '"+pid+"');";
-			
+					+ "VALUES ('" + uid + "', '" + role + "', '" + start + "', '" + end + "', '" + pid + "');";
+
 			System.out.println("Insert to role : 쿼리1 > " + query1);
-			
-			
-			if(stmt.executeUpdate(query1)==0){
+
+			if (stmt.executeUpdate(query1) == 0) {
 				System.out.println("롤테이블에 등록 실패");
 			}
-			
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -964,34 +955,33 @@ public class ProjectDAO {
 			}
 
 		}
-	
+
 	}
-	
-	//김용민
+
+	// 김용민
 	public void delProjectRole(String uid, String pid) {
 		// TODO Auto-generated method stub
 		logger.info("=============프로젝트 롤에 추가 하는 곳=============");
-		System.out.println("파라메터 전달" + uid+" "+ pid+" ");
-		
+		System.out.println("파라메터 전달" + uid + " " + pid + " ");
+
 		Statement stmt = null;
 		Connection conn = null;
-		ResultSet rs=null,rs2 = null;
-		String query1 =null;
+		ResultSet rs = null, rs2 = null;
+		String query1 = null;
 		try {
 
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection("jdbc:mysql://117.123.66.137:8089/dbd2015", "park", "pjw49064215");
 			stmt = conn.createStatement();
-			
-			query1 = "DELETE FROM `dbd2015`.`t_role` WHERE `User_Identifier`='"+uid+"' and`Project_Identifier`='"+pid+"'";
-			
+
+			query1 = "DELETE FROM `dbd2015`.`t_role` WHERE `User_Identifier`='" + uid + "' and`Project_Identifier`='"
+					+ pid + "'";
+
 			System.out.println(" 쿼리1 > " + query1);
-			
-			
-			if(stmt.executeUpdate(query1)==0){
+
+			if (stmt.executeUpdate(query1) == 0) {
 				System.out.println("롤테이블 삭제 실패");
 			}
-			
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -1020,118 +1010,120 @@ public class ProjectDAO {
 			}
 
 		}
-	
+
 	}
-	
-	//김용민(평가 해야할 리스트 뿌려주기)
-		public ArrayList setProjectEvalList(String Appraiser, String pid) {
-			// TODO Auto-generated method stub
-			logger.info("=============프로젝트 평가 추가 하는 곳=============");
-			System.out.println("파라메터 전달" + pid+" "+ Appraiser+" ");
-			ArrayList evalRoleData = new ArrayList();
-			
-			Statement stmt = null;
-			Connection conn = null;
-			ResultSet rs=null,rs2 = null;
-			String query1 =null;
+
+	// 김용민(평가 해야할 리스트 뿌려주기)
+	public ArrayList setProjectEvalList(String Appraiser, String pid) {
+		// TODO Auto-generated method stub
+		logger.info("=============프로젝트 평가 추가 하는 곳=============");
+		System.out.println("파라메터 전달" + pid + " " + Appraiser + " ");
+		ArrayList evalRoleData = new ArrayList();
+
+		Statement stmt = null;
+		Connection conn = null;
+		ResultSet rs = null, rs2 = null;
+		String query1 = null;
+		try {
+
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = DriverManager.getConnection("jdbc:mysql://117.123.66.137:8089/dbd2015", "park", "pjw49064215");
+			stmt = conn.createStatement();
+
+			query1 = "SELECT User_Identifier,Project_Role FROM dbd2015.t_role WHERE Project_Identifier = " + pid
+					+ " and User_Identifier != " + Appraiser + ";";
+			System.out.println("평가테이블에 넣을 기본정보 수신 : 쿼리1 > " + query1);
+			rs2 = stmt.executeQuery(query1);
+
+			while (rs2.next()) {
+				Hashtable evalUser = new Hashtable();
+				evalUser.put("User_Identifier", rs2.getInt("User_Identifier"));
+				evalUser.put("Project_Role", rs2.getInt("Project_Role"));
+				evalRoleData.add(evalUser);
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
 			try {
-				
-				Class.forName("com.mysql.jdbc.Driver");
-				conn = DriverManager.getConnection("jdbc:mysql://117.123.66.137:8089/dbd2015", "park", "pjw49064215");
-				stmt = conn.createStatement();
-				
-				query1 = "SELECT User_Identifier,Project_Role FROM dbd2015.t_role WHERE Project_Identifier = "+pid+" and User_Identifier != "+Appraiser+";";
-				System.out.println("평가테이블에 넣을 기본정보 수신 : 쿼리1 > " + query1);
-				rs2 = stmt.executeQuery(query1);
-				
-				while (rs2.next()) {
-					Hashtable evalUser = new Hashtable();
-					evalUser.put("User_Identifier", rs2.getInt("User_Identifier"));
-					evalUser.put("Project_Role", rs2.getInt("Project_Role"));
-					evalRoleData.add(evalUser);
+				if (rs != null) {
+					rs.close();
 				}
-				
+				if (rs2 != null) {
+					rs2.close();
+				}
+				if (stmt != null) {
+					stmt.close();
+				}
+
+				if (conn != null) {
+					conn.close();
+				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} catch (ClassNotFoundException e) {
+			}
+
+		}
+		return evalRoleData;
+
+	}
+
+	// 김용민(평가 등록하기)
+	public void setProjectEval(String Appraiser, String wg, String cg, String tg, String contents, String is_pm,
+			String uid, String pid, String role) {
+		// TODO Auto-generated method stub
+		logger.info("=============프로젝트 평가 추가 하는 곳=============");
+		System.out.println("파라메터 전달" + Appraiser + " " + wg + " " + cg + " " + tg + " " + contents + " " + is_pm + " "
+				+ uid + " " + pid + " " + role);
+
+		Statement stmt = null;
+		Connection conn = null;
+		ResultSet rs = null, rs2 = null;
+		String query1 = null;
+		try {
+
+			query1 = "INSERT INTO `dbd2015`.`t_evaluation` (`Appraiser`, `Work_Performance_Grade`, `Communication_Capacity`, `Technic_Grade`, `Evaluation_Contents`, `ISProjectmanager`, `User_Identifier`, `Project_Identifier`, `Project_Role`) "
+					+ "VALUES ('" + Appraiser + "', '" + wg + "', '" + cg + "', '" + tg + "', '" + contents + "', '"
+					+ is_pm + "','" + uid + "', '" + pid + "', '" + role + "');";
+			System.out.println("Insert to role : 쿼리1 > " + query1);
+			if (stmt.executeUpdate(query1) == 0) {
+				System.out.println("평가테이블에 등록 실패");
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (rs2 != null) {
+					rs2.close();
+				}
+				if (stmt != null) {
+					stmt.close();
+				}
+
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} finally {
-				try {
-					if (rs != null) {
-						rs.close();
-					}
-					if (rs2 != null) {
-						rs2.close();
-					}
-					if (stmt != null) {
-						stmt.close();
-					}
-
-					if (conn != null) {
-						conn.close();
-					}
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-
 			}
-			return evalRoleData;
-		
+
 		}
-		//김용민(평가 등록하기)
-				public void setProjectEval(String Appraiser, String wg, String cg, String tg, String contents, String is_pm, String uid, String pid, String role) {
-					// TODO Auto-generated method stub
-					logger.info("=============프로젝트 평가 추가 하는 곳=============");
-					System.out.println("파라메터 전달" +Appraiser+" "+wg+" "+cg+" "+tg+" "+contents+" "+is_pm+" "+uid+" "+pid+" "+role);
-					
-					Statement stmt = null;
-					Connection conn = null;
-					ResultSet rs=null,rs2 = null;
-					String query1 =null;
-					try {
-						
-						query1 = "INSERT INTO `dbd2015`.`t_evaluation` (`Appraiser`, `Work_Performance_Grade`, `Communication_Capacity`, `Technic_Grade`, `Evaluation_Contents`, `ISProjectmanager`, `User_Identifier`, `Project_Identifier`, `Project_Role`) "
-								+ "VALUES ('"+Appraiser+"', '"+wg+"', '"+cg+"', '"+tg+"', '"+contents+"', '"+is_pm+"','"+uid+"', '"+pid+"', '"+role+"');";
-						System.out.println("Insert to role : 쿼리1 > " + query1);
-						if(stmt.executeUpdate(query1)==0){
-							System.out.println("평가테이블에 등록 실패");
-						}
-						
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} finally {
-						try {
-							if (rs != null) {
-								rs.close();
-							}
-							if (rs2 != null) {
-								rs2.close();
-							}
-							if (stmt != null) {
-								stmt.close();
-							}
 
-							if (conn != null) {
-								conn.close();
-							}
-						} catch (SQLException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-
-					}
-				
-				}
+	}
 	// permission 으로 유저 리스트 조회 처리
 
-	
-	
-	
-	//권한에 따른 멤버 리스트 
+	// 권한에 따른 멤버 리스트
 	public ArrayList<UserBean> showMember_permssion(int p) {
 		logger.info("=============권한에 따른 회원 리스트 조회 처리 =============");
 		logger.info("권한에 따른 멤버 리스트 확인 " + p);
@@ -1245,8 +1237,8 @@ public class ProjectDAO {
 	public int intsertProject(String pid, obtainBean oBean) {
 		logger.info("=============프로젝트 추가/제안 삭제 처리/role 에 pm 추가 =============");
 		logger.info("intsertProject : pid " + pid + " oid " + oBean.getObtain_Order_Identifier());
-		int result = 0, result2 = 0, result3= 0;
-		int last=0;
+		int result = 0, result2 = 0, result3 = 0;
+		int last = 0;
 		Statement stmt = null;
 		Connection conn = null;
 		ResultSet rs = null;
@@ -1262,30 +1254,29 @@ public class ProjectDAO {
 
 			result = stmt.executeUpdate(query);
 			System.out.println("query 1 " + query);
-		
+
 			String lastinsert = "SELECT LAST_INSERT_ID();";
 			rs = stmt.executeQuery(lastinsert);
 
-			if(rs.first()) {
-				last	=rs.getInt("LAST_INSERT_ID()");
-				
-				System.out.println("last Insert value :"+last);
+			if (rs.first()) {
+				last = rs.getInt("LAST_INSERT_ID()");
+
+				System.out.println("last Insert value :" + last);
 			}
-			
+
 			String query2 = "INSERT INTO `dbd2015`.`t_role` (`User_Identifier`, `Project_Role`, `Start_Date`, `End_Date`, `Project_Identifier`) VALUES"
-					+ " ('" + pid + "', '10', '" + oBean.getStart_Date() + "','" + oBean.getEnd_Date()
-					+ "', '"+last+"');";
+					+ " ('" + pid + "', '10', '" + oBean.getStart_Date() + "','" + oBean.getEnd_Date() + "', '" + last
+					+ "');";
 
 			System.out.println("query2 " + query2);
 			result2 = stmt.executeUpdate(query2);
-			
-			
+
 			String query3 = "DELETE FROM `dbd2015`.`t_obtain_order` WHERE `Obtain_Order_Identifier`='"
 					+ oBean.getObtain_Order_Identifier() + "';";
 			System.out.println("query 3 " + query3);
 			result3 = stmt.executeUpdate(query3);
-			
-			System.out.println("insert result? " + result + " / " + result2+" / "+result3);
+
+			System.out.println("insert result? " + result + " / " + result2 + " / " + result3);
 
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -1374,7 +1365,7 @@ public class ProjectDAO {
 
 	}
 
-	//제안서 세부 정보 조회 
+	// 제안서 세부 정보 조회
 
 	// 제안서 세부 정보 조회 처리
 	public obtainBean showObtain(String oid) {
@@ -1521,10 +1512,10 @@ public class ProjectDAO {
 					"obean writer " + ob.getWriter_User() + " stdat" + ob.getStart_Date() + " ed" + ob.getEnd_Date());
 
 			String query = "UPDATE `dbd2015`.`t_obtain_order` SET `Obtain_Name`='" + ob.getObtain_Name()
-			+ "', `Comment`='" + ob.getComment() + "', `Present_Status`='" + ob.getPresent_Status()
-			+ "', `location`='" + ob.getLocation() + "', `End_Date`='" + ob.getEnd_Date() + "', `Start_Date`='"
-			+ ob.getStart_Date() + "' WHERE `Obtain_Order_Identifier`='" + ob.getObtain_Order_Identifier()
-			+ "';";
+					+ "', `Comment`='" + ob.getComment() + "', `Present_Status`='" + ob.getPresent_Status()
+					+ "', `location`='" + ob.getLocation() + "', `End_Date`='" + ob.getEnd_Date() + "', `Start_Date`='"
+					+ ob.getStart_Date() + "' WHERE `Obtain_Order_Identifier`='" + ob.getObtain_Order_Identifier()
+					+ "';";
 
 			System.out.println("update query? : " + query);
 			result = stmt.executeUpdate(query);
@@ -1555,13 +1546,12 @@ public class ProjectDAO {
 			conn = DriverManager.getConnection("jdbc:mysql://117.123.66.137:8089/dbd2015", "park", "pjw49064215");
 			stmt = conn.createStatement();
 
-
 			query1 = "SELECT * FROM dbd2015.t_user join dbd2015.t_position on t_user.User_Identifier = t_position.User_Identifier  join  dbd2015.t_department on t_department.Department_Identifier = t_position.Department_Identifier where t_position.Department_Identifier > '0'  ;";
 
 			System.out.println("ProjectDAO.getAllMembers : 쿼리1 > " + query1);
 			rs = stmt.executeQuery(query1);
 
-			//	
+			//
 			while (rs.next()) {
 				signupBean member = new signupBean();
 				member.setIsFreeLancer(rs.getString("cat"));
@@ -1586,10 +1576,9 @@ public class ProjectDAO {
 				member.setPosition_Name(rs.getInt("Position_Name"));
 				member.setDi(rs.getInt("Department_Identifier"));
 
-
 				member_List.add(member);
 			}
-			System.out.println(" 몇명이냐 ? "+member_List.size());
+			System.out.println(" 몇명이냐 ? " + member_List.size());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -1625,7 +1614,7 @@ public class ProjectDAO {
 	public int moveDepart(String id, String di, String po, String pe) {
 		// TODO Auto-generated method stub
 		logger.info("=============부서 정보 변경 처리 =============");
-		logger.info("update query : " + id + " 부서 "+di + " 직급 " + po  +" 권한 " + pe );
+		logger.info("update query : " + id + " 부서 " + di + " 직급 " + po + " 권한 " + pe);
 		// TODO Auto-generated method stub
 		Statement stmt = null;
 		Connection conn = null;
@@ -1635,16 +1624,21 @@ public class ProjectDAO {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection("jdbc:mysql://117.123.66.137:8089/dbd2015", "park", "pjw49064215");
 			stmt = conn.createStatement();
-
-
-			String query = "UPDATE `dbd2015`.`t_position` SET `Department_Identifier`='"+di+"', `Position_Name`='"+po+"', `Permission`='"+pe+"' WHERE `User_Identifier`='"+id+"';";
-
+			String query = null;
+			if (pe==null) {
+				
+				System.out.println(" permission 없음 " );
+				query = "UPDATE `dbd2015`.`t_position` SET `Department_Identifier`='" + di + "', `Position_Name`='" + po
+						+ "' WHERE `User_Identifier`='" + id + "';";
+			} else {
+				query = "UPDATE `dbd2015`.`t_position` SET `Department_Identifier`='" + di + "', `Position_Name`='" + po
+						+ "', `Permission`='" + pe + "' WHERE `User_Identifier`='" + id + "';";
+			}
 
 			result = stmt.executeUpdate(query);
 
-			String query1 = "UPDATE `dbd2015`.`t_user` SET `Joining_Date`=now() WHERE `User_Identifier`='"+id+"';";
+			String query1 = "UPDATE `dbd2015`.`t_user` SET `Joining_Date`=now() WHERE `User_Identifier`='" + id + "';";
 			result = stmt.executeUpdate(query1);
-
 
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -1656,266 +1650,265 @@ public class ProjectDAO {
 
 		return result;
 	}
-	
-	//부서 정보를 받아오는 과정
-		public HashMap getDepartInfo() {
-			logger.info("=============부서 정보 조회 처리 =============");
-			// PreparedStatement pstmt = null;
-			Statement stmt = null;
-			Connection conn = null;
-			ResultSet rs = null;
-			HashMap hashmap = new HashMap();
-			HashMap depart = new HashMap();
-			HashMap user = new HashMap();
-			
-			
+
+	// 부서 정보를 받아오는 과정
+	public HashMap getDepartInfo() {
+		logger.info("=============부서 정보 조회 처리 =============");
+		// PreparedStatement pstmt = null;
+		Statement stmt = null;
+		Connection conn = null;
+		ResultSet rs = null;
+		HashMap hashmap = new HashMap();
+		HashMap depart = new HashMap();
+		HashMap user = new HashMap();
+
+		try {
+
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = DriverManager.getConnection("jdbc:mysql://117.123.66.137:8089/dbd2015", "park", "pjw49064215");
+			stmt = conn.createStatement();
+
+			String query1 = "SELECT Hierachical_Identifier,Department_Level,Parent_Department,Department_ID,Department_Name FROM dbd2015.t_department_hierachical "
+					+ "h join dbd2015.t_department d on h.Department_ID = d.Department_Identifier";
+
+			System.out.println("ProjectDAO.getUserInfo : 쿼리1 > " + query1);
+			rs = stmt.executeQuery(query1);
+
+			while (rs.next()) {
+				ArrayList data = new ArrayList();
+				data.add(rs.getInt("Parent_Department"));
+				data.add(rs.getInt("Department_Level"));
+				data.add(rs.getString("Department_Name"));
+				data.add(rs.getInt("Department_ID"));
+				depart.put(rs.getInt("Hierachical_Identifier"), data);
+			}
+
+			query1 = "SELECT t_user.User_Identifier, t_user.NAME ,Department_Identifier FROM dbd2015.t_user join dbd2015.t_position on t_user.User_Identifier = t_position.User_Identifier order by Position_Name;";
+
+			System.out.println("ProjectDAO.getUserInfo : 쿼리1 > " + query1);
+			rs = stmt.executeQuery(query1);
+
+			for (int i = 0; rs.next(); i++) {
+				ArrayList data = new ArrayList();
+				data.add(rs.getInt("User_Identifier"));
+				data.add(rs.getString("NAME"));
+				data.add(rs.getInt("Department_Identifier"));
+				user.put(i, data);
+			}
+
+			hashmap.put(0, depart);
+			hashmap.put(1, user);
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
 			try {
-
-				Class.forName("com.mysql.jdbc.Driver");
-				conn = DriverManager.getConnection("jdbc:mysql://117.123.66.137:8089/dbd2015", "park", "pjw49064215");
-				stmt = conn.createStatement();
-
-				String query1 = "SELECT Hierachical_Identifier,Department_Level,Parent_Department,Department_ID,Department_Name FROM dbd2015.t_department_hierachical "
-						+ "h join dbd2015.t_department d on h.Department_ID = d.Department_Identifier";
-
-				System.out.println("ProjectDAO.getUserInfo : 쿼리1 > " + query1);
-				rs = stmt.executeQuery(query1);
-				
-				while (rs.next()) {
-					ArrayList data = new ArrayList();
-					data.add(rs.getInt("Parent_Department"));
-					data.add(rs.getInt("Department_Level"));
-					data.add(rs.getString("Department_Name"));
-					data.add(rs.getInt("Department_ID"));
-					depart.put(rs.getInt("Hierachical_Identifier"), data);
+				if (rs != null) {
+					rs.close();
 				}
-				
-				query1 = "SELECT t_user.User_Identifier, t_user.NAME ,Department_Identifier FROM dbd2015.t_user join dbd2015.t_position on t_user.User_Identifier = t_position.User_Identifier order by Position_Name;";
-				
-				System.out.println("ProjectDAO.getUserInfo : 쿼리1 > " + query1);
-				rs = stmt.executeQuery(query1);
-				
-				for (int i=0 ; rs.next(); i++) {
-					ArrayList data = new ArrayList();
-					data.add(rs.getInt("User_Identifier"));
-					data.add(rs.getString("NAME"));
-					data.add(rs.getInt("Department_Identifier"));
-					user.put(i, data);
+
+				if (stmt != null) {
+					stmt.close();
 				}
-				
-				hashmap.put(0, depart);
-				hashmap.put(1, user);
-				
+
+				if (conn != null) {
+					conn.close();
+				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} catch (ClassNotFoundException e) {
+			}
+
+		}
+		return hashmap;
+	}
+
+	public ArrayList<userProjectBean> getAllMyProject(String id) {
+		logger.info("=============getAllMyProject 처리 =============");
+		ArrayList<userProjectBean> allProject = new ArrayList<userProjectBean>();
+		PreparedStatement pstmt = null;
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = DriverManager.getConnection("jdbc:mysql://117.123.66.137:8089/dbd2015", "park", "pjw49064215");
+			String query = "SELECT Evaluation_Score,Project_Evaluation,t_project.Project_Identifier, t_role.User_Identifier, Project_Name,Project_Role ,Projectmanager_Identifier, t_project.Start_Date as pStart_date ,t_project.End_Date as pEnd_date,t_role.Start_Date as rStart_date ,t_role.End_Date as rEnd_date,Project_Description , Status,Project_Price,t_project.Comment AS pComment,Project_Document, Product ,Project_Evaluation ,Dispatch_Location FROM dbd2015.t_role join dbd2015.t_project on t_role.Project_Identifier = t_project.Project_Identifier where dbd2015.t_project.Status <'14'  and t_role.User_Identifier = '"
+					+ id + "';";
+
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(query);
+			System.out.println("내 프로젝트 목록 " + query);
+			while (rs.next()) {
+
+				logger.info(rs.getString("Project_Name") + " " + rs.getInt("Projectmanager_Identifier"));
+
+				userProjectBean usbean = new userProjectBean();
+
+				usbean.setEvaluation_Score(rs.getInt("Evaluation_Score"));
+
+				usbean.setProject_Evaluation(rs.getString("Project_Evaluation"));
+				usbean.setUser_Identifier(rs.getInt("User_Identifier"));
+				usbean.setrStart_Date(rs.getDate("rStart_date"));
+				usbean.setrEnd_Date(rs.getDate("rEnd_Date"));
+
+				usbean.setProject_Role(rs.getInt("Project_Role"));
+
+				usbean.setProject_name(rs.getString("Project_Name"));
+
+				usbean.setProject_Identifier(rs.getInt("project_Identifier"));
+				usbean.setProjectmanager_Identifier(rs.getInt("Projectmanager_Identifier"));
+				usbean.setStart_Date(rs.getDate("pStart_date"));
+				usbean.setEnd_Date(rs.getDate("pEnd_date"));
+				usbean.setPproject_Description(rs.getString("Project_Description"));
+				usbean.setPstatus(rs.getInt("Status"));
+				usbean.setPcomment(rs.getString("pComment"));
+				usbean.setPdispatch_Location(rs.getString("Dispatch_Location"));
+
+				allProject.add(usbean);
+
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+
+				if (pstmt != null) {
+					pstmt.close();
+				}
+
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} finally {
-				try {
-					if (rs != null) {
-						rs.close();
-					}
-
-					if (stmt != null) {
-						stmt.close();
-					}
-
-					if (conn != null) {
-						conn.close();
-					}
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-
 			}
-			return hashmap;
+
 		}
-		
-		public ArrayList<userProjectBean> getAllMyProject(String id) {
-		      logger.info("=============getAllMyProject 처리 =============");
-		      ArrayList<userProjectBean> allProject = new ArrayList<userProjectBean>();
-		      PreparedStatement pstmt = null;
-		      Connection conn = null;
-		      Statement stmt = null;
-		      ResultSet rs = null;
 
-		      try {
+		return allProject;
 
-		         Class.forName("com.mysql.jdbc.Driver");
-		         conn = DriverManager.getConnection("jdbc:mysql://117.123.66.137:8089/dbd2015", "park", "pjw49064215");
-		         String query = "SELECT Evaluation_Score,Project_Evaluation,t_project.Project_Identifier, t_role.User_Identifier, Project_Name,Project_Role ,Projectmanager_Identifier, t_project.Start_Date as pStart_date ,t_project.End_Date as pEnd_date,t_role.Start_Date as rStart_date ,t_role.End_Date as rEnd_date,Project_Description , Status,Project_Price,t_project.Comment AS pComment,Project_Document, Product ,Project_Evaluation ,Dispatch_Location FROM dbd2015.t_role join dbd2015.t_project on t_role.Project_Identifier = t_project.Project_Identifier where dbd2015.t_project.Status <'14'  and t_role.User_Identifier = '"+id+"';";
+	}
 
-		         stmt = conn.createStatement();
-		         rs = stmt.executeQuery(query);
-System.out.println("내 프로젝트 목록 "+query);
-		         while (rs.next()) {
+	public ArrayList<userProjectBean> getPastMyProject(String id) {
+		logger.info("=============getPastMyProject 처리 =============");
+		ArrayList<userProjectBean> Past_Project = new ArrayList<userProjectBean>();
+		PreparedStatement pstmt = null;
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet rs = null;
 
-		            logger.info(rs.getString("Project_Name") + " " + rs.getInt("Projectmanager_Identifier"));
+		try {
 
-		            userProjectBean usbean = new userProjectBean();
-		            
-		            usbean.setEvaluation_Score(rs.getInt("Evaluation_Score"));
-		            
-		            usbean.setProject_Evaluation(rs.getString("Project_Evaluation"));
-		            usbean.setUser_Identifier(rs.getInt("User_Identifier"));
-		            usbean.setrStart_Date(rs.getDate("rStart_date"));
-		            usbean.setrEnd_Date(rs.getDate("rEnd_Date"));
-		            
-		            usbean.setProject_Role(rs.getInt("Project_Role"));
-		            
-		            usbean.setProject_name(rs.getString("Project_Name"));
-		            
-		            usbean.setProject_Identifier(rs.getInt("project_Identifier"));
-		            usbean.setProjectmanager_Identifier(rs.getInt("Projectmanager_Identifier"));        
-		            usbean.setStart_Date(rs.getDate("pStart_date"));
-		            usbean.setEnd_Date(rs.getDate("pEnd_date"));
-		            usbean.setPproject_Description(rs.getString("Project_Description"));
-		            usbean.setPstatus(rs.getInt("Status"));
-		            usbean.setPcomment(rs.getString("pComment"));
-		            usbean.setPdispatch_Location(rs.getString("Dispatch_Location"));
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = DriverManager.getConnection("jdbc:mysql://117.123.66.137:8089/dbd2015", "park", "pjw49064215");
 
-		            allProject.add(usbean);
+			String query = "SELECT   Evaluation_Score, Project_Evaluation, t_role.User_Identifier,t_project.Project_Identifier, Project_Name,Project_Role, Projectmanager_Identifier, t_project.Start_Date as pStart_date ,t_project.End_Date as pEnd_date,t_role.Start_Date as rStart_date ,t_role.End_Date as rEnd_date,Project_Description , Status,Project_Price,t_project.Comment AS pComment,Project_Document, Product ,Project_Evaluation ,Dispatch_Location FROM dbd2015.t_role join dbd2015.t_project on t_role.Project_Identifier = t_project.Project_Identifier where dbd2015.t_project.Status >='14'  and t_role.User_Identifier = '"
+					+ id + "';";
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(query);
+			logger.info("과거 프로젝트 나열 ");
 
-		         }
+			while (rs.next()) {
 
-		      } catch (SQLException e) {
-		         // TODO Auto-generated catch block
-		         e.printStackTrace();
-		      } catch (ClassNotFoundException e) {
-		         // TODO Auto-generated catch block
-		         e.printStackTrace();
-		      } finally {
-		         try {
-		            if (rs != null) {
-		               rs.close();
-		            }
+				logger.info(rs.getString("Project_Name") + " " + rs.getInt("Projectmanager_Identifier"));
 
-		            if (pstmt != null) {
-		               pstmt.close();
-		            }
+				userProjectBean usbean = new userProjectBean();
 
-		            if (conn != null) {
-		               conn.close();
-		            }
-		         } catch (SQLException e) {
-		            // TODO Auto-generated catch block
-		            e.printStackTrace();
-		         }
+				usbean.setEvaluation_Score(rs.getInt("Evaluation_Score"));
 
-		      }
+				usbean.setProject_Evaluation(rs.getString("Project_Evaluation"));
+				usbean.setUser_Identifier(rs.getInt("User_Identifier"));
+				usbean.setrStart_Date(rs.getDate("rStart_date"));
+				usbean.setrEnd_Date(rs.getDate("rEnd_Date"));
 
-		      return allProject;
+				usbean.setProject_Role(rs.getInt("Project_Role"));
 
-		   }
+				usbean.setProject_name(rs.getString("Project_Name"));
 
-		   public ArrayList<userProjectBean> getPastMyProject(String id) {
-		      logger.info("=============getPastMyProject 처리 =============");
-		      ArrayList<userProjectBean> Past_Project = new ArrayList<userProjectBean>();
-		      PreparedStatement pstmt = null;
-		      Connection conn = null;
-		      Statement stmt = null;
-		      ResultSet rs = null;
-
-		      try {
-
-		         Class.forName("com.mysql.jdbc.Driver");
-		         conn = DriverManager.getConnection("jdbc:mysql://117.123.66.137:8089/dbd2015", "park", "pjw49064215");
-
-		         String query = "SELECT   Evaluation_Score, Project_Evaluation, t_role.User_Identifier,t_project.Project_Identifier, Project_Name,Project_Role, Projectmanager_Identifier, t_project.Start_Date as pStart_date ,t_project.End_Date as pEnd_date,t_role.Start_Date as rStart_date ,t_role.End_Date as rEnd_date,Project_Description , Status,Project_Price,t_project.Comment AS pComment,Project_Document, Product ,Project_Evaluation ,Dispatch_Location FROM dbd2015.t_role join dbd2015.t_project on t_role.Project_Identifier = t_project.Project_Identifier where dbd2015.t_project.Status >='14'  and t_role.User_Identifier = '"+id+"';";
-		         stmt = conn.createStatement();
-		         rs = stmt.executeQuery(query);
-		         logger.info("과거 프로젝트 나열 ");
-
-		         while (rs.next()) {
-
-		            logger.info(rs.getString("Project_Name") + " " + rs.getInt("Projectmanager_Identifier"));
-
-		            userProjectBean usbean = new userProjectBean();
-		            
- usbean.setEvaluation_Score(rs.getInt("Evaluation_Score"));
-		            
-		            usbean.setProject_Evaluation(rs.getString("Project_Evaluation"));
-		            usbean.setUser_Identifier(rs.getInt("User_Identifier"));
-		            usbean.setrStart_Date(rs.getDate("rStart_date"));
-		            usbean.setrEnd_Date(rs.getDate("rEnd_Date"));
-		            
-		            usbean.setProject_Role(rs.getInt("Project_Role"));
-		            
-		            usbean.setProject_name(rs.getString("Project_Name"));
-		            
-		            usbean.setProject_Identifier(rs.getInt("project_Identifier"));
-		            usbean.setProjectmanager_Identifier(rs.getInt("Projectmanager_Identifier"));
-		            usbean.setStart_Date(rs.getDate("pStart_date"));
-		            usbean.setEnd_Date(rs.getDate("pEnd_date"));
-		            usbean.setPproject_Description(rs.getString("Project_Description"));
-		            usbean.setPstatus(rs.getInt("Status"));
-		            usbean.setPcomment(rs.getString("pComment"));
-		            usbean.setPdispatch_Location(rs.getString("Dispatch_Location"));
-		            Past_Project.add(usbean);
-		         }
-
-		      } catch (SQLException e) {
-		         // TODO Auto-generated catch block
-		         e.printStackTrace();
-		      } catch (ClassNotFoundException e) {
-		         // TODO Auto-generated catch block
-		         e.printStackTrace();
-		      } finally {
-		         try {
-		            if (rs != null) {
-		               rs.close();
-		            }
-
-		            if (pstmt != null) {
-		               pstmt.close();
-		            }
-
-		            if (conn != null) {
-		               conn.close();
-		            }
-		         } catch (SQLException e) {
-		            // TODO Auto-generated catch block
-		            e.printStackTrace();
-		         }
-
-		      }
-
-		      return Past_Project;
-
-		   }
-		   
-
-			// 경영진 프로젝트 삭제 처리
-			public int deleteProject(String pid) {
-				// TODO Auto-generated method stub
-				logger.info("=============프로젝트 삭제 처리 =============");
-				logger.info("deleteObtain : " + pid);
-				Statement stmt = null;
-				Connection conn = null;
-				int result = 0;
-
-				try {
-					Class.forName("com.mysql.jdbc.Driver");
-					conn = DriverManager.getConnection("jdbc:mysql://117.123.66.137:8089/dbd2015", "park", "pjw49064215");
-					stmt = conn.createStatement();
-					String query = "DELETE FROM `dbd2015`.`t_project` WHERE `Project_Identifier`='" + pid + "';";
-					result = stmt.executeUpdate(query);
-					System.out.println("query 1 " + query);
-
-					System.out.println("insert result? " + result);
-
-				} catch (ClassNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				return result;
+				usbean.setProject_Identifier(rs.getInt("project_Identifier"));
+				usbean.setProjectmanager_Identifier(rs.getInt("Projectmanager_Identifier"));
+				usbean.setStart_Date(rs.getDate("pStart_date"));
+				usbean.setEnd_Date(rs.getDate("pEnd_date"));
+				usbean.setPproject_Description(rs.getString("Project_Description"));
+				usbean.setPstatus(rs.getInt("Status"));
+				usbean.setPcomment(rs.getString("pComment"));
+				usbean.setPdispatch_Location(rs.getString("Dispatch_Location"));
+				Past_Project.add(usbean);
 			}
 
-		   
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+
+				if (pstmt != null) {
+					pstmt.close();
+				}
+
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+
+		return Past_Project;
+
+	}
+
+	// 경영진 프로젝트 삭제 처리
+	public int deleteProject(String pid) {
+		// TODO Auto-generated method stub
+		logger.info("=============프로젝트 삭제 처리 =============");
+		logger.info("deleteObtain : " + pid);
+		Statement stmt = null;
+		Connection conn = null;
+		int result = 0;
+
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = DriverManager.getConnection("jdbc:mysql://117.123.66.137:8089/dbd2015", "park", "pjw49064215");
+			stmt = conn.createStatement();
+			String query = "DELETE FROM `dbd2015`.`t_project` WHERE `Project_Identifier`='" + pid + "';";
+			result = stmt.executeUpdate(query);
+			System.out.println("query 1 " + query);
+
+			System.out.println("insert result? " + result);
+
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
+
 }

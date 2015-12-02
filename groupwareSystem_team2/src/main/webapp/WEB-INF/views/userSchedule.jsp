@@ -10,20 +10,12 @@
 <%@ page import="kr.ac.mju.prompt.model.projectBean"%>
 <%@page import="org.apache.commons.beanutils.BeanUtils"%>
 
-<%-- <%
+<%
 	ArrayList<projectBean> allProject = (ArrayList<projectBean>) request.getAttribute("AllProject");
 	ArrayList<projectBean> pastProject = (ArrayList<projectBean>) request.getAttribute("PastProject");
 %>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
 
-<%
-	response.setHeader("pragma", "no-cache");
-	response.setHeader("Cache-control", "no-cache, no-store, must-revalidate");
-	response.setHeader("Expires", "0");
-%> --%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
