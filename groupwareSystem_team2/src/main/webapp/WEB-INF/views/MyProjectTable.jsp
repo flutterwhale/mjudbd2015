@@ -5,10 +5,14 @@
 	pageEncoding="UTF-8"%>
 <%@include file="mapper.jsp"%>
 <%@include file="session.jsp"%>
-<%@page import="java.util.*"%>
 <%@ page import="kr.ac.mju.prompt.model.UserInfo"%>
 <%@ page import="kr.ac.mju.prompt.model.userProjectBean"%>
+<%@ page import="kr.ac.mju.prompt.model.signupBean"%>
+<%@ page import="kr.ac.mju.prompt.model.UserBean"%>
+<%@ page import="kr.ac.mju.prompt.model.projectBean"%>
 <%@page import="org.apache.commons.beanutils.BeanUtils"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.*"%>
 
 <%
 	ArrayList<userProjectBean> allProject = (ArrayList<userProjectBean>) request.getAttribute("AllProject");
@@ -47,6 +51,11 @@
 		});
 	});
 </script>
+<%
+	signupBean showBean = (signupBean) request.getAttribute("showBean");
+	session.setAttribute("showBean", showBean);
+	projectBean pBean = (projectBean) request.getAttribute("projectInfo");
+%>
 </head>
 <body>
 	<nav class="navbar navbar-default">
@@ -75,13 +84,13 @@
 		<div class="project_button">
 			<button id="btn_present_project" class="btn btn-default"
 				type="button">내 현재 프로젝트</button>
-			<button id="btn_post_project" class="btn btn-default" type="button">내 과거
-				프로젝트</button>
+			<button id="btn_post_project" class="btn btn-default" type="button">내
+				과거 프로젝트</button>
 		</div>
 		<div class="project_present">
 			<h1>현재 프로젝트</h1>
 			<table class="table table-striped table-hover" border="1"
-				width="1400px" >
+				width="1400px">
 				<tr align="center">
 					<td width="70px">번호</td>
 					<td width="200px">이름</td>
@@ -114,7 +123,7 @@
 						<td width="70px"><%=c.getProject_Identifier()%></td>
 						<td width="200px"><a
 							href="${pageContext.request.contextPath}/ProjectController/showProjectInformation?pid=<%=c.getProject_Identifier()%>"><%=c.getProject_name()%></a></td>
-							<td><%=c.getProject_Role() %></td>
+						<td width="180px"><%=Project_Part.get(c.getProject_Role())%></td>
 						<td width="250px"><%=c.getStart_Date()%></td>
 						<td width="250px"><%=c.getEnd_Date()%></td>
 						<td width="250px"><%=c.getrStart_Date()%></td>
@@ -164,12 +173,12 @@
 				<form
 					action="${pageContext.request.contextPath}/LectureController/deleteLecture"
 					method="post">
-					
+
 					<tr align="center">
 						<td width="70px"><%=c.getProject_Identifier()%></td>
 						<td width="200px"><a
 							href="${pageContext.request.contextPath}/ProjectController/showProjectInformation?pid=<%=c.getProject_Identifier()%>"><%=c.getProject_name()%></a></td>
-							<td><%=c.getProject_Role() %></td>
+						<td><%=c.getProject_Role()%></td>
 						<td width="250px"><%=c.getStart_Date()%></td>
 						<td width="250px"><%=c.getEnd_Date()%></td>
 						<td width="250px"><%=c.getrStart_Date()%></td>
@@ -190,10 +199,6 @@
 			</table>
 		</div>
 		<div class="main_button" style="padding: 10px 0px;">
-
-			<button class="btn btn-primary" type="button"
-				onclick="location.href='${pageContext.request.contextPath}/ProjectController/showProjectInformation'">프로젝트
-			</button>
 
 			<button class="btn btn-default" type="button"
 				onclick="location.replace('${pageContext.request.contextPath}/LoginController/main')">메인화면</button>

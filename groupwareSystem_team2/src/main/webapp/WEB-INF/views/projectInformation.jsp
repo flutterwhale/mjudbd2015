@@ -150,7 +150,10 @@ function move() {
 					</tr>
 					<tr>
 						<th>진행 상태</th>
-							<td><select id="status" name="status" style="width:'200px'" <%if (!session.getAttribute("session_name").equals(pBean.getProjectmanager_Identifier())) { %> disabled="disabled" <%} %>>
+							<td><select id="status" name="status" style="width:'200px'"
+							<%if(sUinfo.getMyUser().getDi() != 10)
+								if (!session.getAttribute("session_name").equals(pBean.getProjectmanager_Identifier()) 
+									|| (pBean.getStatus() == 14 || pBean.getStatus() == 15)){ %> disabled="disabled" <%} %>>
 								<option value="10" <%if(pBean.getStatus()==10){  %> selected 
 									<%}%>>착수</option>
 								<option value="11" <%if (pBean.getStatus() == 11) {%> selected
@@ -161,6 +164,10 @@ function move() {
 									<%}%>>통제</option>
 								<option value="14" <%if (pBean.getStatus() == 14) {%> selected
 									<%}%>>종료</option>
+							<%-- 	<%if(){ %>
+								<option value="15" <%if (pBean.getStatus() == 15) {%> selected
+									<%}%>>평가</option>
+								<%} %> --%>
 						</select></td>
 					</tr>
 					<tr>
@@ -177,9 +184,9 @@ function move() {
 			</div>
 		</form>
 		<%
-				if (session.getAttribute("session_name").equals(pBean.getProjectmanager_Identifier())) {
+		if (session.getAttribute("session_name").equals(pBean.getProjectmanager_Identifier()) && !(pBean.getStatus() == 14 || pBean.getStatus() == 15) || (sUinfo.getMyUser().getDi() == 10)){
 		%>
-		<button type="submit" class="btn btn-success" style="margin: 5px"
+		<button type="submit" class="btn btn-success" style="margin:5px"
 			onclick="move(<%=pBean.getProjectmanager_Identifier()%>,<%=pBean.getProject_Identifier()%>);">수정</button>
 		<%} %>
 
@@ -188,7 +195,7 @@ function move() {
 		<div class="project_schedule">
 			<h3>프로젝트 일정</h3>
 			<%
-				if (session.getAttribute("session_name").equals(pBean.getProjectmanager_Identifier())) {
+				if (session.getAttribute("session_name").equals(pBean.getProjectmanager_Identifier()) && !(pBean.getStatus() == 14 || pBean.getStatus() == 15) || (sUinfo.getMyUser().getDi() == 10)) {
 			%>
 			<button class="btn btn-primary" type="button"
 				onclick="location.href='${pageContext.request.contextPath}/ProjectController/ShowProjectSchedulePage?pid=<%=pBean.getProject_Identifier()%>'">일정 추가</button>
@@ -214,7 +221,7 @@ function move() {
 					if (allProjectSchedule.isEmpty()) {
 				%>
 
-				<h2>등록된 프로젝트가 없습니다.</h2>
+				<h2>등록된 일정이 없습니다.</h2>
 
 				<%
 					System.out.println("등록된 일정이 없습니다.");
@@ -269,7 +276,7 @@ function move() {
 		<div class="project_user">
 			<h3>투입 인력</h3>
 			<%
-				if (session.getAttribute("session_name").equals(pBean.getProjectmanager_Identifier())) {
+				if (session.getAttribute("session_name").equals(pBean.getProjectmanager_Identifier()) && !(pBean.getStatus() == 14 || pBean.getStatus() == 15) || (sUinfo.getMyUser().getDi() == 10)) {
 			%>
 			<button class="btn btn-primary" type="button"
 				onclick="location.href='${pageContext.request.contextPath}/ProjectController/showProjectMember?pm_id=<%=pBean.getProjectmanager_Identifier()%>&pid=<%=pBean.getProject_Identifier()%>'">인원 추가</button>
