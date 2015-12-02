@@ -146,7 +146,7 @@ public class ProjectDAO {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection("jdbc:mysql://117.123.66.137:8089/dbd2015", "park", "pjw49064215");
 
-			String query = "SELECT Project_Identifier, Project_Name, Projectmanager_Identifier,Start_Date,End_Date,Project_Description ,Status,Project_Price,t_project.Comment AS pComment,Project_Document, Product ,Project_Evaluation ,Dispatch_Location, t_user.Name AS PMname FROM dbd2015.t_project join dbd2015.t_user on t_user.User_Identifier = t_project.Projectmanager_Identifier where End_Date > now();";
+			String query = "SELECT Project_Identifier, Project_Name, Projectmanager_Identifier,Start_Date,End_Date,Project_Description ,Status,Project_Price,t_project.Comment AS pComment,Project_Document, Product ,Project_Evaluation ,Dispatch_Location, t_user.Name AS PMname FROM dbd2015.t_project join dbd2015.t_user on t_user.User_Identifier = t_project.Projectmanager_Identifier where dbd2015.t_project.Status <14;";
 
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(query);
@@ -221,7 +221,7 @@ public class ProjectDAO {
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = DriverManager.getConnection("jdbc:mysql://117.123.66.137:8089/dbd2015", "park", "pjw49064215");
 
-			String query = "SELECT Project_Identifier, Project_Name, Projectmanager_Identifier,Start_Date,End_Date,Project_Description ,Status,Project_Price,t_project.Comment AS pComment,Project_Document, Product ,Project_Evaluation ,Dispatch_Location, t_user.Name AS PMname FROM dbd2015.t_project join dbd2015.t_user on t_user.User_Identifier = t_project.Projectmanager_Identifier where End_Date < now() ;";
+			String query = "SELECT Project_Identifier, Project_Name, Projectmanager_Identifier,Start_Date,End_Date,Project_Description ,Status,Project_Price,t_project.Comment AS pComment,Project_Document, Product ,Project_Evaluation ,Dispatch_Location, t_user.Name AS PMname FROM dbd2015.t_project join dbd2015.t_user on t_user.User_Identifier = t_project.Projectmanager_Identifier where dbd2015.t_project.Status >=14 ;";
 
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(query);
@@ -1315,7 +1315,7 @@ public class ProjectDAO {
 			Connection connection = DriverManager.getConnection("jdbc:mysql://117.123.66.137:8089/dbd2015", "park",
 					"pjw49064215");
 
-			String query = "SELECT Obtain_Order_Identifier,location, Obtain_Name,Start_Date,End_Date,Present_Status,Order_Company,t_obtain_order.Comment AS oComment,Writer_User, t_user.Name AS writer_name ,pm_id FROM dbd2015.t_obtain_order join dbd2015.t_user on t_user.User_Identifier = dbd2015.t_obtain_order.Writer_User  where End_Date >now();";
+			String query = "SELECT Obtain_Order_Identifier,location, Obtain_Name,Start_Date,End_Date,Present_Status,Order_Company,t_obtain_order.Comment AS oComment,Writer_User, t_user.Name AS writer_name ,pm_id FROM dbd2015.t_obtain_order join dbd2015.t_user on t_user.User_Identifier = dbd2015.t_obtain_order.Writer_User ;";
 			conn = connection;
 
 			stmt = conn.createStatement();
@@ -1744,7 +1744,7 @@ public class ProjectDAO {
 
 		         Class.forName("com.mysql.jdbc.Driver");
 		         conn = DriverManager.getConnection("jdbc:mysql://117.123.66.137:8089/dbd2015", "park", "pjw49064215");
-		         String query = "SELECT t_project.Project_Identifier, t_role.User_Identifier, Project_Name,Project_Role ,Projectmanager_Identifier, t_project.Start_Date as pStart_date ,t_project.End_Date as pEnd_date,t_role.Start_Date as rStart_date ,t_role.End_Date as rEnd_date,Project_Description , Status,Project_Price,t_project.Comment AS pComment,Project_Document, Product ,Project_Evaluation ,Dispatch_Location FROM dbd2015.t_role join dbd2015.t_project on t_role.Project_Identifier = t_project.Project_Identifier where t_project.End_Date >= now()  and t_role.User_Identifier = '"+id+"';";
+		         String query = "SELECT t_project.Project_Identifier, t_role.User_Identifier, Project_Name,Project_Role ,Projectmanager_Identifier, t_project.Start_Date as pStart_date ,t_project.End_Date as pEnd_date,t_role.Start_Date as rStart_date ,t_role.End_Date as rEnd_date,Project_Description , Status,Project_Price,t_project.Comment AS pComment,Project_Document, Product ,Project_Evaluation ,Dispatch_Location FROM dbd2015.t_role join dbd2015.t_project on t_role.Project_Identifier = t_project.Project_Identifier where dbd2015.t_project.Status <14  and t_role.User_Identifier = '"+id+"';";
 
 		         stmt = conn.createStatement();
 		         rs = stmt.executeQuery(query);
@@ -1820,7 +1820,7 @@ public class ProjectDAO {
 		         Class.forName("com.mysql.jdbc.Driver");
 		         conn = DriverManager.getConnection("jdbc:mysql://117.123.66.137:8089/dbd2015", "park", "pjw49064215");
 
-		         String query = "SELECT t_project.Project_Identifier, Project_Name, Projectmanager_Identifier, t_project.Start_Date as pStart_date ,t_project.End_Date as pEnd_date,t_role.Start_Date as rStart_date ,t_role.End_Date as rEnd_date,Project_Description , Status,Project_Price,t_project.Comment AS pComment,Project_Document, Product ,Project_Evaluation ,Dispatch_Location FROM dbd2015.t_role join dbd2015.t_project on t_role.Project_Identifier = t_project.Project_Identifier where t_project.End_Date < now()  and t_role.User_Identifier = '"+id+"';";
+		         String query = "SELECT t_project.Project_Identifier, Project_Name, Projectmanager_Identifier, t_project.Start_Date as pStart_date ,t_project.End_Date as pEnd_date,t_role.Start_Date as rStart_date ,t_role.End_Date as rEnd_date,Project_Description , Status,Project_Price,t_project.Comment AS pComment,Project_Document, Product ,Project_Evaluation ,Dispatch_Location FROM dbd2015.t_role join dbd2015.t_project on t_role.Project_Identifier = t_project.Project_Identifier where dbd2015.t_project.Status >=14  and t_role.User_Identifier = '"+id+"';";
 		         stmt = conn.createStatement();
 		         rs = stmt.executeQuery(query);
 		         logger.info("과거 프로젝트 나열 (현재 날 이전)");

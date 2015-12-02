@@ -214,7 +214,7 @@ function move() {
 					if (allProjectSchedule.isEmpty()) {
 				%>
 
-				<h2>등록된 프로젝트가 없습니다.</h2>
+				<h2>등록된 일정이 없습니다.</h2>
 
 				<%
 					System.out.println("등록된 일정이 없습니다.");
