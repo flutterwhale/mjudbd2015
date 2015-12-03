@@ -1121,14 +1121,19 @@ public class ProjectDAO {
 					+ pid + "';";
 			System.out.println("쿼리1 > " + query1);
 			rs2 = stmt.executeQuery(query1);
-
-			if (rs.first() && rs2.first()) {
-				if (rs.getInt("count") == 0 && rs2.getInt("count") > 0) {
-					query1 = "UPDATE `dbd2015`.`t_project` SET `Status`='" + 15 + "' WHERE `Project_Identifier`='" + pid
-							+ "';";
-					System.out.println("평가가 모두 종료되어 프로젝트 역시 종료로 처리하였습니다.");
-				}
+			int a =0;
+			if(rs2.first()){
+				a = rs2.getInt("count");
 			}
+			query1 = "UPDATE `dbd2015`.`t_project` SET `Status`='" + 15 + "' WHERE `Project_Identifier`='" + pid
+					+ "';";
+			stmt.executeUpdate(query1);
+		/*	if (rs.first()) {
+				
+				if (rs.getInt("count") == 0 && a > 0) {
+					
+					System.out.println("평가가 모두 종료되어 프로젝트 역시 종료로 처리하였습니다.");
+				}}*/
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

@@ -203,9 +203,21 @@ function move() {
 		<input type="text" id="email" name="email"></input>
 		<button type="button" class="btn btn-success" style="margin: 5px"
 			onclick="mail()">고객 평가 이메일 발송</button>
+			
 		<%
 			}
 		%>
+		<%
+			if (pBean.getStatus() == 14) {
+		%>
+		<button class="btn btn-primary" type="button"
+				onclick="location.href='${pageContext.request.contextPath}/ProjectController/projectUserEvalList?Appraiser=<%=session.getAttribute("session_name")%>&pid=<%=pBean.getProject_Identifier()%>'">프로젝트
+				평가</button>
+				
+		<%
+			}
+		%>
+		
 		<div class="project_schedule">
 			<h3>프로젝트 일정</h3>
 			<%
@@ -387,7 +399,7 @@ function move() {
 				%>
 				<tr>
 					<td><a
-						href="http://localhost:8080/mju/LoginController/retrieveUser?id=<%=((Hashtable) (pBean.getRole().get(i))).get("User_Identifier")%>"><%=((Hashtable) (pBean.getRole().get(i))).get("User_Identifier")%></a></td>
+						href="${pageContext.request.contextPath}/LoginController/retrieveUser?id=<%=((Hashtable) (pBean.getRole().get(i))).get("User_Identifier")%>"><%=((Hashtable) (pBean.getRole().get(i))).get("User_Identifier")%></a></td>
 					<td><%=((Hashtable) (pBean.getRole().get(i))).get("Name")%></td>
 					<td><%=Gender.get(Integer.parseInt((String) ((Hashtable) (pBean.getRole().get(i))).get("Gender")))%></td>
 					<td><%=((Hashtable) (pBean.getRole().get(i))).get("Phone_Number")%></td>
@@ -473,20 +485,12 @@ function move() {
 				<textaera><%=pBean.getProject_Evaluation() %></textaera>
 				</td>
 				</tr>
-<%} %>
 
 			</table>
-			<%
-				if (session.getAttribute("session_name").equals(pBean.getProjectmanager_Identifier())) {
-			%>
-			
-			<button class="btn btn-primary" type="button"
-				onclick="location.href='${pageContext.request.contextPath}/ProjectController/projectUserEvalList?Appraiser=<%=session.getAttribute("session_name")%>&pid=<%=pBean.getProject_Identifier()%>'">프로젝트
-				평가</button>
-			
-			<%
-				}
-			%>
+		
+		
+			<%} %>
+				
 		</div>
 
 		<div class="project_code">

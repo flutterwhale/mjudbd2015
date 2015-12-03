@@ -26,7 +26,7 @@ try {
 	email.addTo(mail, "(주)프람프트 솔루션 고객님");
 	email.setFrom(fromEmail, fromName, charSet);
 	email.setSubject(subject);
-	email.setHtmlMsg("<p align = 'center'>프람트 그룹웨어 고객평가 이메일입니다.<br><br><form action='http://localhost:8080/mju/ProjectController/setProjectOrderEval' method='post'><input type='hidden' id='pid' name='pid' value='"+pid+"'>프로젝트에 대한 의견을 남겨주시기바랍니다.<br> <textarea rows='4' cols='50' id='comment' name='comment'></textarea><br><br>프로젝트 만족도를 표시해주시기바랍니다.<br><br><br><select name='score' id='score'><option value='1'>1점</option><option value='2'>2점</option><option value='3'>3점</option><option value='4'>4점</option><option value='5'selected>5점</option></select><input type='submit' name='제출'></form></p>");
+	email.setHtmlMsg("<p align = 'center'>프람트 그룹웨어 고객평가 이메일입니다.<br><br><form action='http://groupwareprompt.iptime.org/prompt/ProjectController/setProjectOrderEval' method='post'><input type='hidden' id='pid' name='pid' value='"+pid+"'>프로젝트에 대한 의견을 남겨주시기바랍니다.<br> <textarea rows='4' cols='50' id='comment' name='comment'></textarea><br><br>프로젝트 만족도를 표시해주시기바랍니다.<br><br><br><select name='score' id='score'><option value='1'>1점</option><option value='2'>2점</option><option value='3'>3점</option><option value='4'>4점</option><option value='5'selected>5점</option></select><input type='submit' name='제출'></form></p>");
 	email.send();
 	
 	out.println("<script>history.go(-1); alert('메일을 성공적으로 보냈습니다!'); </script>");
