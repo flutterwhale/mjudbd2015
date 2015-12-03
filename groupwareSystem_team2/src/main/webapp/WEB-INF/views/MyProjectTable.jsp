@@ -113,7 +113,6 @@
 				<%
 					System.out.println("등록된 현재 프로젝트가 없습니다.");
 					} else {
-
 						for (userProjectBean c : allProject) {
 				%>
 				<form action="${pageContext.request.contextPath}/ " method="post">
@@ -170,9 +169,7 @@
 				<%
 					System.out.println("종료된 프로젝트가 없습니다.");
 					} else {
-
 						for (userProjectBean c : pastProject) {
-				System.out.println(c.getProject_Evaluation());
 				
 				%>
 				<form>

@@ -260,12 +260,6 @@ public class ProjectService {
 		return projectDAO.insertUserSchedule(usB);
 	}
 
-	public UscheduleBean getUserSchedule(String uid, String pid) {
-		// TODO Auto-generated method stub
-		logger.info("select ProjectSchedule  uid : " + uid + " pid " + pid);
-
-		return projectDAO.showUserSchedule(uid, pid);
-	}
 
 	public int deleteUserSchedule(String sid) {
 		// TODO Auto-generated method stub
@@ -273,9 +267,20 @@ public class ProjectService {
 		return projectDAO.deleteUserSchedule(sid);
 	}
 
-	public int updateProjectSchedule(UscheduleBean usb) {
+	public int updateUserSchedule(UscheduleBean usb) {
 		// TODO Auto-generated method stub
 
 		return projectDAO.updateProjectSchedule(usb);
 	}
+	public String selectPl(String pid) {
+		// TODO Auto-generated method stub
+
+		return projectDAO.searchPL(pid);
+	}
+
+	public UscheduleBean getUserSchedule(String sid) {
+		// TODO Auto-generated method stub
+		return projectDAO.getUserSchedule(sid);
+	}
+	
 }

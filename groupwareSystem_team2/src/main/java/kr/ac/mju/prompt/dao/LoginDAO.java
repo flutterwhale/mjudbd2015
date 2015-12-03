@@ -2,10 +2,12 @@ package kr.ac.mju.prompt.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Hashtable;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Repository;
 import kr.ac.mju.prompt.model.UserBean;
 import kr.ac.mju.prompt.model.UserInfo;
 import kr.ac.mju.prompt.model.signupBean;
+import kr.ac.mju.prompt.model.userProjectBean;
 
 @Repository
 public class LoginDAO {
@@ -367,7 +370,7 @@ public class LoginDAO {
 				member.setComment(rs.getString("comment"));
 				member.setOffice_Number(rs.getString("office_Number"));
 				member.setPortfolio(rs.getString("Career_File"));
-
+				member.setOffice_Number(rs.getString("office_Number"));
 				member.setPermission(rs.getInt("Permission"));
 				member.setPosition_Name(rs.getInt("Position_Name"));
 				member.setDi(rs.getInt("Department_Identifier"));
@@ -393,7 +396,27 @@ public class LoginDAO {
 
 					member.setLanguage_list(language_list);
 					member.setLanguage_level_list(language_level_list);
+					
 				}
+				
+				String query3 = "SELECT Project_Identifier, Project_Role, sum(Work_Performance_Grade)/count(Work_Performance_Grade) wg,sum(Communication_Capacity)/count(Communication_Capacity) cc,sum(Technic_Grade)/count(Technic_Grade) tg, Evaluation_Contents FROM dbd2015.t_evaluation Where User_Identifier='"+id+"' Group by Project_Identifier;";
+				System.out.println("loginDAO.showMember : 쿼리 > " + query1);
+				rs = stmt.executeQuery(query3);
+				ArrayList<Hashtable> score = new ArrayList<Hashtable>();
+				
+				while(rs.next()){
+					Hashtable project_by_score = new Hashtable();
+					project_by_score.put("Project_Identifier", rs.getInt("Project_Identifier"));
+					project_by_score.put("Project_Role", rs.getInt("Project_Role"));
+					project_by_score.put("wg", rs.getFloat("wg"));
+					project_by_score.put("cc", rs.getInt("cc"));
+					project_by_score.put("tg", rs.getInt("tg"));
+					project_by_score.put("Evaluation_Contents", rs.getString("Evaluation_Contents"));
+					score.add(project_by_score);
+				}
+				
+				member.setEvaluationList(score);
+				
 			}
 
 		} catch (SQLException e) {
@@ -448,7 +471,8 @@ public class LoginDAO {
 					+ "Address=" + "'" + sb.getAddr() + "'" + ", " + "Academic_Career=" + "'" + sb.getA_career() + "'"
 					+ ", " + "Technic_Level=" + "'" + sb.getTech_level() + "'" + ", " + "Career=" + "'" + sb.getCareer()
 					+ "'" + ", " + "Career_File=" + "'" + "./none" + "' ," + "Email=" + "'" + sb.getEmail() + "'" + ", "
-					+ "Password=" + "'" + sb.getPassword() + "'" + " WHERE `User_Identifier`=" + "'" + sb.getId()
+					+ "Password=" + "'" + sb.getPassword() + "'" + ", "
+					+ "Office_Number=" + "'" + sb.getOffice_Number() + "'" + " WHERE `User_Identifier`=" + "'" + sb.getId()
 					+ "';";
 
 			System.out.println("insert query? : " + query);
@@ -630,4 +654,81 @@ public class LoginDAO {
 		return result;
 
 	}
+	public ArrayList<userProjectBean> getPastMyProject(String id) {
+		logger.info("=============getPastMyProject 처리 =============");
+		ArrayList<userProjectBean> Past_Project = new ArrayList<userProjectBean>();
+		PreparedStatement pstmt = null;
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = DriverManager.getConnection("jdbc:mysql://117.123.66.137:8089/dbd2015", "park", "pjw49064215");
+
+			String query = "SELECT   Evaluation_Score, Project_Evaluation, t_role.User_Identifier,t_project.Project_Identifier, Project_Name,Project_Role, Projectmanager_Identifier, t_project.Start_Date as pStart_date ,t_project.End_Date as pEnd_date,t_role.Start_Date as rStart_date ,t_role.End_Date as rEnd_date,Project_Description , Status,Project_Price,t_project.Comment AS pComment,Project_Document, Product ,Project_Evaluation ,Dispatch_Location FROM dbd2015.t_role join dbd2015.t_project on t_role.Project_Identifier = t_project.Project_Identifier where dbd2015.t_project.Status >='14'  and t_role.User_Identifier = '"
+					+ id + "';";
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(query);
+			logger.info("과거 프로젝트 나열 ");
+
+			while (rs.next()) {
+
+				logger.info(rs.getString("Project_Name") + " " + rs.getInt("Projectmanager_Identifier"));
+
+				userProjectBean usbean = new userProjectBean();
+
+				usbean.setEvaluation_Score(rs.getInt("Evaluation_Score"));
+
+				usbean.setProject_Evaluation(rs.getString("Project_Evaluation"));
+				usbean.setUser_Identifier(rs.getInt("User_Identifier"));
+				usbean.setrStart_Date(rs.getDate("rStart_date"));
+				usbean.setrEnd_Date(rs.getDate("rEnd_Date"));
+
+				usbean.setProject_Role(rs.getInt("Project_Role"));
+
+				usbean.setProject_name(rs.getString("Project_Name"));
+
+				usbean.setProject_Identifier(rs.getInt("project_Identifier"));
+				usbean.setProjectmanager_Identifier(rs.getInt("Projectmanager_Identifier"));
+				usbean.setStart_Date(rs.getDate("pStart_date"));
+				usbean.setEnd_Date(rs.getDate("pEnd_date"));
+				usbean.setPproject_Description(rs.getString("Project_Description"));
+				usbean.setPstatus(rs.getInt("Status"));
+				usbean.setPcomment(rs.getString("pComment"));
+				usbean.setPdispatch_Location(rs.getString("Dispatch_Location"));
+				Past_Project.add(usbean);
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+
+				if (pstmt != null) {
+					pstmt.close();
+				}
+
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+
+		return Past_Project;
+
+	}
+	
 }

@@ -8,14 +8,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.ac.mju.prompt.dao.LoginDAO;
+import kr.ac.mju.prompt.dao.ProjectDAO;
 import kr.ac.mju.prompt.model.UserInfo;
 import kr.ac.mju.prompt.model.signupBean;
+import kr.ac.mju.prompt.model.userProjectBean;
 
 @Service
 public class LoginService {
 
 	@Autowired
 	private LoginDAO loginDAO;
+	private ProjectDAO projectDAO;
 	private static final Logger logger = LoggerFactory.getLogger(LoginService.class);
 
 	public UserInfo login(String id, String pw) {
@@ -61,5 +64,12 @@ public class LoginService {
 	public int searchMemberDepart(String id) {
 		logger.info("=============searchMemberDepart Service=============");
 		return loginDAO.searchDepart(id);
+	}
+	
+	public ArrayList<userProjectBean> getPastMyProjects(String id) {
+		// TODO Auto-generated method stub
+		logger.info("=============나의  과거 프로젝트 가져오기 Service=============");
+		logger.info("getPastMyProjects :" + id);
+		return loginDAO.getPastMyProject(id);
 	}
 }

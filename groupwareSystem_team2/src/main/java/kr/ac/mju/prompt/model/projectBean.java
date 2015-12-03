@@ -23,7 +23,9 @@ public class projectBean {
 	private String project_Evaluation;
 	private String dispatch_Location;
 	private ArrayList Role;
-
+private int Evaluation_Score;
+	
+	
 	public projectBean() {
 		// TODO Auto-generated constructor stub
 	}
@@ -159,6 +161,12 @@ public class projectBean {
 
 	public void setPM_name(String pM_name) {
 		PM_name = pM_name;
+	}
+	public int getEvaluation_Score() {
+		return Evaluation_Score;
+	}
+	public void setEvaluation_Score(int evaluation_Score) {
+		Evaluation_Score = evaluation_Score;
 	}
 
 }

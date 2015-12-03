@@ -21,7 +21,9 @@ import org.springframework.web.servlet.ModelAndView;
 import kr.ac.mju.prompt.model.UserBean;
 import kr.ac.mju.prompt.model.UserInfo;
 import kr.ac.mju.prompt.model.signupBean;
+import kr.ac.mju.prompt.model.userProjectBean;
 import kr.ac.mju.prompt.service.LoginService;
+import kr.ac.mju.prompt.service.ProjectService;
 
 @Controller
 public class LoginController {
@@ -292,12 +294,19 @@ public class LoginController {
 	
 	// 유저ID로 정보 검색하기
 	@RequestMapping(value = "/LoginController/retrieveUser", method = RequestMethod.GET)
-	public String retrieveMember(HttpServletRequest request, HttpSession session) {
+	public ModelAndView retrieveMember(HttpServletRequest request, HttpSession session) {
 		logger.info("=============ID로검색=============");
 		logger.info("retrieveMember:ID로 User정보 검색하기 " + request.getParameter("id"));
 		signupBean show = loginService.showMember(request.getParameter("id"));
 		request.setAttribute("showBean", show);
-		return "userProfile";
+		
+		
+		ModelAndView model = new ModelAndView();
+		ArrayList<userProjectBean> PastProjects = loginService
+				.getPastMyProjects(session.getAttribute("session_name").toString());
+		model.addObject("PastProject", PastProjects);
+		model.setViewName("obtainAdd");
+		return model;
 	}
 
 	// 개인정보 수정 페이지 분기
@@ -348,7 +357,7 @@ public class LoginController {
 		String depart = request.getParameter("depart");
 		String graduation = request.getParameter("graduation");
 		String academic_career = university + "." + depart + "." + major + "." + graduation;
-
+		String Office_Number = request.getParameter("Office_Number");//사내 연락처
 		String career = request.getParameter("career");
 
 		String portfolio = request.getParameter("portfolio");
@@ -365,7 +374,7 @@ public class LoginController {
 		sb.setA_career(academic_career);
 		sb.setCareer(career);
 		sb.setPortfolio(portfolio);
-
+		sb.setOffice_Number(Office_Number);
 		System.out.println("부서 ID " + part_id);
 
 		if (part_id == 17 || part_id == 99) {
@@ -401,7 +410,7 @@ public class LoginController {
 		signupBean ui = loginService.updateMember(sb);
 		request.setAttribute("code", ui.getCode());
 
-		return "login";
+		return "main";
 	}
 
 	

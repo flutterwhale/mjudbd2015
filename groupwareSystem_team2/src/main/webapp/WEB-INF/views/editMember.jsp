@@ -17,6 +17,15 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" type="text/javascript"></script>
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<%
+		String sID = session.getAttribute("session_name").toString();
+		UserInfo sUinfo = (UserInfo)session.getAttribute("userinfo");
+		signupBean showBean = (signupBean)session.getAttribute("showBean");	
+		//request.setAttribute("editMember: showBean", showBean)	;	
+		System.out.println("editMember: session ID " + sID);
+		String academy[] = showBean.getA_career().split("\\.");
+		
+	%>
 <script>
     function sample4_execDaumPostcode() {
         new daum.Postcode({
@@ -101,6 +110,7 @@
 			alert("암호를 입력해 주세요");
 			document.myform.signupPW.focus();
 			return false;
+		<% if (sUinfo.getMyUser().getDi() != 15) { %>	
 		} else if (pass2 == "") {
 			alert("암호 확인을 입력해 주세요");
 			document.myform.signupPW2.focus();
@@ -110,6 +120,7 @@
 			document.myform.signupPW2.focus();
 			document.myform.signupPW2.value="";
 			return false;
+		<%}%>
 		}else if( reg_ssn.test(ssn) != true ) {
 	           alert("주민번호를 재대로 입력해주세요.");
 	           document.myform.ssn.value="";
@@ -162,15 +173,7 @@
 </head>
 <body>
 
-	<%
-		String sID = session.getAttribute("session_name").toString();
-		UserInfo sUinfo = (UserInfo)session.getAttribute("userinfo");
-		signupBean showBean = (signupBean)session.getAttribute("showBean");	
-		//request.setAttribute("editMember: showBean", showBean)	;	
-		System.out.println("editMember: session ID " + sID);
-		String academy[] = showBean.getA_career().split("\\.");
-		
-	%>
+	
 		<nav class="navbar navbar-default">
 	        <div class="container-fluid">
 	          <div class="navbar-header">
@@ -238,6 +241,14 @@
 		                  <input type="text" class="form-control" style="width:200px;" id="phone" name="phone" size="15" placeholder="010-1234-1234" maxlength="13"value="<%=showBean.getPhone()%>">
 		             </div>
 		          </div>
+		          <% if (sUinfo.getMyUser().getDi() == 15) { %>
+		         <div class="form-group">
+		            <label for="inputname" class="col-sm-4 control-label">사내연락처</label>
+		             <div class="col-sm-6">
+		                  <input type="text" class="form-control" style="width:200px;" id="Office_Number" name="Office_Number" size="15" placeholder="010-1234-1234" maxlength="13"value="<%=showBean.getOffice_Number()%>">
+		             </div>
+		          </div>
+		         <% }%>
 		         <div class="form-group">
 		            <label for="inputname" class="col-sm-4 control-label">e-mail</label>
 		             <div class="col-sm-6">

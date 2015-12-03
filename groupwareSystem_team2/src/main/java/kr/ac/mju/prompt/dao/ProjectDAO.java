@@ -385,7 +385,7 @@ public class ProjectDAO {
 				role.add(user);
 			}
 
-			query = "SELECT Project_Identifier, Project_Name, Projectmanager_Identifier,Start_Date,End_Date,Project_Description ,Status,Project_Price,t_project.Comment AS pComment,Project_Document, Product ,Project_Evaluation ,Dispatch_Location, t_user.Name AS PMname FROM dbd2015.t_project join dbd2015.t_user on t_user.User_Identifier = t_project.Projectmanager_Identifier where Project_Identifier = '"
+			query = "SELECT Project_Identifier, Project_Name,Evaluation_Score, Projectmanager_Identifier,Start_Date,End_Date,Project_Description ,Status,Project_Price,t_project.Comment AS pComment,Project_Document, Product ,Project_Evaluation ,Dispatch_Location, t_user.Name AS PMname FROM dbd2015.t_project join dbd2015.t_user on t_user.User_Identifier = t_project.Projectmanager_Identifier where Project_Identifier = '"
 					+ projectid + "' ;";
 
 			rs = stmt.executeQuery(query);
@@ -406,6 +406,7 @@ public class ProjectDAO {
 				pbean.setComment(rs.getString("pComment"));
 				pbean.setProject_Document(rs.getString("project_Document"));
 				pbean.setProject_Evaluation(rs.getString("project_Evaluation"));
+				pbean.setEvaluation_Score(rs.getInt("Evaluation_Score"));
 				pbean.setDispatch_Location(rs.getString("dispatch_Location"));
 				pbean.setRole(role);
 
@@ -2015,8 +2016,8 @@ public class ProjectDAO {
 	}
 
 	public int insertUserSchedule(UscheduleBean usB) {
-		logger.info("=============프로젝트 일정 등록 =============");
-		logger.info("insertProjectSchedule name : " + usB.getWork_Name());
+		logger.info("=============개인 일정 등록 =============");
+		logger.info("insertProjectSchedule name : " + usB.getWork_Name() + " " + usB.getUser_Identifier());
 		// TODO Auto-generated method stub
 		Statement stmt = null;
 		Connection conn = null;
@@ -2029,7 +2030,7 @@ public class ProjectDAO {
 			String query = "INSERT INTO `dbd2015`.`t_user_schedule` (`End_Date`, `Work_Name`, `Start_Date`, `User_Identifier`, `Project_Identifier`, `Project_Role`, `Work_descriptions`, `Progress_Percentage`) VALUES ('"
 					+ usB.getEnd_Date() + "', '" + usB.getWork_Name() + "', '" + usB.getStart_Date() + "', '"
 					+ usB.getUser_Identifier() + "', '" + usB.getProject_Identifier() + "', '" + usB.getProject_Role()
-					+ "', '" + usB.getWork_descriptions() + " ', '" + usB.getProgress_Percentage() + "';)";
+					+ "', '" + usB.getWork_descriptions() + " ', '" + usB.getProgress_Percentage() + "');";
 
 			System.out.println("insert query? : " + query);
 			result = stmt.executeUpdate(query);
@@ -2046,19 +2047,187 @@ public class ProjectDAO {
 		return result;
 	}
 
-	public UscheduleBean showUserSchedule(String uid, String pid) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public int deleteUserSchedule(String sid) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+	
 
 	public int updateProjectSchedule(UscheduleBean usb) {
-		// TODO Auto-generated method stub
-		return 0;
+			logger.info("=============프로젝트 일정 변경 처리 =============");
+			logger.info("update query : " + usb.getUser_Schedule_Identifier());
+			// TODO Auto-generated method stub
+			Statement stmt = null;
+			Connection conn = null;
+			int result = 0;
+
+			try {
+				Class.forName("com.mysql.jdbc.Driver");
+				conn = DriverManager.getConnection("jdbc:mysql://117.123.66.137:8089/dbd2015", "park", "pjw49064215");
+				stmt = conn.createStatement();
+				/*
+				 * System.out.println( "obean writer " + ob.getWriter_User() +
+				 * " stdat" + ob.getStart_Date() + " ed" + ob.getEnd_Date());
+				 */
+				String query = "UPDATE `dbd2015`.`t_user_schedule` SET `End_Date`='"+usb.getEnd_Date()+"', "
+						+ "`Work_Name`='"+usb.getWork_Name()+"', `Start_Date`='" + usb.getStart_Date()+"', `Work_descriptions`='" + usb.getWork_descriptions()+"', `Progress_Percentage`='"+usb.getProgress_Percentage()+"' WHERE `User_Schedule_Identifier`='"+usb.getUser_Schedule_Identifier()+"';"; 
+		
+				
+				System.out.println("update query? : " + query);
+				result = stmt.executeUpdate(query);
+				System.out.println("update result? " + result);
+
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			return result;
+		}
+
+
+	public String searchPL(String pid) {
+		// SELECT User_Identifier FROM dbd2015.t_project join dbd2015.t_role on
+		// t_project.Project_Identifier = t_role.Project_Identifier where
+		// t_role.Project_Role ='11' and t_role.Project_Identifier= '"+pid+"' ;
+
+		Statement stmt = null;
+		Connection conn = null;
+		ResultSet rs = null, rs2 = null;
+		String query1 = null;
+		String plID = null;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = DriverManager.getConnection("jdbc:mysql://117.123.66.137:8089/dbd2015", "park", "pjw49064215");
+			stmt = conn.createStatement();
+			query1 = "SELECT User_Identifier FROM dbd2015.t_project join dbd2015.t_role on  t_project.Project_Identifier = t_role.Project_Identifier where  t_role.Project_Role ='11' and t_role.Project_Identifier= '"
+					+ pid + "';";
+			System.out.println("쿼리1 > " + query1);
+			rs = stmt.executeQuery(query1);
+
+			if (rs.first()) {
+				plID = (rs.getInt("User_Identifier") + "");
+
+			}
+
+			System.out.println("pl id? " + plID);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (rs2 != null) {
+					rs2.close();
+				}
+				if (stmt != null) {
+					stmt.close();
+				}
+
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+		return plID;
 	}
 
+	public UscheduleBean getUserSchedule(String sid) {
+		// TODO Auto-generated method stub
+		Statement stmt = null;
+		Connection conn = null;
+		ResultSet rs = null;
+		UscheduleBean usBean = null;
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = DriverManager.getConnection("jdbc:mysql://117.123.66.137:8089/dbd2015", "park", "pjw49064215");
+			stmt = conn.createStatement();
+			String query = "SELECT * FROM dbd2015.t_user_schedule where User_Schedule_Identifier = '"+sid+"';";
+
+			rs = stmt.executeQuery(query);
+
+			if (rs.first()) {
+				usBean = new UscheduleBean();
+
+				usBean.setUser_Schedule_Identifier(Integer.parseInt(sid));
+				usBean.setStart_Date(rs.getDate("Start_Date"));
+				usBean.setEnd_Date(rs.getDate("End_Date"));
+				usBean.setWork_Name(rs.getString("Work_Name"));
+				usBean.setWork_descriptions(rs.getString("Work_descriptions"));
+				usBean.setProgress_Percentage(rs.getInt("Progress_Percentage"));
+
+				usBean.setProject_Role(rs.getInt("Project_Role"));
+				usBean.setUser_Identifier(rs.getInt("user_Identifier"));
+				usBean.setProject_Identifier(rs.getInt("Project_Identifier"));
+				//usBean.setProduct(rs.getInt("Product"));
+				
+			}
+
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+
+				if (stmt != null) {
+					stmt.close();
+				}
+
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+
+		return usBean;
+	}
+	
+	public int deleteUserSchedule(String sid) {
+		logger.info("=============일정 삭제 처리 =============");
+		logger.info("deleteProjectSchedule : " + sid);
+		Statement stmt = null;
+		Connection conn = null;
+		int result = 0;
+
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			conn = DriverManager.getConnection("jdbc:mysql://117.123.66.137:8089/dbd2015", "park", "pjw49064215");
+			stmt = conn.createStatement();
+			String query = "DELETE FROM `dbd2015`.`t_user_schedule` WHERE `User_Schedule_Identifier`='" + sid
+					+ "';";
+			
+			//
+
+			result = stmt.executeUpdate(query);
+			System.out.println("query 1 " + query);
+
+			System.out.println("insert result? " + result);
+
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
 }

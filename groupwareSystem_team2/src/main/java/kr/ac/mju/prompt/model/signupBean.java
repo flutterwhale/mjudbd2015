@@ -2,6 +2,7 @@ package kr.ac.mju.prompt.model;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.Map;
 
 public class signupBean {
@@ -40,6 +41,11 @@ public class signupBean {
 	private int permission;
 	private int position_Name;
 
+	//김용민 추가
+	private ArrayList<Hashtable> evaluationList;
+	
+	
+	
 	public signupBean(String isFreeLancer, String name, String id, String password, String ssn, String phone,
 			String addr, String email, String gender, String a_career, String career, String portfolio,  ArrayList language_list, ArrayList language_level_list, String tech_level) {
 		
@@ -82,7 +88,14 @@ public class signupBean {
 	public signupBean() {
 		// TODO Auto-generated constructor stub
 	}
+	public ArrayList<Hashtable> getEvaluationList() {
+		return evaluationList;
+	}
 
+	public void setEvaluationList(ArrayList<Hashtable> evaluationList) {
+		this.evaluationList = evaluationList;
+	}
+	
 	public String getMsg() {
 		return msg;
 	}

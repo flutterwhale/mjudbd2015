@@ -206,6 +206,7 @@ function getUser(v){
 																								for(int l=1; l<= hashmap.size() ; l++){
 																									//System.out.println("parent value: "+(Integer)(((ArrayList)hashmap.get(k)).get(0)));
 																									//System.out.println("parnet check value: "+(Integer)(((ArrayList)hashmap.get(j)).get(3)));
+																										o=0;
 																										if(n==0){
 																											for(n =0; n < user.size(); n++){
 																												
@@ -221,7 +222,20 @@ function getUser(v){
 																							%> 			
 																											<li class="closed"><span class="folder"><%=(((ArrayList)hashmap.get(l)).get(2))%></span>
 																												<ul id="browser" class="filetree">
+																													<%
+																													if(o==0){
+																														for(o =0; o < user.size(); o++){
+																															
+																															if((Integer)(((ArrayList)(user.get(o))).get(2))==(Integer)(((ArrayList)hashmap.get(l)).get(3))){
+																															%> 
+																																<li><span class="file"><a href="javascript:getUser(<%=(((ArrayList)user.get(o)).get(0))%>);"><%=(((ArrayList)user.get(o)).get(1))%></a></span></li>
+																															<%	
+																															}
+																														}
+																													}
 																													
+																													
+																													%>
 																												</ul>
 																											</li>
 																							<% 
