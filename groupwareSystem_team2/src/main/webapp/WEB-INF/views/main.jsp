@@ -3,26 +3,29 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	
-	<%@include file="mapper.jsp"%>
-	<%@include file="session.jsp"%>
+
+<%@include file="mapper.jsp"%>
+<%@include file="session.jsp"%>
 <%@ page import="kr.ac.mju.prompt.model.UserInfo"%>
 <%@ page import="kr.ac.mju.prompt.model.UserBean"%>
 <%@page import="org.apache.commons.beanutils.BeanUtils"%>
-<%@ page import="java.util.Date" %>
+<%@ page import="java.util.Date"%>
 <jsp:useBean id="loginbean" class="kr.ac.mju.prompt.model.UserBean"
-		scope="session" />
+	scope="session" />
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<link rel="stylesheet" href="http://bootswatch.com/flatly/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<link rel="stylesheet"
+	href="http://bootswatch.com/flatly/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script
+	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Main</title>
 </head>
 <body>
-<%
+	<%
 		response.setHeader("pragma", "no-cache");
 		response.setHeader("Cache-control", "no-cache, no-store, must-revalidate");
 		response.setHeader("Expires", "0");
@@ -37,7 +40,7 @@
 	<%
 		} else {
 	%>
-	
+
 
 	<%
 		System.out.println("=============== main.jsp ===============");
@@ -52,23 +55,25 @@
 				BeanUtils.copyProperties(loginbean, myuser);
 	%>
 	<nav class="navbar navbar-default">
-  		<div class="container-fluid">
-    		<div class="navbar-header">
-      			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-        			<span class="sr-only">Toggle navigation</span>
-        			<span class="icon-bar"></span>
-        			<span class="icon-bar"></span>
-        			<span class="icon-bar"></span>
-      			</button>
-      			<a class="navbar-brand" href="${pageContext.request.contextPath}/LoginController/main">GroupwareSystem</a>
-    		</div>
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed"
+				data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span> <span
+					class="icon-bar"></span> <span class="icon-bar"></span> <span
+					class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand"
+				href="${pageContext.request.contextPath}/LoginController/main">GroupwareSystem</a>
+		</div>
 
-    		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      			<ul class="nav navbar-nav navbar-right">
-        			<li><a href="https://tahiti.mju.ac.kr/moodle/">메뉴</a></li>
-      			</ul>
-    		</div>
-  		</div>
+		<div class="collapse navbar-collapse"
+			id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="https://tahiti.mju.ac.kr/moodle/">메뉴</a></li>
+			</ul>
+		</div>
+	</div>
 	</nav>
 
 	<div class="container">
@@ -121,11 +126,12 @@
 				정보</button>
 
 
-
+			<%if(loginbean.getPosition_Name() != 99){%>
 			<button class="btn btn-primary" style="width: 200px; margin: 10px;"
 				type="button"
-				onclick="location.href='${pageContext.request.contextPath}/ProjectController/showDirectory'">인명부
+				onclick="location.href='${pageContext.request.contextPath}/ProjectController/showDirectory'">조직도
 			</button>
+			<%} %>
 			<%-- <button class="btn btn-primary" style="width:200px; margin:10px;" type="button"
 		onclick="location.href='${pageContext.request.contextPath}/ProjectController/memberManagement'">인사관리</button>
 	<button class="btn btn-primary" style="width:200px; margin:10px;" type="button"
@@ -211,7 +217,7 @@
 			%>
 
 
-	
+
 			<%
 				} else if (loginbean.getDi() == 17) { //개발팀
 							//프로젝트
@@ -227,9 +233,9 @@
 
 				System.out.println(loginbean.getPermission() + ": 가입 대기 상태 로그인");
 	%>
-	<p>가입 대기 상태 입니다. 인사관리부의 승인을 기다립니다.</p>
+			<p>가입 대기 상태 입니다. 인사관리부의 승인을 기다립니다.</p>
 
-	<%
+			<%
 		} else { //가입 대기가 아니라면?
 				System.out.println(loginbean.getPermission() + ": 일반 직원 로그인, 공통 메뉴 보임");
 
@@ -237,7 +243,7 @@
 
 								System.out.println(loginbean.getPermission() + ": 프리랜서(외부인력팀) 로그인");
 			%>
-<!-- 			<button class="btn btn-primary" style="width: 200px; margin: 10px;">메신저</button> -->
+			<!-- 			<button class="btn btn-primary" style="width: 200px; margin: 10px;">메신저</button> -->
 			<%
 				} else {
 			%>
@@ -256,8 +262,11 @@
 			%>
 		</div>
 	</div>
-</div>
-	<div class = "well well-sm">
-		<p>The time on the server is  <%= now %>.</p> 
+	</div>
+	<div class="well well-sm">
+		<p>
+			The time on the server is
+			<%= now %>.
+		</p>
 	</div>
 </body>

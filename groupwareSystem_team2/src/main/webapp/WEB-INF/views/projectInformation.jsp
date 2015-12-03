@@ -387,7 +387,7 @@ function move() {
 				%>
 				<tr>
 					<td><a
-						href="http://localhost:8080/mju/LoginController/retrieveUser?id=<%=((Hashtable) (pBean.getRole().get(i))).get("User_Identifier")%>"><%=((Hashtable) (pBean.getRole().get(i))).get("User_Identifier")%></a></td>
+						href="${pageContext.request.contextPath}/LoginController/retrieveUser?id=<%=((Hashtable) (pBean.getRole().get(i))).get("User_Identifier")%>"><%=((Hashtable) (pBean.getRole().get(i))).get("User_Identifier")%></a></td>
 					<td><%=((Hashtable) (pBean.getRole().get(i))).get("Name")%></td>
 					<td><%=Gender.get(Integer.parseInt((String) ((Hashtable) (pBean.getRole().get(i))).get("Gender")))%></td>
 					<td><%=((Hashtable) (pBean.getRole().get(i))).get("Phone_Number")%></td>

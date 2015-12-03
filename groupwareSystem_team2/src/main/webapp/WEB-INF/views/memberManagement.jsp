@@ -134,7 +134,7 @@
 							<option value="11"<%if(c.getPermission()==11){  %>selected <%}%>>PM</option>
 							<option value="12"<%if(c.getPermission()==12){  %>selected <%}%>>PL</option>
 							<option value="13"<%if(c.getPermission()==13){  %>selected <%}%>>프로젝트 투입 직원</option>
-							<option value="14"<%if(c.getPermission()==14){  %>selected <%}%>>PM/PL</option>
+						<%-- 	<option value="14"<%if(c.getPermission()==14){  %>selected <%}%>>PM/PL</option> --%>
 					</select> 
 					<%} %>
 					</td>

@@ -101,7 +101,7 @@
 					<tr>
 						<td><button type="button" class="btn btn-primary"
 								onclick="addRole(<%=developerlist.get(i).getId()%>,<%=developerlist.get(i).getComment()%>,<%=i%>)">확인</button></td>
-						<td><a href="http://localhost:8080/mju/LoginController/retrieveUser?id=<%=developerlist.get(i).getId()%>"><%=developerlist.get(i).getId()%></a>/<%=developerlist.get(i).getName()%></td>
+						<td><a href="${pageContext.request.contextPath}/LoginController/retrieveUser?id=<%=developerlist.get(i).getId()%>"><%=developerlist.get(i).getId()%></a>/<%=developerlist.get(i).getName()%></td>
 						<td><%=Position_map.get(developerlist.get(i).getPosition_Name())%></td>
 						<td><%=Depart_map.get(developerlist.get(i).getDi())%></td>
 						<td><%=Permission_map.get(developerlist.get(i).getPermission())%></td>
