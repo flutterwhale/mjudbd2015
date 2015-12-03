@@ -23,7 +23,6 @@ import kr.ac.mju.prompt.model.UserInfo;
 import kr.ac.mju.prompt.model.signupBean;
 import kr.ac.mju.prompt.model.userProjectBean;
 import kr.ac.mju.prompt.service.LoginService;
-import kr.ac.mju.prompt.service.ProjectService;
 
 @Controller
 public class LoginController {
@@ -294,20 +293,14 @@ public class LoginController {
 	
 	// 유저ID로 정보 검색하기
 	@RequestMapping(value = "/LoginController/retrieveUser", method = RequestMethod.GET)
-	public ModelAndView retrieveMember(HttpServletRequest request, HttpSession session) {
+	public String retrieveMember(HttpServletRequest request, HttpSession session) {
 		logger.info("=============ID로검색=============");
 		logger.info("retrieveMember:ID로 User정보 검색하기 " + request.getParameter("id"));
 		signupBean show = loginService.showMember(request.getParameter("id"));
 		request.setAttribute("showBean", show);
-		
-		
-		ModelAndView model = new ModelAndView();
-		ArrayList<userProjectBean> PastProjects = loginService
-				.getPastMyProjects(session.getAttribute("session_name").toString());
-		model.addObject("PastProject", PastProjects);
-		model.setViewName("obtainAdd");
-		return model;
+		return "userProfile";
 	}
+
 
 	// 개인정보 수정 페이지 분기
 	@RequestMapping(value = "/LoginController/editMemberPage", method = RequestMethod.POST)

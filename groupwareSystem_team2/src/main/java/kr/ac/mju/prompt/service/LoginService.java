@@ -18,7 +18,6 @@ public class LoginService {
 
 	@Autowired
 	private LoginDAO loginDAO;
-	private ProjectDAO projectDAO;
 	private static final Logger logger = LoggerFactory.getLogger(LoginService.class);
 
 	public UserInfo login(String id, String pw) {
